@@ -1,0 +1,61 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textColorPrimary">@color/theme_color_text_primary</item>
+        <item name="android:textColorHighlight">@color/theme_color_text_highlight</item>
+        <item name="android:textColorHint">@color/theme_color_text_hint</item>
+        <item name="android:textColorTertiary">@color/theme_color_text_tertiary</item>
+        <item name="colorControlActivated">@color/pink_dark</item>
+        <item name="colorControlHighlight">@color/gray</item>
+        <item name="colorControlNormal">@color/gray_dark</item>
+    </style>
+    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+    <style name="AppTheme.NoStatusBar" parent="AppTheme.NoActionBar">
+        <item name="android:windowTranslucentStatus">true</item>
+
+    </style>
+
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/layerlist_splash</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.Transparent">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@android:style/Animation</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+    </style>
+
+    <style name="AppTheme.NavigationView">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="colorControlHighlight">#44bbbbbb</item>
+        <item name="selectableItemBackground">@drawable/selector_navigation_menu_item_bg</item>
+        <item name="textAppearanceListItem">@style/TextAppearance.App.Title</item>
+    </style>
+
+    <style name="TextAppearance"/>
+    <style name="TextAppearance.App">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+    <style name="TextAppearance.App.Title">
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+    </style>
+</resources>

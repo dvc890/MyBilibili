@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="text_size_18sp">18sp</dimen>
+    <dimen name="text_size_body_primary">13sp</dimen>
+    <dimen name="text_size_body_secondary">12sp</dimen>
+    <dimen name="text_size_headline">16sp</dimen>
+    <dimen name="text_size_large">14sp</dimen>
+    <dimen name="text_size_medium">12sp</dimen>
+    <dimen name="text_size_small">10sp</dimen>
+    <dimen name="text_size_subtitle">14sp</dimen>
+    <dimen name="text_size_supplementary">10sp</dimen>
+    <dimen name="text_size_title">15sp</dimen>
+    <dimen name="text_size_xlarge">16sp</dimen>
+    <dimen name="text_size_xxlarge">18sp</dimen>
+</resources>

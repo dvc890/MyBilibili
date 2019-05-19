@@ -1,0 +1,54 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+        
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+        
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+        classpath 'org.greenrobot:greendao-gradle-plugin:3.2.2'
+        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.8.0'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
+ext {
+    // Sdk and tools
+    thePackage = "com.dvc.mybilibili"//"tv.danmaku.bili"
+    thePackage64 = "com.dvc.mybilibili.addon.arm64"
+    versionCode = 5410000
+    versionName = "5.41.0"
+    minSdkVersion = 19
+    targetSdkVersion = 28
+    compileSdkVersion = 28
+    buildToolsVersion = '28.0.3'
+
+    // App dependencies
+    supportLibraryVersion = '28.0.0'
+    exoPlayerVersion = "2.6.0"
+    butterKnifeVersion = '9.0.0'
+    daggerVersion = '2.21'
+    retrofitVersion='2.5.0'
+    markwonVersion = '2.0.1'
+    glideVersion = '4.9.0'
+    rxtoolVersion = '2.2.8'
+}

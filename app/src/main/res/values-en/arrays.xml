@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_entries_VoutViewType">
+        <item>Auto (recommended)</item>
+        <item>Android SurfaceRender</item>
+        <item>Android TextureRender</item>
+        <item>OpenGL GLSurfaceRender</item>
+    </array>
+    <array name="pref_entrySummaries_VoutViewType">
+        <item>Auto choose</item>
+        <item>SurfaceRender: normal way</item>
+        <item>TextureRender: optimize for high-fps video</item>
+        <item>GLSurfaceRender: multithreaded efficient rendering</item>
+    </array>
+    <array name="pref_player_codecMode_entries">
+        <item>Auto (recommended)</item>
+        <item>V3-HW (ijkplayer)</item>
+        <item>Software decoding</item>
+    </array>
+    <array name="pref_player_codecMode_summaries">
+        <item>Auto choose by device &amp; video</item>
+        <item>Hardware decoding, good performance and strong compatibility</item>
+        <item>Compatibility mode, support all devices</item>
+    </array>
+    <array name="pref_player_completionAction_entries">
+        <item>Switch to next</item>
+        <item>Loop in p-list</item>
+        <item>Loop current video</item>
+        <item>Pause</item>
+    </array>
+    <array name="pref_player_completionAction_summaries">
+        <item>Switch to next</item>
+        <item>Loop in p-list</item>
+        <item>Loop current video</item>
+        <item>Pause</item>
+    </array>
+    <array name="pref_player_ffmpegSkipLoopFilter_entries">
+        <item>Auto (recommended)</item>
+        <item>None: smoothest but slowest</item>
+        <item>Non-Ref: balance</item>
+        <item>Bi-Dir: may have mosaics</item>
+        <item>Non-Key: may have mosaics</item>
+        <item>All: fastest, may have mosaics</item>
+    </array>
+</resources>

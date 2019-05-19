@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:height="24dp" android:width="24dp" android:viewportWidth="32" android:viewportHeight="32">
+    <path android:fillColor="#ff000000" android:pathData="M16,14m-4,0a4,4 0,1 1,8 0a4,4 0,1 1,-8 0"/>
+    <path android:fillColor="#ff000000" android:pathData="M25,4H7A4,4 0,0 0,3 8V20a4,4 0,0 0,4 4h7v1h-0.5a1.5,1.5 0,0 0,0 3h5a1.5,1.5 0,0 0,0 -3H18V24h7a4,4 0,0 0,4 -4V8A4,4 0,0 0,25 4ZM16,21a7,7 0,1 1,7 -7A7,7 0,0 1,16 21Z"/>
+</vector>

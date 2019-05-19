@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="Gradle: com.hannesdorfmann.mosby3:utils-fragment:3.1.0@aar">
+    <CLASSES>
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/utils-fragment-3.1.0.aar/5c68916426f4c83466b3aa33a2eef4f0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-1/files-1.1/utils-fragment-3.1.0.aar/5c68916426f4c83466b3aa33a2eef4f0/jars/classes.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.hannesdorfmann.mosby3/utils-fragment/3.1.0/c21441c91924eb9f79604ddcda5bfeb532f5ebf7/utils-fragment-3.1.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

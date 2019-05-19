@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
+    <item>
+        <color android:color="@android:color/white"/>
+    </item>
+    <item>
+        <bitmap android:gravity="center" android:src="@drawable/ic_splash_default"/>
+    </item>
+    <item android:bottom="17dp">
+        <bitmap android:gravity="bottom|center_vertical|center_horizontal|center" android:src="@drawable/ic_logo_copyright"/>
+    </item>
+</layer-list>

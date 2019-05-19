@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" android:checkableBehavior="single">
+    <group android:id="@+id/nav_group1" android:checkableBehavior="single">
+        <item android:icon="@drawable/vector_navigation_home" android:id="@+id/nav_home" android:title="@string/nav_home" android:checkable="true"/>
+        <item android:icon="@drawable/vector_navigation_history" android:id="@+id/nav_histories" android:title="@string/nav_histories" android:checkable="true"/>
+        <item android:icon="@drawable/vector_navigation_file_download" android:id="@+id/nav_offline_manager" android:title="@string/nav_offline_manager" android:checkable="true"/>
+        <item android:icon="@drawable/vector_navigation_favorite" android:id="@+id/nav_favorites" android:title="@string/nav_favorites" android:checkable="true"/>
+        <item android:icon="@drawable/vector_navigation_watchlater" android:id="@+id/nav_watch_later" android:title="@string/nav_view_later" android:checkable="true"/>
+    </group>
+    <group android:id="@+id/nav_group3" android:checkableBehavior="single">
+        <item android:icon="@drawable/vector_navigation_upload" android:id="@+id/upper_up" android:visible="false" android:title="@string/archive_up" android:checkable="false"/>
+        <item android:icon="@drawable/vector_navigation_uppercenter" android:id="@+id/upper_center" android:visible="false" android:title="@string/creator_studio" android:checkable="false"/>
+        <item android:icon="@drawable/vector_navigation_hot" android:id="@+id/upper_hot" android:visible="false" android:title="@string/archive_hot" android:checkable="false"/>
+        <item android:icon="@drawable/vector_navigation_academy" android:id="@+id/upper_academy" android:visible="false" android:title="@string/archive_academy" android:checkable="false"/>
+    </group>
+    <group android:id="@+id/nav_group2" android:checkableBehavior="single">
+        <item android:icon="@drawable/vector_navigation_live" android:id="@+id/nav_live_center" android:title="@string/nav_live_center" android:checkable="false"/>
+        <item android:icon="@drawable/vector_navigation_unicom" android:id="@+id/nav_unicom_service" android:visible="false" android:title="@string/nav_unicom_service" android:checkable="false"/>
+    </group>
+</menu>

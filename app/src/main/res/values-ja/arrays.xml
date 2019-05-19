@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <array name="pref_entries_VoutViewType">
+        <item>自動選擇（推薦）</item>
+        <item>Android 表面渲染</item>
+        <item>Android 紋理渲染</item>
+        <item>OpenGL 表面渲染</item>
+    </array>
+    <array name="pref_entrySummaries_VoutViewType">
+        <item>自動選擇</item>
+        <item>SurfaceRender，標準的輸出方式</item>
+        <item>TextureRender，針對高幀率視頻優化性能</item>
+        <item>GLSurfaceRender，多線程高效渲染</item>
+    </array>
+    <array name="pref_player_codecMode_entries">
+        <item>自動選擇（推薦）</item>
+        <item>V3硬解優先 (ijkplayer)</item>
+        <item>軟解優先（兼容模式）</item>
+    </array>
+    <array name="pref_player_codecMode_summaries">
+        <item>根據機型和視頻智能適配</item>
+        <item>硬解播放，性能好，兼容性強</item>
+        <item>冬季暖手必備，偏重兼容性，適用所有手機系統</item>
+    </array>
+    <array name="pref_player_completionAction_entries">
+        <item>自動換P：自動播放下一P視頻</item>
+        <item>自動換P（循環）：自動播放下一P視頻，列表結束後從頭開始</item>
+        <item>洗腦循環：自動循環播放當前視頻</item>
+        <item>播完暫停：停止播放等待操作</item>
+    </array>
+    <array name="pref_player_completionAction_summaries">
+        <item>自動換P：自動播放下一P視頻</item>
+        <item>自動換P（循環）：自動播放下一P視頻，列表結束後從頭開始</item>
+        <item>洗腦循環：自動循環播放當前視頻</item>
+        <item>播完暫停：停止播放等待操作</item>
+    </array>
+    <array name="pref_player_ffmpegSkipLoopFilter_entries">
+        <item>自動選擇（推薦）</item>
+        <item>None：畫質最平滑</item>
+        <item>Non-Ref：平衡</item>
+        <item>Bi-Dir：可能出現馬賽克</item>
+        <item>Non-Key：可能出現馬賽克</item>
+        <item>All：性能最好，可能出現馬賽克</item>
+    </array>
+</resources>
