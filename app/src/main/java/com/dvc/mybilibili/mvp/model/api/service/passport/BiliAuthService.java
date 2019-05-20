@@ -29,10 +29,10 @@ interface BiliAuthService {
 
     /* compiled from: BL */
     public static class CookieParamsMap extends ParamsMap {
-        public CookieParamsMap(@NonNull List<C2207b.C2206a> list) {
+        public CookieParamsMap(@NonNull List<CookieInfo.C2206a> list) {
             super(list.size());
-            for (C2207b.C2206a c2206a : list) {
-                putParams(c2206a.f6235a, c2206a.f6236b);
+            for (CookieInfo.C2206a c2206a : list) {
+                putParams(c2206a.name, c2206a.value);
             }
         }
     }
@@ -48,7 +48,7 @@ interface BiliAuthService {
     Observable<GeneralResponse<AccessToken>> QRSign(@Query("code") String str);
 
     @GET("/api/v2/oauth2/access_token")
-    Observable<GeneralResponse<C2205a>> acquireAccessToken(@Query("code") String str, @Query("grant_type") String str2);
+    Observable<GeneralResponse<LoginInfo>> acquireAccessToken(@Query("code") String str, @Query("grant_type") String str2);
 
     @FormUrlEncoded
     @POST("/api/oauth2/authorizeByApp")
@@ -65,14 +65,14 @@ interface BiliAuthService {
 
     @FormUrlEncoded
     @POST("/api/v3/oauth2/login")
-    Observable<GeneralResponse<C2205a>> loginV3(@Field("username") String username, @Field("password") String password, @FieldMap Map<String, String> map);
+    Observable<GeneralResponse<LoginInfo>> loginV3(@Field("username") String username, @Field("password") String password, @FieldMap Map<String, String> map);
 
     @GET("/api/v3/oauth2/info")
     Observable<GeneralResponse<OAuthInfo>> oauthInfo(@Query("access_token") String str, @QueryMap CookieParamsMap cookieParamsMap);
 
     @FormUrlEncoded
     @POST("/api/v2/oauth2/refresh_token")
-    Observable<GeneralResponse<C2205a>> refreshToken(@Field("access_token") String str, @Field("refresh_token") String str2, @FieldMap CookieParamsMap cookieParamsMap);
+    Observable<GeneralResponse<LoginInfo>> refreshToken(@Field("access_token") String access_token, @Field("refresh_token") String refresh_token, @FieldMap CookieParamsMap cookieParamsMap);
 
     @FormUrlEncoded
     @POST("/api/reg/byTel")
@@ -87,11 +87,11 @@ interface BiliAuthService {
     @FormUrlEncoded
     @POST("/api/oauth2/login")
     @Deprecated
-    Observable<GeneralResponse<AccessToken>> signIn(@Field("username") String str, @Field("password") String str2, @Field("captcha") String str3);
+    Observable<GeneralResponse<AccessToken>> signIn(@Field("username") String username, @Field("password") String password, @Field("captcha") String captcha);
 
     @FormUrlEncoded
     @POST("/api/v2/oauth2/login")
-    Observable<GeneralResponse<C2205a>> signInWithVerify(@Field("username") String str, @Field("password") String str2, @Field("captcha") String str3);
+    Observable<GeneralResponse<LoginInfo>> signInWithVerify(@Field("username") String username, @Field("password") String password, @Field("captcha") String captcha);
 
     @FormUrlEncoded
     @POST("/api/v2/oauth2/revoke")

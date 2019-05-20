@@ -36,7 +36,7 @@ public class aoz extends BaseIntercept {
         map.put("src", "master");
         map.put("version", getVerStr());
         map.put("trace_id", this.simpleDateFormat.format(Long.valueOf(System.currentTimeMillis())));
-        AccountInfo d = null;// = C2198d.m8642a(C1905b.m8107a()).mo11365d();
+        AccountInfo accountInfo = null;// = C2198d.m8642a(C1905b.m8107a()).mo11365d();
 //        if (!TextUtils.isEmpty(k)) {
 //            map.put("access_key", k);//AccessToken.access_token
 //        }
@@ -61,13 +61,13 @@ public class aoz extends BaseIntercept {
             if (!TextUtils.isEmpty(k)) {
                 map.put("_hwid", k);
             }
-            if (map.containsKey("access_key") || d == null || d.getRank() <= 0) {
+            if (map.containsKey("access_key") || accountInfo == null || accountInfo.getRank() <= 0) {
                 map.remove("_ulv");
                 return;
             }
             StringBuilder stringBuilder = new StringBuilder();
             stringBuilder.append("");
-            stringBuilder.append(d.getRank());
+            stringBuilder.append(accountInfo.getRank());
             map.put("_ulv", stringBuilder.toString());
         }
     }

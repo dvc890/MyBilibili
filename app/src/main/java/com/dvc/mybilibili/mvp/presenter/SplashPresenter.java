@@ -3,13 +3,12 @@ package com.dvc.mybilibili.mvp.presenter;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.os.SystemClock;
-import android.text.TextUtils;
 
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
+import com.dvc.mybilibili.app.utils.RandomUtils;
 import com.dvc.mybilibili.mvp.model.DataManager;
-import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.Splash;
 import com.dvc.mybilibili.mvp.ui.activity.SplashView;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -17,12 +16,11 @@ import com.trello.rxlifecycle2.LifecycleProvider;
 import java.util.Iterator;
 
 import javax.inject.Inject;
-import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableOnSubscribe;
 
-public class SplashPresenter extends MvpBasePresenter<SplashView> {
+public class SplashPresenter extends MvpBasePresenter<SplashView> implements ISplash{
     private final Context context;
     private final DataManager dataManager;
     private final LifecycleProvider<Lifecycle.Event> provider;
@@ -34,6 +32,7 @@ public class SplashPresenter extends MvpBasePresenter<SplashView> {
         this.provider = provider;
     }
 
+    @Override
     public void loadSplash() {
 //        this.dataManager.getApiHelper().getSplashV2()
 //                .compose(RxSchedulersHelper.ioAndMainThread())
@@ -60,17 +59,20 @@ public class SplashPresenter extends MvpBasePresenter<SplashView> {
                     return true;
                 })
                 .subscribe(splashData -> {
-                    ifViewAttached(view -> view.onSplashData(splashData.splashList));
+                    ifViewAttached(view -> {
+                        int pos = RandomUtils.randomCommon(0, splashData.splashList.size()-1, 1)[0];
+                        view.onSplashData(splashData.splashList.get(pos));
+                    });
                 });
     }
 
     @Override
-    public void countdownProgress(int progress) {
+    public void countdownProgress(int progress, int maxProgress) {
         Observable.create((ObservableOnSubscribe<Integer>) emitter -> {
             int i = progress;
-            while (i != 361 && !emitter.isDisposed()) {
+            while (i <= maxProgress && !emitter.isDisposed()) {
                 emitter.onNext(i++);
-                SystemClock.sleep(10);
+                SystemClock.sleep(1000);
             }
             emitter.onComplete();
         }).compose(RxSchedulersHelper.ioAndMainThread())

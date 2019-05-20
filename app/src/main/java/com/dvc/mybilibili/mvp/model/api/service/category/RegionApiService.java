@@ -25,41 +25,41 @@ import retrofit2.http.Query;
 public interface RegionApiService {
 
     @GET("/x/v2/region/index")
-    Observable<CategoryMeta> getRegionV2List(@Nullable @Query("ver") String str);
+    Observable<CategoryMeta> getRegionV2List(@Nullable @Query("ver") String ver);
 
     //@CacheControl
     @GET("http://api.bilibili.com/x/tag/hots")
-    Observable<GeneralResponse<List<Tag.TagMeta>>> getHotTags(@Query("rid") int i, @Query("type") int i2);
+    Observable<GeneralResponse<List<Tag.TagMeta>>> getHotTags(@Query("rid") int rid, @Query("type") int type);
 
     //@CacheControl
     @GET("/x/v2/show/index")
-    Observable<GeneralResponse<List<CategoryIndex>>> getIndex(@Query("access_key") String str);
+    Observable<GeneralResponse<List<CategoryIndex>>> getIndex(@Query("access_key") String access_key);
 
     @GET("/x/v2/region/dynamic/list")
     @Headers("Interceptor:"+C21989o.CLASSNAME)
 //    @RequestInterceptor(C21989o.class)
-    Observable<GeneralResponse<RegionRecommendVideo>> getNextRegionRecommendDynamic(@Query("access_key") String str, @Query("rid") int i, @Query("pull") boolean z, @Query("ctime") long j, @Query("channel") String str2);
+    Observable<GeneralResponse<RegionRecommendVideo>> getNextRegionRecommendDynamic(@Query("access_key") String access_key, @Query("rid") int i, @Query("pull") boolean z, @Query("ctime") long j, @Query("channel") String str2);
 
     @GET("/x/v2/region/dynamic/child/list")
-    Observable<GeneralResponse<RegionTagVideo>> getNextRegionTagDynamic(@Query("access_key") String str, @Query("rid") int i, @Query("tag_id") int i2, @Query("pull") boolean z, @Query("ctime") long j);
+    Observable<GeneralResponse<RegionTagVideo>> getNextRegionTagDynamic(@Query("access_key") String access_key, @Query("rid") int i, @Query("tag_id") int i2, @Query("pull") boolean z, @Query("ctime") long j);
 
     @Headers("Interceptor:"+ C21989o.CLASSNAME)
 //    @RequestInterceptor(C21989o.class)
     //@CacheControl(120000)
     @GET("/x/v2/region/dynamic")
-    Observable<GeneralResponse<RegionRecommendVideo>> getRegionRecommendDynamic(@Query("access_key") String str, @Query("rid") int i, @Query("channel") String str2, @Query("ad_extra") String str3);
+    Observable<GeneralResponse<RegionRecommendVideo>> getRegionRecommendDynamic(@Query("access_key") String access_key, @Query("rid") int i, @Query("channel") String str2, @Query("ad_extra") String str3);
 
     //@CacheControl(120000)
     @GET("/x/v2/region/dynamic/child")
-    Observable<GeneralResponse<RegionTagVideo>> getRegionTagDynamic(@Query("access_key") String str, @Query("rid") int i, @Query("tag_id") int i2, @Query("channel") String str2);
+    Observable<GeneralResponse<RegionTagVideo>> getRegionTagDynamic(@Query("access_key") String access_key, @Query("rid") int i, @Query("tag_id") int i2, @Query("channel") String str2);
 
     //@CacheControl
     @GET("/x/v2/region/show/child/list")
     Observable<GeneralResponse<List<BiliVideoV2>>> getVideoList(@Query("rid") int i, @Query("pn") int i2, @Query("ps") int i3, @Query("order") String str, @Query("tag_id") Integer num, @Query("channel") String str2);
 
     @GET("/x/v2/show/change/region")
-    Observable<GeneralResponse<List<CategoryIndex.Content>>> refreshRegionAV(@Query("access_key") String str, @Query("rand") int i, @Query("rid") int i2);
+    Observable<GeneralResponse<List<CategoryIndex.Content>>> refreshRegionAV(@Query("access_key") String access_key, @Query("rand") int i, @Query("rid") int i2);
 
     @GET("/x/v2/show/change/bangumi")
-    Observable<GeneralResponse<List<CategoryIndex.Content>>> refreshRegionBangumi(@Query("access_key") String str, @Query("rand") int i);
+    Observable<GeneralResponse<List<CategoryIndex.Content>>> refreshRegionBangumi(@Query("access_key") String access_key, @Query("rand") int i);
 }

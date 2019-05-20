@@ -9,7 +9,8 @@ import java.util.List;
 public interface SplashView extends MvpView {
     void updateProgress(Integer integer);
 
-    void onSplashData(List<Splash> splashList);
+    void onSplashData(Splash splashList);
 
+    @Deprecated
     void onSampleSplash(SampleSplash splashData);
 }

@@ -10,33 +10,33 @@ import java.util.TreeMap;
 /* compiled from: BL */
 public final class SignedQuery {
     /* renamed from: c */
-    private static final char[] f47309c = "0123456789ABCDEF".toCharArray();
+    private static final char[] c = "0123456789ABCDEF".toCharArray();
     /* renamed from: a */
-    public final String f47310a;
+    public final String a;
     /* renamed from: b */
-    public final String f47311b;
+    public final String b;
 
     public SignedQuery(String str, String str2) {
-        this.f47310a = str;
-        this.f47311b = str2;
+        this.a = str;
+        this.b = str2;
     }
 
     public String toString() {
-        if (this.f47310a == null) {
+        if (this.a == null) {
             return "";
         }
-        if (this.f47311b == null) {
-            return this.f47310a;
+        if (this.b == null) {
+            return this.a;
         }
         StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(this.f47310a);
+        stringBuilder.append(this.a);
         stringBuilder.append("&sign=");
-        stringBuilder.append(this.f47311b);
+        stringBuilder.append(this.b);
         return stringBuilder.toString();
     }
 
     /* renamed from: r */
-    static String m66574r(Map<String, String> map) {
+    static String r(Map<String, String> map) {
         if (!(map instanceof SortedMap)) {
             map = new TreeMap(map);
         }
@@ -44,13 +44,13 @@ public final class SignedQuery {
         for (Entry entry : map.entrySet()) {
             String str = (String) entry.getKey();
             if (!TextUtils.isEmpty(str)) {
-                stringBuilder.append(m66571a(str));
+                stringBuilder.append(a(str));
                 stringBuilder.append(HttpUtils.EQUAL_SIGN);
                 String str2 = (String) entry.getValue();
                 if (str2 == null) {
                     str2 = "";
                 } else {
-                    str2 = m66571a(str2);
+                    str2 = a(str2);
                 }
                 stringBuilder.append(str2);
                 stringBuilder.append(HttpUtils.PARAMETERS_SEPARATOR);
@@ -67,12 +67,12 @@ public final class SignedQuery {
     }
 
     /* renamed from: a */
-    static String m66571a(String str) {
-        return m66572a(str, null);
+    static String a(String str) {
+        return a(str, null);
     }
 
     /* renamed from: a */
-    static String m66572a(String str, String str2) {
+    static String a(String str, String str2) {
         if (str == null) {
             return null;
         }
@@ -81,7 +81,7 @@ public final class SignedQuery {
         int i = 0;
         while (i < length) {
             int i2 = i;
-            while (i2 < length && m66573a(str.charAt(i2), str2)) {
+            while (i2 < length && a(str.charAt(i2), str2)) {
                 i2++;
             }
             if (i2 != length) {
@@ -92,7 +92,7 @@ public final class SignedQuery {
                     stringBuilder.append(str, i, i2);
                 }
                 i = i2 + 1;
-                while (i < length && !m66573a(str.charAt(i), str2)) {
+                while (i < length && !a(str.charAt(i), str2)) {
                     i++;
                 }
                 try {
@@ -100,8 +100,8 @@ public final class SignedQuery {
                     int length2 = bytes.length;
                     for (int i3 = 0; i3 < length2; i3++) {
                         stringBuilder.append('%');
-                        stringBuilder.append(f47309c[(bytes[i3] & 240) >> 4]);
-                        stringBuilder.append(f47309c[bytes[i3] & 15]);
+                        stringBuilder.append(c[(bytes[i3] & 240) >> 4]);
+                        stringBuilder.append(c[bytes[i3] & 15]);
                     }
                 } catch (UnsupportedEncodingException e) {
                     throw new AssertionError(e);
@@ -120,7 +120,7 @@ public final class SignedQuery {
     }
 
     /* renamed from: a */
-    private static boolean m66573a(char c, String str) {
+    private static boolean a(char c, String str) {
         return (c >= 'A' && c <= 'Z') || ((c >= 'a' && c <= 'z') || !((c < '0' || c > '9') && "-_.~".indexOf(c) == -1 && (str == null || str.indexOf(c) == -1)));
     }
 

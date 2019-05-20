@@ -9,7 +9,7 @@ import com.bilibili.nativelibrary.LibBili;
 import java.util.Map;
 
 /* compiled from: BL */
-/* renamed from: b.BaseIntercept */
+/* renamed from: b.ewf */
 public class BaseIntercept implements Iintercept{
     public final static String CLASSNAME = "com.dvc.mybilibili.mvp.model.api.baseinterceptor.BaseIntercept";
 
@@ -25,9 +25,7 @@ public class BaseIntercept implements Iintercept{
     public void putParams(Map<String, String> map) {
         map.put("platform", "android");
         map.put("mobi_app", "android"/*C1793a.m7867e()*/);//
-//        try {
-//            map.put("appkey", LibBili.m8855a());
-//        }catch (Exception e){}
+        map.put("appkey", LibBili.getAndroidAppKey());
         map.put("build", String.valueOf(5410000));
         map.put("channel", "master");
 //        Map f = C1793a.m7868f();

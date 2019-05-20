@@ -13,10 +13,10 @@ import javax.crypto.spec.SecretKeySpec;
 /* compiled from: BL */
 public final class LibBili {
     /* renamed from: a */
-    private static native String m8856a(String str);
+    private static native String a(String str);
 
     /* renamed from: b */
-    private static native IvParameterSpec m8858b(String str) throws InvalidKeyException;
+    private static native IvParameterSpec b(String str) throws InvalidKeyException;
 
     public static native int getCpuCount();
 
@@ -24,34 +24,46 @@ public final class LibBili {
     public static native int getCpuId();
 
     /* renamed from: s */
-    static native SignedQuery m8861s(SortedMap<String, String> sortedMap);
+    static native SignedQuery s(SortedMap<String, String> sortedMap);
 
     static {
         System.loadLibrary("bili");
     }
 
-    @Deprecated
     /* renamed from: a */
-    public static String m8855a() {
-        return m8860c("android");
+    public static String getAndroidAppKey() {
+        return getAppKey("android");
     }
 
     /* renamed from: c */
-    public static String m8860c(String str) {
-        return m8856a(str);
+    public static String getAppKey(String str) {
+//        switch (str) {
+//            case "android":
+//                return "1d8b6e7d45233436";
+//            case "android_i":
+//                return "bb3101000e232e27";
+//            case "android_b":
+//                return "07da50c9a0bf829f";
+//            case "android_tv":
+//                return "4409e2ce8ffd12b8";
+//            case "biliLink":
+//                return "37207f2beaebf8d7";
+//        }
+//        return "1d8b6e7d45233436";
+        return a(str);
     }
 
     /* renamed from: a */
     public static SignedQuery m8854a(Map<String, String> map) {
-        return m8861s(map == null ? new TreeMap() : new TreeMap(map));
+        return s(map == null ? new TreeMap() : new TreeMap(map));
     }
 
     /* renamed from: a */
-    public static byte[] m8857a(String str, byte[] bArr) throws InvalidKeyException {
+    public static byte[] a(String str, byte[] bArr) throws InvalidKeyException {
         try {
             byte[] bytes = str.getBytes(SignedQuery.HttpUtils.ENCODING_UTF_8);
             try {
-                return C16894a.m66575a(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), m8858b(str), bArr);
+                return C16894a.m66575a(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
             } catch (Exception unused) {
                 return bArr;
             }
@@ -61,11 +73,11 @@ public final class LibBili {
     }
 
     /* renamed from: b */
-    public static byte[] m8859b(String str, byte[] bArr) throws InvalidKeyException {
+    public static byte[] b(String str, byte[] bArr) throws InvalidKeyException {
         try {
             byte[] bytes = str.getBytes(SignedQuery.HttpUtils.ENCODING_UTF_8);
             try {
-                return C16894a.m66576b(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), m8858b(str), bArr);
+                return C16894a.m66576b(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
             } catch (Exception unused) {
                 return bArr;
             }

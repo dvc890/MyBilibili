@@ -48,9 +48,6 @@ import java.lang.ref.WeakReference;
  */
 public abstract class MvpBasePresenter<V extends MvpView> extends BasePresenter implements MvpPresenter<V> {
 
-
-    public abstract void countdownProgress(int progress);
-
     /**
      * An Action that is executed to interact with the view.
      * Usually a Presenter should not get any data from View: so calls like view.getUserId() should not be done.

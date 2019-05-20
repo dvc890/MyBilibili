@@ -10181,4 +10181,6 @@
     <string name="yesterday_date_label">昨天 %02d:%02d</string>
     <string name="yesterday_fmt">昨天%s</string>
     <string name="you_do_not_need_the_verification_code_anymore">你已经不需要验证码了</string>
+
+    <string name="no_look_ad">就不给你看广告...</string>
 </resources>

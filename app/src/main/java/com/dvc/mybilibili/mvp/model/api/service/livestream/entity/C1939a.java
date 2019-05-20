@@ -9,23 +9,23 @@ import java.util.List;
 public class C1939a {
     @JSONField(name = "id")
     /* renamed from: a */
-    public int f5803a;
+    public int id;
     @JSONField(name = "name")
     /* renamed from: b */
-    public String f5804b;
+    public String name;
     @JSONField(name = "list")
     /* renamed from: c */
-    public List<BaseLiveArea> f5805c;
+    public List<BaseLiveArea> list;
 
     /* renamed from: a */
     public void mo9006a() {
-        for (BaseLiveArea baseLiveArea : this.f5805c) {
-            baseLiveArea.f5798c = this.f5804b;
+        for (BaseLiveArea baseLiveArea : this.list) {
+            baseLiveArea.f5798c = this.name;
         }
     }
 
     /* renamed from: b */
     public boolean mo9007b() {
-        return "\u6e38\u620f".equals(this.f5804b);
+        return "\u6e38\u620f".equals(this.name);
     }
 }

@@ -15,4 +15,54 @@
     <color name="gray_dark_alpha26">#44999999</color>
     <color name="daynight_color_view_background">#fafafa</color>
     <color name="theme_color_view_background">@color/daynight_color_view_background</color>
+
+
+    <color name="black_alpha10">#16000000</color>
+    <color name="black_alpha15">#26000000</color>
+    <color name="black_alpha20">#33000000</color>
+    <color name="black_alpha25">#3c000000</color>
+    <color name="black_alpha30">#4c000000</color>
+    <color name="black_alpha35">#5a000000</color>
+    <color name="black_alpha40">#66000000</color>
+    <color name="black_alpha50">#7f000000</color>
+    <color name="black_alpha52">#52000000</color>
+    <color name="black_alpha55">#8d000000</color>
+    <color name="black_alpha60">#99000000</color>
+    <color name="black_alpha70">#b4000000</color>
+    <color name="black_alpha75">#c0000000</color>
+    <color name="black_alpha80">#cc000000</color>
+    <color name="black_alpha84">#d6000000</color>
+    <color name="black_alpha94">#e2000000</color>
+    <color name="black_alphaDE">#de000000</color>
+    <color name="black_alpha_de">#de000000</color>
+    <color name="black_deep">#1e1e1e</color>
+    <color name="black_gray">#626262</color>
+    <color name="black_gray_alpha8A">#8a2c4457</color>
+    <color name="black_light">#333333</color>
+    <color name="black_light_1">#333333</color>
+    <color name="black_light_2">#4a4a4a</color>
+    <color name="black_light_3">#666666</color>
+    <color name="black_light_4">#7f7f7f</color>
+    <color name="black_light_5">#1b1b1b</color>
+    <color name="black_light_5_alpha80">#cc1b1b1b</color>
+    <color name="black_light_5_alpha_80">#cc1b1b1b</color>
+    <color name="black_light_alpha5">#0c212121</color>
+    <color name="black_light_alpha50">#7f212121</color>
+    <color name="black_light_alpha90">#e5212121</color>
+    <color name="black_light_alpha96">#f4212121</color>
+    <color name="black_lighter_trans_54">#8c2c4457</color>
+    <color name="black_lighter_trans_87">#e62c4457</color>
+    <color name="black_overlay">#66000000</color>
+    <color name="black_translucent">#80000000</color>
+    <color name="black_transparent">#aa000000</color>
+    <color name="black_transparent_01">#01000000</color>
+    <color name="black_transparent_10">#1a000000</color>
+    <color name="black_transparent_24">#3d000000</color>
+    <color name="black_transparent_30">#55000000</color>
+    <color name="black_transparent_40">#40000000</color>
+    <color name="black_transparent_50">#80000000</color>
+    <color name="black_transparent_60">#99000000</color>
+    <color name="black_transparent_70">#b3000000</color>
+    <color name="black_transparent_84">#d6000000</color>
+
 </resources>

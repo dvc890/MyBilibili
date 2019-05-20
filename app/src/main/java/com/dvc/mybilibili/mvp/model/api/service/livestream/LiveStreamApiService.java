@@ -51,12 +51,12 @@ public interface LiveStreamApiService {
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/banned_service/v1/Silent/room_block_user")
-    Observable<GeneralResponse<AddRoomBlack>> addRoomBlackList(@Field("roomid") long j, @Field("content") String str, @Field("type") int i, @Field("hour") int i2);
+    Observable<GeneralResponse<AddRoomBlack>> addRoomBlackList(@Field("roomid") long roomid, @Field("content") String content, @Field("type") int type, @Field("hour") int hour);
 
     @GET("/live_stream/v1/UpStreamExt/pause_by_room")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<ChangeLiveStreamInfo>> changeLiveStream(@Query("room_id") int i);
+    Observable<GeneralResponse<ChangeLiveStreamInfo>> changeLiveStream(@Query("room_id") int roomid);
 
     @GET("/xlive/app-ucenter/v1/topic/CheckTopic")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -91,27 +91,27 @@ public interface LiveStreamApiService {
     @GET("http://api.live.bilibili.com/room/v1/Area/getMyChooseArea")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<List<HistoryArea>>> getChooseArea(@Query("roomid") int i);
+    Observable<GeneralResponse<List<HistoryArea>>> getChooseArea(@Query("roomid") int roomid);
 
     @GET("/room/v1/Cover/get_list")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<List<LiveRoomUploadCover>>> getCover(@Query("room_id") int i, @Query("type") String str);
+    Observable<GeneralResponse<List<LiveRoomUploadCover>>> getCover(@Query("room_id") int roomid, @Query("type") String type);
 
     @GET("/room/v1/Danmu/getConf")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<BiliLiveRoomDanmuConfig>> getDanmakuRoomInfo(@Query("room_id") int i);
+    Observable<GeneralResponse<BiliLiveRoomDanmuConfig>> getDanmakuRoomInfo(@Query("room_id") int room_id);
 
     @GET("/rankdb/v1/RoomRank/mobileMedalRank")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveRoomFansRank>> getFansMedalRank(@Query("room_id") int i);
+    Observable<GeneralResponse<LiveRoomFansRank>> getFansMedalRank(@Query("room_id") int room_id);
 
     @GET("/rankdb/v1/RoomRank/mobileSevenRank")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveRoomFeedRank>> getFeedRank(@Query("room_id") int i);
+    Observable<GeneralResponse<LiveRoomFeedRank>> getFeedRank(@Query("room_id") int room_id);
 
 //    @GET("/gift/v3/live/gift_config")
 //    @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -136,12 +136,12 @@ public interface LiveStreamApiService {
     @GET("/pay/v1/Master/assistant_income_list")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<IncomeDetailInfo>> getIncomeHamstersDetail(@Query("month") String str);
+    Observable<GeneralResponse<IncomeDetailInfo>> getIncomeHamstersDetail(@Query("month") String month);
 
     @GET("/gift/v1/LuckGift/getLuckStatus")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LuckGiftEntrance>> getLuckGiftEntrance(@Query("roomid") int i);
+    Observable<GeneralResponse<LuckGiftEntrance>> getLuckGiftEntrance(@Query("room_id") int room_id);
 
     @GET("live_user/v1/WishBottle/myWishList")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -151,12 +151,12 @@ public interface LiveStreamApiService {
     @GET("/rankdb/v1/ActivityRank/mobileRoomRank")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveRoomOperationRank>> getOperationRank(@Query("room_id") int i, @Query("type") String str, @Query("scale") String str2);
+    Observable<GeneralResponse<LiveRoomOperationRank>> getOperationRank(@Query("room_id") int room_id, @Query("type") String str, @Query("scale") String str2);
 
     @GET("/xlive/app-room/v1/dM/gethistory")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveRoomHistoryMsg>> getRoomHistoryMsg(@Query("room_id") int i);
+    Observable<GeneralResponse<LiveRoomHistoryMsg>> getRoomHistoryMsg(@Query("room_id") int room_id);
 
     @GET("/xlive/app-ucenter/v1/room/GetInfo")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -166,12 +166,12 @@ public interface LiveStreamApiService {
     @GET("/AppRoom/index")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveRoomInfo>> getRoomInfo(@Query("room_id") int i, @Query("buld") String str, @Query("scale") String str2);
+    Observable<GeneralResponse<LiveRoomInfo>> getRoomInfo(@Query("room_id") int room_id, @Query("buld") String str, @Query("scale") String str2);
 
     @GET("/banned_service/v1/Shield/get_up_keywords")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<ShieldKeyWord>> getShieldKeyword(@Query("roomId") int i);
+    Observable<GeneralResponse<ShieldKeyWord>> getShieldKeyword(@Query("room_id") int room_id);
 
     @GET("/xlive/app-ucenter/v1/topic/GetTopicList")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -181,7 +181,7 @@ public interface LiveStreamApiService {
     @GET("/live_stream/v1/UpStreamExt/get_by_room")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<UpStreamAddrInfo>> getUpStreamAddr(@Query("room_id") int i, @Query("free_flow") String str, @Query("area_id") int i2);
+    Observable<GeneralResponse<UpStreamAddrInfo>> getUpStreamAddr(@Query("room_id") int room_id, @Query("free_flow") String str, @Query("area_id") int i2);
 
     @GET("/live_user/v1/WishBottle/myWishConfig")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -220,29 +220,29 @@ public interface LiveStreamApiService {
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Room/startLive")
-    Observable<GeneralResponse<LiveStreamingRoomStartLiveInfo>> startLiveStreaming(@Field("room_id") int i, @Field("area_v2") int i2, @Field("type") int i3, @Field("freeFlow") String str);
+    Observable<GeneralResponse<LiveStreamingRoomStartLiveInfo>> startLiveStreaming(@Field("room_id") int room_id, @Field("area_v2") int i2, @Field("type") int i3, @Field("freeFlow") String str);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Room/stopLive")
-    Observable<GeneralResponse<LiveStreamingRoomStopLiveInfo>> stopLiveStreaming(@Field("room_id") int i);
+    Observable<GeneralResponse<LiveStreamingRoomStopLiveInfo>> stopLiveStreaming(@Field("room_id") int room_id);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Cover/update")
-    Observable<GeneralResponse<List<Void>>> updateProfileCover(@Field("pic_id") int i, @Field("room_id") int i2);
+    Observable<GeneralResponse<List<Void>>> updateProfileCover(@Field("pic_id") int i, @Field("room_id") int room_id2);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Room/update")
-    Observable<GeneralResponse<List<Void>>> updateRoomArea(@Field("room_id") int i, @Field("area_id") int i2);
+    Observable<GeneralResponse<List<Void>>> updateRoomArea(@Field("room_id") int room_id, @Field("area_id") int i2);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Room/update")
-    Observable<GeneralResponse<List<Void>>> updateRoomTitle(@Field("room_id") int i, @Field("title") String str);
+    Observable<GeneralResponse<List<Void>>> updateRoomTitle(@Field("room_id") int room_id, @Field("title") String title);
 }
