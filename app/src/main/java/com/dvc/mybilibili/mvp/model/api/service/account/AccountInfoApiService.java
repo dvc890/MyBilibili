@@ -12,5 +12,5 @@ import retrofit2.http.Query;
 /* renamed from: com.bilibili.lib.account.b */
 public interface AccountInfoApiService {
     @GET("/x/v2/account/myinfo")
-    Observable<GeneralResponse<AccountInfo>> getAccountInfo(@Query("access_key") String str);
+    Observable<GeneralResponse<AccountInfo>> getAccountInfo(@Query("access_key") String access_key);
 }

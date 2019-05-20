@@ -41,13 +41,13 @@ public abstract class ApplicationModule {
     @Provides
     @PreferenceFileName
     static String providePreferenceName(@ApplicationContext Context context) {
-        return context.getPackageName() + "_preferences";
+        return "environment_prefs";
     }
 
     @Provides
     @AccountPreferenceFileName
     static String provideAccountPreferenceName() {
-        return "account_preferences";
+        return "bili.passport.storage";
     }
 
     @Provides

@@ -84,7 +84,7 @@ public interface BangumiApiService {
     Observable<JSONObject> editShort(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2, @Field("score") int i3, @Field("content") String str2);
 
     @GET("/api/concern_season")
-    Observable<BangumiApiResponse<JSONObject>> follow(@Query("access_key") String str, @Query("season_id") String str2);
+    Observable<BangumiApiResponse<JSONObject>> follow(@Query("access_key") String access_key, @Query("season_id") String str2);
 
     //@CacheControl(120000)
     @GET("/appindex/followcn_index_page")
@@ -129,7 +129,7 @@ public interface BangumiApiService {
     Observable<BangumiApiResponse<BangumiFollowHome>> getFollowHome();
 
     @GET("/api/get_concerned_season")
-    Observable<BangumiMineFollow> getFollowMine(@Query("page") int i, @Query("pagesize") int i2, @Query("mid") long j, @Query("access_key") String str);
+    Observable<BangumiMineFollow> getFollowMine(@Query("page") int i, @Query("pagesize") int i2, @Query("mid") long j, @Query("access_key") String access_key);
 
     //@CacheControl(120000)
     @GET("/api/concern_recommend")
@@ -146,16 +146,16 @@ public interface BangumiApiService {
     Observable<BangumiApiResponse<BangumiIndexResult>> getIndexResult(@QueryMap HashMap<String, String> hashMap);
 
     @GET("/review/api/long/view")
-    Observable<BangumiApiResponse<ReviewLongDetail>> getLongReview(@Query("access_key") String str, @Query("media_id") int i, @Query("review_id") int i2);
+    Observable<BangumiApiResponse<ReviewLongDetail>> getLongReview(@Query("access_key") String access_key, @Query("media_id") int i, @Query("review_id") int i2);
 
     @GET("/review/api/long/list")
-    Observable<BangumiApiResponse<C1870b>> getLongReviewList(@Query("media_id") String str, @Query("cursor") String str2, @Query("page_size") int i, @Query("folded") int i2, @Query("access_key") String str3);
+    Observable<BangumiApiResponse<C1870b>> getLongReviewList(@Query("media_id") String str, @Query("cursor") String str2, @Query("page_size") int i, @Query("folded") int i2, @Query("access_key") String access_key3);
 
     @GET("/media/api/detail")
-    Observable<BangumiApiResponse<ReviewMediaBase>> getMediaData(@Query("media_id") long j, @Query("access_key") String str);
+    Observable<BangumiApiResponse<ReviewMediaBase>> getMediaData(@Query("media_id") long j, @Query("access_key") String access_key);
 
     @GET("/appindex/follow_index_mine")
-    Observable<BangumiApiResponse<BangumiFollowMine>> getMineFollow(@Query("mid") long j, @Query("access_key") String str);
+    Observable<BangumiApiResponse<BangumiFollowMine>> getMineFollow(@Query("mid") long j, @Query("access_key") String access_key);
 
     //@CacheControl(3600000)
     @GET("/api/movie_index_cond")
@@ -177,16 +177,16 @@ public interface BangumiApiService {
     Observable<BangumiApiResponse<List<BangumiRecommend>>> getRecommendList(@Query("type") int i, @Query("cursor") long j);
 
     @GET("/view/api/media")
-    Observable<BangumiApiResponse<ReviewMediaDetail>> getReviewDetail(@Query("media_id") long j, @Query("access_key") String str);
+    Observable<BangumiApiResponse<ReviewMediaDetail>> getReviewDetail(@Query("media_id") long j, @Query("access_key") String access_key);
 
     @GET("/review/api/long/mine")
-    Observable<BangumiApiResponse<List<RecommendReview>>> getReviewHomeMyLongReview(@Query("access_key") String str, @Query("cursor") String str2);
+    Observable<BangumiApiResponse<List<RecommendReview>>> getReviewHomeMyLongReview(@Query("access_key") String access_key, @Query("cursor") String str2);
 
     @GET("/review/api/rating/mine")
-    Observable<BangumiApiResponse<List<ReviewMediaDetail>>> getReviewHomeMyReview(@Query("access_key") String str, @Query("cursor") String str2);
+    Observable<BangumiApiResponse<List<ReviewMediaDetail>>> getReviewHomeMyReview(@Query("access_key") String access_key, @Query("cursor") String str2);
 
     @GET("/review/api/page/index")
-    Observable<BangumiApiResponse<ReviewIndex>> getReviewIndex(@Query("access_key") String str);
+    Observable<BangumiApiResponse<ReviewIndex>> getReviewIndex(@Query("access_key") String access_key);
 
     @GET("/media/api/ranking/list")
     Observable<BangumiApiResponse<List<ReviewMediaBase>>> getReviewRankingList(@Query("region_id") int i);
@@ -207,17 +207,17 @@ public interface BangumiApiService {
     Observable<BangumiApiPageResponse<BangumiCategoryOld>> getSeasonByTag(@Query("page") int i, @Query("pagesize") int i2, @Query("tag_id") String str, @Query("indexType") int i3);
 
     @GET("/api/season_v5?type=bangumi")
-    Observable<BangumiApiResponse<BiliBangumiSeasonDetail>> getSeasonDetail(@Query("access_key") String str, @Query("season_id") String str2);
+    Observable<BangumiApiResponse<BiliBangumiSeasonDetail>> getSeasonDetail(@Query("access_key") String access_key, @Query("season_id") String str2);
 
     //@CacheControl(120000)
     @GET("/media/api/search/series/list")
-    Observable<BangumiApiResponse<List<BangumiSeasonListPrevious>>> getSeasonList(@Query("access_key") String str, @Query("season_type") int i);
+    Observable<BangumiApiResponse<List<BangumiSeasonListPrevious>>> getSeasonList(@Query("access_key") String access_key, @Query("season_type") int i);
 
     @GET("/review/api/short/view")
-    Observable<BangumiApiResponse<ReviewShortDetail>> getShortReview(@Query("access_key") String str, @Query("media_id") int i, @Query("review_id") int i2);
+    Observable<BangumiApiResponse<ReviewShortDetail>> getShortReview(@Query("access_key") String access_key, @Query("media_id") int i, @Query("review_id") int i2);
 
     @GET("/review/api/short/list")
-    Observable<BangumiApiResponse<C1870b>> getShortReviewList(@Query("media_id") String str, @Query("cursor") String str2, @Query("page_size") int i, @Query("access_key") String str3);
+    Observable<BangumiApiResponse<C1870b>> getShortReviewList(@Query("media_id") String str, @Query("cursor") String str2, @Query("page_size") int i, @Query("access_key") String access_key3);
 
     //@CacheControl(86400000)
     @Deprecated
@@ -225,10 +225,10 @@ public interface BangumiApiService {
     Observable<BangumiApiResponse<JSONObject>> getSponsorRate();
 
     @GET("/api/timeline_v5")
-    Observable<BangumiApiResponse<List<BangumiTimelineDay>>> getTimeline(@Query("access_key") String str, @Query("area_id") String str2, @Query("see_mine") int i, @Query("date_before") int i2, @Query("date_after") int i3, @Query("night_mode") int i4);
+    Observable<BangumiApiResponse<List<BangumiTimelineDay>>> getTimeline(@Query("access_key") String access_key, @Query("area_id") String str2, @Query("see_mine") int i, @Query("date_before") int i2, @Query("date_after") int i3, @Query("night_mode") int i4);
 
     @GET("/api/user_season_status")
-    Observable<BangumiApiResponse<UserSeason>> getUserSeasonStatus(@Query("access_key") String str, @Query("season_id") String str2);
+    Observable<BangumiApiResponse<UserSeason>> getUserSeasonStatus(@Query("access_key") String access_key, @Query("season_id") String str2);
 
     @GET("/api/fall?pagesize=10&wid=26")
     Observable<BangumiApiResponse<List<BangumiMovieHome.Fall>>> getWeekendList(@Query("cursor") String str);
@@ -250,5 +250,5 @@ public interface BangumiApiService {
     Observable<JSONObject> reportReview(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2, @Field("review_type") int i3, @Field("report_type") int i4, @Field("content") String str2);
 
     @GET("/api/unconcern_season")
-    Observable<BangumiApiResponse<JSONObject>> unfollow(@Query("access_key") String str, @Query("season_id") String str2);
+    Observable<BangumiApiResponse<JSONObject>> unfollow(@Query("access_key") String access_key, @Query("season_id") String str2);
 }

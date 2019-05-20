@@ -36,10 +36,10 @@ public class aoz extends BaseIntercept {
         map.put("src", "master");
         map.put("version", getVerStr());
         map.put("trace_id", this.simpleDateFormat.format(Long.valueOf(System.currentTimeMillis())));
-        AccountInfo accountInfo = null;// = C2198d.m8642a(C1905b.m8107a()).mo11365d();
-//        if (!TextUtils.isEmpty(k)) {
-//            map.put("access_key", k);//AccessToken.access_token
-//        }
+        AccountInfo accountInfo = getiAccountHelper().getAccountInfo();// = C2198d.m8642a(C1905b.m8107a()).mo11365d();
+        if (getiAccountHelper().isLogin()) {
+            map.put("access_key", getiAccountHelper().getToken().access_token);//AccessToken.access_token
+        }
         int i = 0;
         Object obj = 1;
         if (this.httpurl.startsWith("http://club.bilibili.com") || this.httpurl.startsWith("http://message.bilibili.com") || this.httpurl.startsWith("http://www.im9.com") || this.httpurl.startsWith("https://pay.bilibili.com")) {

@@ -79,25 +79,25 @@ public interface HomeApiService {
 
     @NotNull
     @GET("/pgc/app/v2/page/exchange")
-    Observable<BangumiApiResponse<List<CommonCard>>> exchange(@NotNull @Query("oid") String str, @NotNull @Query("type") String str2, @NotNull @Query("access_key") String str3);
+    Observable<BangumiApiResponse<List<CommonCard>>> exchange(@NotNull @Query("oid") String str, @NotNull @Query("type") String str2, @NotNull @Query("access_key") String access_key3);
 
     @NotNull
     @GET("/pgc/app/page/bangumi/mine")
-    Observable<BangumiApiResponse<HomeMinePage>> mineBangumiPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String str);
+    Observable<BangumiApiResponse<HomeMinePage>> mineBangumiPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String access_key);
 
     @NotNull
     @GET("/pgc/app/page/cinema/mine")
-    Observable<BangumiApiResponse<HomeMinePage>> mineCinemaPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String str);
+    Observable<BangumiApiResponse<HomeMinePage>> mineCinemaPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String access_key);
 
     @NotNull
     @GET("/pgc/app/v2/page/bangumi")
-    Observable<BangumiApiResponse<HomeRecommendPage>> recommendBangumiPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String str, @Nullable @Query("pgc_home_timeline_abtest") Integer num);
+    Observable<BangumiApiResponse<HomeRecommendPage>> recommendBangumiPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String access_key, @Nullable @Query("pgc_home_timeline_abtest") Integer num);
 
     @NotNull
     @GET("/pgc/app/v2/page/cinema/tab")
-    Observable<BangumiApiResponse<HomeRecommendPage>> recommendCinemaPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String str, @Nullable @Query("pgc_home_timeline_abtest") Integer num);
+    Observable<BangumiApiResponse<HomeRecommendPage>> recommendCinemaPage(@Query("fnver") int i, @Query("fnval") int i2, @NotNull @Query("access_key") String access_key, @Nullable @Query("pgc_home_timeline_abtest") Integer num);
 
     @NotNull
     @GET("/pgc/operation/api/fall")
-    Observable<BangumiApiResponse<List<CommonCard>>> recommendFall(@Query("size") int i, @NotNull @Query("cursor") String str, @NotNull @Query("wid") String str2, @NotNull @Query("access_key") String str3);
+    Observable<BangumiApiResponse<List<CommonCard>>> recommendFall(@Query("size") int i, @NotNull @Query("cursor") String str, @NotNull @Query("wid") String str2, @NotNull @Query("access_key") String access_key3);
 }

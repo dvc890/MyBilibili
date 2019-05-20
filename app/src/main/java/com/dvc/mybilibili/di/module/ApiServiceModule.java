@@ -4,6 +4,8 @@ import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.app.retrofit2.RetrofitUtils;
 import com.dvc.mybilibili.app.retrofit2.converterfactory.FastJsonConverterFactory;
 import com.dvc.mybilibili.mvp.model.api.baseinterceptor.CommonInterceptor;
+import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.vondear.rxtool.RxLogTool;
 
@@ -51,5 +53,17 @@ public class ApiServiceModule {
     @Provides
     BiliSplashApiV2Service providesBiliSplashApiV2Service(Retrofit.Builder builder) {
         return RetrofitUtils.createWithBaseUrl(builder, BiliSplashApiV2Service.class);
+    }
+
+    @Singleton
+    @Provides
+    AccountInfoApiService providesAccountInfoApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, AccountInfoApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    TMFeedIndexService providesTMFeedIndexService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, TMFeedIndexService.class);
     }
 }

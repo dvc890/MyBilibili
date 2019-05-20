@@ -2,6 +2,7 @@ package com.dvc.mybilibili.mvp.model.api.baseinterceptor;
 
 import android.content.Context;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.Reflect;
@@ -25,6 +26,7 @@ import okio.Buffer;
 
 @Singleton
 public class CommonInterceptor implements Interceptor {
+    private final static String TAG = CommonInterceptor.class.getSimpleName();
     Context context;
     BaseIntercept baseIntercept;
     Map<String, Iintercept> interceptMap;
@@ -34,7 +36,6 @@ public class CommonInterceptor implements Interceptor {
         this.context = context;
         this.interceptMap = new HashMap<>();
         this.paramsMap = new HashMap<>();
-        this.baseIntercept = new BaseIntercept(context);
     }
 
     @Override
@@ -51,9 +52,13 @@ public class CommonInterceptor implements Interceptor {
                     intercept = interceptMap.get(header);
                 intercept.putParams(paramsMap);
             }catch (ReflectException e) {}
-        }else
+        }else {
+            if(this.baseIntercept == null)
+                this.baseIntercept = new BaseIntercept(context);
             baseIntercept.putParams(paramsMap);
+        }
         HttpUrl url = oldRequest.url();
+        Log.d(TAG, url.toString());
         HttpUrl.Builder authorizedUrlBuilder = url.newBuilder()
                 .scheme(oldRequest.url().scheme())
                 .host(oldRequest.url().host());

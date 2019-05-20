@@ -48,7 +48,7 @@ public class SplashActivity extends MvpBaseActivity<SplashView, SplashPresenter>
             finish();
             return 0;
         }
-        findViewById(android.R.id.content).setPadding(0, 0, 0, 0);
+//        findViewById(android.R.id.content).setPadding(0, 0, 0, 0);
         return 0;
     }
 
@@ -139,6 +139,6 @@ public class SplashActivity extends MvpBaseActivity<SplashView, SplashPresenter>
 
     private void to() {
 //        startActivityWithAnimation(new Intent(this, HomeActivity.class));
-        finish();
+//        finish();
     }
 }

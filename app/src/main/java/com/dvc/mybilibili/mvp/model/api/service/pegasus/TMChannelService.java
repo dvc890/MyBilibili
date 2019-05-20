@@ -24,36 +24,36 @@ import retrofit2.http.Query;
 public interface TMChannelService {
     @NotNull
     @GET("x/channel/discover")
-    Observable<GeneralResponse<List<Channel>>> discoverChannelList(@Nullable @Query("access_key") String str, @Query("id") int i);
+    Observable<GeneralResponse<List<Channel>>> discoverChannelList(@Nullable @Query("access_key") String access_key, @Query("id") int i);
 
     @NotNull
     @GET("x/channel/category")
-    Observable<GeneralResponse<List<ChannelCategoryItem>>> getChannelCategoryList(@Nullable @Query("access_key") String str);
+    Observable<GeneralResponse<List<ChannelCategoryItem>>> getChannelCategoryList(@Nullable @Query("access_key") String access_key);
 
     @NotNull
     @GET("/x/channel/list")
-    Observable<GeneralResponse<ChannelHomeInfo>> getChannelMainPage(@Nullable @Query("access_key") String str);
+    Observable<GeneralResponse<ChannelHomeInfo>> getChannelMainPage(@Nullable @Query("access_key") String access_key);
 
     @NotNull
     @GET("/x/channel/feed/index")
-    Observable<GeneralResponse<ChannelFeedV2>> getFeedList(@Query("channel_id") int i, @Nullable @Query("channel_name") String str, @Query("pull") boolean z, @Query("login_event") int i2, @Query("display_id") int i3, @Nullable @Query("access_key") String str2, @Query("fnval") int i4, @Query("fnver") int i5, @Query("fourk") int i6, @Query("qn") int i7, @Query("force_host") int i8, @Nullable @Query("from_spmid") String str3, @NotNull @Query("from_page") String str4);
+    Observable<GeneralResponse<ChannelFeedV2>> getFeedList(@Query("channel_id") int i, @Nullable @Query("channel_name") String str, @Query("pull") boolean z, @Query("login_event") int i2, @Query("display_id") int i3, @Nullable @Query("access_key") String access_key2, @Query("fnval") int i4, @Query("fnver") int i5, @Query("fourk") int i6, @Query("qn") int i7, @Query("force_host") int i8, @Nullable @Query("from_spmid") String str3, @NotNull @Query("from_page") String str4);
 
     @NotNull
     @GET("/x/channel/feed/tab")
-    Observable<GeneralResponse<Channel>> getFeedTab(@Query("channel_id") int i, @Nullable @Query("channel_name") String str, @Nullable @Query("access_key") String str2);
+    Observable<GeneralResponse<Channel>> getFeedTab(@Query("channel_id") int i, @Nullable @Query("channel_name") String str, @Nullable @Query("access_key") String access_key2);
 
     @NotNull
     @GET("/x/channel/mysub")
-    Observable<GeneralResponse<ChannelMySubscribeInfo>> getMySubscribeChannel(@Nullable @Query("access_key") String str);
+    Observable<GeneralResponse<ChannelMySubscribeInfo>> getMySubscribeChannel(@Nullable @Query("access_key") String access_key);
 
 //    @CacheControl(config = 28)
     @NotNull
     @GET("/x/channel/square")
-    Observable<GeneralResponse<ChannelSquareInfo>> getSquareInfo(@Nullable @Query("access_key") String str, @Query("login_event") int i);
+    Observable<GeneralResponse<ChannelSquareInfo>> getSquareInfo(@Nullable @Query("access_key") String access_key, @Query("login_event") int i);
 
     @NotNull
     @GET("/x/v2/search/type")
-    Observable<GeneralResponse<ChannelSearchResult>> searchChannel(@Nullable @Query("access_key") String str, @Nullable @Query("keyword") String str2, @Query("type") int i, @Query("pn") int i2, @Query("ps") int i3, @Nullable @Query("user_type") String str3, @Nullable @Query("order") String str4, @Nullable @Query("order_sort") String str5, @Query("highlight") int i4);
+    Observable<GeneralResponse<ChannelSearchResult>> searchChannel(@Nullable @Query("access_key") String access_key, @Nullable @Query("keyword") String str2, @Query("type") int i, @Query("pn") int i2, @Query("ps") int i3, @Nullable @Query("user_type") String str3, @Nullable @Query("order") String str4, @Nullable @Query("order_sort") String str5, @Query("highlight") int i4);
 
     @FormUrlEncoded
     @NotNull

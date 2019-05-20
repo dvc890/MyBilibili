@@ -29,22 +29,22 @@ public interface TMFeedIndexService {
 
     @NotNull
     @GET("/x/v2/feed/index/converge")
-    Observable<GeneralResponse<ConvergeList>> getConvergeList(@Nullable @Query("id") String str);
+    Observable<GeneralResponse<ConvergeList>> getConvergeList(@Nullable @Query("id") String id);
 
     @NotNull
     @GET("/x/v2/show/popular/index")
-    Observable<GeneralResponse<PegasusFeedResponse>> getHot(@Nullable @Query("access_key") String str, @Query("idx") int i, @Nullable @Query("last_param") String str2, @Query("login_event") int i2, @Nullable @Query("ver") String str3, @Query("qn") int i3, @Query("fnval") int i4, @Query("fnver") int i5, @Query("fourk") int i6, @Query("force_host") int i7, @NotNull @Query("spmid") String str4);
+    Observable<GeneralResponse<PegasusFeedResponse>> getHot(@Nullable @Query("access_key") String access_key, @Query("idx") int idx, @Nullable @Query("last_param") String last_param, @Query("login_event") int login_event, @Nullable @Query("ver") String ver, @Query("qn") int qn, @Query("fnval") int fnval, @Query("fnver") int fnver, @Query("fourk") int fourk, @Query("force_host") int force_host, @NotNull @Query("spmid") String spmid);
 
     @NotNull
     @GET("/x/v2/feed/index")
-    Observable<GeneralResponse<PegasusFeedResponse>> getIndexList(@Nullable @Query("access_key") String str, @Query("idx") int i, @Query("pull") boolean z, @Nullable @Query("network") String str2, @Query("column") int i2, @Query("login_event") int i3, @Nullable @Query("open_event") String str3, @Nullable @Query("banner_hash") String str4, @Query("qn") int i4, @Nullable @Query("interest") String str5, @Nullable @Query("ad_extra") String str6, @Query("flush") int i5, @Query("autoplay_card") int i6, @Query("fnval") int i7, @Query("fnver") int i8, @Query("fourk") int i9, @Query("device_type") int i10, @Query("force_host") int i11, @Query("recsys_mode") int i12);
+    Observable<GeneralResponse<PegasusFeedResponse>> getIndexList(@Nullable @Query("access_key") String access_key, @Query("idx") int idx, @Query("pull") boolean pull, @Nullable @Query("network") String network, @Query("column") int column, @Query("login_event") int login_event, @Nullable @Query("open_event") String open_event, @Nullable @Query("banner_hash") String banner_hash, @Query("qn") int qn, @Nullable @Query("interest") String interest, @Nullable @Query("ad_extra") String ad_extra, @Query("flush") int flush, @Query("autoplay_card") int autoplay_card, @Query("fnval") int fnval, @Query("fnver") int fnver, @Query("fourk") int fourk, @Query("device_type") int device_type, @Query("force_host") int force_host, @Query("recsys_mode") int recsys_mode);
 
     @NotNull
     @GET("/x/v2/feed/index/tab")
-    Observable<GeneralResponse<PromoOperationTab>> getOperationTab(@Nullable @Query("access_key") String str, @Nullable @Query("id") String str2, @Query("qn") int i, @Query("fnval") int i2, @Query("fnver") int i3, @Query("fourk") int i4, @Query("force_host") int i5);
+    Observable<GeneralResponse<PromoOperationTab>> getOperationTab(@Nullable @Query("access_key") String access_key, @Nullable @Query("id") String id, @Query("qn") int qn, @Query("fnval") int fnval, @Query("fnver") int fnver, @Query("fourk") int fourk, @Query("force_host") int force_host);
 
     @FormUrlEncoded
     @NotNull
     @POST("/x/v2/view/like")
-    Observable<GeneralResponse<JSONObject>> likeVideo(@Field("access_key") @Nullable String str, @Field("aid") @Nullable String str2, @Field("like") int i);
+    Observable<GeneralResponse<JSONObject>> likeVideo(@Field("access_key") @Nullable String access_key, @Field("aid") @Nullable String aid, @Field("like") int like);
 }

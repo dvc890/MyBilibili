@@ -18,5 +18,5 @@ import retrofit2.http.Query;
 public interface BangumiReviewApiService {
     @NotNull
     @GET("/pgc/review/app/user")
-    Observable<BangumiApiResponse<ReviewPublishInfo>> getUserReview(@Nullable @Query("access_key") String str, @Nullable @Query("media_id") String str2);
+    Observable<BangumiApiResponse<ReviewPublishInfo>> getUserReview(@Nullable @Query("access_key") String access_key, @Nullable @Query("media_id") String str2);
 }

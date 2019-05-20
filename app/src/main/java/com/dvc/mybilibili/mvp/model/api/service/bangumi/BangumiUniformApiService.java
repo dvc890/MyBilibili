@@ -53,7 +53,7 @@ public interface BangumiUniformApiService {
     }
 
     @GET("/follow/api/season/follow")
-    Observable<BangumiApiResponse<JSONObject>> favorite(@Query("access_key") String str, @Query("season_id") String str2, @Query("season_type") Integer num);
+    Observable<BangumiApiResponse<JSONObject>> favorite(@Query("access_key") String access_key, @Query("season_id") String str2, @Query("season_type") Integer num);
 
 //    @CacheControl(120000)
     @GET("/media/api/search/result")
@@ -64,7 +64,7 @@ public interface BangumiUniformApiService {
     Observable<BangumiApiResponse<BangumiCinemaIndexFilter>> getCinemaIndexFilter(@Query("season_type") String str);
 
     @GET("/follow/api/list/mine")
-    Observable<BangumiApiPageResponse<List<BangumiUniformSimpleSeason>>> getFollowList(@Query("access_key") String str, @Query("page") int i, @Query("pagesize") int i2);
+    Observable<BangumiApiPageResponse<List<BangumiUniformSimpleSeason>>> getFollowList(@Query("access_key") String access_key, @Query("page") int i, @Query("pagesize") int i2);
 
     @Deprecated
     @GET("/player/api/v2/recommend")
@@ -75,7 +75,7 @@ public interface BangumiUniformApiService {
     Observable<BangumiApiResponse<BangumiUniformRecommend>> getSeasonRecommend(@Query("season_id") String str, @Query("season_type") int i);
 
     @GET("/sponsor/api/point")
-    Observable<BangumiApiResponse<JSONObject>> getSponsorPoint(@Query("access_key") String str, @Query("amount") int i);
+    Observable<BangumiApiResponse<JSONObject>> getSponsorPoint(@Query("access_key") String access_key, @Query("amount") int i);
 
     @GET("/sponsor/api/v2/rank/total")
     Observable<BangumiApiResponse<BangumiSponsorRank>> getSponsorRankTotal(@QueryMap SponsorRankParamsMap sponsorRankParamsMap);
@@ -84,5 +84,5 @@ public interface BangumiUniformApiService {
     Observable<BangumiApiResponse<BangumiSponsorRank>> getSponsorRankWeek(@QueryMap SponsorRankParamsMap sponsorRankParamsMap);
 
     @GET("/follow/api/season/unfollow")
-    Observable<BangumiApiResponse<JSONObject>> unfavorite(@Query("access_key") String str, @Query("season_id") String str2, @Query("season_type") Integer num);
+    Observable<BangumiApiResponse<JSONObject>> unfavorite(@Query("access_key") String access_key, @Query("season_id") String str2, @Query("season_type") Integer num);
 }

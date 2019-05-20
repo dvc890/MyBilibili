@@ -5,6 +5,7 @@ import android.support.multidex.MultiDex;
 
 import com.dvc.base.net.NetWorkStatusManager;
 import com.dvc.mybilibili.di.component.DaggerAppComponent;
+import com.dvc.mybilibili.mvp.model.DataManager;
 import com.vondear.rxtool.RxTool;
 
 import javax.inject.Inject;
@@ -17,6 +18,8 @@ public class BiliApplication extends DaggerApplication {
     private static BiliApplication base;
 
     @Inject
+    DataManager dataManager;
+    @Inject
     NetWorkStatusManager netWorkStatusManager;
 
     public static BiliApplication get(){
@@ -25,6 +28,10 @@ public class BiliApplication extends DaggerApplication {
 
     public static Context getContext(){
         return base.getApplicationContext();
+    }
+
+    public static DataManager getDataManager() {
+        return get().dataManager;
     }
 
     @Override

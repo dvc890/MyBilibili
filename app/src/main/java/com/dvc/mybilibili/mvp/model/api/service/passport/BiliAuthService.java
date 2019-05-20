@@ -55,7 +55,7 @@ interface BiliAuthService {
     Observable<GeneralResponse<AuthorizeCode>> authorizeByApp(@Field("access_token") String str, @Field("target_subid") String str2, @Field("target_appkey") String str3, @Field("package") String str4, @Field("signature") String str5);
 
     @GET("/api/member/bindPhone")
-    Observable<GeneralResponse<Void>> bindPhone(@Query("tel") String str, @Query("country_id") String str2, @Query("captcha") String str3, @Query("access_key") String str4);
+    Observable<GeneralResponse<Void>> bindPhone(@Query("tel") String str, @Query("country_id") String str2, @Query("captcha") String str3, @Query("access_key") String access_key4);
 
     @GET("/api/reg/checkTel")
     Observable<GeneralResponse<Void>> checkPhoneNumber(@Query("tel") String str, @Query("country_id") String str2);

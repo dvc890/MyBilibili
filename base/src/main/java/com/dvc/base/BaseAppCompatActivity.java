@@ -109,21 +109,21 @@ public abstract class BaseAppCompatActivity extends DaggerAppCompatActivity impl
         super.onDestroy();
     }
 
-    /**
-     * 带动画的启动activity
-     */
-    public void startActivityWithAnimation(Intent intent) {
-        startActivity(intent);
-        overridePendingTransition(com.dvc.base.R.anim.slide_in_right, com.dvc.base.R.anim.slide_out_left);
-    }
-
-    /**
-     * 带动画的启动activity
-     */
-    public void startActivityForResultWithAnimation(Intent intent, int requestCode) {
-        startActivityForResult(intent, requestCode);
-        overridePendingTransition(com.dvc.base.R.anim.slide_in_right, com.dvc.base.R.anim.slide_out_left);
-    }
+//    /**
+//     * 带动画的启动activity
+//     */
+//    public void startActivityWithAnimation(Intent intent) {
+//        startActivity(intent);
+//        overridePendingTransition(com.dvc.base.R.anim.slide_in_right, com.dvc.base.R.anim.slide_out_left);
+//    }
+//
+//    /**
+//     * 带动画的启动activity
+//     */
+//    public void startActivityForResultWithAnimation(Intent intent, int requestCode) {
+//        startActivityForResult(intent, requestCode);
+//        overridePendingTransition(com.dvc.base.R.anim.slide_in_right, com.dvc.base.R.anim.slide_out_left);
+//    }
 
     @Override
     public void onBackPressed() {

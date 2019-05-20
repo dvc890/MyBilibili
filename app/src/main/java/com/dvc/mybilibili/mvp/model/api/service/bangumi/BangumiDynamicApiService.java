@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 public interface BangumiDynamicApiService {
     //@CacheControl(10000)
     @GET("/x/v2/region/dynamic/list")
-    Observable<GeneralResponse<BangumiUgcVideoV2>> getDynamicList(@Query("access_key") String str, @Query("rid") int i, @Query("channel") String str2, @Query("pull") boolean z, @Query("ctime") long j);
+    Observable<GeneralResponse<BangumiUgcVideoV2>> getDynamicList(@Query("access_key") String access_key, @Query("rid") int i, @Query("channel") String str2, @Query("pull") boolean z, @Query("ctime") long j);
 
     //@CacheControl(10000)
     @GET("/x/v2/region/show/dynamic")

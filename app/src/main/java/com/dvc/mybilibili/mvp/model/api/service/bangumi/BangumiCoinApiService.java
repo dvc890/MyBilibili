@@ -19,5 +19,5 @@ import retrofit2.http.Query;
 public interface BangumiCoinApiService {
     @NotNull
     @GET("/pgc/season/episode/coin/user/number")
-    Observable<BangumiApiResponse<UserCoinNumberBean>> loadContributionCoinCount(@Query("ep_id") long j, @Nullable @Query("access_key") String str);
+    Observable<BangumiApiResponse<UserCoinNumberBean>> loadContributionCoinCount(@Query("ep_id") long j, @Nullable @Query("access_key") String access_key);
 }
