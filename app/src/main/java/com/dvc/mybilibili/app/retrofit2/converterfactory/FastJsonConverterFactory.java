@@ -15,8 +15,6 @@ import java.lang.reflect.Type;
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
-import okio.BufferedSource;
-import okio.Okio;
 import retrofit2.Converter;
 import retrofit2.Retrofit;
 
@@ -85,6 +83,7 @@ public class FastJsonConverterFactory extends Converter.Factory {
                 return JSON.parseObject(content, type, config, featureValues,
                         features != null ? features : EMPTY_SERIALIZER_FEATURES);
             }catch (Exception e) {
+                e.printStackTrace();
                 return this.gson.fromJson(content, type);
             }
         }

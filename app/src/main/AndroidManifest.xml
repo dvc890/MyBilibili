@@ -11,9 +11,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        tools:targetApi="n"
         tools:ignore="GoogleAppIndexingWarning">
         <activity android:name="com.dvc.mybilibili.mvp.ui.activity.SplashActivity"
-            android:theme="@style/AppTheme.Splash"
+            android:theme="@style/AppTheme.Splash" android:launchMode="singleTask"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name="com.dvc.mybilibili.mvp.ui.activity.HomeActivity"
+            android:launchMode="singleTask"
+            android:windowSoftInputMode="adjustNothing"
+            android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

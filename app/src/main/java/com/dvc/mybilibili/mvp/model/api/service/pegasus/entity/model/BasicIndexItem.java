@@ -68,7 +68,7 @@ public class BasicIndexItem extends FeedItem {
     @Nullable
     @JSONField(name = "client_ip")
     /* renamed from: ip */
-    public String f8830ip;
+    public String ip;
     @JSONField(name = "is_ad")
     public boolean isAd;
     @JSONField(name = "is_ad_loc")

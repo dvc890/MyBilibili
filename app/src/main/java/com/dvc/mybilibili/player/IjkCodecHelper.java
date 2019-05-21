@@ -46,7 +46,11 @@ public class IjkCodecHelper {
     }
 
     public static String getBestCodecName(String str) {
-        return IjkCodecHelper.getBestCodecName(str, "");
+        try {
+            return IjkCodecHelper.getBestCodecName(str, "");
+        }catch (Exception e) {
+            return null;
+        }
     }
 
     @RequiresApi(api = 16)
@@ -142,7 +146,11 @@ public class IjkCodecHelper {
         return false;
     }
 
+    private static Boolean isUhdSupport = null;
     public static boolean isUhdSupport(String str) {
-        return IjkCodecHelper.isUhdSupport(str, "video/hevc");
+        if(isUhdSupport == null) {
+            return isUhdSupport = IjkCodecHelper.isUhdSupport(str, "video/hevc");
+        }
+        return isUhdSupport;
     }
 }

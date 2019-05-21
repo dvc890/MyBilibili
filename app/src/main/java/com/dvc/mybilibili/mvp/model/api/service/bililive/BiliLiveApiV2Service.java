@@ -31,9 +31,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
-import retrofit2.http.PATCH;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
 import retrofit2.http.Url;
@@ -569,7 +567,7 @@ public interface BiliLiveApiV2Service {
     @GET("/room/v1/Room/getBannedInfo")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)
-    Observable<GeneralResponse<BliLiveBannedInfo>> getRoomBannedInfo(@Query("roomid") int i);
+    Observable<GeneralResponse<BiliLiveBannedInfo>> getRoomBannedInfo(@Query("roomid") int i);
 
     @GET("/activity/v1/Common/mobileRoomBanner")
     @Headers("Interceptor:"+C9909b.CLASSNAME)

@@ -7,4 +7,6 @@ public interface NetWorkStatusManager {
     void unregisterReceiver();
 
     void setOnNetworkStatusListener(AppNetWorkStatusManager.NetworkStatusListener networkStatusListener);
+
+    int getNetworkStatus();
 }

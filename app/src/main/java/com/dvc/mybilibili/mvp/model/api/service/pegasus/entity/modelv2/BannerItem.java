@@ -15,7 +15,7 @@ public class BannerItem extends BasicIndexItem {
     public JSONObject extra;
     @JSONField(name = "id")
     /* renamed from: id */
-    public int f9764id;
+    public int id;
     @Nullable
     @JSONField(name = "image")
     public String image;

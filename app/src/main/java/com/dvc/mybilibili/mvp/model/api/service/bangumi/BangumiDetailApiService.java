@@ -1,7 +1,5 @@
 package com.dvc.mybilibili.mvp.model.api.service.bangumi;
 
-import android.content.Context;
-
 import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.app.utils.ParamsMap;
 import com.dvc.mybilibili.mvp.model.api.service.bangumi.entity.BangumiApiResponse;
@@ -11,7 +9,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
-import java.util.Map.Entry;
 import java.util.Set;
 
 import io.reactivex.Observable;
@@ -44,23 +41,23 @@ public interface BangumiDetailApiService {
 //            }
         }
 
-        public UniformSeasonParamsMap(@NotNull String str, int i, int i2, @NotNull String str2, @Nullable String str3, @NotNull String str4) {
-//           //Intrinsics.checkParameterIsNotNull(str, "id");
-//           //Intrinsics.checkParameterIsNotNull(str2, "fromSpmid");
-//           //Intrinsics.checkParameterIsNotNull(str4, "spmid");
+        public UniformSeasonParamsMap(String access_key, @NotNull String type_id, int type, int track_path, @NotNull String from_spmid, @Nullable String from_av, @NotNull String spmid) {
+           //Intrinsics.checkParameterIsNotNull(type_id, "id");
+           //Intrinsics.checkParameterIsNotNull(from_spmid, "fromSpmid");
+           //Intrinsics.checkParameterIsNotNull(spmid, "spmid");
             super(7);
-//            putParams("access_key", C4931h.m21203b((Context) C1910d.m8135d()));
-            if (i == 0) {
-                putParams("season_id", str);
-            } else if (i == 1) {
-                putParams("media_id", str);
-            } else if (i == 2) {
-                putParams("ep_id", str);
+            putParams("access_key", access_key);
+            if (type == 0) {
+                putParams("season_id", type_id);
+            } else if (type == 1) {
+                putParams("media_id", type_id);
+            } else if (type == 2) {
+                putParams("ep_id", type_id);
             }
-            putParams("track_path", String.valueOf(i2));
-            putParams("from_spmid", str2);
-            putParams("spmid", str4);
-            putParams("from_av", str3);
+            putParams("track_path", String.valueOf(track_path));
+            putParams("from_spmid", from_spmid);
+            putParams("spmid", spmid);
+            putParams("from_av", from_av);
         }
 
         public final /* bridge */ boolean containsKey(Object obj) {

@@ -21,6 +21,7 @@ public class AppNetWorkStatusManager implements NetWorkStatusManager {
 
     private Context context;
     private AppNetWorkStatusManager.NetworkStatusListener networkStatusListener;
+    private int networkStatus = NETWORK_STATUS_DEFAULT;
 
     @Inject
     public AppNetWorkStatusManager(@ApplicationContext Context context) {
@@ -60,6 +61,11 @@ public class AppNetWorkStatusManager implements NetWorkStatusManager {
         this.networkStatusListener = networkStatusListener;
     }
 
+    @Override
+    public int getNetworkStatus() {
+        return this.networkStatus;
+    }
+
     private BroadcastReceiver networkStatusReceiver = new BroadcastReceiver() {
 
         @Override
@@ -68,7 +74,7 @@ public class AppNetWorkStatusManager implements NetWorkStatusManager {
                 ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
                 NetworkInfo mobNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
                 NetworkInfo wifiNetInfo = connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-                int networkStatus = NETWORK_STATUS_DEFAULT;
+//                int networkStatus = NETWORK_STATUS_DEFAULT;
 
                 if (!mobNetInfo.isConnected() && !wifiNetInfo.isConnected()) {
                     networkStatus = NETWORK_STATUS_OFF;

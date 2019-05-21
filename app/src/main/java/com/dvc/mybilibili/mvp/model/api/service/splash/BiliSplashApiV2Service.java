@@ -1,7 +1,6 @@
 package com.dvc.mybilibili.mvp.model.api.service.splash;
 
 import com.dvc.mybilibili.app.retrofit2.BaseUrl;
-import com.dvc.mybilibili.mvp.model.api.baseinterceptor.BaseIntercept;
 import com.dvc.mybilibili.mvp.model.api.response.DataListResponse;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
@@ -9,7 +8,6 @@ import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
-import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 @BaseUrl("http://app.bilibili.com")
@@ -17,7 +15,6 @@ import retrofit2.http.Query;
 /* renamed from: tv.danmaku.bili.ui.splash.r */
 public interface BiliSplashApiV2Service {
     @GET("/x/v2/splash")
-//    @Headers("Interceptor:"+ BaseIntercept.CLASSNAME)
     @Deprecated
     Observable<DataListResponse<SampleSplash>> getSplash(@Query("width") int width, @Query("height") int height);
 

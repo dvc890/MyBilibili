@@ -12,7 +12,7 @@ public class DislikeReason implements Parcelable {
     public static final Creator<DislikeReason> CREATOR = new C22691();
     @JSONField(name = "id")
     /* renamed from: id */
-    public int f6344id;
+    public int id;
     @JSONField(name = "name")
     public String name;
 
@@ -38,12 +38,21 @@ public class DislikeReason implements Parcelable {
     }
 
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.f6344id);
+        parcel.writeInt(this.id);
         parcel.writeString(this.name);
+    }
+    public DislikeReason() {
+        super();
+    }
+
+    public DislikeReason(int i, String str) {
+        super();
+        this.id = i;
+        this.name = str;
     }
 
     protected DislikeReason(Parcel parcel) {
-        this.f6344id = parcel.readInt();
+        this.id = parcel.readInt();
         this.name = parcel.readString();
     }
 }

@@ -15,7 +15,6 @@ import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.Splash;
 import com.dvc.mybilibili.mvp.presenter.SplashPresenter;
 import com.vondear.rxtool.RxLogTool;
-import com.vondear.rxui.view.RxRoundProgress;
 
 import javax.inject.Inject;
 
@@ -138,7 +137,7 @@ public class SplashActivity extends MvpBaseActivity<SplashView, SplashPresenter>
     }
 
     private void to() {
-//        startActivityWithAnimation(new Intent(this, HomeActivity.class));
-//        finish();
+        startActivity(new Intent(this, HomeActivity.class));
+        finish();
     }
 }

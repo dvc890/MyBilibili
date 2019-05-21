@@ -13,7 +13,6 @@ import com.dvc.mybilibili.mvp.model.account.IAccountHelper;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.Splash;
 import com.dvc.mybilibili.mvp.ui.activity.SplashView;
 import com.trello.rxlifecycle2.LifecycleProvider;
-import com.vondear.rxtool.RxLogTool;
 
 import java.util.Iterator;
 
@@ -70,12 +69,6 @@ public class SplashPresenter extends MvpBasePresenter<SplashView> implements ISp
                         int pos = RandomUtils.randomCommon(0, splashData.splashList.size()-1, 1)[0];
                         view.onSplashData(splashData.splashList.get(pos));
                     });
-                });
-        this.dataManager.getApiHelper().getIndexList(access_key,0,true, 1, "", 0, 0,"",0)
-                .compose(RxSchedulersHelper.ioAndMainThread())
-                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_PAUSE))
-                .subscribe(pegasusFeedResponse -> {
-                    RxLogTool.e(pegasusFeedResponse.feedVer);
                 });
     }
 

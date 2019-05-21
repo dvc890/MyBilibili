@@ -5,18 +5,22 @@ import android.os.Build;
 import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
+import com.dvc.base.net.AppNetWorkStatusManager;
+import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 import com.dvc.mybilibili.player.IjkCodecHelper;
-import com.vondear.rxtool.RxNetTool;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -28,21 +32,24 @@ import io.rx_cache2.EvictProvider;
 public class AppApiHelper implements ApiHelper {
 
     private final Context context;
-    private final BiliSplashApiV2Service biliSplashApiV2Service;
     private final CacheProviders cacheProviders;
+    private final BiliSplashApiV2Service biliSplashApiV2Service;
     private final AccountInfoApiService accountInfoApiService;
     private final TMFeedIndexService tmFeedIndexService;
+    private final TMFeedIndexV1Service tmFeedIndexV1Service;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
                         BiliSplashApiV2Service biliSplashApiV2Service,
                         AccountInfoApiService accountInfoApiService,
-                        TMFeedIndexService tmFeedIndexService) {
+                        TMFeedIndexService tmFeedIndexService,
+                        TMFeedIndexV1Service tmFeedIndexV1Service) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
         this.accountInfoApiService = accountInfoApiService;
         this.tmFeedIndexService = tmFeedIndexService;
+        this.tmFeedIndexV1Service = tmFeedIndexV1Service;
     }
 
     @Override
@@ -87,6 +94,16 @@ public class AppApiHelper implements ApiHelper {
                 });
     }
 
+    @Override
+    @Deprecated
+    public Observable<List<AppIndex>> getIndexList(int idx, boolean pull, int login_event) {
+        String open_event = pull?"cold":"";
+        String network = BiliApplication.getNetWorkStatusManager().getNetworkStatus()==AppNetWorkStatusManager.NETWORK_STATUS_WIFI?"wifi":"mobile";
+        int style = 2;
+        String ts = "1499589051";
+        return this.tmFeedIndexV1Service.getIndex(idx,login_event,network,open_event,pull,style,ts)
+                .map(appIndexDataListResponse -> appIndexDataListResponse.getData());
+    }
     /**
      * idx 取之前获取到的PegasusFeedResponse的BasicIndexItem列表的第一个idx
      * login_event 是否登录，登录了：2，未登录：1
@@ -97,16 +114,16 @@ public class AppApiHelper implements ApiHelper {
      * device_type 是否第一次开启app?0:1
      */
     @Override
-    public Observable<PegasusFeedResponse> getIndexList(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
+    public Observable<PegasusFeedResponse> getIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
         int fourk = IjkCodecHelper.isUhdSupport(IjkCodecHelper.getBestCodecName("video/hevc"))?1:0;
         int force_host = 1;//1:2:0
         int recsys_mode = 1;//1:0
         int column = 2;//0或2的倍数
         int fnval = Build.VERSION.SDK_INT < 19?16:32;
         int fnver = 0;
-        String open_event = "cold";
+        String open_event = pull?"cold":"";
         String ad_extra = "";
-        String network = RxNetTool.getNetWorkType(this.context)==RxNetTool.NETWORK_WIFI?"wifi":"mobile";
+        String network = BiliApplication.getNetWorkStatusManager().getNetworkStatus()==AppNetWorkStatusManager.NETWORK_STATUS_WIFI?"wifi":"mobile";
         int qn = 16;//16:32即可
         return this.tmFeedIndexService.getIndexList(access_key,idx,pull,network,column,login_event,open_event,banner_hash,qn,interest,ad_extra,flush,autoplay_card,fnval,fnver,fourk,device_type,force_host,recsys_mode)
         .map(pegasusFeedResponseGeneralResponse -> {

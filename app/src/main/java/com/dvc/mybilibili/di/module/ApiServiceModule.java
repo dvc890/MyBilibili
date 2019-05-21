@@ -1,11 +1,18 @@
 package com.dvc.mybilibili.di.module;
 
-import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.app.retrofit2.RetrofitUtils;
 import com.dvc.mybilibili.app.retrofit2.converterfactory.FastJsonConverterFactory;
 import com.dvc.mybilibili.mvp.model.api.baseinterceptor.CommonInterceptor;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
+import com.dvc.mybilibili.mvp.model.api.service.bangumi.BangumiApiService;
+import com.dvc.mybilibili.mvp.model.api.service.bangumi.HomeApiService;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.LiveStreamApiService;
+import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
+import com.dvc.mybilibili.mvp.model.api.service.search.BiliSearchApiService;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.vondear.rxtool.RxLogTool;
 
@@ -18,7 +25,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 @Module
 public class ApiServiceModule {
@@ -65,5 +71,53 @@ public class ApiServiceModule {
     @Provides
     TMFeedIndexService providesTMFeedIndexService(Retrofit.Builder builder) {
         return RetrofitUtils.createWithBaseUrl(builder, TMFeedIndexService.class);
+    }
+
+    @Singleton
+    @Provides
+    TMFeedIndexV1Service providesTMFeedIndexV1Service(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, TMFeedIndexV1Service.class);
+    }
+
+    @Singleton
+    @Provides
+    BiliLiveApiV2Service providesBiliLiveApiV2Service(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BiliLiveApiV2Service.class);
+    }
+
+    @Singleton
+    @Provides
+    BiliSearchApiService providesBiliSearchApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BiliSearchApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    BiliAuthService providesBiliAuthService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BiliAuthService.class);
+    }
+
+    @Singleton
+    @Provides
+    LiveStreamApiService providesLiveStreamApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, LiveStreamApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    RegionApiService providesRegionApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, RegionApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    HomeApiService providesHomeApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, HomeApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    BangumiApiService providesBangumiApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BangumiApiService.class);
     }
 }

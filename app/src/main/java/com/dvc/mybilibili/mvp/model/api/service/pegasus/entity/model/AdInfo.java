@@ -33,7 +33,7 @@ public class AdInfo implements Parcelable {
     public JSONObject extra;
     @JSONField(name = "id")
     /* renamed from: id */
-    public long f6319id;
+    public long id;
     @JSONField(name = "client_ip")
     /* renamed from: ip */
     public String f6320ip;
@@ -91,9 +91,11 @@ public class AdInfo implements Parcelable {
         parcel.writeString(this.showUrl);
         parcel.writeString(this.clickUrl);
         parcel.writeString(this.f6320ip);
-        parcel.writeLong(this.f6319id);
+        parcel.writeLong(this.id);
         parcel.writeSerializable(this.extra);
     }
+
+    public AdInfo() {}
 
     protected AdInfo(Parcel parcel) {
         this.creativeId = parcel.readLong();
@@ -116,7 +118,7 @@ public class AdInfo implements Parcelable {
         this.showUrl = parcel.readString();
         this.clickUrl = parcel.readString();
         this.f6320ip = parcel.readString();
-        this.f6319id = parcel.readLong();
+        this.id = parcel.readLong();
         this.extra = (JSONObject) parcel.readSerializable();
     }
 }

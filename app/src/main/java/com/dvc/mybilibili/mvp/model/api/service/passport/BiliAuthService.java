@@ -25,7 +25,7 @@ import retrofit2.http.QueryMap;
 @Keep
 @BaseUrl("https://passport.bilibili.com")
 /* compiled from: BL */
-interface BiliAuthService {
+public interface BiliAuthService {
 
     /* compiled from: BL */
     public static class CookieParamsMap extends ParamsMap {

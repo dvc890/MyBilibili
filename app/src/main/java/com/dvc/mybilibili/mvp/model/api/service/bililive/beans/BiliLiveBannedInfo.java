@@ -6,7 +6,7 @@ import com.alibaba.fastjson.annotation.JSONField;
 
 @Keep
 /* compiled from: BL */
-public class BliLiveBannedInfo {
+public class BiliLiveBannedInfo {
     public static final int BAN_FOREVER = -1;
     public static final int BAN_TIME = -2;
     public static final int NOT_BAN = 0;

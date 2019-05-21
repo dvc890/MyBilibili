@@ -34,6 +34,10 @@ public class BiliApplication extends DaggerApplication {
         return get().dataManager;
     }
 
+    public static NetWorkStatusManager getNetWorkStatusManager() {
+        return get().netWorkStatusManager;
+    }
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);

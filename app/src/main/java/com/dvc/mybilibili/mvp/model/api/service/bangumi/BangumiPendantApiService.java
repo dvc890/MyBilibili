@@ -12,7 +12,7 @@ import retrofit2.http.POST;
 @BaseUrl("https://api.bilibili.com")
 /* compiled from: BL */
 /* renamed from: com.bilibili.bangumi.api.d */
-public interface C4754d {
+public interface BangumiPendantApiService {
     @FormUrlEncoded
     @POST("/x/member/app/pendant/equip?status=2")
     Observable<GeneralResponse<JSONObject>> equipPendant(@Field("access_key") String str, @Field("pid") String str2);

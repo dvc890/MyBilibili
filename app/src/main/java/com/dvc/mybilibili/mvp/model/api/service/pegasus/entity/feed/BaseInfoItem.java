@@ -1,7 +1,6 @@
 package com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.feed;
 
 import android.os.Parcel;
-import android.os.Parcelable.Creator;
 import android.support.annotation.Keep;
 import android.support.annotation.Nullable;
 
@@ -37,11 +36,11 @@ public class BaseInfoItem implements IAdReportInfo {
     public FeedExtra extra;
     @JSONField(name = "id")
     /* renamed from: id */
-    public long f8679id;
+    public long id;
     @Nullable
     @JSONField(name = "client_ip")
     /* renamed from: ip */
-    public String f8680ip;
+    public String ip;
     @Nullable
     @JSONField(name = "is_ad")
     public boolean isAd;
@@ -104,12 +103,12 @@ public class BaseInfoItem implements IAdReportInfo {
         parcel.writeLong(this.creativeId);
         parcel.writeLong(this.creativeType);
         parcel.writeString(this.ad_cb);
-        parcel.writeString(this.f8680ip);
+        parcel.writeString(this.ip);
         parcel.writeString(this.showUrl);
         parcel.writeString(this.clickUrl);
         parcel.writeLong(this.serverType);
         parcel.writeLong(this.resourceId);
-        parcel.writeLong(this.f8679id);
+        parcel.writeLong(this.id);
         parcel.writeLong(this.adIndex);
         parcel.writeLong(this.cardIndex);
         parcel.writeByte((byte) (this.buttonShow?1:0));
@@ -135,12 +134,12 @@ public class BaseInfoItem implements IAdReportInfo {
         this.creativeId = parcel.readLong();
         this.creativeType = parcel.readLong();
         this.ad_cb = parcel.readString();
-        this.f8680ip = parcel.readString();
+        this.ip = parcel.readString();
         this.showUrl = parcel.readString();
         this.clickUrl = parcel.readString();
         this.serverType = parcel.readLong();
         this.resourceId = parcel.readLong();
-        this.f8679id = parcel.readLong();
+        this.id = parcel.readLong();
         this.adIndex = parcel.readLong();
         this.cardIndex = parcel.readLong();
         if (parcel.readByte() != (byte) 0) {
@@ -183,7 +182,7 @@ public class BaseInfoItem implements IAdReportInfo {
     }
 
     public String getIp() {
-        return this.f8680ip;
+        return this.ip;
     }
 
     public String getShowUrl() {
@@ -203,7 +202,7 @@ public class BaseInfoItem implements IAdReportInfo {
     }
 
     public long getId() {
-        return this.f8679id;
+        return this.id;
     }
 
     public long getAdIndex() {

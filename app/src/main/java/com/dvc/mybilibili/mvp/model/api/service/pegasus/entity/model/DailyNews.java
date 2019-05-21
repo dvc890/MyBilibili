@@ -10,7 +10,7 @@ public class DailyNews {
     public long duration;
     public int favourite;
     /* renamed from: go */
-    public String f47652go;
+    public String go;
     public String name;
     public String param;
     public int play;
