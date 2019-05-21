@@ -26,9 +26,9 @@ public final class LibBili {
     /* renamed from: s */
     static native SignedQuery s(SortedMap<String, String> sortedMap);
 
-    static {
-        System.loadLibrary("bili");
-    }
+//    static {
+//        System.loadLibrary("bili");
+//    }
 
     /* renamed from: a */
     public static String getAndroidAppKey() {
@@ -37,20 +37,20 @@ public final class LibBili {
 
     /* renamed from: c */
     public static String getAppKey(String str) {
-//        switch (str) {
-//            case "android":
-//                return "1d8b6e7d45233436";
-//            case "android_i":
-//                return "bb3101000e232e27";
-//            case "android_b":
-//                return "07da50c9a0bf829f";
-//            case "android_tv":
-//                return "4409e2ce8ffd12b8";
-//            case "biliLink":
-//                return "37207f2beaebf8d7";
-//        }
-//        return "1d8b6e7d45233436";
-        return a(str);
+        switch (str) {
+            case "android":
+                return "1d8b6e7d45233436";
+            case "android_i":
+                return "bb3101000e232e27";
+            case "android_b":
+                return "07da50c9a0bf829f";
+            case "android_tv":
+                return "4409e2ce8ffd12b8";
+            case "biliLink":
+                return "37207f2beaebf8d7";
+        }
+        return "1d8b6e7d45233436";
+//        return a(str);
     }
 
     /* renamed from: a */

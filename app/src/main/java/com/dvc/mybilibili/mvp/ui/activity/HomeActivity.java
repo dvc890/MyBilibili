@@ -20,6 +20,11 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
     }
 
     @Override
+    public boolean isSupportSwipeBack() {
+        return false;
+    }
+
+    @Override
     public int getContentViewResID() {
         return R.layout.bili_app_activity_main_v2;
     }

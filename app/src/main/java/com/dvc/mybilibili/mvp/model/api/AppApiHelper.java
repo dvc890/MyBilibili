@@ -11,6 +11,8 @@ import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
+import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
+import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
@@ -37,19 +39,22 @@ public class AppApiHelper implements ApiHelper {
     private final AccountInfoApiService accountInfoApiService;
     private final TMFeedIndexService tmFeedIndexService;
     private final TMFeedIndexV1Service tmFeedIndexV1Service;
+    private final RegionApiService regionApiService;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
                         BiliSplashApiV2Service biliSplashApiV2Service,
                         AccountInfoApiService accountInfoApiService,
                         TMFeedIndexService tmFeedIndexService,
-                        TMFeedIndexV1Service tmFeedIndexV1Service) {
+                        TMFeedIndexV1Service tmFeedIndexV1Service,
+                        RegionApiService regionApiService) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
         this.accountInfoApiService = accountInfoApiService;
         this.tmFeedIndexService = tmFeedIndexService;
         this.tmFeedIndexV1Service = tmFeedIndexV1Service;
+        this.regionApiService = regionApiService;
     }
 
     @Override
@@ -96,7 +101,7 @@ public class AppApiHelper implements ApiHelper {
 
     @Override
     @Deprecated
-    public Observable<List<AppIndex>> getIndexList(int idx, boolean pull, int login_event) {
+    public Observable<List<AppIndex>> getPegasusFeedIndexList(int idx, boolean pull, int login_event) {
         String open_event = pull?"cold":"";
         String network = BiliApplication.getNetWorkStatusManager().getNetworkStatus()==AppNetWorkStatusManager.NETWORK_STATUS_WIFI?"wifi":"mobile";
         int style = 2;
@@ -114,7 +119,7 @@ public class AppApiHelper implements ApiHelper {
      * device_type 是否第一次开启app?0:1
      */
     @Override
-    public Observable<PegasusFeedResponse> getIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
+    public Observable<PegasusFeedResponse> getPegasusFeedIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
         int fourk = IjkCodecHelper.isUhdSupport(IjkCodecHelper.getBestCodecName("video/hevc"))?1:0;
         int force_host = 1;//1:2:0
         int recsys_mode = 1;//1:0
@@ -131,5 +136,15 @@ public class AppApiHelper implements ApiHelper {
                 throw new BiliApiException(pegasusFeedResponseGeneralResponse.code);
             return pegasusFeedResponseGeneralResponse.data;
         });
+    }
+
+    @Override
+    public Observable<List<CategoryIndex>> getCategoryIndex(String access_key) {
+        return this.regionApiService.getIndex(access_key)
+                .map(categoryIndexGeneralResponse->{
+                    if(!categoryIndexGeneralResponse.isSuccess())
+                        throw new BiliApiException(categoryIndexGeneralResponse.code);
+                    return categoryIndexGeneralResponse.data;
+                });
     }
 }

@@ -2,9 +2,11 @@ package com.dvc.mybilibili.mvp.presenter;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
+import android.util.Log;
 
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.base.di.ApplicationContext;
+import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.ui.activity.HomeView;
 import com.trello.rxlifecycle2.LifecycleProvider;
@@ -25,14 +27,14 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
     }
 
     public void test() {
-//        this.dataManager.getApiHelper().getIndexList(0,true,1)
+//        this.dataManager.getApiHelper().getPegasusFeedIndexList(0,true,1)
 //                .compose(RxSchedulersHelper.ioAndMainThread())
 //                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
 //                .subscribe(appIndices -> {
-//                    for(AppIndex appIndex : appIndices)
-//                        RxLogTool.d(appIndex);
+//                        RxLogTool.d(appIndices);
 //                });
-//        this.dataManager.getApiHelper().getIndexListV2("",0,true, 1, "", 0, 0,"",0)
+
+//        this.dataManager.getApiHelper().getPegasusFeedIndexListV2("",0,true, 1, "", 0, 0,"",0)
 //                .compose(RxSchedulersHelper.ioAndMainThread())
 //                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
 //                .subscribe(pegasusFeedResponse -> {
