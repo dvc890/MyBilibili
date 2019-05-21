@@ -38,7 +38,20 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(pegasusFeedResponse -> {
-
+                    RxLogTool.d(pegasusFeedResponse);
                 });
+
+        this.dataManager.getApiHelper().getKey()
+                .compose(RxSchedulersHelper.AllioThread())
+                .subscribe(authKey -> {
+                    this.dataManager.getApiHelper().loginV3("",authKey.encryptPassword(""))
+                            .compose(RxSchedulersHelper.ioAndMainThread())
+                            .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
+                            .subscribe(loginInfo -> {
+                                RxLogTool.d(loginInfo);
+                            });
+                });
+
+
     }
 }

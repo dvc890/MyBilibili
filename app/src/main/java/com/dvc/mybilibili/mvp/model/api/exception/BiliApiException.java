@@ -1,5 +1,7 @@
 package com.dvc.mybilibili.mvp.model.api.exception;
 
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
+
 /* compiled from: BL */
 public class BiliApiException extends Exception {
     public static final int E_ACCESS_DENIED = -403;
@@ -179,6 +181,11 @@ public class BiliApiException extends Exception {
 
     public BiliApiException(int i) {
         this.mCode = i;
+    }
+
+    public BiliApiException(GeneralResponse generalResponse) {
+        super(generalResponse.message);
+        this.mCode = generalResponse.code;
     }
 
     public BiliApiException(int i, String str) {

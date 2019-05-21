@@ -36,7 +36,7 @@ public final class SignedQuery {
     }
 
     /* renamed from: r */
-    static String r(Map<String, String> map) {
+    public static String r(Map<String, String> map) {
         if (!(map instanceof SortedMap)) {
             map = new TreeMap(map);
         }
@@ -67,7 +67,7 @@ public final class SignedQuery {
     }
 
     /* renamed from: a */
-    static String a(String str) {
+    public static String a(String str) {
         return a(str, null);
     }
 

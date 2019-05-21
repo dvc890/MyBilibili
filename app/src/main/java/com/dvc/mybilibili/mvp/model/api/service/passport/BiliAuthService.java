@@ -47,8 +47,9 @@ public interface BiliAuthService {
     @GET("/api/oauth2/accessToken?grant_type=authorization_code")
     Observable<GeneralResponse<AccessToken>> QRSign(@Query("code") String str);
 
+    //code 就是检验页面返回的ticket  grant_type="authorization_code"
     @GET("/api/v2/oauth2/access_token")
-    Observable<GeneralResponse<LoginInfo>> acquireAccessToken(@Query("code") String str, @Query("grant_type") String str2);
+    Observable<GeneralResponse<LoginInfo>> acquireAccessToken(@Query("code") String code, @Query("grant_type") String grant_type);
 
     @FormUrlEncoded
     @POST("/api/oauth2/authorizeByApp")

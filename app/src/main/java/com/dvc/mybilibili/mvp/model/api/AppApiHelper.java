@@ -6,13 +6,18 @@ import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.net.AppNetWorkStatusManager;
+import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
+import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
+import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
@@ -22,7 +27,9 @@ import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 import com.dvc.mybilibili.player.IjkCodecHelper;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -40,6 +47,7 @@ public class AppApiHelper implements ApiHelper {
     private final TMFeedIndexService tmFeedIndexService;
     private final TMFeedIndexV1Service tmFeedIndexV1Service;
     private final RegionApiService regionApiService;
+    private final BiliAuthService biliAuthService;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
@@ -47,7 +55,8 @@ public class AppApiHelper implements ApiHelper {
                         AccountInfoApiService accountInfoApiService,
                         TMFeedIndexService tmFeedIndexService,
                         TMFeedIndexV1Service tmFeedIndexV1Service,
-                        RegionApiService regionApiService) {
+                        RegionApiService regionApiService,
+                        BiliAuthService biliAuthService) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
@@ -55,6 +64,7 @@ public class AppApiHelper implements ApiHelper {
         this.tmFeedIndexService = tmFeedIndexService;
         this.tmFeedIndexV1Service = tmFeedIndexV1Service;
         this.regionApiService = regionApiService;
+        this.biliAuthService = biliAuthService;
     }
 
     @Override
@@ -64,10 +74,10 @@ public class AppApiHelper implements ApiHelper {
         return this.biliSplashApiV2Service.getSplash(
                 Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels),
                 Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels))
-                .map(s->{
-                    if(!s.isSuccess())
-                        throw new BiliApiException(s.getCode());
-                    return s.getData().get(0);
+                .map(sampleSplashDataListResponse->{
+                    if(!sampleSplashDataListResponse.isSuccess())
+                        return sampleSplashDataListResponse.getData().get(0);
+                    throw new BiliApiException(sampleSplashDataListResponse.getCode(), sampleSplashDataListResponse.getMessage());
                 });
     }
 
@@ -79,10 +89,10 @@ public class AppApiHelper implements ApiHelper {
                 Math.min(displayMetrics.widthPixels, displayMetrics.heightPixels),
                 Math.max(displayMetrics.widthPixels, displayMetrics.heightPixels),
                 birth, ad_extra)
-                .map(s->{
-                    if(!s.isSuccess())
-                        throw new BiliApiException(s.code);
-                    return s.data;
+                .map(splashDataGeneralResponse->{
+                    if(splashDataGeneralResponse.isSuccess())
+                        return splashDataGeneralResponse.data;
+                    throw new BiliApiException(splashDataGeneralResponse);
                 });
         return cacheProviders.getSplashList(getSplashListV2, new EvictProvider(cleanCache))
                 .map(splashDataReply -> splashDataReply.getData());
@@ -93,9 +103,9 @@ public class AppApiHelper implements ApiHelper {
         return this.accountInfoApiService.getAccountInfo(access_key)
 //                .filter(accountInfoGeneralResponse -> accountInfoGeneralResponse.isSuccess())
                 .map(accountInfoGeneralResponse-> {
-                    if(!accountInfoGeneralResponse.isSuccess())
-                        throw new BiliApiException(accountInfoGeneralResponse.code);
-                    return accountInfoGeneralResponse.data;
+                    if(accountInfoGeneralResponse.isSuccess())
+                        return accountInfoGeneralResponse.data;
+                    throw new BiliApiException(accountInfoGeneralResponse);
                 });
     }
 
@@ -105,9 +115,13 @@ public class AppApiHelper implements ApiHelper {
         String open_event = pull?"cold":"";
         String network = BiliApplication.getNetWorkStatusManager().getNetworkStatus()==AppNetWorkStatusManager.NETWORK_STATUS_WIFI?"wifi":"mobile";
         int style = 2;
-        String ts = "1499589051";
+        String ts = String.valueOf(System.currentTimeMillis() / 1000);
         return this.tmFeedIndexV1Service.getIndex(idx,login_event,network,open_event,pull,style,ts)
-                .map(appIndexDataListResponse -> appIndexDataListResponse.getData());
+                .map(appIndexDataListResponse -> {
+                    if (appIndexDataListResponse.isSuccess())
+                        return appIndexDataListResponse.getData();
+                    throw new BiliApiException(appIndexDataListResponse.getCode(), appIndexDataListResponse.getMessage());
+                });
     }
     /**
      * idx 取之前获取到的PegasusFeedResponse的BasicIndexItem列表的第一个idx
@@ -132,9 +146,9 @@ public class AppApiHelper implements ApiHelper {
         int qn = 16;//16:32即可
         return this.tmFeedIndexService.getIndexList(access_key,idx,pull,network,column,login_event,open_event,banner_hash,qn,interest,ad_extra,flush,autoplay_card,fnval,fnver,fourk,device_type,force_host,recsys_mode)
         .map(pegasusFeedResponseGeneralResponse -> {
-            if(!pegasusFeedResponseGeneralResponse.isSuccess())
-                throw new BiliApiException(pegasusFeedResponseGeneralResponse.code);
-            return pegasusFeedResponseGeneralResponse.data;
+            if(pegasusFeedResponseGeneralResponse.isSuccess())
+                return pegasusFeedResponseGeneralResponse.data;
+            throw new BiliApiException(pegasusFeedResponseGeneralResponse);
         });
     }
 
@@ -142,9 +156,38 @@ public class AppApiHelper implements ApiHelper {
     public Observable<List<CategoryIndex>> getCategoryIndex(String access_key) {
         return this.regionApiService.getIndex(access_key)
                 .map(categoryIndexGeneralResponse->{
-                    if(!categoryIndexGeneralResponse.isSuccess())
-                        throw new BiliApiException(categoryIndexGeneralResponse.code);
-                    return categoryIndexGeneralResponse.data;
+                    if(categoryIndexGeneralResponse.isSuccess())
+                        return categoryIndexGeneralResponse.data;
+                    throw new BiliApiException(categoryIndexGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<AuthKey> getKey() {
+        return this.biliAuthService.getKey().map(authKeyGeneralResponse -> {
+            if(authKeyGeneralResponse.isSuccess())
+                return authKeyGeneralResponse.data;
+            throw new BiliApiException(authKeyGeneralResponse);
+        });
+    }
+
+    @Override
+    public Observable<LoginInfo> signInWithVerify(String username, String password, String captcha) {
+        return this.biliAuthService.signInWithVerify(username, password, captcha)
+                .map(loginInfoGeneralResponse -> {
+                    if(loginInfoGeneralResponse.isSuccess())
+                        return loginInfoGeneralResponse.data;
+                    throw new BiliApiException(loginInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/) {
+        return this.biliAuthService.loginV3(username, password, Collections.emptyMap())
+                .map(loginInfoGeneralResponse -> {
+                    if(loginInfoGeneralResponse.isSuccess())
+                        return loginInfoGeneralResponse.data;
+                    throw new BiliApiException(loginInfoGeneralResponse);
                 });
     }
 }

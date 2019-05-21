@@ -1,7 +1,9 @@
 package com.dvc.mybilibili.mvp.model.api;
 
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
+import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
@@ -23,4 +25,10 @@ public interface ApiHelper {
     Observable<PegasusFeedResponse> getPegasusFeedIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type);
 
     Observable<List<CategoryIndex>> getCategoryIndex(String access_key);
+
+    Observable<AuthKey> getKey();
+
+    Observable<LoginInfo> signInWithVerify(String username, String password, String captcha);
+
+    Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/);
 }
