@@ -6,11 +6,9 @@ import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.net.AppNetWorkStatusManager;
-import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -29,7 +27,6 @@ import com.dvc.mybilibili.player.IjkCodecHelper;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -163,12 +160,15 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<AuthKey> getKey() {
-        return this.biliAuthService.getKey().map(authKeyGeneralResponse -> {
+    public Observable<AuthKey> getKey(boolean cleanCache) {
+        Observable<AuthKey> getKey = this.biliAuthService.getKey().map(authKeyGeneralResponse -> {
             if(authKeyGeneralResponse.isSuccess())
                 return authKeyGeneralResponse.data;
             throw new BiliApiException(authKeyGeneralResponse);
         });
+
+        return this.cacheProviders.getKey(getKey, new EvictProvider(cleanCache))
+                .map(authKeyReply -> authKeyReply.getData());
     }
 
     @Override
@@ -184,6 +184,16 @@ public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/) {
         return this.biliAuthService.loginV3(username, password, Collections.emptyMap())
+                .map(loginInfoGeneralResponse -> {
+                    if(loginInfoGeneralResponse.isSuccess())
+                        return loginInfoGeneralResponse.data;
+                    throw new BiliApiException(loginInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<LoginInfo> acquireAccessToken(String code) {
+        return this.biliAuthService.acquireAccessToken(code, "authorization_code")
                 .map(loginInfoGeneralResponse -> {
                     if(loginInfoGeneralResponse.isSuccess())
                         return loginInfoGeneralResponse.data;

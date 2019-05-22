@@ -66,6 +66,11 @@ public class AppNetWorkStatusManager implements NetWorkStatusManager {
         return this.networkStatus;
     }
 
+    @Override
+    public boolean isConnected() {
+        return getNetworkStatus() != NETWORK_STATUS_OFF;
+    }
+
     private BroadcastReceiver networkStatusReceiver = new BroadcastReceiver() {
 
         @Override

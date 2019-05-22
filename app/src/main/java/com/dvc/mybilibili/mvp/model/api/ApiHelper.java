@@ -26,9 +26,11 @@ public interface ApiHelper {
 
     Observable<List<CategoryIndex>> getCategoryIndex(String access_key);
 
-    Observable<AuthKey> getKey();
+    Observable<AuthKey> getKey(boolean cleanCache);
 
     Observable<LoginInfo> signInWithVerify(String username, String password, String captcha);
 
     Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/);
+
+    Observable<LoginInfo> acquireAccessToken(String code);
 }

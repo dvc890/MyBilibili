@@ -9,4 +9,6 @@ public interface NetWorkStatusManager {
     void setOnNetworkStatusListener(AppNetWorkStatusManager.NetworkStatusListener networkStatusListener);
 
     int getNetworkStatus();
+
+    boolean isConnected();
 }

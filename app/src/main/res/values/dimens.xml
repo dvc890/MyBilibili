@@ -12,4 +12,14 @@
     <dimen name="text_size_title">15sp</dimen>
     <dimen name="text_size_xlarge">16sp</dimen>
     <dimen name="text_size_xxlarge">18sp</dimen>
+
+    <dimen name="corner_banner">8dp</dimen>
+    <dimen name="corner_card">4dp</dimen>
+    <dimen name="corner_radius">2dp</dimen>
+    <dimen name="corner_radius_medium">4dp</dimen>
+    <dimen name="corner_radius_small">2dp</dimen>
+    <dimen name="corners_radius">20dp</dimen>
+
+    <dimen name="large_button_height">42dp</dimen>
+    <dimen name="large_button_width">266dp</dimen>
 </resources>

@@ -58,4 +58,9 @@
     <style name="TextAppearance.App.Title">
         <item name="android:textColor">?android:attr/textColorPrimary</item>
     </style>
+
+    <!--设置toolbar字体大小-->
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">16sp</item>
+    </style>
 </resources>

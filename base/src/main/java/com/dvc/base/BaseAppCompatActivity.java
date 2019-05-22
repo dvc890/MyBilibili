@@ -1,9 +1,10 @@
 package com.dvc.base;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.View;
+import android.widget.ImageButton;
 
 import butterknife.ButterKnife;
 import cn.bingoogolapple.swipebacklayout.BGASwipeBackHelper;
@@ -136,6 +137,17 @@ public abstract class BaseAppCompatActivity extends DaggerAppCompatActivity impl
         if (existActivityWithAnimation) {
             overridePendingTransition(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
         }
+    }
+
+    protected void visible(View... views) {
+        for(View view :views)
+            view.setVisibility(View.VISIBLE);
+    }
+
+
+    protected void gone(View... views) {
+        for(View view :views)
+            view.setVisibility(View.GONE);
     }
 
     public abstract int getContentViewResID();

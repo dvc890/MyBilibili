@@ -174,6 +174,7 @@ public class BiliApiException extends Exception {
     public static final int S_OK = 0;
     private static final long serialVersionUID = -4032549134925259473L;
     public int mCode = -1;
+    public GeneralResponse generalResponse;
 
     public BiliApiException(String str) {
         super(str);
@@ -186,6 +187,7 @@ public class BiliApiException extends Exception {
     public BiliApiException(GeneralResponse generalResponse) {
         super(generalResponse.message);
         this.mCode = generalResponse.code;
+        this.generalResponse =generalResponse;
     }
 
     public BiliApiException(int i, String str) {

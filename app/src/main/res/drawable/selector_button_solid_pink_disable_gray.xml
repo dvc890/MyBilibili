@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
+    <item android:state_enabled="true" android:state_pressed="true">
+        <shape>
+            <corners android:radius="@dimen/corner_radius"/>
+            <solid android:color="@color/pink_dark_alpha60"/>
+        </shape>
+    </item>
+    <item android:state_enabled="true">
+        <shape>
+            <solid android:color="@color/pink_dark"/>
+            <corners android:radius="@dimen/corner_radius"/>
+        </shape>
+    </item>
+    <item android:state_enabled="false">
+        <shape>
+            <solid android:color="@color/night_light"/>
+            <corners android:radius="@dimen/corner_radius"/>
+        </shape>
+    </item>
+</selector>

@@ -19,7 +19,7 @@ public abstract class ObserverCallback<T> implements Observer<T> {
     @Override
     public void onError(Throwable e) {
         BiliApiException apiException = new BiliApiException(e);
-        onError(apiException.getMessage(), apiException.mCode);
+        onError(apiException, apiException.mCode);
         e.printStackTrace();
     }
 
@@ -34,5 +34,5 @@ public abstract class ObserverCallback<T> implements Observer<T> {
 
     public abstract void onSuccess(T t);
 
-    public abstract void onError(String msg, int code);
+    public abstract void onError(BiliApiException apiException, int code);
 }

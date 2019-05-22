@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.presenter;
+package com.dvc.mybilibili.mvp.presenter.activity;
 
 public interface ISplash {
     void loadSplash();

@@ -13,7 +13,7 @@ import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.utils.GlideUtils;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.Splash;
-import com.dvc.mybilibili.mvp.presenter.SplashPresenter;
+import com.dvc.mybilibili.mvp.presenter.activity.SplashPresenter;
 import com.vondear.rxtool.RxLogTool;
 
 import javax.inject.Inject;

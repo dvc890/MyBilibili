@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.presenter;
+package com.dvc.mybilibili.mvp.presenter.activity;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
@@ -39,17 +39,6 @@ public class HomePresenter extends MvpBasePresenter<HomeView> {
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(pegasusFeedResponse -> {
                     RxLogTool.d(pegasusFeedResponse);
-                });
-
-        this.dataManager.getApiHelper().getKey()
-                .compose(RxSchedulersHelper.AllioThread())
-                .subscribe(authKey -> {
-                    this.dataManager.getApiHelper().loginV3("",authKey.encryptPassword(""))
-                            .compose(RxSchedulersHelper.ioAndMainThread())
-                            .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                            .subscribe(loginInfo -> {
-                                RxLogTool.d(loginInfo);
-                            });
                 });
 
 

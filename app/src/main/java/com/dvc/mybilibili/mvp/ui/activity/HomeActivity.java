@@ -4,7 +4,7 @@ import android.support.annotation.NonNull;
 
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.mvp.presenter.HomePresenter;
+import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
 
 import javax.inject.Inject;
 

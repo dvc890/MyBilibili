@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.presenter;
+package com.dvc.mybilibili.mvp.presenter.activity;
 
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
