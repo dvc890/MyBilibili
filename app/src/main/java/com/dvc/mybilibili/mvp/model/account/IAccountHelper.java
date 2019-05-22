@@ -21,4 +21,6 @@ public interface IAccountHelper {
     String getBrithday();
 
     void save();
+
+    void clear();
 }

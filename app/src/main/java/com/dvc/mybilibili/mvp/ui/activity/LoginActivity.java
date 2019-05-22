@@ -21,6 +21,8 @@ import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.vondear.rxtool.view.RxToast;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -166,7 +168,9 @@ public class LoginActivity extends MvpBaseActivity<LoginView, LoginPresenter> im
 
     @Override
     public void loginCompleted(LoginInfo loginInfo) {
-        RxToast.info("登录成功");
+        RxToast.info(getString(R.string.login_success));
+        EventBus.getDefault().postSticky(loginInfo);
+        finish();
     }
 
     @OnClick(R.id.btn_back)

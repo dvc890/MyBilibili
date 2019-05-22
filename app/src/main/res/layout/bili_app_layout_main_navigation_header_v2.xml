@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:orientation="vertical"
+    android:background="@color/theme_color_primary_white_original" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <android.support.constraint.ConstraintLayout android:id="@+id/drawer_profile_layout"
+        android:background="@color/theme_color_primary"
+        android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:id="@+id/profile_cover_image" android:focusable="true" android:clickable="true"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:src="@drawable/bili_drawerbg_not_logined" android:scaleType="centerCrop" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintEnd_toEndOf="parent"/>
+        <de.hdodenhof.circleimageview.CircleImageView android:id="@+id/avatar_layout"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_margin="18dp" app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/bili_default_avatar"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <LinearLayout android:gravity="left|center_vertical|center_horizontal|center|start"
+            android:orientation="horizontal" android:id="@+id/linear_01"
+            android:layout_width="0dp" android:layout_height="wrap_content"
+            android:layout_margin="18dp"
+            app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/avatar_layout">
+            <TextView android:textAppearance="@style/TextAppearance.App.Headline"
+                android:text="@string/nav_login_click_avatar"
+                android:textSize="14sp" android:textColor="@color/theme_color_publish_text"
+                android:ellipsize="end" android:layout_gravity="left"
+                android:id="@+id/user_nick_text"
+                android:layout_width="0dp" android:layout_height="wrap_content"
+                android:maxLines="1" android:layout_weight="1"/>
+            <TextView android:textSize="8sp" android:textStyle="bold"
+                android:textColor="@color/theme_color_tab_pink" android:gravity="center_vertical"
+                android:id="@+id/level"
+                android:background="@drawable/white_theme_shape_roundrect_trans_stroke_white"
+                android:paddingLeft="4dp" android:paddingTop="1dp" android:paddingRight="4dp" android:paddingBottom="1dp"
+                android:layout_width="wrap_content" android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"/>
+            <TextView android:textSize="9sp" android:textColor="@color/theme_color_primary_tr_background" android:id="@+id/vip_status" android:background="@drawable/white_theme_shape_roundrect_white_trans_stroke_white" android:paddingLeft="4dp" android:paddingTop="1dp" android:paddingRight="4dp" android:paddingBottom="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp"/>
+            <TextView android:textSize="9sp" android:textColor="@color/theme_color_primary_tr_background" android:id="@+id/member_status" android:background="@drawable/white_theme_shape_roundrect_white_trans_stroke_white" android:paddingLeft="4dp" android:paddingTop="1dp" android:paddingRight="4dp" android:paddingBottom="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp"/>
+            <TextView android:textSize="9sp" android:textColor="@color/theme_color_primary_tr_background" android:id="@+id/music_status" android:background="@drawable/white_theme_shape_roundrect_white_trans_stroke_white" android:paddingLeft="4dp" android:paddingTop="1dp" android:paddingRight="4dp" android:paddingBottom="1dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:text="@string/audio_type_month"/>
+        </LinearLayout>
+        <LinearLayout android:layout_gravity="start" android:orientation="horizontal" android:id="@+id/linear_02" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="18dp" android:layout_marginTop="5dp" app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toBottomOf="@+id/linear_01">
+            <TextView android:textAppearance="@style/TextAppearance.App.Subtitle" android:textSize="12sp" android:textColor="@color/theme_color_navigation_text" android:ellipsize="end" android:id="@+id/user_bp_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:maxLines="1"/>
+            <TextView android:textAppearance="@style/TextAppearance.App.Subtitle" android:textSize="12sp" android:textColor="@color/theme_color_navigation_text" android:ellipsize="end" android:id="@+id/user_coin_count" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12dp" android:maxLines="1"/>
+        </LinearLayout>
+        <ImageView android:id="@+id/qrcode" android:background="@drawable/shape_ring_thick_1_size_30" android:padding="7dp" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginTop="12dp" android:layout_marginRight="18dp" app:backgroundTint="@color/theme_color_primary_tr_icon" app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent" android:src="@drawable/vector_navigation_qrcode"/>
+        <ImageView android:id="@+id/nav_pay" android:background="@drawable/shape_ring_thick_1_size_30" android:padding="7dp" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginTop="12dp" android:layout_marginRight="15dp" app:backgroundTint="@color/theme_color_primary_tr_icon" app:layout_constraintEnd_toStartOf="@+id/qrcode" app:layout_constraintTop_toTopOf="parent" android:src="@drawable/vector_navigation_wallet"/>
+    </android.support.constraint.ConstraintLayout>
+    <TextView android:textAppearance="@style/TextAppearance.App.Subtitle" android:textColor="@color/white" android:orientation="horizontal" android:id="@+id/answer_entry" android:background="@color/yellow" android:padding="@dimen/item_spacing" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/nav_menu_answer_tips" android:drawableRight="@drawable/ic_white_arrow_right"/>
+    <LinearLayout android:orientation="horizontal" android:id="@+id/vip_entry" android:background="@color/daynight_color_background_card" android:paddingLeft="18dp" android:paddingRight="14dp" android:layout_width="match_parent" android:layout_height="wrap_content">
+        <ImageView android:layout_gravity="center_vertical" android:id="@+id/vip_icon" android:background="@drawable/ic_vip_entrance" android:layout_width="18dp" android:layout_height="18dp"/>
+        <TextView android:textAppearance="@style/TextAppearance.App.Large" android:textStyle="bold" android:textColor="@color/theme_color_secondary" android:gravity="center_vertical" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="5dp" android:layout_marginTop="13dp" android:layout_marginBottom="13dp" android:text="@string/vip_name"/>
+        <TextView android:textAppearance="@style/TextAppearance.App.Medium" android:textColor="@color/gray_1" android:ellipsize="end" android:gravity="right|center_vertical|center_horizontal|center|end" android:layout_gravity="center_vertical" android:id="@+id/vip_text" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="19dp" android:lines="1" android:drawableRight="@drawable/ic_gray_arrow_right" android:drawablePadding="4dp" android:layout_weight="1" android:drawableEnd="@drawable/ic_gray_arrow_right"/>
+    </LinearLayout>
+    <View android:background="@color/daynight_color_divider_line_for_white" android:layout_width="match_parent" android:layout_height="0.5dp"/>
+    <!--<tv.danmaku.bili.ui.personinfo.view.BannedItemView android:id="@+id/banned_entry" android:layout_width="match_parent" android:layout_height="40dp"/>-->
+</LinearLayout>

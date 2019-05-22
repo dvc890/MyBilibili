@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingDefaultResource">
     <dimen name="text_size_18sp">18sp</dimen>
     <dimen name="text_size_body_primary">13sp</dimen>
     <dimen name="text_size_body_secondary">12sp</dimen>
@@ -22,4 +22,18 @@
 
     <dimen name="large_button_height">42dp</dimen>
     <dimen name="large_button_width">266dp</dimen>
+    <dimen name="item_spacing">8dp</dimen>
+    <dimen name="item_spacing_10">10dp</dimen>
+    <dimen name="item_spacing_12">12dp</dimen>
+    <dimen name="item_spacing_13">13dp</dimen>
+    <dimen name="item_spacing_14">14dp</dimen>
+    <dimen name="item_spacing_16">16dp</dimen>
+    <dimen name="item_spacing_18">18dp</dimen>
+    <dimen name="item_spacing_2">2dp</dimen>
+    <dimen name="item_spacing_4">4dp</dimen>
+    <dimen name="item_spacing_6">6dp</dimen>
+    <dimen name="item_spacing_8">8dp</dimen>
+    <dimen name="item_spacing_bottom">60dp</dimen>
+
+    <dimen name="tab_layout_height" >40dp</dimen>
 </resources>

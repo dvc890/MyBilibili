@@ -10,14 +10,14 @@ import java.util.List;
 public class CookieInfo {
     @JSONField(name = "cookies")
     /* renamed from: a */
-    public List<C2206a> cookies;
+    public List<Cookie> cookies;
     @JSONField(name = "domains")
     /* renamed from: b */
     public String[] domains;
 
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.b$a */
-    public static class C2206a {
+    public static class Cookie {
         @JSONField(name = "name")
         /* renamed from: a */
         public String name;
@@ -36,11 +36,11 @@ public class CookieInfo {
             if (this == obj) {
                 return true;
             }
-            if (!(obj instanceof C2206a)) {
+            if (!(obj instanceof Cookie)) {
                 return false;
             }
-            C2206a c2206a = (C2206a) obj;
-            if (!(c2206a.name.equals(this.name) && c2206a.value.equals(this.value) && c2206a.http_only == this.http_only && c2206a.expires == this.expires)) {
+            Cookie cookie = (Cookie) obj;
+            if (!(cookie.name.equals(this.name) && cookie.value.equals(this.value) && cookie.http_only == this.http_only && cookie.expires == this.expires)) {
                 z = false;
             }
             return z;

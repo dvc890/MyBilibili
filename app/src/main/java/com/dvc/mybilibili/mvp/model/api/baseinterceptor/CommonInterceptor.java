@@ -112,7 +112,7 @@ public class CommonInterceptor implements Interceptor {
         Map<String, String> map = new HashMap<>();
         if(request.contentLength() == 0) return map;
         for(int i = 0; i < ((FormBody) request).size(); i++){
-            map.put(((FormBody) request).encodedName(i), ((FormBody) request).encodedValue(i));
+            map.put(((FormBody) request).name(i), ((FormBody) request).value(i));
         }
         return map;
     }

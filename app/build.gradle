@@ -44,6 +44,11 @@ dependencies {
 
     implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation 'org.jetbrains:annotations-java5:15.0@jar'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+////    BottomNavigationBar(底部栏）
+    implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
+////    循环广告栏
+    implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$parent.ext.daggerVersion"

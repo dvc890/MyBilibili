@@ -15,7 +15,9 @@ import com.bilibili.nativelibrary.SignedQuery;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.application.BiliApplication;
+import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.di.AccountPreferenceFileName;
+import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.CookieInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -109,19 +111,41 @@ public class AccountHelper implements IAccountHelper {
         if(this.accountInfo != null) ;
             this.appEditor.putString(KEY_ACCOUNT_INFO_CONTENT_STR, formatClass(this.accountInfo));
         if(this.cookieInfo != null) ;
-        this.appEditor.putString(KEY_ACCOUNT_COOKIE_CONTENT_STR, formatClass(this.cookieInfo));
+            this.appEditor.putString(KEY_ACCOUNT_COOKIE_CONTENT_STR, formatClass(this.cookieInfo));
+        this.appEditor.apply();
+    }
+
+    @Override
+    public void clear() {
+        this.token = null;
+        this.accountInfo = null;
+        this.cookieInfo = null;
+        this.appEditor.remove(KEY_ACCOUNT_TOKEN_CONTENT_STR);
+        this.appEditor.remove(KEY_ACCOUNT_INFO_CONTENT_STR);
+        this.appEditor.remove(KEY_ACCOUNT_COOKIE_CONTENT_STR);
+        this.appEditor.apply();
     }
 
     private void loadAccountInfo() {
-        if(this.token == null || (this.token == null && this.token.isExpires())) {
+        if(this.token == null) {
             this.accountInfo = null;
             return;
         }
         BiliApplication.getDataManager().getApiHelper().getAccountInfo(this.token.access_token)
                 .compose(RxSchedulersHelper.AllioThread())
-                .subscribe(accountInfo1 -> {
-                    this.accountInfo = accountInfo1;
-                    save();
+                .subscribe(new ObserverCallback<AccountInfo>() {
+                    @Override
+                    public void onSuccess(AccountInfo accountInfo1) {
+                        accountInfo = accountInfo1;
+                        save();
+                    }
+
+                    @Override
+                    public void onError(BiliApiException apiException, int code) {
+                        if(apiException.isTokenExpired()) {
+                            clear();
+                        }
+                    }
                 });
     }
 

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:shape="rectangle">
+    <solid android:color="@color/theme_color_home_navigation_search_bg"/>
+    <corners android:radius="15dp"/>
+    <padding android:left="10dp" android:top="6dp" android:right="10dp" android:bottom="6dp"/>
+</shape>

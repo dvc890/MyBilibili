@@ -221,4 +221,8 @@ public class BiliApiException extends Exception {
     public boolean isAuthStateError() {
         return this.mCode == -2 || this.mCode == -101;
     }
+
+    public boolean isTokenExpired() {
+        return this.mCode == E_ACCESS_TOKEN_EXPIRED || this.mCode == E_PASSPORT_ACCESS_TOKEN_EXPIRED;
+    }
 }

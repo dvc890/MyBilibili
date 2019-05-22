@@ -4,10 +4,22 @@
     android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <FrameLayout
-        android:id="@+id/content_layout"
+
+    <android.support.design.widget.CoordinatorLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <FrameLayout
+            android:id="@+id/content_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <com.ashokvarma.bottomnavigation.BottomNavigationBar
+            android:id="@+id/bottom_navigation_bar"
+            android:layout_gravity="bottom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </android.support.design.widget.CoordinatorLayout>
+
     <android.support.design.widget.NavigationView
         android:theme="@style/AppTheme.NavigationView"
         android:layout_gravity="start"
@@ -16,5 +28,10 @@
         android:scrollbars="none"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:itemTextColor="@color/selector_navigation_menuitem_text"
+        app:itemIconTint="@color/selector_navigation_menuitem_icon"
+        app:itemIconPadding="@dimen/dp_1"
+        android:fitsSystemWindows="false"
+        app:headerLayout="@layout/bili_app_layout_main_navigation_header_v2"
         app:menu="@menu/drawer_items_v2"/>
 </android.support.v4.widget.DrawerLayout>

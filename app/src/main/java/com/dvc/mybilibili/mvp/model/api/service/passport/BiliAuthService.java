@@ -29,10 +29,10 @@ public interface BiliAuthService {
 
     /* compiled from: BL */
     public static class CookieParamsMap extends ParamsMap {
-        public CookieParamsMap(@NonNull List<CookieInfo.C2206a> list) {
+        public CookieParamsMap(@NonNull List<CookieInfo.Cookie> list) {
             super(list.size());
-            for (CookieInfo.C2206a c2206a : list) {
-                putParams(c2206a.name, c2206a.value);
+            for (CookieInfo.Cookie cookie : list) {
+                putParams(cookie.name, cookie.value);
             }
         }
     }

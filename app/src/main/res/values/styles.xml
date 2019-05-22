@@ -14,12 +14,18 @@
         <item name="colorControlHighlight">@color/gray</item>
         <item name="colorControlNormal">@color/gray_dark</item>
     </style>
-    <style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+    <!--<style name="AppTheme.NoActionBar" parent="Theme.AppCompat.Light.NoActionBar">-->
+        <!--&lt;!&ndash; Customize your theme here. &ndash;&gt;-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+    <!--</style>-->
 
+    <style name="AppTheme.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:fitsSystemWindows">false</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
     <style name="AppTheme.NoStatusBar" parent="AppTheme.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
@@ -32,6 +38,9 @@
         <item name="android:windowFullscreen">true</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Home">
     </style>
 
     <style name="AppTheme.Transparent">
@@ -63,4 +72,16 @@
     <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="TextAppearance.App.Subtitle"></style>
+
+    <style name="TextAppearance.App.Large">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+    <style name="TextAppearance.App.Medium">
+        <item name="android:textSize">@dimen/text_size_medium</item>
+    </style>
+
+    <style name="TextAppearance.App.Headline"></style>
+
 </resources>

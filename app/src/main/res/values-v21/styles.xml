@@ -1,0 +1,27 @@
+<resources>
+    <style name="AppTheme" parent="Theme.AppCompat">
+        <item name="android:colorBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/theme_color_text_primary</item>
+        <!--<item name="android:buttonStyle">@style/Widget.App.Button</item>-->
+        <item name="android:textColorHighlight">@color/theme_color_text_highlight</item>
+        <item name="android:textColorHint">@color/theme_color_text_hint</item>
+        <item name="android:textColorTertiary">@color/theme_color_text_tertiary</item>
+        <item name="android:colorControlHighlight">?attr/colorControlHighlight</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:colorEdgeEffect">@color/gray_dark_alpha26</item>
+        <!--<item name="buttonStyle">@style/Widget.App.Button</item>-->
+    </style>
+    <style name="AppTheme.NoActionBar">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:statusBarColor">@color/colorPrimaryDark</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="AppTheme.NoActionBar.Home">
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+    </style>
+</resources>
