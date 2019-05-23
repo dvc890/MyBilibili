@@ -7,8 +7,10 @@ import android.text.TextUtils;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.feed.FeedItem;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.Args;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerListItem;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.DislikeReason;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.ThreePointItem;
 
@@ -16,7 +18,7 @@ import java.util.List;
 
 @Keep
 /* compiled from: BL */
-public class BasicIndexItem extends FeedItem {
+public class BasicIndexItem extends FeedItem implements MultiItemEntity {
     @JSONField(name = "ad_index")
     public long adIndex;
     @Nullable
@@ -231,5 +233,12 @@ public class BasicIndexItem extends FeedItem {
 
     public boolean getBooleanValue(String str) {
         return this.jsonObj != null && this.jsonObj.getBooleanValue(str);
+    }
+
+    @Override
+    public int getItemType() {
+        if(isADCard())return 2;
+        if(this instanceof BannerListItem) return 1;
+        return 0;
     }
 }

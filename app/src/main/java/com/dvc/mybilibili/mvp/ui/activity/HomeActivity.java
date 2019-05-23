@@ -5,15 +5,19 @@ import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.content.ContextCompat;
 import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.base.utils.FragmentUtils;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.constants.Keys;
+import com.dvc.mybilibili.app.utils.BottomNavigationBarUtils;
 import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
-import com.dvc.mybilibili.mvp.ui.fragment.home.PegasusFragment;
+import com.dvc.mybilibili.mvp.ui.fragment.home.HomeFragment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -55,11 +59,10 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 
     @Override
     protected void initViews() {
-        selectIndex = getIntent().getIntExtra(Keys.KEY_SELECT_INDEX, 1);
+        selectIndex = getIntent().getIntExtra(Keys.KEY_SELECT_INDEX, 0);
         fragmentManager = getSupportFragmentManager();
         fragmentMap = new HashMap<>();
-
-        mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, new PegasusFragment(), contentFrameLayout.getId(), 0, false);
+        initBottomNavigationBar(selectIndex);
     }
 
     @Override
@@ -68,7 +71,7 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         if(!intent.hasExtra(Keys.KEY_SELECT_INDEX)) return;
         int type =intent.getIntExtra(Keys.KEY_SELECT_INDEX,0);
         if (type > -1 && type < 4){
-//            bottomNavigationBar.selectTab(type);
+            bottomNavigationBar.selectTab(type);
         }
     }
 
@@ -77,62 +80,72 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         presenter.test();
     }
 
-//    private void initBottomNavigationBar(int selectIndex) {
-//        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.tabbar_icon_search_pressed, R.string.search_game).setInactiveIcon(ContextCompat.getDrawable(this,R.mipmap.tabbar_icon_search_nomal)));
-//        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.tabbar_icon_game_pressed, R.string.play_game).setInactiveIcon(ContextCompat.getDrawable(this,R.mipmap.tabbar_icon_game_nomal)));
-//        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.tabbar_icon_teach_pressed, R.string.guide).setInactiveIcon(ContextCompat.getDrawable(this,R.mipmap.tabbar_icon_teach_nomal)));
-//        bottomNavigationBar.addItem(new BottomNavigationItem(R.mipmap.tabbar_icon_user_pressed, R.string.mine).setInactiveIcon(ContextCompat.getDrawable(this,R.mipmap.tabbar_icon_user_nomal)));
-//        //mode_fixed:每个item对应名称，不选中也会显示
-//        // mode_shifting:每个item对应名称，只有选中才会显示，不选中隐藏
-//        bottomNavigationBar.setMode(BottomNavigationBar.MODE_SHIFTING_NO_TITLE);
-//        bottomNavigationBar
-//                .setActiveColor(R.color.color_ui35_white);
-////                .setInActiveColor(R.color.color_ui35_title);
-//        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
-//        bottomNavigationBar.setAutoHideEnabled(false);//关闭自动隐藏
-//        bottomNavigationBar.setFirstSelectedPosition(selectIndex);
-//        bottomNavigationBar.initialise();
-//        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.SimpleOnTabSelectedListener(){
-//            @Override
-//            public void onTabSelected(int position) {
-//                doOnTabSelected(position);
-//            }
-//        });
-//        bottomNavigationBar.selectTab(selectIndex);
-//    }
+    private void initBottomNavigationBar(int selectIndex) {
+        bottomNavigationBar.addItem(
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_home_default, R.string.main_page_homepage)
+        );
+        bottomNavigationBar.addItem(
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_partition_default, R.string.main_page_channel)
+        );
+        bottomNavigationBar.addItem(
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_moments_default, R.string.main_page_attentions)
+        );
+        bottomNavigationBar.addItem(
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_me_default, R.string.main_page_my_center)
+        );
+        //mode_fixed:每个item对应名称，不选中也会显示
+        // mode_shifting:每个item对应名称，只有选中才会显示，不选中隐藏
+        bottomNavigationBar.setMode(BottomNavigationBar.MODE_FIXED);
+        bottomNavigationBar
+                .setBarBackgroundColor(R.color.colorAccent) // 背景颜色
+                .setActiveColor(R.color.white)
+                .setInActiveColor(R.color.black);
+        bottomNavigationBar.setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_RIPPLE);
+        bottomNavigationBar.setAutoHideEnabled(false);//关闭自动隐藏
+        bottomNavigationBar.setFirstSelectedPosition(selectIndex);
+        bottomNavigationBar.initialise();
+        BottomNavigationBarUtils.setBottomNavigationItem(bottomNavigationBar, 6, 22, 10);
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.SimpleOnTabSelectedListener(){
+            @Override
+            public void onTabSelected(int position) {
+                doOnTabSelected(position);
+            }
+        });
+        bottomNavigationBar.selectTab(selectIndex);
+    }
 
-//    private void doOnTabSelected(@IntRange(from = 0, to = 3) int positionId) {
-//        Fragment fragment;
-//        String tag;
-//        switch (positionId) {
-//            case 0:
-//                tag = Tags.TAG_SEARCH_FRAGMENT;
-//                if(!fragmentMap.containsKey(tag)){
-//                    fragment = new SearchFragment();
-//                }else
-//                    fragment = fragmentMap.get(tag);
-//                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
-//                fragmentMap.put(tag, mCurrentFragment);
-//                break;
-//            case 1:
-//                tag = Tags.TAG_GAME_FRAGMENT;
+    private void doOnTabSelected(@IntRange(from = 0, to = 3) int positionId) {
+        Fragment fragment;
+        String tag;
+        switch (positionId) {
+            case 0:
+                tag = Tags.TAG_HOME_FRAGMENT;
+                if(!fragmentMap.containsKey(tag)){
+                    fragment = new HomeFragment();
+                }else
+                    fragment = fragmentMap.get(tag);
+                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
+                fragmentMap.put(tag, mCurrentFragment);
+                break;
+            case 1:
+//                tag = Tags.TAG_CHANNEL_FRAGMENT;
 //                if(!fragmentMap.containsKey(tag)) {
-//                    fragment = new PlayFragment();
+//                    fragment = new ChannelFragment();
 //                }else
 //                    fragment = fragmentMap.get(tag);
 //                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
 //                fragmentMap.put(tag, mCurrentFragment);
-//                break;
-//            case 2:
-//                tag = Tags.TAG_TEACH_FRAGMENT;
+                break;
+            case 2:
+//                tag = Tags.TAG_ATTENTION_FRAGMENT;
 //                if(!fragmentMap.containsKey(tag)){
-//                    fragment = new GuideFragment();
+//                    fragment = new AttentionFragment();
 //                }else
 //                    fragment = fragmentMap.get(tag);
 //                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
 //                fragmentMap.put(tag, mCurrentFragment);
-//                break;
-//            case 3:
+                break;
+            case 3:
 //                tag = Tags.TAG_USER_FRAGMENT;
 //                if(!fragmentMap.containsKey(tag)){
 //                    fragment = new MineFragment();
@@ -141,13 +154,13 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 //                mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
 //                fragmentMap.put(tag, mCurrentFragment);
 //                break;
-//        }
-//    }
+        }
+    }
 
-//    public static class Tags {
-//        public static final String TAG_LIVE_FRAGMENT = getString(R.string.search_game);
-//        public static final String TAG_MAIN_FRAGMENT = getString(R.string.play_game);
-//        public static final String TAG_COMMUNITY_FRAGMENT = getString(R.string.guide);
-//        public static final String TAG_USER_FRAGMENT = getString(R.string.mine);
-//    }
+    public static class Tags {
+        public static final String TAG_HOME_FRAGMENT = BiliApplication.getContext().getString(R.string.main_page_homepage);
+        public static final String TAG_CHANNEL_FRAGMENT = BiliApplication.getContext().getString(R.string.main_page_channel);
+        public static final String TAG_ATTENTION_FRAGMENT = BiliApplication.getContext().getString(R.string.main_page_attentions);
+        public static final String TAG_USER_FRAGMENT = BiliApplication.getContext().getString(R.string.main_page_my_center);
+    }
 }

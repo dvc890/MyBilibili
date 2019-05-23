@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:height="24dp" android:width="24dp" android:viewportWidth="22" android:viewportHeight="22">
+    <path android:fillColor="#ffffff" android:pathData="M18.3,5.3h-4c0.1,-1.8 1.1,-2.7 3.2,-2.7c0.1,0 0.2,0 0.3,0l0,0c0.4,0 0.7,-0.3 0.7,-0.7s-0.3,-0.8 -0.7,-0.8c-0.1,0 -0.2,0 -0.3,0c-3,0 -4.7,1.4 -4.8,4.2h-9C2.2,5.3 1,6.5 1,8v8.2c0,1.5 1.2,2.7 2.7,2.7h14.5c1.5,0 2.7,-1.2 2.7,-2.7V8C21,6.5 19.8,5.3 18.3,5.3zM19.4,16.2c0,0.7 -0.5,1.2 -1.1,1.2H3.7c-0.7,0 -1.2,-0.5 -1.2,-1.2V8c0,-0.7 0.6,-1.2 1.2,-1.2h9h1.4h0.1h4c0.7,0 1.2,0.5 1.2,1.2V16.2L19.4,16.2z"/>
+    <path android:fillColor="#ffffff" android:pathData="M9.8,11.2H8V9.4C8,9 7.7,8.7 7.3,8.7H7.2C6.8,8.7 6.5,9 6.5,9.4v1.8H4.7c-0.4,0 -0.7,0.3 -0.7,0.7V12c0,0.4 0.3,0.7 0.7,0.7h1.8v1.8c0,0.4 0.3,0.7 0.7,0.7h0.1c0.4,0 0.7,-0.3 0.7,-0.7v-1.8h1.8c0.4,0 0.7,-0.3 0.7,-0.7v-0.1C10.5,11.5 10.2,11.2 9.8,11.2z"/>
+    <path android:fillColor="#ffffff" android:pathData="M16.7,10.1m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0"/>
+    <path android:fillColor="#ffffff" android:pathData="M14.7,13.6m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0"/>
+</vector>

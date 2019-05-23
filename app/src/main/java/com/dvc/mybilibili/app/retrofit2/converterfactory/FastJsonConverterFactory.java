@@ -20,14 +20,16 @@ import retrofit2.Retrofit;
 
 public class FastJsonConverterFactory extends Converter.Factory {
     private ParserConfig mParserConfig = ParserConfig.getGlobalInstance();
-    private int featureValues = JSON.DEFAULT_PARSER_FEATURE;
+    private int featureValues = JSON.DEFAULT_PARSER_FEATURE | Feature.DisableSpecialKeyDetect.mask;
     private Feature[] features;
 
     private SerializeConfig serializeConfig;
     private SerializerFeature[] serializerFeatures =
             {SerializerFeature.WriteNullListAsEmpty,
-            SerializerFeature.SkipTransientField,
-            SerializerFeature.DisableCircularReferenceDetect};
+            SerializerFeature.WriteClassName,
+//            SerializerFeature.SkipTransientField,
+//            SerializerFeature.DisableCircularReferenceDetect
+            };
 
     public static FastJsonConverterFactory create() {
         return new FastJsonConverterFactory();

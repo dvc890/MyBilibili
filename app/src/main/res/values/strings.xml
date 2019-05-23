@@ -5257,6 +5257,7 @@
     <string name="logout">@string/br_logout</string>
     <string name="look_more">查看更多</string>
     <string name="love_club">友爱社</string>
+    <string name="main_page_homepage">首页</string>
     <string name="main_page_attentions">动态</string>
     <string name="main_page_bangumi">番剧</string>
     <string name="main_page_bangumi_hall">影视</string>
@@ -5266,6 +5267,7 @@
     <string name="main_page_game">游戏</string>
     <string name="main_page_home">推荐</string>
     <string name="main_page_live">直播</string>
+    <string name="main_page_hot">热门</string>
     <string name="main_page_mall">会员购</string>
     <string name="main_page_my_center">我的</string>
     <string name="main_page_test">测试</string>

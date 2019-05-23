@@ -10,6 +10,8 @@ public interface IAccountHelper {
 
     AccessToken getToken();
 
+    String getAccessKey();
+
     void loadToLoginInfo(LoginInfo loginInfo);
 
     void setToken(AccessToken accessToken);

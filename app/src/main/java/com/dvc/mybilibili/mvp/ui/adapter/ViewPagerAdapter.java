@@ -1,7 +1,9 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
@@ -16,8 +18,8 @@ import java.util.List;
  * Date: 13-10-11
  * Time: 下午3:03
  */
-public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageChangeListener{
-    private List<View> fragments; // 每个Fragment对应一个Page
+public class ViewPagerAdapter extends FragmentPagerAdapter implements ViewPager.OnPageChangeListener{
+    private List<Fragment> fragments; // 每个Fragment对应一个Page
     private ViewPager viewPager; // viewPager对象
     private int currentPageIndex = 0; // 当前page索引（切换之前）
     private List<String> titles = new ArrayList<>();
@@ -25,13 +27,15 @@ public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageCh
 
     private OnExtraPageChangeListener onExtraPageChangeListener; // ViewPager切换页面时的额外功能添加接口
 
-    public ViewPagerAdapter(ViewPager viewPager , List<View> fragments) {
+    public ViewPagerAdapter(FragmentManager fragmentManager, ViewPager viewPager , List<Fragment> fragments) {
+        super(fragmentManager);
         this.fragments = fragments;
         this.viewPager = viewPager;
         this.viewPager.setAdapter(this);
         this.viewPager.setOnPageChangeListener(this);
     }
-    public ViewPagerAdapter(ViewPager viewPager , List<View> fragments, List<String> titles) {
+    public ViewPagerAdapter(FragmentManager fragmentManager, ViewPager viewPager , List<Fragment> fragments, List<String> titles) {
+        super(fragmentManager);
         this.titles = titles;
         this.fragments = fragments;
         this.viewPager = viewPager;
@@ -39,7 +43,7 @@ public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageCh
         this.viewPager.setOnPageChangeListener(this);
     }
     
-    public List<View> replace(int location,View fragment){
+    public List<Fragment> replace(int location,Fragment fragment){
     	this.fragments.add(location, fragment);
     	return fragments;
     }
@@ -47,6 +51,11 @@ public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageCh
     @Override
     public int getCount() {
         return fragments.size();
+    }
+
+    @Override
+    public Fragment getItem(int i) {
+        return fragments.get(i);
     }
 
     @Override
@@ -59,12 +68,7 @@ public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageCh
 	public int getItemPosition(Object object) {
 		return POSITION_NONE;
 	}
-    
-    @Override
-    public void destroyItem(View container, int position, Object object) {
-		((ViewPager) container).removeView(fragments.get(position));
-    	//super.destroyItem(container, position, object);
-    }
+
 
     @Nullable
     @Override
@@ -109,12 +113,6 @@ public class ViewPagerAdapter extends PagerAdapter implements ViewPager.OnPageCh
 
         return fragment.getView();
     }*/
-    
-    @Override  
-    public Object instantiateItem(View view, int position){
-        ((ViewPager) view).addView(fragments.get(position), 0);
-        return fragments.get(position);  
-    } 
 
     /**
      * 当前page索引（切换之前）

@@ -71,8 +71,8 @@ public class CommandActionUtils {
 
         private BiliBiliUrl(String url) {
             this.scheme = url.substring(0, url.indexOf("://"));
-            this.host = url.split("://")[1].substring(0, url.indexOf("/"));
-            this.main = url.contains("?")? url.substring(url.indexOf(this.host), url.indexOf("?")): url.substring(url.indexOf(this.host));
+            this.host = url.split("://")[1].split("/")[0];
+            this.main = url.contains("?")? url.substring(url.indexOf(this.host)+this.host.length()+1, url.indexOf("?")): url.split("://")[1].split("/")[1];
             this.query = url.contains("?")? url.substring(url.indexOf("?")+1) : "";
             this.bundle = new Bundle();
             this.queryParameter = new HashMap<>();

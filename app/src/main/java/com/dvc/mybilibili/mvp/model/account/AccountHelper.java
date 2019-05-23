@@ -62,6 +62,11 @@ public class AccountHelper implements IAccountHelper {
     }
 
     @Override
+    public String getAccessKey() {
+        return isLogin()? getToken().access_token:"";
+    }
+
+    @Override
     public void loadToLoginInfo(LoginInfo loginInfo) {
         this.token = loginInfo.token_info;
         this.cookieInfo = loginInfo.cookie_info;

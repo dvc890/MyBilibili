@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:height="40dp" android:width="40dp" android:viewportWidth="1024" android:viewportHeight="1024">
+    <path android:fillColor="#000000" android:pathData="M267.636364 267.636364a244.363636 244.363636 0 1 1 488.727272 0 244.363636 244.363636 0 0 1-488.727272 0z m-23.272728 221.090909a244.363636 244.363636 0 1 1 0 488.727272 244.363636 244.363636 0 0 1 0-488.727272z m535.272728 0a244.363636 244.363636 0 1 1 0 488.727272 244.363636 244.363636 0 0 1 0-488.727272z"/>
+</vector>
