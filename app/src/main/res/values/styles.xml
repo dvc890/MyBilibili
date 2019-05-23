@@ -84,4 +84,18 @@
 
     <style name="TextAppearance.App.Headline"></style>
 
+
+    <style name="Widget"></style>
+    <style name="Widget.App"></style>
+    <style name="Widget.App.StaticImageView"></style>
+    <style name="Widget.App.StaticImageView.Thumb"></style>
+    <style name="Widget.App.StaticImageView.Thumb.VideoCover">
+        <item name="android:height">100dp</item>
+        <item name="android:width">160dp</item></style>
+    <style name="Widget.App.StaticImageView.Thumb.VideoListCover">
+        <item name="android:height">200px</item>
+        <item name="android:width">320px</item>
+    </style>
+
+
 </resources>

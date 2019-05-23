@@ -34,6 +34,30 @@
     <dimen name="item_spacing_6">6dp</dimen>
     <dimen name="item_spacing_8">8dp</dimen>
     <dimen name="item_spacing_bottom">60dp</dimen>
+    <dimen name="item_ex_large_spacing">18dp</dimen>
+    <dimen name="item_half_quad_spacing">6dp</dimen>
+    <dimen name="item_half_spacing">4dp</dimen>
+    <dimen name="item_huge_spacing">40dp</dimen>
+    <dimen name="item_large_spacing">16dp</dimen>
+    <dimen name="item_little_spacing">6dp</dimen>
+    <dimen name="item_medium_half_spacing">6dp</dimen>
+    <dimen name="item_medium_spacing">12dp</dimen>
+    <dimen name="item_quad_spacing">2dp</dimen>
+    <dimen name="item_shadow_spacing">10dp</dimen>
+    <dimen name="item_small_spacing">1.5dp</dimen>
+    <dimen name="item_smaller_spacing">10dp</dimen>
+    <dimen name="item_timeline_text_height">60dp</dimen>
+    <dimen name="item_touch_helper_max_drag_scroll_per_frame">20dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_max_velocity">800dp</dimen>
+    <dimen name="item_touch_helper_swipe_escape_velocity">120dp</dimen>
 
     <dimen name="tab_layout_height" >40dp</dimen>
+
+    <dimen name="index_card_converge_card_width">96dp</dimen>
+    <dimen name="index_card_entrance_card_width">53dp</dimen>
+    <dimen name="index_card_info_icon_height">15dp</dimen>
+    <dimen name="index_card_info_icon_width">15dp</dimen>
+    <dimen name="index_card_more_height">16dp</dimen>
+    <dimen name="index_card_text_info">12sp</dimen>
+    <dimen name="index_card_text_right_info">10sp</dimen>
 </resources>

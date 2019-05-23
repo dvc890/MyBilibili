@@ -27,21 +27,27 @@ public class RecommendFragPresenter extends MvpBasePresenter<RecommendFragView> 
         this.provider = provider;
     }
 
-    public void loadData(int idx, boolean pull) {
+    public void loadData(int idx, boolean pull, String banner_hash) {
         int login_event = this.dataManager.getUser().isLogin()?2:1;
 
-        this.dataManager.getApiHelper().getPegasusFeedIndexList(idx, pull, login_event)
-                .compose(RxSchedulersHelper.ioAndMainThread())
-                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(appIndices -> {
-                    RxLogTool.d(appIndices);
-                });
+//        this.dataManager.getApiHelper().getPegasusFeedIndexList(idx, pull, login_event)
+//                .compose(RxSchedulersHelper.ioAndMainThread())
+//                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
+//                .subscribe(appIndices -> {
+//                    RxLogTool.d(appIndices);
+//                });
 
-        this.dataManager.getApiHelper().getPegasusFeedIndexListV2(this.dataManager.getUser().getAccessKey(),idx,pull, login_event, "", 0, 0,"",0)
+        this.dataManager.getApiHelper().getPegasusFeedIndexListV2(this.dataManager.getUser().getAccessKey(),idx,pull, login_event, "", 0, 0,banner_hash,0)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(pegasusFeedResponse -> {
-                    ifViewAttached(view -> view.setData(pegasusFeedResponse.items));
+                    ifViewAttached(view -> {
+                        if(pull) {
+                            view.setData(pegasusFeedResponse.items);
+                        } else {
+                            view.setMoreData(pegasusFeedResponse.items);
+                        }
+                    });
                     RxLogTool.d(pegasusFeedResponse);
                 });
     }

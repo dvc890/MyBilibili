@@ -324,4 +324,9 @@
     <color name="daynight_color_divider_line_for_white">#e7e7e7</color>
 
     <color name="tab_unselected_color">#AAffffff</color>
+
+    <color name="index_card_text_video_meta">#ccffffff</color>
+
+    <color name="daynight_color_text_body_primary">#8e8e8e</color>
+    <color name="daynight_color_text_supplementary_dark">#999999</color>
 </resources>

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/ic_card_bg_corner_medium" android:clipChildren="false" android:clipToPadding="false" android:layout_width="match_parent" android:layout_height="wrap_content"
+    >
+    <!--app:cornerAllRadius="4dp" app:cornerButtomRadius="0dp"-->
+    <!--app:cornerTopRadius="4dp" app:isNeedAllcorner="false" -->
+    <FrameLayout android:id="@+id/cover_layout"
+        android:layout_width="0dp" android:layout_height="wrap_content"
+        android:background="@drawable/white_corner_bg"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <ImageView android:id="@+id/cover"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:background="@drawable/white_corner_bg"
+            android:src="@drawable/bili_default_image_tv"
+            style="@style/Widget.App.StaticImageView.Thumb.VideoCover"/>
+        <ImageView android:id="@+id/cover_shadow"
+            android:visibility="gone"
+            android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:foreground="@color/black_alpha20"
+            android:src="@drawable/bili_default_image_tv"
+            android:background="@drawable/white_corner_bg"
+            style="@style/Widget.App.StaticImageView.Thumb.VideoCover"/>
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_gravity="center" android:id="@+id/square_cover"
+            android:visibility="gone"
+            android:layout_width="96dp" android:layout_height="96dp"/>
+    </FrameLayout>
+    <ImageView android:id="@+id/cover_like_shadow"
+        android:visibility="gone"
+        android:layout_width="0dp" android:layout_height="0dp"
+        android:scaleType="matrix"
+        app:layout_constraintBottom_toBottomOf="@+id/cover_layout"
+        app:layout_constraintLeft_toLeftOf="@+id/cover_layout"
+        app:layout_constraintRight_toRightOf="@+id/cover_layout"
+        app:layout_constraintTop_toTopOf="@+id/cover_layout"
+        android:background="@drawable/white_corner_bg"/>
+    <Button android:id="@+id/like_button"
+        android:padding="6dp"
+        android:layout_width="20dp" android:layout_height="20dp"
+        app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toTopOf="parent"/>
+    <View android:id="@+id/cover_text_shadow" android:background="@drawable/shape_rect_grad_black_alpha_0_to_40" android:layout_width="0dp" android:layout_height="40dp" app:layout_constraintBottom_toBottomOf="@+id/cover_layout" app:layout_constraintLeft_toLeftOf="@+id/cover_layout" app:layout_constraintRight_toRightOf="@+id/cover_layout"/>
+    <LinearLayout
+        android:layout_width="0dp" android:layout_height="wrap_content" android:orientation="horizontal"
+        android:layout_marginLeft="@dimen/item_half_spacing" android:layout_marginRight="@dimen/item_half_spacing" android:layout_marginBottom="2dp" app:layout_constraintBottom_toBottomOf="@+id/cover_layout" app:layout_constraintLeft_toLeftOf="@+id/cover_layout" app:layout_constraintRight_toRightOf="@+id/cover_layout">
+        <TextView
+            android:textSize="@dimen/index_card_text_info"
+            android:textColor="@color/index_card_text_video_meta"
+            android:ellipsize="end" android:gravity="center_vertical"
+            android:layout_gravity="bottom" android:id="@+id/cover_left_text1"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:maxLines="1" android:drawableStart="@drawable/ic_info_views"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/index_card_text_video_meta"
+            app:layout_constraintRight_toLeftOf="@+id/cover_left_text2"/>
+        <TextView android:textSize="@dimen/index_card_text_info"
+            android:textColor="@color/index_card_text_video_meta"
+            android:ellipsize="end" android:gravity="center_vertical"
+            android:layout_gravity="bottom"
+            android:id="@+id/cover_left_text2"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/item_half_spacing"
+            android:maxLines="1" android:drawableLeft="@drawable/ic_info_danmakus"
+            android:drawablePadding="4dp"
+            android:drawableTint="@color/index_card_text_video_meta"
+            app:layout_constraintLeft_toRightOf="@+id/cover_left_text1"/>
+        <android.support.v4.widget.Space android:id="@+id/horizontal_space" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"/>
+        <TextView android:textSize="@dimen/index_card_text_info"
+            android:textColor="@color/index_card_text_video_meta"
+            android:ellipsize="end"
+            android:gravity="right|center_vertical|center_horizontal|center|end"
+            android:id="@+id/cover_right_text"
+            android:layout_width="wrap_content" android:layout_height="wrap_content"
+            android:maxLines="1" android:maxEms="6"
+            app:layout_constraintRight_toRightOf="parent"/>
+    </LinearLayout>
+    <LinearLayout android:orientation="vertical" android:id="@+id/title_layout" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginLeft="@dimen/item_spacing" android:layout_marginTop="@dimen/item_half_spacing" app:layout_constraintBottom_toTopOf="@+id/space" app:layout_constraintLeft_toLeftOf="parent" app:layout_constraintRight_toRightOf="parent" app:layout_constraintTop_toBottomOf="@+id/cover_layout" app:layout_constraintVertical_chainStyle="spread">
+        <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content">
+            <!--app:roundedCornerRadius="8dp"-->
+            <ImageView android:id="@+id/game_icon" android:layout_width="32dp" android:layout_height="32dp" android:layout_marginRight="@dimen/item_spacing" app:layout_constraintLeft_toLeftOf="parent" />
+            <TextView android:textSize="@dimen/text_size_large" android:textColor="@color/daynight_color_text_body_primary" android:ellipsize="end" android:id="@+id/title" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginRight="@dimen/item_spacing" android:maxLines="2"/>
+        </LinearLayout>
+        <TextView android:textAppearance="@style/TextAppearance.App.Medium" android:textColor="@color/daynight_color_text_supplementary_dark" android:ellipsize="end" android:id="@+id/index" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="@dimen/item_half_spacing" android:layout_marginRight="35dp" android:maxLines="1"/>
+    </LinearLayout>
+    <android.support.v4.widget.Space android:id="@+id/space" android:layout_width="0dp" android:layout_height="0dp" app:layout_constraintBottom_toTopOf="@+id/bottom_layout" app:layout_constraintTop_toBottomOf="@+id/title_layout" app:layout_constraintVertical_weight="1"/>
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/bottom_layout" android:layout_width="0dp" android:layout_height="wrap_content" android:layout_marginTop="@dimen/item_half_quad_spacing" android:layout_marginBottom="@dimen/item_half_quad_spacing" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintLeft_toLeftOf="@+id/title_layout" app:layout_constraintRight_toLeftOf="@+id/more" app:layout_constraintTop_toBottomOf="@+id/space">
+        <!--<p022tv.danmaku.bili.widget.tag.TagView android:id="@+id/badge" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/item_half_spacing" app:tag_maxLength="6" style="@style/Widget.App.Tag.Small.Stroke"/>-->
+        <TextView android:textSize="@dimen/text_size_body_secondary" android:textColor="@color/daynight_color_text_supplementary_dark" android:ellipsize="end" android:gravity="center_vertical" android:id="@+id/desc" android:visibility="visible" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1" />
+    </LinearLayout>
+    <!--<p022tv.danmaku.bili.widget.FixedPopupAnchor android:id="@+id/more" android:paddingLeft="20dp" android:paddingTop="30dp" android:paddingRight="@dimen/item_spacing" android:paddingBottom="@dimen/item_half_quad_spacing" android:layout_width="wrap_content" android:layout_height="wrap_content" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintRight_toRightOf="parent">-->
+        <ImageView android:layout_width="wrap_content" android:layout_height="@dimen/index_card_more_height" android:src="@drawable/ic_promo_index_more_v2" android:scaleType="centerInside" android:id="@+id/more" android:paddingLeft="20dp" android:paddingTop="30dp" android:paddingRight="@dimen/item_spacing" android:paddingBottom="@dimen/item_half_quad_spacing" app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintRight_toRightOf="parent"/>
+    <!--</p022tv.danmaku.bili.widget.FixedPopupAnchor>-->
+</ConstraintLayout>
