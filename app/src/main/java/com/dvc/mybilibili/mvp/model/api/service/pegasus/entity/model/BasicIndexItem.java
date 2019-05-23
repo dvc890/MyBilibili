@@ -18,7 +18,7 @@ import java.util.List;
 
 @Keep
 /* compiled from: BL */
-public class BasicIndexItem extends FeedItem implements MultiItemEntity {
+public class BasicIndexItem extends FeedItem {
     @JSONField(name = "ad_index")
     public long adIndex;
     @Nullable
@@ -233,12 +233,5 @@ public class BasicIndexItem extends FeedItem implements MultiItemEntity {
 
     public boolean getBooleanValue(String str) {
         return this.jsonObj != null && this.jsonObj.getBooleanValue(str);
-    }
-
-    @Override
-    public int getItemType() {
-        if(isADCard())return 2;
-        if(this instanceof BannerListItem) return 1;
-        return 0;
     }
 }

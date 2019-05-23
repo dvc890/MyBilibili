@@ -1,15 +1,22 @@
 package com.dvc.mybilibili.app.retrofit2.converterfactory;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.parser.Feature;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.alibaba.fastjson.util.ParameterizedTypeImpl;
+import com.dvc.base.utils.Reflect;
+import com.dvc.mybilibili.app.retrofit2.responseconverter.PegasusFeedResponseConverter;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.lang.annotation.Annotation;
+import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 
 import okhttp3.MediaType;
@@ -19,7 +26,6 @@ import retrofit2.Converter;
 import retrofit2.Retrofit;
 
 public class FastJsonConverterFactory extends Converter.Factory {
-    private ParserConfig mParserConfig = ParserConfig.getGlobalInstance();
     private int featureValues = JSON.DEFAULT_PARSER_FEATURE | Feature.DisableSpecialKeyDetect.mask;
     private Feature[] features;
 
@@ -40,7 +46,7 @@ public class FastJsonConverterFactory extends Converter.Factory {
      */
     @Override
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations, Retrofit retrofit) {
-        return new FastJsonResponseBodyConverter<>(type, mParserConfig, featureValues, features);
+        return new FastJsonResponseBodyConverter<>(type, ParserConfig.getGlobalInstance(), featureValues, features);
     }
 
     /**
@@ -79,8 +85,17 @@ public class FastJsonConverterFactory extends Converter.Factory {
             if (this.type == String.class) {
                 return (T) content;
             }
-//            if(config == null)
-//                return JSON.parseObject(value.string(), type);
+            if(((ParameterizedType)this.type).getRawType() == GeneralResponse.class) {
+                Type[] types = ((ParameterizedType)this.type).getActualTypeArguments();
+                if(types != null && types.length >= 1) {
+                    if(types[0] == PegasusFeedResponse.class) {
+                        return (T) PegasusFeedResponseConverter.convert(
+                                JSON.parseObject(content,
+                                        new ParameterizedTypeImpl(new Class[]{JSONObject.class}, null, GeneralResponse.class),
+                                config, featureValues, features != null ? features : EMPTY_SERIALIZER_FEATURES));
+                    }
+                }
+            }
             try {
                 return JSON.parseObject(content, type, config, featureValues,
                         features != null ? features : EMPTY_SERIALIZER_FEATURES);
