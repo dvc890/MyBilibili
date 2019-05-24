@@ -47,6 +47,10 @@ public class ImageBean implements Parcelable {
         parcel.writeStringList(this.reportUrls);
     }
 
+    public ImageBean() {
+
+    }
+
     protected ImageBean(Parcel parcel) {
         this.url = parcel.readString();
         this.jumpUrl = parcel.readString();

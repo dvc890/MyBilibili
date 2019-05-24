@@ -47,7 +47,7 @@ public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> 
     }
 
     @Override
-    public void setMoreData(List moreData) {
+    public void loadMoreDataComplete(List moreData) {
 
     }
 
@@ -57,7 +57,7 @@ public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> 
     }
 
     @Override
-    public void setData(List data) {
+    public void loadDataCompleted(List data) {
 
     }
 

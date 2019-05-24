@@ -77,6 +77,10 @@ public class MarkInfo implements Parcelable {
         parcel.writeInt(this.imgWidth);
     }
 
+    public MarkInfo() {
+
+    }
+
     protected MarkInfo(Parcel parcel) {
         this.type = parcel.readInt();
         this.text = parcel.readString();

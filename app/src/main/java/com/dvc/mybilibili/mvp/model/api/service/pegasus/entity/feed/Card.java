@@ -157,6 +157,10 @@ public class Card implements Parcelable {
         parcel.writeParcelable(this.video, i);
     }
 
+    public Card() {
+
+    }
+
     protected Card(Parcel parcel) {
         this.cardType = parcel.readInt();
         this.title = parcel.readString();

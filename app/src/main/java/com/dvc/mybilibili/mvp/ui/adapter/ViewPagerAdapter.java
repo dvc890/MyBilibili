@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,10 +57,11 @@ public class ViewPagerAdapter extends FragmentPagerAdapter implements ViewPager.
         return fragments.get(i);
     }
 
-    @Override
+    //坑：fragmentPagerAdapter不可以重写这个，不然会显示不出来
+    /*@Override
     public boolean isViewFromObject(View view, Object o) {
         return view == o;
-    }
+    }*/
     
     
     @Override

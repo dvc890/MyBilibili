@@ -12,6 +12,8 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.app.application.BiliApplication;
+import com.dvc.mybilibili.app.glide.RoundedCornersTransform;
+import com.vondear.rxtool.RxImageTool;
 
 public class GlideUtils {
     private static RequestManager manager = Glide.with(BiliApplication.getContext());
@@ -40,12 +42,22 @@ public class GlideUtils {
         requestBuilder.into(view);
     }
 
-    public static void RoundedCorners2ImageView(ImageView view, String url){
+    public static void RoundedCorners2ImageView(ImageView view, String url, int roundRadius){
         manager.load(url)
 //                .placeholder(R.drawable.placeholder)
                 .transition(new DrawableTransitionOptions().crossFade(300))
-                .apply(RequestOptions.bitmapTransform(new RoundedCorners(24)))
+                .apply(RequestOptions.bitmapTransform(new RoundedCorners(roundRadius)))
                 .into(view);
+    }
+
+    public static void TopRoundedCorners2ImageView(ImageView view, String url, int roundRadius) {
+        RoundedCorners2ImageView(view, url, roundRadius, true, true, false, false);
+    }
+
+    public static void RoundedCorners2ImageView(ImageView view, String url, int roundRadius, boolean leftTop, boolean rightTop, boolean leftBottom, boolean rightBottom) {
+        RoundedCornersTransform transform = new RoundedCornersTransform(view.getContext(), RxImageTool.dip2px(roundRadius/3));
+        transform.setNeedCorner(leftTop, rightTop, leftBottom, rightBottom);
+        manager.load(url).apply(RequestOptions.bitmapTransform(transform)).into(view);
     }
 
     public static void Circle2ImageView(ImageView view, String url){

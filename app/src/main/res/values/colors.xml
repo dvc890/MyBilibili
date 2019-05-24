@@ -327,6 +327,6 @@
 
     <color name="index_card_text_video_meta">#ccffffff</color>
 
-    <color name="daynight_color_text_body_primary">#8e8e8e</color>
+    <color name="daynight_color_text_body_primary">#111111</color>
     <color name="daynight_color_text_supplementary_dark">#999999</color>
 </resources>

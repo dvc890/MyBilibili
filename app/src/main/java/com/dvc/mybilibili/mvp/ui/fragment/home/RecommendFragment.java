@@ -1,10 +1,10 @@
 package com.dvc.mybilibili.mvp.ui.fragment.home;
 
 import android.support.annotation.NonNull;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.retrofit2.responseconverter.CardTypeEnum;
@@ -12,7 +12,9 @@ import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.BasicIndexI
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerListItem;
 import com.dvc.mybilibili.mvp.presenter.fragment.RecommendFragPresenter;
 import com.dvc.mybilibili.mvp.ui.adapter.PegasusRecommendAdapter;
-import com.vondear.rxtool.view.RxToast;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,13 +25,13 @@ import butterknife.BindView;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM;
 
-public class RecommendFragment extends MvpBaseFragment<RecommendFragView, RecommendFragPresenter> implements RecommendFragView<BasicIndexItem>, SwipeRefreshLayout.OnRefreshListener {
+public class RecommendFragment extends MvpBaseFragment<RecommendFragView, RecommendFragPresenter> implements RecommendFragView<BasicIndexItem>, OnRefreshListener {
 
     @Inject
     RecommendFragPresenter recommendFragPresenter;
 
     @BindView(R.id.mSwipeRefreshLayout)
-    SwipeRefreshLayout mSwipeRefreshLayout;
+    SmartRefreshLayout mSwipeRefreshLayout;
     @BindView(R.id.mRecyclerView)
     RecyclerView mRecyclerView;
 
@@ -51,21 +53,13 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
         pegasusRecommendAdapter = new PegasusRecommendAdapter(new ArrayList<>());
         mSwipeRefreshLayout.setOnRefreshListener(this);
         GridLayoutManager layoutManager = new GridLayoutManager(context,2);
-        layoutManager.setSpanSizeLookup(new GridLayoutManager.SpanSizeLookup() {
-            @Override
-            public int getSpanSize(int position) {//表示需要占据几个位置的span
-                //因为在声明gridlayoutManager的时候进行了设置，so每一行2个span
-                int viewType = pegasusRecommendAdapter.getItemViewType(position);
-                if(viewType == CardTypeEnum.BANNER_V2.getValue())
-                    return 2;//占据两个位置的span
-//                if(viewType == CardTypeEnum.ADV2.getValue())
-//                    return 0;//不占据位置的span
-                return 1;//占据一个位置
-            }
-        });
         mRecyclerView.setLayoutManager(layoutManager);
+        pegasusRecommendAdapter.setPreLoadNumber(4);
         pegasusRecommendAdapter.openLoadAnimation(SLIDEIN_BOTTOM);
         pegasusRecommendAdapter.bindToRecyclerView(mRecyclerView);
+        pegasusRecommendAdapter.setOnLoadMoreListener(() -> {
+            loadData(false,false);
+        });
     }
 
     @Override
@@ -73,19 +67,10 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
         loadData(true, false);
     }
 
+
     @Override
-    public void onRefresh() {
+    public void onRefresh(@NonNull RefreshLayout refreshLayout) {
         loadData(true, false);
-    }
-
-    @Override
-    public void loadMoreFailed() {
-
-    }
-
-    @Override
-    public void noMoreData() {
-
     }
 
     @Override
@@ -93,7 +78,7 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
         if(pullToRefresh)
             presenter.loadData(0, pullToRefresh, "");
         else {
-            BasicIndexItem lastItem = pegasusRecommendAdapter.getItem(pegasusRecommendAdapter.getItemCount()-1);
+            BasicIndexItem lastItem = pegasusRecommendAdapter.getItem(pegasusRecommendAdapter.getData().size()-1);
             String banner_hash = "";
             for(BasicIndexItem indexItem : pegasusRecommendAdapter.getData()){
                 if(indexItem instanceof BannerListItem) {
@@ -101,18 +86,33 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
                     break;
                 }
             }
-            presenter.loadData(lastItem.idx, pullToRefresh, banner_hash);
+            presenter.loadData(lastItem.idx, false, banner_hash);
         }
     }
 
     @Override
-    public void setData(List<BasicIndexItem> data) {
+    public void loadDataCompleted(List<BasicIndexItem> data) {
         pegasusRecommendAdapter.setNewData(data);
+        pegasusRecommendAdapter.setEnableLoadMore(true);
+        pegasusRecommendAdapter.disableLoadMoreIfNotFullPage();
+        mSwipeRefreshLayout.finishRefresh();
     }
 
     @Override
-    public void setMoreData(List<BasicIndexItem> moreData) {
+    public void loadMoreDataComplete(List<BasicIndexItem> moreData) {
         pegasusRecommendAdapter.addData(moreData);
+        pegasusRecommendAdapter.loadMoreComplete();
+    }
+
+    @Override
+    public void loadMoreFailed() {
+        pegasusRecommendAdapter.loadMoreFail();
+    }
+
+    @Override
+    public void noMoreData() {
+        pegasusRecommendAdapter.loadMoreEnd();
+        pegasusRecommendAdapter.setEnableLoadMore(false);
     }
 
     @Override

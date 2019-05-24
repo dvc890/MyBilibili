@@ -53,6 +53,10 @@ public class ButtonBean implements Parcelable {
         parcel.writeString(this.dlsucCallupUrl);
     }
 
+    public ButtonBean() {
+
+    }
+
     protected ButtonBean(Parcel parcel) {
         this.text = parcel.readString();
         this.type = parcel.readInt();

@@ -7,7 +7,11 @@ import android.content.Context;
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
+import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.DataManager;
+import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerListItem;
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
 import com.dvc.mybilibili.mvp.ui.fragment.home.RecommendFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 import com.vondear.rxtool.RxLogTool;
@@ -40,15 +44,36 @@ public class RecommendFragPresenter extends MvpBasePresenter<RecommendFragView> 
         this.dataManager.getApiHelper().getPegasusFeedIndexListV2(this.dataManager.getUser().getAccessKey(),idx,pull, login_event, "", 0, 0,banner_hash,0)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(pegasusFeedResponse -> {
-                    ifViewAttached(view -> {
-                        if(pull) {
-                            view.setData(pegasusFeedResponse.items);
-                        } else {
-                            view.setMoreData(pegasusFeedResponse.items);
-                        }
-                    });
-                    RxLogTool.d(pegasusFeedResponse);
+                .filter(pegasusFeedResponse -> {
+                    if(pegasusFeedResponse.items.get(0) instanceof BannerListItem) {
+                        if (((BannerListItem) pegasusFeedResponse.items.get(0)).hash.equals(banner_hash))
+                            pegasusFeedResponse.items.remove(0);
+                    }
+                    return true;
+                })
+                .subscribe(new ObserverCallback<PegasusFeedResponse>() {
+                    @Override
+                    public void onSuccess(PegasusFeedResponse pegasusFeedResponse) {
+                        ifViewAttached(view -> {
+                            if(pull) {
+                                view.loadDataCompleted(pegasusFeedResponse.items);
+                            } else {
+                                view.loadMoreDataComplete(pegasusFeedResponse.items);
+                            }
+                        });
+                        RxLogTool.d(pegasusFeedResponse);
+                    }
+
+                    @Override
+                    public void onError(BiliApiException apiException, int code) {
+                        ifViewAttached(view -> {
+                            if(pull) {
+
+                            }else {
+                                view.loadMoreFailed();
+                            }
+                        });
+                    }
                 });
     }
 }

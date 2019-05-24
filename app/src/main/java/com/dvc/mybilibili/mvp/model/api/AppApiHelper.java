@@ -23,7 +23,6 @@ import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFe
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
-import com.dvc.mybilibili.player.IjkCodecHelper;
 
 import java.util.Collections;
 import java.util.List;
@@ -131,7 +130,7 @@ public class AppApiHelper implements ApiHelper {
      */
     @Override
     public Observable<PegasusFeedResponse> getPegasusFeedIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
-        int fourk = IjkCodecHelper.isUhdSupport(IjkCodecHelper.getBestCodecName("video/hevc"))?1:0;
+        int fourk = 0;//IjkCodecHelper.isUhdSupport(IjkCodecHelper.getBestCodecName("video/hevc"))?1:0;
         int force_host = 1;//1:2:0
         int recsys_mode = 1;//1:0
         int column = 2;//0或2的倍数

@@ -81,6 +81,10 @@ public class FeedExtra implements Parcelable {
         parcel.writeString(this.specialIndustryTips);
     }
 
+    public FeedExtra() {
+
+    }
+
     protected FeedExtra(Parcel parcel) {
         boolean z = false;
         this.useAdWebV2 = parcel.readByte() != (byte) 0;

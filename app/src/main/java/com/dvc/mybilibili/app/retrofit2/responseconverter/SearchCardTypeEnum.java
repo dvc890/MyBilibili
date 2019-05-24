@@ -8,6 +8,10 @@ import java.util.Map;
 /* compiled from: BL */
 /* renamed from: com.bilibili.pegasus.card.base.i */
 public final class SearchCardTypeEnum {
+    /* renamed from: Z */
+    private static Map<Integer, CardTypeEnum> f47822Z = new LinkedHashMap();
+    /* renamed from: a */
+    private static SearchCardTypeEnum instants;
     /* renamed from: A */
     private static final int f47797A = "multi_item".hashCode();
     /* renamed from: B */
@@ -58,10 +62,6 @@ public final class SearchCardTypeEnum {
     private static final int f47820X = "hot_footer_empty".hashCode();
     /* renamed from: Y */
     private static final int f47821Y = "large_cover_v3".hashCode();
-    /* renamed from: Z */
-    private static Map<Integer, CardTypeEnum> f47822Z = new LinkedHashMap();
-    /* renamed from: a */
-    public static final SearchCardTypeEnum f47823a = new SearchCardTypeEnum();
     /* renamed from: b */
     private static final int f47824b = "large_cover_v1".hashCode();
     /* renamed from: c */
@@ -120,6 +120,13 @@ public final class SearchCardTypeEnum {
         }
     }
 
+    public static SearchCardTypeEnum get() {
+        synchronized (SearchCardTypeEnum.class) {
+            if(instants == null) instants = new SearchCardTypeEnum();
+            return instants;
+        }
+    }
+
     private SearchCardTypeEnum() {
     }
 
@@ -134,7 +141,7 @@ public final class SearchCardTypeEnum {
     }
 
     /* renamed from: c */
-    public final int mo56917c() {
+    public final int smallCoverV2type() {
         return f47826d;
     }
 
@@ -184,7 +191,7 @@ public final class SearchCardTypeEnum {
     }
 
     /* renamed from: m */
-    public final int mo56927m() {
+    public final int bannerV2type() {
         return f47836n;
     }
 
@@ -314,7 +321,7 @@ public final class SearchCardTypeEnum {
     }
 
     /* renamed from: M */
-    public final int mo56903M() {
+    public final int adV2type() {
         return f47810N;
     }
 
@@ -376,7 +383,6 @@ public final class SearchCardTypeEnum {
     @Nullable
     /* renamed from: a */
     public static final CardTypeEnum search(@Nullable Integer num) {
-        Map map = f47822Z;
-        return map != null ? (CardTypeEnum) map.get(num) : null;
+        return f47822Z != null ? f47822Z.get(num) : null;
     }
 }

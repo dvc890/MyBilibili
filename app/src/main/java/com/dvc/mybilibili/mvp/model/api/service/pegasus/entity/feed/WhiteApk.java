@@ -87,6 +87,10 @@ public class WhiteApk implements Parcelable {
         parcel.writeString(this.icon);
     }
 
+    public WhiteApk() {
+
+    }
+
     protected WhiteApk(Parcel parcel) {
         this.size = parcel.readLong();
         this.displayName = parcel.readString();

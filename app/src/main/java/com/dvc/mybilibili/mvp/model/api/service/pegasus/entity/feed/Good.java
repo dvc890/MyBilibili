@@ -41,6 +41,10 @@ public class Good implements Parcelable {
         return 0;
     }
 
+    public Good() {
+
+    }
+
     protected Good(Parcel parcel) {
         this.itemId = parcel.readLong();
         this.skuId = parcel.readLong();

@@ -156,6 +156,10 @@ public class VideoBean implements Parcelable {
         parcel.writeInt(this.position);
     }
 
+    public VideoBean() {
+
+    }
+
     protected VideoBean(Parcel parcel) {
         this.avid = parcel.readString();
         this.cid = parcel.readString();
