@@ -14,6 +14,44 @@
 
     <color name="nav_footer_icon_color">#999999</color>
 
+    <color name="white">#ffffff</color>
+    <color name="white98">#faffffff</color>
+    <color name="white_alpha10">#1affffff</color>
+    <color name="white_alpha11">#19ffffff</color>
+    <color name="white_alpha14">#24ffffff</color>
+    <color name="white_alpha15">#26ffffff</color>
+    <color name="white_alpha16">#29ffffff</color>
+    <color name="white_alpha20">#33ffffff</color>
+    <color name="white_alpha25">#40ffffff</color>
+    <color name="white_alpha30">#30ffffff</color>
+    <color name="white_alpha40">#66ffffff</color>
+    <color name="white_alpha41">#69ffffff</color>
+    <color name="white_alpha50">#88ffffff</color>
+    <color name="white_alpha60">#99ffffff</color>
+    <color name="white_alpha70">#b3ffffff</color>
+    <color name="white_alpha80">#ccffffff</color>
+    <color name="white_alpha90">#e6ffffff</color>
+    <color name="white_alpha_85">#85ffffff</color>
+    <color name="white_bg_block">#f7f7f6</color>
+    <color name="white_dark">#fafafa</color>
+    <color name="white_darker_1">#f2f2f2</color>
+    <color name="white_light">#fff2f7fa</color>
+    <color name="white_light_1">#f7f9fa</color>
+    <color name="white_light_bg">#f6f6f6</color>
+    <color name="white_light_bg1">#e6ebf0</color>
+    <color name="white_light_bg2">#eeeff3</color>
+    <color name="white_line_block">#dfe2e6</color>
+    <color name="white_text_block">#b9bcc0</color>
+    <color name="white_trans">#99ffffff</color>
+    <color name="white_translucent">#80ffffff</color>
+    <color name="white_translucent_60">#99ffffff</color>
+    <color name="white_transparent_30">#4dffffff</color>
+    <color name="white_transparent_32">#59ffffff</color>
+    <color name="white_transparent_70">#b2ffffff</color>
+    <color name="white_view_bg">#d3d7d9</color>
+    <color name="white_view_bg2">#dceff7</color>
+    <color name="white_view_bg3">#f4f4f4</color>
+
     <color name="black_alpha10">#16000000</color>
     <color name="black_alpha15">#26000000</color>
     <color name="black_alpha20">#33000000</color>

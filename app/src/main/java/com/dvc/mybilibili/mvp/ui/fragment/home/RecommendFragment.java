@@ -3,11 +3,13 @@ package com.dvc.mybilibili.mvp.ui.fragment.home;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.retrofit2.responseconverter.CardTypeEnum;
+import com.dvc.mybilibili.app.utils.LoadStateViewUtils;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.BasicIndexItem;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerListItem;
 import com.dvc.mybilibili.mvp.presenter.fragment.RecommendFragPresenter;
@@ -64,6 +66,7 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
 
     @Override
     protected void loadDatas() {
+        LoadStateViewUtils.showLoadingLayout(pegasusRecommendAdapter);
         loadData(true, false);
     }
 
@@ -92,10 +95,27 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
 
     @Override
     public void loadDataCompleted(List<BasicIndexItem> data) {
+        if(data.size() == 0){
+            LoadStateViewUtils.showEmptyLayout(pegasusRecommendAdapter, null);
+            return;
+        }
         pegasusRecommendAdapter.setNewData(data);
         pegasusRecommendAdapter.setEnableLoadMore(true);
         pegasusRecommendAdapter.disableLoadMoreIfNotFullPage();
         mSwipeRefreshLayout.finishRefresh();
+    }
+
+    @Override
+    public void loadFailed(int code, String msg) {
+        if(pegasusRecommendAdapter.getData().size() > 0) {
+            LoadStateViewUtils.showLoadErrorLayout(pegasusRecommendAdapter, v -> {
+                loadData(false, false);
+            });
+        } else {
+            LoadStateViewUtils.showNetErrorLayout(pegasusRecommendAdapter, v -> {
+                loadDatas();
+            });
+        }
     }
 
     @Override
@@ -105,7 +125,7 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
     }
 
     @Override
-    public void loadMoreFailed() {
+    public void loadMoreFailed(int code, String msg) {
         pegasusRecommendAdapter.loadMoreFail();
     }
 
@@ -113,25 +133,5 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
     public void noMoreData() {
         pegasusRecommendAdapter.loadMoreEnd();
         pegasusRecommendAdapter.setEnableLoadMore(false);
-    }
-
-    @Override
-    public void showLoading(boolean pullToRefresh) {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showMessage(String msg, int type) {
-
-    }
-
-    @Override
-    public void showError(String message) {
-
     }
 }

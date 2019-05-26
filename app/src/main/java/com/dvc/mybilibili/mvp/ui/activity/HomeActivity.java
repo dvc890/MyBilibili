@@ -3,9 +3,14 @@ package com.dvc.mybilibili.mvp.ui.activity;
 import android.content.Intent;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
+import android.support.design.internal.BottomNavigationMenu;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -35,6 +40,8 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
     FrameLayout contentFrameLayout;
     @BindView(R.id.bottom_navigation_bar)
     BottomNavigationBar bottomNavigationBar;
+    @BindView(R.id.nav_view)
+    NavigationView navigationView;
 
     private int selectIndex;
     private Fragment mCurrentFragment;
@@ -63,6 +70,9 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         fragmentManager = getSupportFragmentManager();
         fragmentMap = new HashMap<>();
         initBottomNavigationBar(selectIndex);
+        navigationView.addView(
+                LayoutInflater.from(this).inflate(R.layout.bili_view_navigation_footer, null,true),
+                new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
     }
 
     @Override

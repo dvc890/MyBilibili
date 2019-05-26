@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 

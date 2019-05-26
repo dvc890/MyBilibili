@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:background="@color/black" android:fitsSystemWindows="true" android:layout_width="match_parent" android:layout_height="match_parent" android:contentDescription="@string/ACD_ControllerView">
+    <FrameLayout android:background="@drawable/bg_player_screencast_tv_small" android:layout_width="227dp" android:layout_height="60dp" android:layout_centerHorizontal="true">
+        <TextView android:textSize="10sp" android:textColor="@color/gray_dark" android:layout_gravity="center" android:id="@+id/device_name" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+    </FrameLayout>
+    <LinearLayout android:orientation="horizontal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/danmaku_switch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="28dp">
+            <ImageView android:id="@+id/danmaku_image" android:background="@drawable/ic_bplayer_remote_danmaku_on" android:layout_width="28dp" android:layout_height="28dp"/>
+            <TextView android:textSize="12sp" android:textColor="@color/white" android:id="@+id/danmaku_text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/player_projection_screen_danmuku_opened"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/device_switch" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="28dp">
+            <com.airbnb.lottie.LottieAnimationView android:id="@+id/device_switch_animation_view" android:layout_width="28dp" android:layout_height="28dp" app:lottie_autoPlay="true" app:lottie_fileName="ic_player_remote_link_check.json" app:lottie_loop="true"/>
+            <ImageView android:id="@+id/device_connect_failed" android:background="@drawable/ic_bplayer_remote_device_swtich_failed" android:visibility="gone" android:layout_width="28dp" android:layout_height="28dp"/>
+            <TextView android:textSize="12sp" android:textColor="@color/white" android:id="@+id/device_switch_text_view" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/player_projection_screen_connecting"/>
+        </LinearLayout>
+        <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/quit" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="28dp">
+            <ImageView android:background="@drawable/ic_remote_search_quit" android:layout_width="28dp" android:layout_height="28dp"/>
+            <TextView android:textSize="12sp" android:textColor="@color/white" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="8dp" android:text="@string/player_projection_screen_exit"/>
+        </LinearLayout>
+    </LinearLayout>
+    <FrameLayout android:id="@+id/progress_controllers_view" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
+        <View android:id="@+id/shadow" android:background="@drawable/shape_toolbar_gradient_shadow_reverse" android:layout_width="match_parent" android:layout_height="60dp"/>
+        <LinearLayout android:gravity="center" android:layout_gravity="bottom|center_vertical|center_horizontal|center" android:orientation="horizontal" android:id="@+id/seek_bar_layout" android:background="@null" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
+            <ImageView android:id="@+id/play_pause_toggle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12dp" android:src="@drawable/bili_player_portrait_ctrl_play_pause"/>
+            <com.dvc.mybilibili.player.widget.PlayerSeekBar android:id="@+id/seek_bar" android:paddingLeft="12dp" android:paddingRight="12dp" android:layout_width="0dp" android:layout_height="wrap_content" android:maxHeight="2dp" android:progressDrawable="@drawable/bplayer_seek_pink__scrubber_horizontal" android:minHeight="2dp" android:layout_weight="1"/>
+            <TextView android:textSize="10sp" android:textStyle="bold" android:textColor="#ffffff" android:gravity="center" android:layout_gravity="center" android:id="@+id/portrait_time" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+            <ImageView android:id="@+id/landscape_portrait_toggle" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="4dp" android:src="@drawable/ic_player_portrait_fullscreen"/>
+        </LinearLayout>
+    </FrameLayout>
+</RelativeLayout>

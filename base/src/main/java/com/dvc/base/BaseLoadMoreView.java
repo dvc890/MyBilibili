@@ -10,7 +10,9 @@ public interface BaseLoadMoreView<T> extends BaseView {
 
     void loadDataCompleted(List<T> data);
 
-    void loadMoreFailed();
+    void loadFailed(int code, String msg);
+
+    void loadMoreFailed(int code, String msg);
 
     void noMoreData();
 }

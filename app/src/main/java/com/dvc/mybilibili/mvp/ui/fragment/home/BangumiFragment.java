@@ -54,24 +54,4 @@ public class BangumiFragment extends MvpBaseFragment<BangumiFragView, BangumiFra
     protected void loadDatas() {
 
     }
-
-    @Override
-    public void showLoading(boolean pullToRefresh) {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showMessage(String msg, int type) {
-
-    }
-
-    @Override
-    public void showError(String message) {
-
-    }
 }

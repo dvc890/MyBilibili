@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/vertically_bars_group" android:focusable="false" android:focusableInTouchMode="false" android:fitsSystemWindows="true" android:clickable="false" android:layout_width="match_parent" android:layout_height="match_parent">
+    <LinearLayout android:orientation="horizontal" android:id="@+id/brightness_bar" android:background="@drawable/xplayer_shape_roundrect_black_alpha30" android:paddingLeft="16dp" android:paddingTop="12dp" android:paddingRight="16dp" android:paddingBottom="12dp" android:focusable="false" android:focusableInTouchMode="false" android:clickable="false" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_centerInParent="true">
+        <ImageView android:focusable="false" android:focusableInTouchMode="false" android:clickable="false" android:layout_width="30dp" android:layout_height="30dp" android:layout_marginRight="12dp" android:src="@drawable/xplayer_ic_brightness_2" android:contentDescription="@null"/>
+        <SeekBar android:layout_gravity="center" android:id="@+id/brightness_level" android:padding="0dp" android:focusable="false" android:focusableInTouchMode="false" android:clickable="false" android:layout_width="120dp" android:layout_height="2dp" android:maxHeight="2dp" android:progressDrawable="@drawable/xplayer_seek_pink__scrubber_horizontal" android:minHeight="2dp" android:thumb="@null"/>
+    </LinearLayout>
+</RelativeLayout>

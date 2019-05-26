@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <!--<com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer-->
+    <com.dvc.mybilibili.player.BiliVideoPlayer
+        android:id="@+id/bilivideoplayer"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animation_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_fileName="anim/player_seek_bar_tv_1.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:lottie_fileName="anim/player_seek_bar_tv_2.json"
+        app:lottie_loop="true"
+        app:lottie_autoPlay="true" />
+
+    <!--<com.opensource.svgaplayer.SVGAImageView-->
+        <!--android:id="@+id/animation_view2"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_width="match_parent"-->
+        <!--app:source="anim/camera_live_loading_land.svga"-->
+        <!--app:autoPlay="true"-->
+        <!--android:background="#000" />-->
+
+</LinearLayout>

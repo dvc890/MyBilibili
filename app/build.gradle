@@ -51,6 +51,13 @@ dependencies {
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 ////    下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-24'
+////    GSYVideoPlayer
+    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.3' //高版本需要AndroidX
+    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.3'
+////    lottie
+    implementation 'com.airbnb.android:lottie:2.7.0'//更高版本要用AndroidX
+////    SVGAPlayer
+//    implementation 'com.github.yyued:SVGAPlayer-Android:2.4.4'
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$parent.ext.daggerVersion"

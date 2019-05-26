@@ -68,9 +68,9 @@ public class RecommendFragPresenter extends MvpBasePresenter<RecommendFragView> 
                     public void onError(BiliApiException apiException, int code) {
                         ifViewAttached(view -> {
                             if(pull) {
-
+                                view.loadFailed(code, apiException.getMessage());
                             }else {
-                                view.loadMoreFailed();
+                                view.loadMoreFailed(code, apiException.getMessage());
                             }
                         });
                     }

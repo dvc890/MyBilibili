@@ -37,7 +37,7 @@ public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> 
     }
 
     @Override
-    public void loadMoreFailed() {
+    public void loadMoreFailed(int code, String msg) {
 
     }
 
@@ -62,22 +62,7 @@ public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> 
     }
 
     @Override
-    public void showLoading(boolean pullToRefresh) {
-
-    }
-
-    @Override
-    public void showContent() {
-
-    }
-
-    @Override
-    public void showMessage(String msg, int type) {
-
-    }
-
-    @Override
-    public void showError(String message) {
+    public void loadFailed(int code, String msg) {
 
     }
 }
