@@ -34,6 +34,9 @@ public class ChargeRankResult implements Parcelable {
     @JSONField(name = "start")
     public long start;
 
+    public ChargeRankResult() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.comm.charge.api.ChargeRankResult$1 */
     static class C21781 implements Creator<ChargeRankResult> {

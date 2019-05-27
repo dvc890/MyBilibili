@@ -15,6 +15,9 @@ public class BangumiStatus implements Parcelable {
     @JSONField(name = "views")
     public int views;
 
+    public BangumiStatus() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.review.BangumiStatus$1 */
     static class C18441 implements Creator<BangumiStatus> {

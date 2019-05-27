@@ -19,6 +19,9 @@ public class BangumiTag implements Parcelable {
     public String name;
     public String type;
 
+    public BangumiTag() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiTag$1 */
     static class C18311 implements Creator<BangumiTag> {

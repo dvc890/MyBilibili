@@ -21,6 +21,9 @@ public class BiliLiveChestLotteryActivityData implements Parcelable {
     @JSONField(name = "title")
     public String mTitle;
 
+    public BiliLiveChestLotteryActivityData() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveChestLotteryActivityData$1 */
     static class C20041 implements Creator<BiliLiveChestLotteryActivityData> {

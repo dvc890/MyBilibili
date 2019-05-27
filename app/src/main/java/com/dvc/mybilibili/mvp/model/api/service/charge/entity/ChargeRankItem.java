@@ -47,6 +47,9 @@ public class ChargeRankItem implements Parcelable {
     @JSONField(name = "vip_info")
     public VipUserInfo vipInfo;
 
+    public ChargeRankItem() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.comm.charge.api.ChargeRankItem$1 */
     static class C21771 implements Creator<ChargeRankItem> {

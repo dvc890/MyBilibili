@@ -21,6 +21,9 @@ public class BiliLiveAllBeats implements Parcelable {
     @JSONField(name = "public")
     public ArrayList<BeatsPublic> mPublicBeats;
 
+    public BiliLiveAllBeats() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class BeatsConfig implements Parcelable {
@@ -33,6 +36,9 @@ public class BiliLiveAllBeats implements Parcelable {
         public String mMsgEnd;
         @JSONField(name = "title")
         public String mTitle;
+
+        public BeatsConfig() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveAllBeats$BeatsConfig$1 */
@@ -81,6 +87,9 @@ public class BiliLiveAllBeats implements Parcelable {
         @JSONField(name = "svip")
         public boolean mSvip;
 
+        public BeatsInfo() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveAllBeats$BeatsInfo$1 */
         static class C19951 implements Creator<BeatsInfo> {
@@ -126,6 +135,9 @@ public class BiliLiveAllBeats implements Parcelable {
         @JSONField(name = "status")
         public int mStatus;
 
+        public BeatsPrivate() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveAllBeats$BeatsPrivate$1 */
         static class C19961 implements Creator<BeatsPrivate> {
@@ -166,6 +178,9 @@ public class BiliLiveAllBeats implements Parcelable {
         public String mContent;
         @JSONField(name = "id")
         public String mId;
+
+        public BeatsPublic() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveAllBeats$BeatsPublic$1 */

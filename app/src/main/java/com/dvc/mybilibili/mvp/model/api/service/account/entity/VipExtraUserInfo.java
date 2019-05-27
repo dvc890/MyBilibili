@@ -20,6 +20,9 @@ public class VipExtraUserInfo implements Parcelable {
     @JSONField(name = "vipType")
     public int vipType;
 
+    public VipExtraUserInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.VipExtraUserInfo$1 */
     static class C22031 implements Creator<VipExtraUserInfo> {

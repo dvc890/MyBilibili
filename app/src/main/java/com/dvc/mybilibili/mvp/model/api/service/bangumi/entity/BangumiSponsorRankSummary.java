@@ -25,6 +25,9 @@ public class BangumiSponsorRankSummary implements Parcelable {
     @JSONField(name = "point_activity")
     public BangumiSponsorEvent sponsorActivity;
 
+    public BangumiSponsorRankSummary() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiSponsorRankSummary$1 */
     static class C18281 implements Creator<BangumiSponsorRankSummary> {

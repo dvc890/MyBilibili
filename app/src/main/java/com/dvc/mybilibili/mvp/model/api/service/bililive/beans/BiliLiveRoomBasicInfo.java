@@ -95,6 +95,9 @@ public class BiliLiveRoomBasicInfo {
         @JSONField(name = "mobile_frame")
         public Pendant mMobileFrame;
 
+        public NewPendants() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomBasicInfo$NewPendants$1 */
         static class C20231 implements Creator<NewPendants> {

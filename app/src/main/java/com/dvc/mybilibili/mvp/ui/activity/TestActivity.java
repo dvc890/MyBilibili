@@ -2,10 +2,16 @@ package com.dvc.mybilibili.mvp.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 
 import com.airbnb.lottie.LottieAnimationView;
+import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
+import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -59,8 +65,19 @@ public class TestActivity extends DaggerAppCompatActivity {
     }
 
     private void testVideoI() {
-        videoApiService.getVideoDetails(new VideoApiService.VideoParamsMap.create(52013415).setFrom("7").setFromSpmid("tm.recommend.0.0").setSpmid("main.ugc-video-detail.0.0").setTrackId("all_12.shylf-ai-recsys-87.1558951192310.719").setAutoPlay("0").build(), null)
-        .subscribe();
+        videoApiService.getVideoDetails(new VideoApiService.VideoParamsMap.create(51945879).setFrom("7").setFromSpmid("tm.recommend.0.0").setSpmid("main.ugc-video-detail.0.0").setTrackId("all_12.shylf-ai-recsys-87.1558955694804.68").setAutoPlay("0").build(), null)
+                .compose(RxSchedulersHelper.ioAndMainThread())
+        .subscribe(new ObserverCallback<GeneralResponse<BiliVideoDetail>>() {
+            @Override
+            public void onSuccess(GeneralResponse<BiliVideoDetail> biliVideoDetailGeneralResponse) {
+                Log.d("d", biliVideoDetailGeneralResponse.toString());
+            }
+
+            @Override
+            public void onError(BiliApiException apiException, int code) {
+                apiException.printStackTrace();
+            }
+        });
     }
 
 //    @Override

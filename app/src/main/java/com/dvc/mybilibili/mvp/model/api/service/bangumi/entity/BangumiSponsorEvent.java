@@ -18,6 +18,9 @@ public class BangumiSponsorEvent implements Parcelable {
     /* renamed from: c */
     public String f5644c;
 
+    public BangumiSponsorEvent() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiSponsorEvent$1 */
     static class C18251 implements Creator<BangumiSponsorEvent> {

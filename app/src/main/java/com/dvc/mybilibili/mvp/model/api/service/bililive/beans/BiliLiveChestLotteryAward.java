@@ -25,6 +25,9 @@ public class BiliLiveChestLotteryAward implements Parcelable, Cloneable {
     @JSONField(name = "status")
     public int mStatus;
 
+    public BiliLiveChestLotteryAward() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveChestLotteryAward$1 */
     static class C20051 implements Creator<BiliLiveChestLotteryAward> {

@@ -21,6 +21,9 @@ public class BiliBangumiTag implements Parcelable {
     @JSONField(name = "type")
     public String mType;
 
+    public BiliBangumiTag() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BiliBangumiTag$1 */
     static class C18431 implements Creator<BiliBangumiTag> {

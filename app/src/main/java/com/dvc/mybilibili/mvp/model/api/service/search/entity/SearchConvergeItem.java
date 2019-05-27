@@ -98,6 +98,10 @@ public class SearchConvergeItem extends BaseSearchItem {
             parcel.writeInt(this.online);
         }
 
+        public Media() {
+
+        }
+
         protected Media(Parcel parcel) {
             this.title = parcel.readString();
             this.cover = parcel.readString();

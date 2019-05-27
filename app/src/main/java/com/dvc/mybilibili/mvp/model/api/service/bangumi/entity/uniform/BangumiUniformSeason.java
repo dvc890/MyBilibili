@@ -76,6 +76,9 @@ public class BangumiUniformSeason implements Parcelable {
     @JSONField(name = "user_status")
     public BangumiUserStatus userStatus;
 
+    public BangumiUniformSeason() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class MusicMenu implements Parcelable {
@@ -91,6 +94,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "play_num")
         public int playNum;
         public String title;
+
+        public MusicMenu() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$MusicMenu$1 */
@@ -162,6 +168,9 @@ public class BangumiUniformSeason implements Parcelable {
         public int duration;
         public int type;
         public int url;
+
+        public Paster() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Paster$1 */
@@ -269,6 +278,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "type")
         public String type;
 
+        public PayDialogButton() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$PayDialogButton$1 */
         static class C18801 implements Creator<PayDialogButton> {
@@ -335,6 +347,9 @@ public class BangumiUniformSeason implements Parcelable {
         public String vipPromotionBadge;
         public boolean vipSwitchOpen = true;
 
+        public Payment() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Payment$1 */
         static class C18811 implements Creator<Payment> {
@@ -386,6 +401,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "allow_ticket")
         public boolean allowTicket;
 
+        public PaymentType() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$PaymentType$1 */
         static class C18821 implements Creator<PaymentType> {
@@ -434,6 +452,9 @@ public class BangumiUniformSeason implements Parcelable {
         public String pubTime;
         @JSONField(name = "pub_time_show")
         public String pubTimeShow;
+
+        public Publish() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Publish$1 */
@@ -491,6 +512,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "is_preview")
         public boolean isPreview;
 
+        public Right() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Right$1 */
         static class C18841 implements Creator<Right> {
@@ -545,6 +569,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "series_title")
         public String title;
 
+        public Series() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Series$1 */
         static class C18851 implements Creator<Series> {
@@ -595,6 +622,9 @@ public class BangumiUniformSeason implements Parcelable {
         public long share;
         @JSONField(name = "views")
         public long views;
+
+        public Stat() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$Stat$1 */
@@ -655,6 +685,9 @@ public class BangumiUniformSeason implements Parcelable {
         @JSONField(name = "verify_type")
         public int verifyType;
 
+        public UpInfo() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$UpInfo$1 */
         static class C18871 implements Creator<UpInfo> {
@@ -707,6 +740,9 @@ public class BangumiUniformSeason implements Parcelable {
         public String url1;
         @JSONField(name = "url2")
         public String url2;
+
+        public VideoPlayerIcon() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$VideoPlayerIcon$1 */
@@ -767,6 +803,9 @@ public class BangumiUniformSeason implements Parcelable {
         public String content = "";
         public String image = "";
 
+        public BangumiSeasonLimit() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$BangumiSeasonLimit$1 */
         static class C18901 implements Creator<BangumiSeasonLimit> {
@@ -808,6 +847,9 @@ public class BangumiUniformSeason implements Parcelable {
         public String link;
         public String title = "";
         public String type = "";
+
+        public LimitButton() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.uniform.BangumiUniformSeason$LimitButton$1 */

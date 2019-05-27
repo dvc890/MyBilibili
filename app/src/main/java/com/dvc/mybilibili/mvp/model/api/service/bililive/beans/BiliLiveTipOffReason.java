@@ -15,6 +15,9 @@ public class BiliLiveTipOffReason implements Parcelable {
     @JSONField(name = "id")
     public int mReasonId;
 
+    public BiliLiveTipOffReason() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveTipOffReason$1 */
     static class C20461 implements Creator<BiliLiveTipOffReason> {

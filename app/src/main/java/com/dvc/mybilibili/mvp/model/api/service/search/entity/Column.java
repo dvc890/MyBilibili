@@ -38,6 +38,9 @@ public class Column implements Parcelable {
     public String uri;
     public long view;
 
+    public Column() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.search.api.Column$1 */
     static class C22741 implements Creator<Column> {

@@ -21,6 +21,9 @@ public class BiliLiveNewArea implements Parcelable {
     @JSONField(name = "name")
     public String name;
 
+    public BiliLiveNewArea() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class SubArea implements Parcelable {
@@ -52,6 +55,9 @@ public class BiliLiveNewArea implements Parcelable {
         @Nullable
         @JSONField(name = "pic")
         public String pic;
+
+        public SubArea() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveNewArea$SubArea$1 */

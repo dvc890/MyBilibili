@@ -23,6 +23,9 @@ public class BangumiRecommend implements Parcelable {
     public String title;
     public String wid;
 
+    public BangumiRecommend() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiRecommend$1 */
     static class C18241 implements Creator<BangumiRecommend> {

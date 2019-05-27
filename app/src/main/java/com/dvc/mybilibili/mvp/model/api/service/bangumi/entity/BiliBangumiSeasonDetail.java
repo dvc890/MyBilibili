@@ -38,6 +38,9 @@ public class BiliBangumiSeasonDetail extends BiliBangumiSeason {
         @JSONField(name = "title")
         public String mTitle;
 
+        public Activity() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeasonDetail$Activity$1 */
         static class C18411 implements Creator<Activity> {
@@ -82,6 +85,9 @@ public class BiliBangumiSeasonDetail extends BiliBangumiSeason {
         public boolean mArealimit;
         @JSONField(name = "is_started")
         public boolean mIsStarted;
+
+        public Rights() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeasonDetail$Rights$1 */
@@ -145,6 +151,9 @@ public class BiliBangumiSeasonDetail extends BiliBangumiSeason {
         public String name;
         public String pid;
 
+        public Pendant() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeasonDetail$Pendant$1 */
         static class C29681 implements Creator<Pendant> {
@@ -189,6 +198,9 @@ public class BiliBangumiSeasonDetail extends BiliBangumiSeason {
         public String f8693id;
         public List<Pendant> pendants;
         public List<BangumiThreshold> threshold;
+
+        public PendantActivity() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeasonDetail$PendantActivity$1 */

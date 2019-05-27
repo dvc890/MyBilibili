@@ -7,6 +7,7 @@ import android.support.multidex.MultiDex;
 import com.dvc.base.net.NetWorkStatusManager;
 import com.dvc.mybilibili.di.component.DaggerAppComponent;
 import com.dvc.mybilibili.mvp.model.DataManager;
+import com.dvc.mybilibili.mvp.model.account.IAccountHelper;
 import com.dvc.mybilibili.mvp.ui.widget.CustomRefreshHeader;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshHeaderCreator;
@@ -40,19 +41,17 @@ public class BiliApplication extends DaggerApplication {
         return get().dataManager;
     }
 
+    public static IAccountHelper getUser() {
+        return get().dataManager.getUser();
+    }
+
     public static NetWorkStatusManager getNetWorkStatusManager() {
         return get().netWorkStatusManager;
     }
 
     static {
         //预设下拉刷新控件样式
-        SmartRefreshLayout.setDefaultRefreshHeaderCreator(new DefaultRefreshHeaderCreator() {
-            @NonNull
-            @Override
-            public RefreshHeader createRefreshHeader(@NonNull Context context, @NonNull RefreshLayout layout) {
-                return new CustomRefreshHeader(context);
-            }
-        });
+        SmartRefreshLayout.setDefaultRefreshHeaderCreator((context, layout) -> new CustomRefreshHeader(context));
     }
 
     @Override

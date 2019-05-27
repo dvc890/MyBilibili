@@ -96,12 +96,13 @@ public class CommonInterceptor implements Interceptor {
 //            authorizedUrlBuilder.addQueryParameter("sign", getSign(/*SignedQuery.a*/(oldRequest.url().url().getQuery()+"&"+SignedQuery.r(paramsMap))));
             Map<String,String> tempMap = urlQueryParameterToMap(oldRequest.url());
             tempMap.putAll(paramsMap);
-            String signString = LibBili.m8854a(paramsMap).b;
-            authorizedUrlBuilder.addQueryParameter("sign", signString);
-            tempMap.clear();
+//            String signString = LibBili.m8854a(paramsMap).b;
+//            authorizedUrlBuilder.addQueryParameter("sign", signString);
+//            tempMap.clear();
             return chain.proceed(
                     oldRequest.newBuilder()
-                            .url(authorizedUrlBuilder.build())
+                            .url(url.newBuilder().encodedQuery(LibBili.m8854a(tempMap).toString()).build())
+//                            .url(authorizedUrlBuilder.build())
                             .build()
             );
         }
@@ -122,6 +123,7 @@ public class CommonInterceptor implements Interceptor {
         for(int i = 0; i < url.querySize(); i++){
             map.put(url.queryParameterName(i), url.queryParameterValue(i));
         }
+
         return map;
     }
 

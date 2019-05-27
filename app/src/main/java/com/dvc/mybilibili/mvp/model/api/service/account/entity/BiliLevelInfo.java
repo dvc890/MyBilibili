@@ -23,6 +23,9 @@ public class BiliLevelInfo implements Parcelable {
     /* renamed from: d */
     public String f6229d;
 
+    public BiliLevelInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.BiliLevelInfo$1 */
     static class C21991 implements Creator<BiliLevelInfo> {

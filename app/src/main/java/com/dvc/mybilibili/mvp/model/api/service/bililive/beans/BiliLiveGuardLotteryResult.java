@@ -32,6 +32,9 @@ public class BiliLiveGuardLotteryResult implements Parcelable {
     @JSONField(name = "type")
     public String mType;
 
+    public BiliLiveGuardLotteryResult() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class AwardList implements Parcelable {
@@ -42,6 +45,9 @@ public class BiliLiveGuardLotteryResult implements Parcelable {
         public String mName;
         @JSONField(name = "type")
         public String mType;
+
+        public AwardList() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveGuardLotteryResult$AwardList$1 */

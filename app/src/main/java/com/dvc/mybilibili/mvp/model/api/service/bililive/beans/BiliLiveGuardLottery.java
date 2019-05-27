@@ -33,6 +33,9 @@ public class BiliLiveGuardLottery implements Parcelable {
     @JSONField(name = "time")
     public int mTime;
 
+    public BiliLiveGuardLottery() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class Sender implements Parcelable {
@@ -43,6 +46,9 @@ public class BiliLiveGuardLottery implements Parcelable {
         public long mUid;
         @JSONField(name = "uname")
         public String mUname;
+
+        public Sender() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveGuardLottery$Sender$1 */

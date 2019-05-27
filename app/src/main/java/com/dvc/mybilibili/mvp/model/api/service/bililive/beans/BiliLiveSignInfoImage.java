@@ -17,6 +17,9 @@ public class BiliLiveSignInfoImage implements Parcelable {
     @JSONField(name = "width")
     public int width;
 
+    public BiliLiveSignInfoImage() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveSignInfoImage$1 */
     static class C20441 implements Creator<BiliLiveSignInfoImage> {

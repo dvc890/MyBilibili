@@ -57,6 +57,9 @@ public class SearchResultAll {
         public int total;
         public int type;
 
+        public NavInfo() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.search.api.SearchResultAll$NavInfo$1 */
         static class C22761 implements Creator<NavInfo> {

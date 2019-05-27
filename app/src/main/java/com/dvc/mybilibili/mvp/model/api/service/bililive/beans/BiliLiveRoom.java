@@ -43,6 +43,9 @@ public class BiliLiveRoom implements Parcelable {
     @JSONField(name = "uname")
     public String mUname;
 
+    public BiliLiveRoom() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoom$1 */
     static class C20211 implements Creator<BiliLiveRoom> {

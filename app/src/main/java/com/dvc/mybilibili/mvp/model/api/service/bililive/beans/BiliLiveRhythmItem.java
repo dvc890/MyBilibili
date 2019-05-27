@@ -38,6 +38,10 @@ public class BiliLiveRhythmItem implements Parcelable {
         return 0;
     }
 
+    public BiliLiveRhythmItem() {
+
+    }
+
     protected BiliLiveRhythmItem(Parcel parcel) {
         this.mId = parcel.readString();
         this.mContent = parcel.readString();

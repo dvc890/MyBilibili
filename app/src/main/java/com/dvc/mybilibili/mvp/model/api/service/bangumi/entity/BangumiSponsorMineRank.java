@@ -19,6 +19,9 @@ public class BangumiSponsorMineRank implements Parcelable {
     @JSONField(name = "rank")
     public int mRank;
 
+    public BangumiSponsorMineRank() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiSponsorMineRank$1 */
     static class C18261 implements Creator<BangumiSponsorMineRank> {

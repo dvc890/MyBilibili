@@ -13,6 +13,9 @@ public class InviteInfo implements Parcelable {
     private boolean display;
     private int invite_remind;
 
+    public InviteInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.InviteInfo$1 */
     static class C22001 implements Creator<InviteInfo> {

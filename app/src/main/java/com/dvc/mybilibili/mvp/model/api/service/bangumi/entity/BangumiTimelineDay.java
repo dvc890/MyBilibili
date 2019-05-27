@@ -29,6 +29,9 @@ public class BangumiTimelineDay implements Parcelable {
     /* renamed from: f */
     public int f5651f = -1;
 
+    public BangumiTimelineDay() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiTimelineDay$1 */
     static class C18331 implements Creator<BangumiTimelineDay> {

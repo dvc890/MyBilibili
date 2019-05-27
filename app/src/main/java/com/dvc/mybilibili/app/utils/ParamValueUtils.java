@@ -13,7 +13,7 @@ public class ParamValueUtils {
     }
 
     public static int getForceHost() {
-        int force_host = 1;//1:2:0
+        int force_host = 0;//1:2:0
         return force_host;
     }
 

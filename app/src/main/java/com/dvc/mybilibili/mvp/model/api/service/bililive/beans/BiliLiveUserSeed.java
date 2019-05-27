@@ -53,6 +53,9 @@ public class BiliLiveUserSeed {
         @JSONField(name = "medal_name")
         public String mMedalName;
 
+        public Medal() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveUserSeed$Medal$1 */
         static class C20491 implements Creator<Medal> {

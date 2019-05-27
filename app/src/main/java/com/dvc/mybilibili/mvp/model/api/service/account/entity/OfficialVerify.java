@@ -19,6 +19,9 @@ public class OfficialVerify implements Parcelable {
     @JSONField(name = "type")
     public int type;
 
+    public OfficialVerify() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.OfficialVerify$1 */
     static class C22021 implements Creator<OfficialVerify> {

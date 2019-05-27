@@ -38,14 +38,18 @@ public class BaseIntercept implements Iintercept{
     @Override
     public void putParams(Map<String, String> map) {
         map.put("platform", "android");
-        map.put("mobi_app", "android"/*C1793a.m7867e()*/);//
+        map.put("mobi_app", "android");//
         map.put("appkey", LibBili.getAndroidAppKey());
         map.put("build", String.valueOf(5410000));
         map.put("channel", "master");
-//        Map f = mo7410e();
-//        if (f != null) {
-//            map.putAll(f);
-//        }
+        try {
+            map.put("statistics", new JSONObject().put("appId", 1)
+                    .put("platform", 3)
+                    .put("version", "5.41.0")
+                    .put("abtest", "506_734_728").toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
     }
 
 //    public Map<String, String> mo7410e() {

@@ -28,6 +28,9 @@ public class OwnerExt implements Parcelable {
     @JSONField(name = "vip")
     public VipExtraUserInfo vipInfo;
 
+    public OwnerExt() {
+    }
+
     /* compiled from: BL */
     /* renamed from: tv.danmaku.bili.ui.video.api.OwnerExt$1 */
     static class C24751 implements Creator<OwnerExt> {

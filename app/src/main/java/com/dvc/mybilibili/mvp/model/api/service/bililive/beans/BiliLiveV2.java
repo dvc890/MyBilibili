@@ -110,6 +110,9 @@ public class BiliLiveV2 implements Parcelable {
         public int height;
         public int width;
 
+        public CoverSize() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveV2$CoverSize$1 */
         static class C20511 implements Creator<CoverSize> {

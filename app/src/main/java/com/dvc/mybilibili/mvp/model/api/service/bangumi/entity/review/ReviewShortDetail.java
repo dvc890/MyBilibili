@@ -39,6 +39,9 @@ public class ReviewShortDetail implements Parcelable {
     /* renamed from: j */
     public boolean f5714j;
 
+    public ReviewShortDetail() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.review.ReviewShortDetail$1 */
     static class C18641 implements Creator<ReviewShortDetail> {

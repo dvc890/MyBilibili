@@ -19,6 +19,9 @@ public class BiliLiveRhythmData implements Parcelable {
     @JSONField(name = "svip")
     public boolean mSvip;
 
+    public BiliLiveRhythmData() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRhythmData$1 */
     static class C20191 implements Creator<BiliLiveRhythmData> {

@@ -51,6 +51,9 @@ public class BiliLiveLotteryInfo {
         public String mType;
         public long mWaitSystemTime;
 
+        public Lottery() {
+        }
+
         @Keep
         /* compiled from: BL */
         public static class FromUser implements Parcelable {
@@ -59,6 +62,9 @@ public class BiliLiveLotteryInfo {
             public String mFace;
             @JSONField(name = "uname")
             public String mUname;
+
+            public FromUser() {
+            }
 
             /* compiled from: BL */
             /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.lottery.BiliLiveLotteryInfo$Lottery$FromUser$1 */

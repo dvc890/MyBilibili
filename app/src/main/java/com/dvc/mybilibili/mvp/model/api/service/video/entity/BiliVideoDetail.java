@@ -51,7 +51,7 @@ public class BiliVideoDetail implements Parcelable {
     public JSONObject extra;
     @JSONField(name = "id")
     /* renamed from: id */
-    public long f6658id;
+    public long id;
     @JSONField(name = "is_ad")
     public boolean isAd;
     @JSONField(name = "is_ad_loc")
@@ -182,6 +182,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "upper_id")
         public int upperId;
 
+        public Audio() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Audio$1 */
         static class C24511 implements Creator<Audio> {
@@ -246,6 +249,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "weekday")
         public int mWeekday;
 
+        public BangumiInfo() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$BangumiInfo$1 */
         static class C24521 implements Creator<BangumiInfo> {
@@ -296,6 +302,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "title")
         public String title;
 
+        public Bgm() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Bgm$1 */
         static class C24531 implements Creator<Bgm> {
@@ -341,6 +350,9 @@ public class BiliVideoDetail implements Parcelable {
         public String title;
         @JSONField(name = "uri")
         public String uri;
+
+        public Button() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Button$1 */
@@ -388,6 +400,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "title")
         public String title;
 
+        public Contribute() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Contribute$1 */
         static class C24551 implements Creator<Contribute> {
@@ -433,6 +448,9 @@ public class BiliVideoDetail implements Parcelable {
         public boolean closed;
         @JSONField(name = "real_name")
         public boolean realName;
+
+        public C2456DM() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$DM$1 */
@@ -482,6 +500,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "width")
         public int width;
 
+        public Dimension() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Dimension$1 */
         static class C24581 implements Creator<Dimension> {
@@ -526,6 +547,9 @@ public class BiliVideoDetail implements Parcelable {
         public int f6651id;
         @JSONField(name = "reason_name")
         public String name;
+
+        public DislikeReason() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$DislikeReason$1 */
@@ -574,6 +598,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "title")
         public String title;
 
+        public DislikeReasonV2() {
+        }
+
         @Keep
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$DislikeReasonV2$ReasonItem */
@@ -591,6 +618,9 @@ public class BiliVideoDetail implements Parcelable {
             public int rid;
             @JSONField(name = "tag_id")
             public int tagTd;
+
+            public ReasonItem() {
+            }
 
             /* compiled from: BL */
             /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$DislikeReasonV2$ReasonItem$1 */
@@ -674,6 +704,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "progress")
         public long progress;
 
+        public History() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$History$1 */
         static class C24621 implements Creator<History> {
@@ -717,6 +750,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "uri")
         public String uri;
 
+        public Label() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Label$1 */
         static class C24631 implements Creator<Label> {
@@ -758,6 +794,9 @@ public class BiliVideoDetail implements Parcelable {
         public String desc;
         @JSONField(name = "type")
         public String type;
+
+        public OfficialVerify() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$OfficialVerify$1 */
@@ -885,19 +924,23 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "weblink")
         public String mWebLink;
 
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Page$Meta */
         public static class Meta implements Parcelable, Cloneable {
             public static final Creator<Meta> CREATOR = new C24661();
             @JSONField(name = "quality")
             /* renamed from: a */
-            public int f6653a;
+            public int quality;
             @JSONField(name = "format")
             /* renamed from: b */
-            public String f6654b;
+            public String format;
             @JSONField(name = "size")
             /* renamed from: c */
-            public long f6655c;
+            public long size;
+
+            public Meta() {
+            }
 
             /* compiled from: BL */
             /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Page$Meta$1 */
@@ -921,15 +964,15 @@ public class BiliVideoDetail implements Parcelable {
             }
 
             public void writeToParcel(Parcel parcel, int i) {
-                parcel.writeInt(this.f6653a);
-                parcel.writeString(this.f6654b);
-                parcel.writeLong(this.f6655c);
+                parcel.writeInt(this.quality);
+                parcel.writeString(this.format);
+                parcel.writeLong(this.size);
             }
 
             protected Meta(Parcel parcel) {
-                this.f6653a = parcel.readInt();
-                this.f6654b = parcel.readString();
-                this.f6655c = parcel.readLong();
+                this.quality = parcel.readInt();
+                this.format = parcel.readString();
+                this.size = parcel.readLong();
             }
         }
 
@@ -967,8 +1010,8 @@ public class BiliVideoDetail implements Parcelable {
                 return 0;
             }
             for (Meta meta : this.mMetas) {
-                if (meta.f6653a == i) {
-                    return meta.f6655c;
+                if (meta.quality == i) {
+                    return meta.size;
                 }
             }
             return 0;
@@ -994,6 +1037,8 @@ public class BiliVideoDetail implements Parcelable {
             parcel.writeParcelable(this.f6656dm, i);
             parcel.writeParcelable(this.mDimension, i);
         }
+
+        public Page() {}
 
         protected Page(Parcel parcel) {
             this.mCid = parcel.readInt();
@@ -1065,6 +1110,8 @@ public class BiliVideoDetail implements Parcelable {
             parcel.writeInt(this.coin);
         }
 
+        public RequestUser() {}
+
         protected RequestUser(Parcel parcel) {
             this.mAttention = parcel.readInt();
             this.mFavorite = parcel.readByte() != (byte) 0;
@@ -1091,6 +1138,8 @@ public class BiliVideoDetail implements Parcelable {
         public boolean mCanMovie;
         @JSONField(name = "no_reprint")
         public boolean noReprint;
+
+        public Rights() {}
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Rights$1 */
@@ -1153,6 +1202,9 @@ public class BiliVideoDetail implements Parcelable {
         public String title;
         @JSONField(name = "vip")
         public VipExtraUserInfo vipInfo;
+
+        public Staff() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Staff$1 */
@@ -1220,6 +1272,9 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "share")
         public int mShares;
 
+        public Stat() {
+        }
+
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Stat$1 */
         static class C24711 implements Creator<Stat> {
@@ -1280,14 +1335,16 @@ public class BiliVideoDetail implements Parcelable {
         @JSONField(name = "hates")
         public int hateNum;
         @JSONField(name = "tag_id")
-        /* renamed from: id */
-        public int f6657id;
+        public int id;
         @JSONField(name = "is_activity")
         public int isActivity;
         @JSONField(name = "likes")
         public int likeNum;
         @JSONField(name = "tag_name")
         public String name;
+
+        public Tag() {
+        }
 
         /* compiled from: BL */
         /* renamed from: tv.danmaku.bili.ui.video.api.BiliVideoDetail$Tag$1 */
@@ -1311,14 +1368,14 @@ public class BiliVideoDetail implements Parcelable {
         }
 
         public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeInt(this.f6657id);
+            parcel.writeInt(this.id);
             parcel.writeString(this.name);
             parcel.writeInt(this.likeNum);
             parcel.writeInt(this.hateNum);
         }
 
         protected Tag(Parcel parcel) {
-            this.f6657id = parcel.readInt();
+            this.id = parcel.readInt();
             this.name = parcel.readString();
             this.likeNum = parcel.readInt();
             this.hateNum = parcel.readInt();
@@ -1405,7 +1462,7 @@ public class BiliVideoDetail implements Parcelable {
         this.clientIp = parcel.readString();
         this.serverType = parcel.readLong();
         this.resourceId = parcel.readLong();
-        this.f6658id = parcel.readLong();
+        this.id = parcel.readLong();
         this.adIndex = parcel.readLong();
         this.cardIndex = parcel.readLong();
         this.mButton = (Button) parcel.readParcelable(Button.class.getClassLoader());
@@ -1470,7 +1527,7 @@ public class BiliVideoDetail implements Parcelable {
         parcel.writeString(this.clientIp);
         parcel.writeLong(this.serverType);
         parcel.writeLong(this.resourceId);
-        parcel.writeLong(this.f6658id);
+        parcel.writeLong(this.id);
         parcel.writeLong(this.adIndex);
         parcel.writeLong(this.cardIndex);
         parcel.writeParcelable(this.mButton, i);

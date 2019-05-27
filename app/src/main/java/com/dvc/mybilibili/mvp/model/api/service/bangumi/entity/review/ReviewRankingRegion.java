@@ -15,6 +15,9 @@ public class ReviewRankingRegion implements Parcelable {
     /* renamed from: b */
     public String f5704b;
 
+    public ReviewRankingRegion() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.review.ReviewRankingRegion$1 */
     static class C18631 implements Creator<ReviewRankingRegion> {

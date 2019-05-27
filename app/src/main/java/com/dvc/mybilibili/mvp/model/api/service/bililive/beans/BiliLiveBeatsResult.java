@@ -15,6 +15,9 @@ public class BiliLiveBeatsResult implements Parcelable {
     @JSONField(name = "tips")
     public Tips mTips;
 
+    public BiliLiveBeatsResult() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class Tips implements Parcelable {
@@ -33,6 +36,9 @@ public class BiliLiveBeatsResult implements Parcelable {
         public String mMobileContent;
         @JSONField(name = "title")
         public String mTitle;
+
+        public Tips() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveBeatsResult$Tips$1 */

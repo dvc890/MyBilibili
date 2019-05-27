@@ -27,6 +27,9 @@ public class BiliLivePayLiveInfo implements Parcelable {
     @JSONField(name = "title")
     public String title;
 
+    public BiliLivePayLiveInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLivePayLiveInfo$1 */
     static class C20151 implements Creator<BiliLivePayLiveInfo> {

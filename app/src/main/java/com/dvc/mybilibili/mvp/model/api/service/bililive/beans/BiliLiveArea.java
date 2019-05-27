@@ -21,6 +21,9 @@ public class BiliLiveArea implements Parcelable {
     @JSONField(name = "sub_icon")
     public BiliImage mSmallIcon = BiliImage.NULL;
 
+    public BiliLiveArea() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveArea$1 */
     static class C19991 implements Creator<BiliLiveArea> {

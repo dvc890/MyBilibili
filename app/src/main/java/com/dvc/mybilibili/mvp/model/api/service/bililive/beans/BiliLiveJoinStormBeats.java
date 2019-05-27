@@ -25,6 +25,9 @@ public class BiliLiveJoinStormBeats implements Parcelable {
     @JSONField(name = "title")
     public String mTitle;
 
+    public BiliLiveJoinStormBeats() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveJoinStormBeats$1 */
     static class C20111 implements Creator<BiliLiveJoinStormBeats> {

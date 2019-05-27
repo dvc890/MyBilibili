@@ -137,6 +137,9 @@ public class BiliBangumiSeason implements Parcelable {
         @JSONField(name = "role")
         public String mRole;
 
+        public Actor() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeason$Actor$1 */
         static class C18341 implements Creator<Actor> {
@@ -290,6 +293,9 @@ public class BiliBangumiSeason implements Parcelable {
         @JSONField(name = "title")
         public String title;
 
+        public PayPack() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeason$PayPack$1 */
         static class C18361 implements Creator<PayPack> {
@@ -346,6 +352,9 @@ public class BiliBangumiSeason implements Parcelable {
         public boolean isPayPackPaid;
         @JSONField(name = "status")
         public int status;
+
+        public PayUser() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeason$PayUser$1 */
@@ -410,6 +419,9 @@ public class BiliBangumiSeason implements Parcelable {
         @JSONField(name = "tip")
         public String tip;
 
+        public Payment() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeason$Payment$1 */
         static class C18381 implements Creator<Payment> {
@@ -461,6 +473,9 @@ public class BiliBangumiSeason implements Parcelable {
         public long mLastEpProgress;
         @JSONField(name = "pay_user")
         public PayUser mPayUser;
+
+        public UserSeason() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bangumi.api.BiliBangumiSeason$UserSeason$1 */

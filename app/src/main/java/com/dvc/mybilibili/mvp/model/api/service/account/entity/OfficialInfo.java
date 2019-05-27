@@ -21,6 +21,9 @@ public class OfficialInfo implements Parcelable {
     private int role;
     private String title;
 
+    public OfficialInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.OfficialInfo$1 */
     static class C22011 implements Creator<OfficialInfo> {

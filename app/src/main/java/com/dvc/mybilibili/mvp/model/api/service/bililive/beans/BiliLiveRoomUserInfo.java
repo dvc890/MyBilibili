@@ -31,6 +31,9 @@ public class BiliLiveRoomUserInfo implements Parcelable {
     @JSONField(name = "uname")
     public String mUname;
 
+    public BiliLiveRoomUserInfo() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class OfficialVerify implements Parcelable {
@@ -39,6 +42,9 @@ public class BiliLiveRoomUserInfo implements Parcelable {
         public String mVerifyDesc;
         @JSONField(name = "type")
         public int mVerifyType;
+
+        public OfficialVerify() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomUserInfo$OfficialVerify$1 */

@@ -16,6 +16,9 @@ public class BangumiThreshold implements Parcelable {
     @JSONField(name = "days_text")
     public String daysText;
 
+    public BangumiThreshold() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.uniform.BangumiThreshold$1 */
     static class C18731 implements Creator<BangumiThreshold> {

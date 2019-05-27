@@ -114,6 +114,9 @@ public class BiliLiveRoomInfo implements Parcelable {
     @JSONField(name = "uname")
     public String mUname;
 
+    public BiliLiveRoomInfo() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class EventType implements Parcelable {
@@ -122,6 +125,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         public String mEventImg;
         @JSONField(name = "event_type")
         public String mEventType;
+
+        public EventType() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$EventType$1 */
@@ -162,6 +168,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         @JSONField(name = "heart_time")
         public int mHeartTime;
 
+        public GuardInfo() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$GuardInfo$1 */
         static class C20261 implements Creator<GuardInfo> {
@@ -201,6 +210,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         @JSONField(name = "words")
         public String mWord;
 
+        public HotWord() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$HotWord$1 */
         static class C20271 implements Creator<HotWord> {
@@ -239,6 +251,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         public int mId;
         @JSONField(name = "num")
         public int mNum;
+
+        public IgnoreGift() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$IgnoreGift$1 */
@@ -282,6 +297,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         public String mMasterTitle;
         @JSONField(name = "width")
         public String mWidth;
+
+        public MasterTitle() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$MasterTitle$1 */
@@ -330,6 +348,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         @JSONField(name = "typeid")
         public int mTypeid;
 
+        public Meta() {
+        }
+
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$Meta$1 */
         static class C20301 implements Creator<Meta> {
@@ -372,6 +393,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         public String mName;
         @JSONField(name = "type")
         public String mType;
+
+        public OperationType() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$OperationType$1 */
@@ -425,6 +449,9 @@ public class BiliLiveRoomInfo implements Parcelable {
         public int mStreamId;
         @JSONField(name = "title")
         public String mTitle;
+
+        public Schedule() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomInfo$Schedule$1 */

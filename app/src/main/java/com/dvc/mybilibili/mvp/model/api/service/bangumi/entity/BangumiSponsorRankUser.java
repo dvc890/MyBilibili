@@ -25,6 +25,9 @@ public class BangumiSponsorRankUser implements Parcelable {
     @JSONField(name = "vip")
     public VipExtraUserInfo vipInfo;
 
+    public BangumiSponsorRankUser() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiSponsorRankUser$1 */
     static class C18291 implements Creator<BangumiSponsorRankUser> {

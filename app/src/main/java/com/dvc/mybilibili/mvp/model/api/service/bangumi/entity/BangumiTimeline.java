@@ -45,6 +45,9 @@ public class BangumiTimeline implements Parcelable, Comparable<BangumiTimeline> 
     @JSONField(name = "title")
     public String title;
 
+    public BangumiTimeline() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bangumi.api.BangumiTimeline$1 */
     static class C18321 implements Creator<BangumiTimeline> {

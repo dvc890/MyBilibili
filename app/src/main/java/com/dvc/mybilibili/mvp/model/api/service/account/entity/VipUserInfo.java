@@ -24,6 +24,9 @@ public class VipUserInfo implements Parcelable {
     private int vipStatus;
     private int vipType;
 
+    public VipUserInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.lib.account.model.VipUserInfo$1 */
     static class C22041 implements Creator<VipUserInfo> {

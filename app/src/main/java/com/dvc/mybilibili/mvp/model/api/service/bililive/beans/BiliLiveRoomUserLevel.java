@@ -17,6 +17,9 @@ public class BiliLiveRoomUserLevel implements Parcelable {
     @JSONField(name = "uid")
     public long mUid;
 
+    public BiliLiveRoomUserLevel() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class MasterLevel implements Parcelable {
@@ -25,6 +28,9 @@ public class BiliLiveRoomUserLevel implements Parcelable {
         public int mLevel;
         @JSONField(name = "master_level_color")
         public int mLevelColor;
+
+        public MasterLevel() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.BiliLiveRoomUserLevel$MasterLevel$1 */
