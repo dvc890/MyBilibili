@@ -8,12 +8,14 @@ import com.dvc.mybilibili.mvp.model.api.service.bangumi.BangumiApiService;
 import com.dvc.mybilibili.mvp.model.api.service.bangumi.HomeApiService;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
+import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.LiveStreamApiService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
 import com.dvc.mybilibili.mvp.model.api.service.search.BiliSearchApiService;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.vondear.rxtool.RxLogTool;
 
 import javax.inject.Singleton;
@@ -119,5 +121,17 @@ public class ApiServiceModule {
     @Provides
     BangumiApiService providesBangumiApiService(Retrofit.Builder builder) {
         return RetrofitUtils.createWithBaseUrl(builder, BangumiApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    VideoApiService providesVideoApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, VideoApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    ChargeApiService providesChargeApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, ChargeApiService.class);
     }
 }

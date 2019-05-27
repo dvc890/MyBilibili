@@ -1,12 +1,12 @@
 package com.dvc.mybilibili.mvp.model.api;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.net.AppNetWorkStatusManager;
 import com.dvc.mybilibili.app.application.BiliApplication;
+import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
@@ -130,16 +130,16 @@ public class AppApiHelper implements ApiHelper {
      */
     @Override
     public Observable<PegasusFeedResponse> getPegasusFeedIndexListV2(String access_key, int idx, boolean pull, int login_event, String interest, int flush, int autoplay_card, String banner_hash, int device_type) {
-        int fourk = 0;//IjkCodecHelper.isUhdSupport(IjkCodecHelper.getBestCodecName("video/hevc"))?1:0;
-        int force_host = 1;//1:2:0
-        int recsys_mode = 1;//1:0
+        int fourk = ParamValueUtils.getFourk();
+        int force_host = ParamValueUtils.getForceHost();
+        int recsys_mode = ParamValueUtils.getRecsysMode();
         int column = 2;//0或2的倍数
-        int fnval = Build.VERSION.SDK_INT < 19?16:32;
-        int fnver = 0;
+        int fnval = ParamValueUtils.getFnval();
+        int fnver = ParamValueUtils.getFnver();
         String open_event = pull?"cold":"";
         String ad_extra = "";
-        String network = BiliApplication.getNetWorkStatusManager().getNetworkStatus()==AppNetWorkStatusManager.NETWORK_STATUS_WIFI?"wifi":"mobile";
-        int qn = 16;//16:32即可
+        String network = ParamValueUtils.getNetwork();
+        int qn = ParamValueUtils.getQN();
         return this.tmFeedIndexService.getIndexList(access_key,idx,pull,network,column,login_event,open_event,banner_hash,qn,interest,ad_extra,flush,autoplay_card,fnval,fnver,fourk,device_type,force_host,recsys_mode)
         .map(pegasusFeedResponseGeneralResponse -> {
             if(pegasusFeedResponseGeneralResponse.isSuccess())

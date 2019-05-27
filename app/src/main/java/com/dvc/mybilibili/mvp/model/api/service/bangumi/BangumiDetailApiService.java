@@ -150,7 +150,8 @@ public interface BangumiDetailApiService {
         }
     }
 
+    //bili_referer:
     @NotNull
     @GET("/pgc/view/app/season")
-    Observable<BangumiApiResponse<BangumiUniformSeason>> getViewSeason(@NotNull @Header("bili-referer") String str, @NotNull @QueryMap UniformSeasonParamsMap uniformSeasonParamsMap);
+    Observable<BangumiApiResponse<BangumiUniformSeason>> getViewSeason(@NotNull @Header("bili-referer") String bili_referer, @NotNull @QueryMap UniformSeasonParamsMap uniformSeasonParamsMap);
 }

@@ -1,23 +1,23 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.player.BiliVideoPlayer;
+import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import dagger.android.support.DaggerAppCompatActivity;
 
-public class TestActivity extends AppCompatActivity {
+public class TestActivity extends DaggerAppCompatActivity {
 
     @BindView(R.id.animation_view)
     LottieAnimationView lottieAnimationView;
@@ -27,6 +27,9 @@ public class TestActivity extends AppCompatActivity {
 //    SVGAImageView svgaImageView;
 
     OrientationUtils orientationUtils;
+
+    @Inject
+    VideoApiService videoApiService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -52,6 +55,12 @@ public class TestActivity extends AppCompatActivity {
             //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
             biliVideoPlayer.startWindowFullscreen(TestActivity.this, true, true);
         });
+        testVideoI();
+    }
+
+    private void testVideoI() {
+        videoApiService.getVideoDetails(new VideoApiService.VideoParamsMap.create(52013415).setFrom("7").setFromSpmid("tm.recommend.0.0").setSpmid("main.ugc-video-detail.0.0").setTrackId("all_12.shylf-ai-recsys-87.1558951192310.719").setAutoPlay("0").build(), null)
+        .subscribe();
     }
 
 //    @Override

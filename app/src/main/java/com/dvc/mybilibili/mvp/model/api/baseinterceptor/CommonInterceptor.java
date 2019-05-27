@@ -2,13 +2,13 @@ package com.dvc.mybilibili.mvp.model.api.baseinterceptor;
 
 import android.content.Context;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.bilibili.nativelibrary.LibBili;
 import com.bilibili.nativelibrary.SignedQuery;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.Reflect;
 import com.dvc.base.utils.ReflectException;
+import com.vondear.rxtool.RxLogTool;
 
 import java.io.IOException;
 import java.nio.charset.Charset;
@@ -64,7 +64,7 @@ public class CommonInterceptor implements Interceptor {
             baseIntercept.putParams(paramsMap);
         }
         HttpUrl url = oldRequest.url();
-        Log.d(TAG, url.toString());
+        RxLogTool.d(TAG, url.toString());
         HttpUrl.Builder authorizedUrlBuilder = url.newBuilder()
                 .scheme(oldRequest.url().scheme())
                 .host(oldRequest.url().host());

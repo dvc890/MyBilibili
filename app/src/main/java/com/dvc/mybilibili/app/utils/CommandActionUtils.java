@@ -6,6 +6,7 @@ import android.os.Bundle;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -79,9 +80,9 @@ public class CommandActionUtils {
             if(query.length() > 0) {
                 if(this.query.contains("&")) {
                     for(String q : this.query.split("&"))
-                        queryParameter.put(q.split("=")[0], q.split("=")[1]);
+                        queryParameter.put(q.split("=")[0], URLDecoder.decode(q.split("=")[1]).replace("\\u0026", "&"));
                 }else {
-                    queryParameter.put(query.split("=")[0], query.split("=")[1]);
+                    queryParameter.put(query.split("=")[0], URLDecoder.decode(query.split("=")[1]).replace("\\u0026", "&"));
                 }
                 for(Map.Entry<String, String> entry : queryParameter.entrySet())
                     bundle.putString(entry.getKey(), entry.getValue());

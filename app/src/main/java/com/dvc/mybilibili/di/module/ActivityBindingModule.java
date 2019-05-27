@@ -5,16 +5,22 @@ import com.dvc.mybilibili.di.module.activity.AccountVerifyWebActivityModule;
 import com.dvc.mybilibili.di.module.activity.HomeActivityModule;
 import com.dvc.mybilibili.di.module.activity.LoginActivityModule;
 import com.dvc.mybilibili.di.module.activity.SplashActivityModule;
+import com.dvc.mybilibili.di.module.activity.TestActivityModule;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;
 import com.dvc.mybilibili.mvp.ui.activity.SplashActivity;
+import com.dvc.mybilibili.mvp.ui.activity.TestActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 
 @Module
 public abstract class ActivityBindingModule {
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = TestActivityModule.class)
+    abstract TestActivity testActivity();
 
     @PerActivity
     @ContributesAndroidInjector(modules = SplashActivityModule.class)
