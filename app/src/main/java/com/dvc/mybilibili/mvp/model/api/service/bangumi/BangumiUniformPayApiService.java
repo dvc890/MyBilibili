@@ -39,23 +39,23 @@ public interface BangumiUniformPayApiService {
 
     @FormUrlEncoded
     @POST("/sponsor/api/v2/pay/order/success")
-    Observable<BangumiApiResponse<BangumiSponsorResult>> checkOrderForSponsorSeason(@Field("access_key") String str, @Field("season_type") int i, @Field("order_id") String str2);
+    Observable<BangumiApiResponse<BangumiSponsorResult>> checkOrderForSponsorSeason(@Field("access_key") String access_key, @Field("season_type") int i, @Field("order_id") String str2);
 
     @FormUrlEncoded
     @POST("/pay/api/to_paid")
-    Observable<BangumiApiResponse<BangumiPayResult>> checkUniversePayResult(@Field("access_key") String str, @Field("season_type") int i, @Field("order_id") String str2);
+    Observable<BangumiApiResponse<BangumiPayResult>> checkUniversePayResult(@Field("access_key") String access_key, @Field("season_type") int i, @Field("order_id") String str2);
 
     @FormUrlEncoded
     @POST("/sponsor/api/v2/pay/order/create")
-    Observable<BangumiApiResponse<BangumiOrderResult>> createOrderForSponsorSeason(@Field("access_key") String str, @Field("season_id") String str2, @Field("season_type") int i, @Field("amount") float f);
+    Observable<BangumiApiResponse<BangumiOrderResult>> createOrderForSponsorSeason(@Field("access_key") String access_key, @Field("season_id") String str2, @Field("season_type") int i, @Field("amount") float f);
 
     @FormUrlEncoded
     @POST("/pay/api/get_create_order_param?platform=android")
-    Observable<BangumiApiResponse<JSONObject>> getCreateOrderParam(@Field("access_key") String str, @Field("season_id") String str2, @Field("season_type") int i);
+    Observable<BangumiApiResponse<JSONObject>> getCreateOrderParam(@Field("access_key") String access_key, @Field("season_id") String str2, @Field("season_type") int i);
 
     @FormUrlEncoded
     @POST("/pay/api/season/pay_by_ticket?platform=android")
-    Observable<BangumiApiResponse<BangumiTicketResult>> payByTicket(@Field("access_key") String str, @Field("season_id") String str2, @Field("season_type") int i);
+    Observable<BangumiApiResponse<BangumiTicketResult>> payByTicket(@Field("access_key") String access_key, @Field("season_id") String str2, @Field("season_type") int i);
 
     @FormUrlEncoded
     @POST("/sponsor/api/v2/pay/comment")

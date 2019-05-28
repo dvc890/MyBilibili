@@ -21,15 +21,15 @@ import retrofit2.http.QueryMap;
 public interface BiliCommentApiService {
     @FormUrlEncoded
     @POST("/x/v2/reply/del")
-    Observable<GeneralResponse<Void>> delete(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2);
+    Observable<GeneralResponse<Void>> delete(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2);
 
     @FormUrlEncoded
     @POST("/x/v2/reply/del/combo")
-    Observable<GeneralResponse<JSONObject>> deleteAndBlacken(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2);
+    Observable<GeneralResponse<JSONObject>> deleteAndBlacken(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2);
 
     @FormUrlEncoded
     @POST("/x/v2/reply/hate")
-    Observable<GeneralResponse<Void>> dislike(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
+    Observable<GeneralResponse<Void>> dislike(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
 
     //评论：更多回复内容
     @GET("/x/v2/reply/reply/cursor")
@@ -62,7 +62,7 @@ public interface BiliCommentApiService {
 
     @FormUrlEncoded
     @POST("/x/v2/reply/action")
-    Observable<GeneralResponse<Void>> like(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
+    Observable<GeneralResponse<Void>> like(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
 
     @FormUrlEncoded
     @POST("/x/v2/reply/add")
@@ -70,9 +70,9 @@ public interface BiliCommentApiService {
 
     @FormUrlEncoded
     @POST("/x/v2/reply/report")
-    Observable<GeneralResponse<Void>> report(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("reason") int i2, @Field("content") String str2);
+    Observable<GeneralResponse<Void>> report(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("reason") int i2, @Field("content") String str2);
 
     @FormUrlEncoded
     @POST("/x/v2/reply/top")
-    Observable<GeneralResponse<Void>> stick(@Field("access_key") String str, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
+    Observable<GeneralResponse<Void>> stick(@Field("access_key") String access_key, @Field("oid") long j, @Field("type") int i, @Field("rpid") long j2, @Field("action") int i2);
 }

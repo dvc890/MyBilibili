@@ -98,10 +98,11 @@ public class CommonInterceptor implements Interceptor {
             tempMap.putAll(paramsMap);
 //            String signString = LibBili.m8854a(paramsMap).b;
 //            authorizedUrlBuilder.addQueryParameter("sign", signString);
-//            tempMap.clear();
+            HttpUrl newurl = url.newBuilder().encodedQuery(LibBili.m8854a(tempMap).toString()).build();
+            tempMap.clear();
             return chain.proceed(
                     oldRequest.newBuilder()
-                            .url(url.newBuilder().encodedQuery(LibBili.m8854a(tempMap).toString()).build())
+                            .url(newurl)
 //                            .url(authorizedUrlBuilder.build())
                             .build()
             );

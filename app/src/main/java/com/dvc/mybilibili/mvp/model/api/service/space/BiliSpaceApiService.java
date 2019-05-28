@@ -47,43 +47,43 @@ public interface BiliSpaceApiService {
 
 //    @Timeout(conn = 1000)
     @GET("/x/v2/space/upper/recmd?device=android")
-    Observable<GeneralResponse<BiliSpaceRecommendUpperInfo>> getSpaceRecommendUppers(@Query("access_key") String str, @Query("vmid") long j);
+    Observable<GeneralResponse<BiliSpaceRecommendUpperInfo>> getSpaceRecommendUppers(@Query("access_key") String access_key, @Query("vmid") long j);
 
     @GET("http://space.bilibili.com/api/member/getSettings")
-    Observable<BiliUserSpaceSetting> getUserSpaceSetting(@Query("access_key") String str, @Query("mid") long j);
+    Observable<BiliUserSpaceSetting> getUserSpaceSetting(@Query("access_key") String access_key, @Query("mid") long j);
 
 //    //@CacheControl(3000)
     @GET("/x/v2/space/archive")
-    Observable<GeneralResponse<BiliSpaceVideoList>> loadArchiveVideos(@Query("access_key") String str, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
+    Observable<GeneralResponse<BiliSpaceVideoList>> loadArchiveVideos(@Query("access_key") String access_key, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
 
     //@CacheControl(3000)
     @GET("/x/v2/space/bangumi")
-    Observable<GeneralResponse<BiliSpaceSeason>> loadBangumi(@Query("access_key") String str, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
+    Observable<GeneralResponse<BiliSpaceSeason>> loadBangumi(@Query("access_key") String access_key, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
 
     //@CacheControl(3000)
     @GET("/x/v2/space/contribute")
-    Observable<GeneralResponse<BiliSpaceContributeList>> loadContribute(@Query("access_key") String str, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
+    Observable<GeneralResponse<BiliSpaceContributeList>> loadContribute(@Query("access_key") String access_key, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
 
     //@CacheControl(3000)
     @GET("/x/v2/space/coinarc")
-    Observable<GeneralResponse<BiliSpaceVideoList>> loadPayCoinsVideos(@Query("access_key") String str, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
+    Observable<GeneralResponse<BiliSpaceVideoList>> loadPayCoinsVideos(@Query("access_key") String access_key, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
 
     //@CacheControl(3000)
     @GET("/x/v2/space/likearc")
-    Observable<GeneralResponse<BiliSpaceVideoList>> loadRecommendVideos(@Query("access_key") String str, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
+    Observable<GeneralResponse<BiliSpaceVideoList>> loadRecommendVideos(@Query("access_key") String access_key, @Query("vmid") long j, @Query("pn") int i, @Query("ps") int i2);
 
     @GET("/x/v2/space")
-    Observable<GeneralResponse<BiliSpace>> loadSpaceData(@Query("access_key") String str, @Query("vmid") String str2, @Query("name") String str3, @Query("from") String str4, @Query("ps") int i);
+    Observable<GeneralResponse<BiliSpace>> loadSpaceData(@Query("access_key") String access_key, @Query("vmid") String str2, @Query("name") String str3, @Query("from") String str4, @Query("ps") int i);
 
     @POST("/x/v2/space/report")
-    Observable<GeneralResponse<Void>> report(@Query("access_key") String str, @Query("mid") long j, @Query("reason") String str2);
+    Observable<GeneralResponse<Void>> report(@Query("access_key") String access_key, @Query("mid") long j, @Query("reason") String str2);
 
     @GET("http://space.bilibili.com/api/member/setSettings")
-    Observable<GeneralResponse<Void>> setUserSetting(@Query("access_key") String str, @QueryMap SettingParams settingParams);
+    Observable<GeneralResponse<Void>> setUserSetting(@Query("access_key") String access_key, @QueryMap SettingParams settingParams);
 
     @Multipart
     @Headers("Interceptor:"+ ewj.CLASSNAME)
 //    @RequestInterceptor(ewj.class)
     @POST("http://space.bilibili.com/api/member/uploadTopPhoto")
-    Observable<JSONObject> uploadVipTopPicture(@Query("access_key") String str, @Part("img_file") RequestBody c23724z);
+    Observable<JSONObject> uploadVipTopPicture(@Query("access_key") String access_key, @Part("img_file") RequestBody c23724z);
 }

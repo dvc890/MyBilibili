@@ -8,6 +8,7 @@ import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.app.utils.ParamsMap;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.RecommendUpperInfo;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.VideoRecommend;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.VideoTripleLike;
@@ -157,4 +158,8 @@ public interface VideoApiService {
     @FormUrlEncoded
     @POST("/x/v2/view/like/triple")
     Observable<GeneralResponse<VideoTripleLike>> tripleLikeVideo(@FieldMap Map<String, Object> map);
+
+    //Map: "aid","cid","fnval=1"
+    @GET("/x/playurl")
+    Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoMaterialUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
 }

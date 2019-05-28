@@ -14,4 +14,11 @@ public class Keys {
     public final static String KEY_PREVIEW_IMAGES = "key_preview_images";
     public final static String KEY_PREVIEW_IMAGE_POSITION = "key_preview_position";
     public final static String KEY_PREVIEW_IMAGE_ORIENTATION = "key_preview_Orientation";
+
+    public final static String KEY_AVID = "avid";
+    public final static String KEY_VIDEO_DETAILS_PLAYER_WIDTH = "player_width";
+    public final static String KEY_VIDEO_DETAILS_PLAYER_HEIGHT = "player_height";
+    public final static String KEY_VIDEO_DETAILS_PLAYER_ROTATE = "player_rotate";
+    public final static String KEY_VIDEO_DETAILS_PLAYER_PRELOAD = "player_preload";
+    public final static String KEY_VIDEO_DETAILS_PAGE = "page";
 }

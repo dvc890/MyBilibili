@@ -60,6 +60,10 @@
         <item name="textAppearanceListItem">@style/TextAppearance.App.Title</item>
     </style>
 
+    <style name="AppTheme.NoActionBar.Live_Detail">
+        <item name="android:windowNoTitle">true</item>
+    </style>
+
     <style name="TextAppearance"/>
     <style name="TextAppearance.App">
         <item name="android:textSize">@dimen/text_size_medium</item>

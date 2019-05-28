@@ -14,15 +14,21 @@ import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
+import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
+import com.dvc.mybilibili.mvp.model.api.service.column.ColumnApiService;
+import com.dvc.mybilibili.mvp.model.api.service.comment.BiliCommentApiService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
+import com.dvc.mybilibili.mvp.model.api.service.space.BiliSpaceApiService;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
+import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 
 import java.util.Collections;
 import java.util.List;
@@ -44,6 +50,11 @@ public class AppApiHelper implements ApiHelper {
     private final TMFeedIndexV1Service tmFeedIndexV1Service;
     private final RegionApiService regionApiService;
     private final BiliAuthService biliAuthService;
+    private final VideoApiService videoApiService;
+    private final ChargeApiService chargeApiService;
+    private final ColumnApiService columnApiService;
+    private final BiliCommentApiService biliCommentApiService;
+    private final BiliSpaceApiService biliSpaceApiService;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
@@ -52,7 +63,12 @@ public class AppApiHelper implements ApiHelper {
                         TMFeedIndexService tmFeedIndexService,
                         TMFeedIndexV1Service tmFeedIndexV1Service,
                         RegionApiService regionApiService,
-                        BiliAuthService biliAuthService) {
+                        BiliAuthService biliAuthService,
+                        VideoApiService videoApiService,
+                        ChargeApiService chargeApiService,
+                        ColumnApiService columnApiService,
+                        BiliCommentApiService biliCommentApiService,
+                        BiliSpaceApiService biliSpaceApiService) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
@@ -61,6 +77,11 @@ public class AppApiHelper implements ApiHelper {
         this.tmFeedIndexV1Service = tmFeedIndexV1Service;
         this.regionApiService = regionApiService;
         this.biliAuthService = biliAuthService;
+        this.videoApiService = videoApiService;
+        this.chargeApiService = chargeApiService;
+        this.columnApiService = columnApiService;
+        this.biliCommentApiService = biliCommentApiService;
+        this.biliSpaceApiService = biliSpaceApiService;
     }
 
     @Override
@@ -197,6 +218,26 @@ public class AppApiHelper implements ApiHelper {
                     if(loginInfoGeneralResponse.isSuccess())
                         return loginInfoGeneralResponse.data;
                     throw new BiliApiException(loginInfoGeneralResponse);
+                });
+    }
+
+    /**
+     * 写死了一些参数，那个是统计数据用的，抱歉哔哩哔哩，没有心思去研究你这个参数
+     * @param avid
+     * @param accessKey
+     * @return
+     */
+    @Override
+    public Observable<BiliVideoDetail> getVideoDetails(int avid, String accessKey) {
+        return this.videoApiService.getVideoDetails(
+                new VideoApiService.VideoParamsMap.create(avid)
+                        .setFrom("7").setFromSpmid("tm.recommend.0.0").setSpmid("main.ugc-video-detail.0.0")
+                        .setTrackId("all_12.shylf-ai-recsys-87.1558955694804.68")
+                        .setAutoPlay("0").build(), accessKey)
+                .map(biliVideoDetailGeneralResponse -> {
+                    if(biliVideoDetailGeneralResponse.isSuccess())
+                        return biliVideoDetailGeneralResponse.data;
+                    throw new BiliApiException(biliVideoDetailGeneralResponse);
                 });
     }
 }

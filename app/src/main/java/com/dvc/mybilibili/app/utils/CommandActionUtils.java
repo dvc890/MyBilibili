@@ -1,13 +1,20 @@
 package com.dvc.mybilibili.app.utils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
+import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
 
 import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CommandActionUtils {
@@ -39,7 +46,7 @@ public class CommandActionUtils {
         moduleCommandMap.put("root", HomeActivity.class);
 //        moduleCommandMap.put("space/:mid/", AuthorSpaceProxyActivity.class);
         moduleCommandMap.put("user_center", HomeActivity.class);
-//        moduleCommandMap.put("video/:avid/", VideoDetailsActivity.class);
+        moduleCommandMap.put("video", VideoDetailsActivity.class);
     }
     /**
      *
@@ -47,7 +54,21 @@ public class CommandActionUtils {
      * @param command Em: bilibili://main/login/verify
      */
     public static void start(Context context, String command) {
+        BiliBiliUrl url = createBiliUrl(command);
+        if(moduleCommandMap.containsKey(url.host())) {
+            Intent intent = new Intent(context, moduleCommandMap.get(url.host()));
+            if(url.getBundle() != null)
+            intent.putExtras(url.getBundle());
+            if(isVideoAction(url))
+                intent.putExtra(Keys.KEY_AVID, Integer.valueOf(url.getLastPathSegment()));
+            intent.setData(url.toUri());
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }
+    }
 
+    public static boolean isVideoAction(BiliBiliUrl url) {
+        return ("video".contains(url.host()) || "bangumi".contains(url.host()));
     }
 
     public static BiliBiliUrl createBiliUrl(String url) {
@@ -63,6 +84,7 @@ public class CommandActionUtils {
 
     public static class BiliBiliUrl {
 
+        private final Uri uri;
         private String scheme = "bilibili";
         private String host;
         private String main;
@@ -70,7 +92,9 @@ public class CommandActionUtils {
         private Bundle bundle;
         private Map<String,String> queryParameter;
 
+
         private BiliBiliUrl(String url) {
+            this.uri = Uri.parse(url);
             this.scheme = url.substring(0, url.indexOf("://"));
             this.host = url.split("://")[1].split("/")[0];
             this.main = url.contains("?")? url.substring(url.indexOf(this.host)+this.host.length()+1, url.indexOf("?")): url.split("://")[1].split("/")[1];
@@ -105,6 +129,14 @@ public class CommandActionUtils {
             return query;
         }
 
+        public List<String> getPathSegments() {
+            return new ArrayList<>(Arrays.asList(main.split("/")));
+        }
+
+        public String getLastPathSegment() {
+            return getPathSegments().get(getPathSegments().size()-1);
+        }
+
         public Map<String, String> queryParameters() {
             return queryParameter;
         }
@@ -114,7 +146,11 @@ public class CommandActionUtils {
         }
 
         public String url() {
-            return scheme+"://"+main+query;
+            return uri.toString();//scheme+"://"+main+query;
+        }
+
+        public Uri toUri() {
+            return uri;
         }
     }
 }

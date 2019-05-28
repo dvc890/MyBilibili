@@ -9,11 +9,14 @@ import com.dvc.mybilibili.mvp.model.api.service.bangumi.HomeApiService;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
 import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
+import com.dvc.mybilibili.mvp.model.api.service.column.ColumnApiService;
+import com.dvc.mybilibili.mvp.model.api.service.comment.BiliCommentApiService;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.LiveStreamApiService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexV1Service;
 import com.dvc.mybilibili.mvp.model.api.service.search.BiliSearchApiService;
+import com.dvc.mybilibili.mvp.model.api.service.space.BiliSpaceApiService;
 import com.dvc.mybilibili.mvp.model.api.service.splash.BiliSplashApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.vondear.rxtool.RxLogTool;
@@ -133,5 +136,23 @@ public class ApiServiceModule {
     @Provides
     ChargeApiService providesChargeApiService(Retrofit.Builder builder) {
         return RetrofitUtils.createWithBaseUrl(builder, ChargeApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    ColumnApiService providesColumnApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, ColumnApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    BiliCommentApiService providesBiliCommentApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BiliCommentApiService.class);
+    }
+
+    @Singleton
+    @Provides
+    BiliSpaceApiService providesBiliSpaceApiService(Retrofit.Builder builder) {
+        return RetrofitUtils.createWithBaseUrl(builder, BiliSpaceApiService.class);
     }
 }

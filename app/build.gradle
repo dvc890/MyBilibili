@@ -58,6 +58,8 @@ dependencies {
     implementation 'com.airbnb.android:lottie:2.7.0'//更高版本要用AndroidX
 ////    SVGAPlayer
 //    implementation 'com.github.yyued:SVGAPlayer-Android:2.4.4'
+////    BasePopup
+    implementation 'com.github.razerdp:BasePopup:2.1.9'
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$parent.ext.daggerVersion"

@@ -876,7 +876,7 @@ public interface BiliLiveApiV2Service {
     @FormUrlEncoded
 //    @RequestInterceptor(ewg.class)
     @POST("http://space.bilibili.com/api/report/add")
-    Observable<GeneralResponse<String>> postTipOffPhotoOrName(@Field("mid") long j, @Field("reason") String str, @Field("access_key") String str2);
+    Observable<GeneralResponse<String>> postTipOffPhotoOrName(@Field("mid") long j, @Field("reason") String str, @Field("access_key") String access_key2);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+C9909b.CLASSNAME)

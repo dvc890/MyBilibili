@@ -8,6 +8,7 @@ import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 
 import java.util.List;
 
@@ -33,4 +34,6 @@ public interface ApiHelper {
     Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/);
 
     Observable<LoginInfo> acquireAccessToken(String code);
+
+    Observable<BiliVideoDetail> getVideoDetails(int avid, String accessKey);
 }

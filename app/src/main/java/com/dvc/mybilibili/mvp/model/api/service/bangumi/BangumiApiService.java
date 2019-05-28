@@ -65,23 +65,23 @@ public interface BangumiApiService {
 
     @FormUrlEncoded
     @POST("/review/api/long/del")
-    Observable<JSONObject> deleteLong(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2);
+    Observable<JSONObject> deleteLong(@Field("access_key") String access_key, @Field("media_id") int i, @Field("review_id") int i2);
 
     @FormUrlEncoded
     @POST("/review/api/short/del")
-    Observable<JSONObject> deleteShort(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2);
+    Observable<JSONObject> deleteShort(@Field("access_key") String access_key, @Field("media_id") int i, @Field("review_id") int i2);
 
     @FormUrlEncoded
     @POST("/review/api/dislike")
-    Observable<JSONObject> dislikeReview(@Field("media_id") long j, @Field("review_id") long j2, @Field("review_type") int i, @Field("access_key") String str);
+    Observable<JSONObject> dislikeReview(@Field("media_id") long j, @Field("review_id") long j2, @Field("review_type") int i, @Field("access_key") String access_key);
 
     @FormUrlEncoded
     @POST("/review/api/long/modify")
-    Observable<JSONObject> editLong(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2, @Field("score") int i3, @Field("title") String str2, @Field("content") String str3, @Field("origin") int i4, @Field("spoiler") int i5);
+    Observable<JSONObject> editLong(@Field("access_key") String access_key, @Field("media_id") int i, @Field("review_id") int i2, @Field("score") int i3, @Field("title") String str2, @Field("content") String str3, @Field("origin") int i4, @Field("spoiler") int i5);
 
     @FormUrlEncoded
     @POST("/review/api/short/modify")
-    Observable<JSONObject> editShort(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2, @Field("score") int i3, @Field("content") String str2);
+    Observable<JSONObject> editShort(@Field("access_key") String access_key, @Field("media_id") int i, @Field("review_id") int i2, @Field("score") int i3, @Field("content") String str2);
 
     @GET("/api/concern_season")
     Observable<BangumiApiResponse<JSONObject>> follow(@Query("access_key") String access_key, @Query("season_id") String str2);
@@ -235,19 +235,19 @@ public interface BangumiApiService {
 
     @FormUrlEncoded
     @POST("/review/api/like")
-    Observable<JSONObject> likeReview(@Field("media_id") long j, @Field("review_id") long j2, @Field("review_type") int i, @Field("access_key") String str);
+    Observable<JSONObject> likeReview(@Field("media_id") long j, @Field("review_id") long j2, @Field("review_type") int i, @Field("access_key") String access_key);
 
     @FormUrlEncoded
     @POST("/review/api/long/post")
-    Observable<JSONObject> publishLong(@Field("access_key") String str, @Field("media_id") int i, @Field("score") int i2, @Field("title") String str2, @Field("content") String str3, @Field("origin") int i3, @Field("spoiler") int i4);
+    Observable<JSONObject> publishLong(@Field("access_key") String access_key, @Field("media_id") int i, @Field("score") int i2, @Field("title") String str2, @Field("content") String str3, @Field("origin") int i3, @Field("spoiler") int i4);
 
     @FormUrlEncoded
     @POST("/review/api/short/post")
-    Observable<JSONObject> publishShort(@Field("access_key") String str, @Field("media_id") int i, @Field("score") int i2, @Field("content") String str2, @Field("share_feed") int i3);
+    Observable<JSONObject> publishShort(@Field("access_key") String access_key, @Field("media_id") int i, @Field("score") int i2, @Field("content") String str2, @Field("share_feed") int i3);
 
     @FormUrlEncoded
     @POST("/review/api/report")
-    Observable<JSONObject> reportReview(@Field("access_key") String str, @Field("media_id") int i, @Field("review_id") int i2, @Field("review_type") int i3, @Field("report_type") int i4, @Field("content") String str2);
+    Observable<JSONObject> reportReview(@Field("access_key") String access_key, @Field("media_id") int i, @Field("review_id") int i2, @Field("review_type") int i3, @Field("report_type") int i4, @Field("content") String str2);
 
     @GET("/api/unconcern_season")
     Observable<BangumiApiResponse<JSONObject>> unfollow(@Query("access_key") String access_key, @Query("season_id") String str2);

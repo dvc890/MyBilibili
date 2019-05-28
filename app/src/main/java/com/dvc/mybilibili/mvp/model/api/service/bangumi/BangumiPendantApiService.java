@@ -15,5 +15,5 @@ import retrofit2.http.POST;
 public interface BangumiPendantApiService {
     @FormUrlEncoded
     @POST("/x/member/app/pendant/equip?status=2")
-    Observable<GeneralResponse<JSONObject>> equipPendant(@Field("access_key") String str, @Field("pid") String str2);
+    Observable<GeneralResponse<JSONObject>> equipPendant(@Field("access_key") String access_key, @Field("pid") String str2);
 }

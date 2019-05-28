@@ -12,6 +12,7 @@ import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.player.BiliVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
@@ -28,7 +29,7 @@ public class TestActivity extends DaggerAppCompatActivity {
     @BindView(R.id.animation_view)
     LottieAnimationView lottieAnimationView;
     @BindView(R.id.bilivideoplayer)
-    StandardGSYVideoPlayer biliVideoPlayer;
+    BiliVideoPlayer biliVideoPlayer;
 //    @BindView(R.id.animation_view2)
 //    SVGAImageView svgaImageView;
 
@@ -50,34 +51,6 @@ public class TestActivity extends DaggerAppCompatActivity {
 //                biliVideoPlayer.startPlayLogic());
         biliVideoPlayer.startPlayLogic();
         Debuger.enable();
-
-        //外部辅助的旋转，帮助全屏
-        orientationUtils = new OrientationUtils(this, biliVideoPlayer);
-        //初始化不打开外部的旋转
-        orientationUtils.setEnable(false);
-        biliVideoPlayer.getFullscreenButton().setOnClickListener(v -> {
-            //直接横屏
-            orientationUtils.resolveByClick();
-            //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
-            biliVideoPlayer.startWindowFullscreen(TestActivity.this, true, true);
-        });
-        testVideoI();
-    }
-
-    private void testVideoI() {
-        videoApiService.getVideoDetails(new VideoApiService.VideoParamsMap.create(51945879).setFrom("7").setFromSpmid("tm.recommend.0.0").setSpmid("main.ugc-video-detail.0.0").setTrackId("all_12.shylf-ai-recsys-87.1558955694804.68").setAutoPlay("0").build(), null)
-                .compose(RxSchedulersHelper.ioAndMainThread())
-        .subscribe(new ObserverCallback<GeneralResponse<BiliVideoDetail>>() {
-            @Override
-            public void onSuccess(GeneralResponse<BiliVideoDetail> biliVideoDetailGeneralResponse) {
-                Log.d("d", biliVideoDetailGeneralResponse.toString());
-            }
-
-            @Override
-            public void onError(BiliApiException apiException, int code) {
-                apiException.printStackTrace();
-            }
-        });
     }
 
 //    @Override

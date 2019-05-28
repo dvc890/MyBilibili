@@ -13,5 +13,5 @@ import retrofit2.http.POST;
 public interface C12092a {
     @FormUrlEncoded
     @POST("/bplus_report/v1/Report/add")
-    Observable<GeneralResponse<String>> reportForward(@Field("access_key") String str, @Field("biz_code") int i, @Field("module") int i2, @Field("accused_uid") String str2, @Field("object_id") String str3);
+    Observable<GeneralResponse<String>> reportForward(@Field("access_key") String access_key, @Field("biz_code") int i, @Field("module") int i2, @Field("accused_uid") String str2, @Field("object_id") String str3);
 }

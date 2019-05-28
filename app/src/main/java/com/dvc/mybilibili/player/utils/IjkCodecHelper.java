@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.player;
+package com.dvc.mybilibili.player.utils;
 
 import android.media.MediaCodecInfo;
 import android.media.MediaCodecInfo.CodecCapabilities;

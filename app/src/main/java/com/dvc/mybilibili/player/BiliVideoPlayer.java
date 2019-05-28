@@ -5,19 +5,22 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Surface;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
 import android.widget.SeekBar;
-import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
-import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
+import com.shuyu.gsyvideoplayer.utils.CommonUtil;
+import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,7 +34,15 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
 
     @BindView(R.id.startfristbtn)
     ImageView startfristbtn;
+    @BindView(R.id.preview_layout)
+    RelativeLayout mPreviewLayout;
+    @BindView(R.id.preview_image)
+    ImageView mPreView;
+
     private SeekBar brightnessBar;
+    //是否打开滑动预览
+    private boolean mOpenPreView = false;
+    private int mPreProgress = -2;
 
     public BiliVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -56,16 +67,24 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
         ButterKnife.bind(this, this);
         hideAllWidget();
         //全屏动画
-        setShowFullAnimation(false);
+        getFullscreenButton().setOnClickListener(v -> {
+            setShowFullAnimation(false);
+//            setRotateViewAuto(true);
+//            setLockLand(true);
+//            setRotateWithSystem(false);//不跟随系统转屏
+            setAutoFullWithSize(true);
+            //第一个true是否需要隐藏actionbar，第二个true是否需要隐藏statusbar
+            startWindowFullscreen(mContext, true, true);
+        });
     }
 
     @Override
     protected void updateStartImage() {
         ImageView imageView = (ImageView) mStartButton;
-        if (mCurrentState == CURRENT_STATE_PLAYING) {
+        if (getCurrentState() == CURRENT_STATE_PLAYING) {
             imageView.setImageResource(R.drawable.bili_player_play_can_pause);
             startfristbtn.setVisibility(GONE);
-        } else if (mCurrentState == CURRENT_STATE_ERROR) {
+        } else if (getCurrentState() == CURRENT_STATE_ERROR) {
             imageView.setImageResource(R.drawable.bili_player_play_can_play);
             startfristbtn.setVisibility(VISIBLE);
         } else {
@@ -92,6 +111,11 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     @OnClick(R.id.startfristbtn)
     public void loadVideoClick(View v) {
         if(fristStart != null) fristStart.onClick(v);
+        if(mHadPlay) {
+            getStartButton().callOnClick();
+        } else {
+            startPlayLogic();
+        }
     }
 
     @Override
@@ -120,11 +144,6 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
             mLockCurScreen = true;
             hideAllWidget();
         }
-    }
-
-    @Override
-    public boolean isNeedLockFull() {
-        return true;
     }
 
     @Override
@@ -158,6 +177,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 亮度dialog的layoutId
      */
+    @Override
     protected int getBrightnessLayoutId() {
         return R.layout.bili_view_video_brightness;
     }
@@ -165,6 +185,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 亮度dialog的百分比text id
      */
+    @Override
     protected int getBrightnessTextId() {
         return 0;
     }
@@ -172,6 +193,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 音量dialog的layoutId
      */
+    @Override
     protected int getVolumeLayoutId() {
         return R.layout.bili_view_video_volume;
     }
@@ -179,6 +201,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 音量dialog的百分比进度条 id
      */
+    @Override
     protected int getVolumeProgressId() {
         return R.id.volume_level;
     }
@@ -186,6 +209,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 触摸进度dialog的layoutId
      */
+    @Override
     protected int getProgressDialogLayoutId() {
         return R.layout.bili_view_video_progresstips;
     }
@@ -193,6 +217,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 触摸进度dialog的进度条id
      */
+    @Override
     protected int getProgressDialogProgressId() {
         return 0;
     }
@@ -200,6 +225,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 触摸进度dialog的当前时间文本
      */
+    @Override
     protected int getProgressDialogCurrentDurationTextId() {
         return R.id.tv_current;
     }
@@ -207,6 +233,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 触摸进度dialog全部时间文本
      */
+    @Override
     protected int getProgressDialogAllDurationTextId() {
         return R.id.tv_duration;
     }
@@ -214,7 +241,124 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     /**
      * 触摸进度dialog的图片id
      */
+    @Override
     protected int getProgressDialogImageId() {
         return 0;
+    }
+
+
+    public boolean isOpenPreView() {
+        return mOpenPreView;
+    }
+
+    /**
+     * 如果是需要进度条预览的设置打开，默认关闭
+     */
+    public void setOpenPreView(boolean localFile) {
+        this.mOpenPreView = localFile;
+    }
+
+    /**
+     * 进入全屏模式
+     * @return
+     */
+    @Override
+    public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
+        BiliVideoPlayer gsyBaseVideoPlayer = (BiliVideoPlayer) super.startWindowFullscreen(context, actionBar, statusBar);
+        gsyBaseVideoPlayer.setOpenPreView(isOpenPreView());
+        return gsyBaseVideoPlayer;
+    }
+
+    /**
+     * 退出全屏模式
+     */
+    @Override
+    protected void resolveNormalVideoShow(View oldF, ViewGroup vp, GSYVideoPlayer gsyVideoPlayer) {
+        super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
+        if (gsyVideoPlayer != null) {
+
+        }
+    }
+
+    @Override
+    public void onPrepared() {
+        super.onPrepared();
+        if(isIfCurrentIsFullscreen() && isOpenPreView())
+            startDownFrame(mOriginUrl);
+    }
+
+    @Override
+    public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+        super.onProgressChanged(seekBar, progress, fromUser);
+        if(fromUser && isIfCurrentIsFullscreen() && isOpenPreView()) {
+
+            int width = seekBar.getWidth();
+            int time = progress * getDuration() / 100;
+            int offset = (int) (width - (getResources().getDimension(R.dimen.seek_bar_image) / 2)) / 100 * progress;
+            Debuger.printfError("***************** " + progress);
+            Debuger.printfError("***************** " + time);
+            showPreView(mOriginUrl, time);
+            FrameLayout.LayoutParams layoutParams = (FrameLayout.LayoutParams) mPreviewLayout.getLayoutParams();
+            layoutParams.leftMargin = offset;
+            //设置帧预览图的显示位置
+            mPreviewLayout.setLayoutParams(layoutParams);
+            if (mHadPlay && mOpenPreView) {
+                mPreProgress = progress;
+            }
+        }
+    }
+
+    @Override
+    public void onStartTrackingTouch(SeekBar seekBar) {
+        super.onStartTrackingTouch(seekBar);
+        if (isOpenPreView() && isIfCurrentIsFullscreen()) {
+            mPreviewLayout.setVisibility(VISIBLE);
+            mPreProgress = -2;
+        }
+    }
+
+    @Override
+    public void onStopTrackingTouch(SeekBar seekBar) {
+        if (isOpenPreView()) {
+            if (mPreProgress >= 0) {
+                seekBar.setProgress(mPreProgress);
+            }
+            super.onStopTrackingTouch(seekBar);
+            mPreviewLayout.setVisibility(GONE);
+        } else {
+            super.onStopTrackingTouch(seekBar);
+        }
+    }
+
+    private void showPreView(String url, long time) {
+        int width = CommonUtil.dip2px(getContext(), 150);
+        int height = CommonUtil.dip2px(getContext(), 100);
+        Glide.with(getContext().getApplicationContext())
+                .setDefaultRequestOptions(
+                        new RequestOptions()
+                                //这里限制了只从缓存读取
+                                .onlyRetrieveFromCache(true)
+                                .frame(1000 * time)
+                                .override(width, height)
+                                .dontAnimate()
+                                .centerCrop())
+                .load(url)
+                .into(mPreView);
+    }
+
+    private void startDownFrame(String url) {
+        for (int i = 1; i <= 100; i++) {
+            int time = i * getDuration() / 100;
+            int width = mPreView.getWidth();
+            int height = mPreView.getHeight();
+            Glide.with(getContext().getApplicationContext())
+                    .setDefaultRequestOptions(
+                            new RequestOptions()
+                                    .frame(1000 * time)
+                                    .override(width, height)
+                                    .centerCrop())
+                    .load(url).preload(width, height);
+
+        }
     }
 }

@@ -37,6 +37,17 @@ public class MediaResource {
 
     public MediaResource() {}
 
+    public String getAutoVideoUrl() {
+        return getVideoUrl(quality);
+    }
+
+    public String getVideoUrl(int quality) {
+        for(VideoDash dash : dash.videos) {
+            if(dash.id == quality) return dash.base_url;
+        }
+        return dash.videos.get(0).base_url;
+    }
+
     @Keep
     public static class MediaFileInfos {
 
