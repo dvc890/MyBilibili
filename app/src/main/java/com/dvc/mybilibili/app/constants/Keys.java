@@ -21,4 +21,5 @@ public class Keys {
     public final static String KEY_VIDEO_DETAILS_PLAYER_ROTATE = "player_rotate";
     public final static String KEY_VIDEO_DETAILS_PLAYER_PRELOAD = "player_preload";
     public final static String KEY_VIDEO_DETAILS_PAGE = "page";
+    public final static String KEY_VIDEO_DETAILS_COVER = "cover";
 }

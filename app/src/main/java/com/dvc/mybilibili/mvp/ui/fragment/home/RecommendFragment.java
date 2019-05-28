@@ -3,12 +3,16 @@ package com.dvc.mybilibili.mvp.ui.fragment.home;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.retrofit2.responseconverter.CardTypeEnum;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.app.utils.LoadStateViewUtils;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.BasicIndexItem;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerListItem;
@@ -61,6 +65,12 @@ public class RecommendFragment extends MvpBaseFragment<RecommendFragView, Recomm
         pegasusRecommendAdapter.bindToRecyclerView(mRecyclerView);
         pegasusRecommendAdapter.setOnLoadMoreListener(() -> {
             loadData(false,false);
+        });
+        pegasusRecommendAdapter.setOnItemClickListener((adapter, view, position) -> {
+            BasicIndexItem indexItem = (BasicIndexItem) adapter.getItem(position);
+            if(!TextUtils.isEmpty(indexItem.uri))
+                CommandActionUtils.start(getActivity(), indexItem.uri +
+                        String.format("&%1$s=%2$s", Keys.KEY_VIDEO_DETAILS_COVER, indexItem.cover));
         });
     }
 

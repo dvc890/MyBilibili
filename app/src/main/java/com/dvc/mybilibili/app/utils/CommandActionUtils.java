@@ -51,7 +51,7 @@ public class CommandActionUtils {
     /**
      *
      * @param context
-     * @param command Em: bilibili://main/login/verify
+     * @param command Ep: bilibili://main/login/verify
      */
     public static void start(Context context, String command) {
         BiliBiliUrl url = createBiliUrl(command);

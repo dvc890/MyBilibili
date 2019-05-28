@@ -12,6 +12,8 @@ import com.dvc.mybilibili.player.popup.QualityPickPopup;
 import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
+import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
@@ -20,6 +22,7 @@ import com.vondear.rxtool.view.RxToast;
 import java.io.File;
 
 import butterknife.BindView;
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
 /**
  * 可以切换清晰度的播放器
@@ -77,7 +80,12 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 
     public boolean setUp(MediaResource mediaResource, boolean cacheWithPlay, String title) {
         this.mediaResource = mediaResource;
-        return setUp(this.mediaResource.getAutoVideoUrl(), cacheWithPlay, title);
+//        if(this.mediaResource.getAutoVideoUrl().toLowerCase().contains("quic")) {
+//            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
+//        } else {
+//            PlayerFactory.setPlayManager(IjkPlayerManager.class);
+//        }
+        return setUp(this.mediaResource.getAutoVideoUrl().replace("quic://", "http://"), cacheWithPlay, title);
     }
 
     private String getVideoUrl(int position) {

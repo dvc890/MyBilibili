@@ -101,5 +101,7 @@
         <item name="android:width">320px</item>
     </style>
 
+    <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
 
 </resources>

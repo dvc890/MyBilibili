@@ -16,6 +16,7 @@ import android.widget.SeekBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.utils.GlideUtils;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
@@ -93,15 +94,10 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     }
 
     public void loadCoverImage(String url) {
+        setViewShowState(mLoadingProgressBar, GONE);
         mCoverImage = (ImageView) findViewById(R.id.thumbImage);
         mCoverOriginUrl = url;
-        Glide.with(getContext().getApplicationContext())
-                .setDefaultRequestOptions(
-                        new RequestOptions()
-                                .frame(1000000)
-                                .centerCrop())
-                .load(url)
-                .into(mCoverImage);
+        GlideUtils.Default2ImageView(mCoverImage, url, 0);
     }
 
     public void setFristStartClickListener(OnClickListener onClickListener) {
@@ -115,6 +111,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
             getStartButton().callOnClick();
         } else {
             startPlayLogic();
+            mCoverImage.setVisibility(GONE);
         }
     }
 

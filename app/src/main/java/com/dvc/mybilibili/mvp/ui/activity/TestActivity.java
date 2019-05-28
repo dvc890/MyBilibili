@@ -49,7 +49,7 @@ public class TestActivity extends DaggerAppCompatActivity {
         biliVideoPlayer.setUp(source1, true, "测试视频");
 //        biliVideoPlayer.setFristStart(v ->
 //                biliVideoPlayer.startPlayLogic());
-        biliVideoPlayer.startPlayLogic();
+//        biliVideoPlayer.startPlayLogic();
         Debuger.enable();
     }
 

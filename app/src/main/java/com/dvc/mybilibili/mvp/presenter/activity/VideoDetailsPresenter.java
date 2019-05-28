@@ -41,12 +41,12 @@ public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView>{
                 .subscribe(new ObserverCallback<BiliVideoDetail>() {
                     @Override
                     public void onSuccess(BiliVideoDetail biliVideoDetail) {
-
+                        ifViewAttached(view -> view.onLoadDetailCompleted(biliVideoDetail));
                     }
 
                     @Override
                     public void onError(BiliApiException apiException, int code) {
-
+                        ifViewAttached(view -> view.onLoadDetailFailed(apiException));
                     }
                 });
     }

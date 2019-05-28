@@ -128,16 +128,16 @@
         android:scaleType="centerInside"
         android:visibility="gone"
         android:src="@drawable/video_small_close" />
-    <FrameLayout
-        android:id="@+id/lock_screen"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="10dp"
-        android:visibility="gone" android:background="@drawable/xplayer_shape_roundrect_black_alpha30" android:layout_width="44dp" android:layout_height="44dp" android:layout_marginLeft="8dp">
+
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:id="@+id/lock_screen"
+            android:visibility="gone"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/xplayer_shape_roundrect_black_alpha30"
+            android:layout_width="44dp" android:layout_height="44dp" android:layout_marginLeft="8dp"
             android:scaleType="centerInside"
             android:src="@drawable/xplayer_ic_un_lock" />
-    </FrameLayout>
+
 </RelativeLayout>

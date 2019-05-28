@@ -53,6 +53,7 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-24'
 ////    GSYVideoPlayer
     implementation 'com.shuyu:gsyVideoPlayer-java:6.0.3' //高版本需要AndroidX
+    implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.3'//是否需要ExoPlayer模式
     implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.3'
 ////    lottie
     implementation 'com.airbnb.android:lottie:2.7.0'//更高版本要用AndroidX
