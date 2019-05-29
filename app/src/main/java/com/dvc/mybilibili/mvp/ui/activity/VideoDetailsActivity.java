@@ -5,6 +5,7 @@ import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
 
@@ -12,15 +13,19 @@ import com.alibaba.fastjson.JSON;
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
+import com.dvc.mybilibili.mvp.model.api.entity.IMediaResource;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
+import com.dvc.mybilibili.mvp.model.api.entity.MediaResourceV1;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.presenter.activity.VideoDetailsPresenter;
 import com.dvc.mybilibili.player.BiliQualityPickVideoPlayer;
+import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.OnClick;
 
 public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, VideoDetailsPresenter> implements VideoDetailsView{
 
@@ -30,7 +35,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     private int player_width;
     private int player_height;
     private int player_rotate;
-    private MediaResource preload;
+    private IMediaResource preload;
 
     @BindView(R.id.app_bar)
     AppBarLayout appBarLayout;
@@ -38,6 +43,8 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     CollapsingToolbarLayout collapsingToolbarLayout;
     @BindView(R.id.player)
     BiliQualityPickVideoPlayer pickVideoPlayer;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
     @BindView(R.id.title_layout)
     View title_layout;
     @BindView(R.id.tab_layout)
@@ -59,7 +66,22 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
 
     @Override
     protected void initViews() {
-
+//        setSupportActionBar(toolbar);
+        appBarLayout.addOnOffsetChangedListener((appBarLayout, verticalOffset) -> {
+            if (verticalOffset == 0){
+                gone(title_layout);
+            }else if (Math.abs(verticalOffset) >= appBarLayout.getTotalScrollRange()){
+                visible(title_layout);
+            }
+            if(pickVideoPlayer.isInPlayingState()) {
+                View appBarChildAt = appBarLayout.getChildAt(0);
+                AppBarLayout.LayoutParams appBarParams = (AppBarLayout.LayoutParams) appBarChildAt.getLayoutParams();
+//                appBarParams.setScrollFlags( AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
+//                        | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);// 重置折叠效果
+                appBarParams.setScrollFlags(0);//这个加了之后不可滑动
+                appBarChildAt.setLayoutParams(appBarParams);
+            }
+        });
     }
 
     @Override
@@ -73,7 +95,13 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
         this.player_height = getIntent().getIntExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_HEIGHT, -1);
         this.player_rotate = getIntent().getIntExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_ROTATE, -1);
         this.cover = getIntent().getStringExtra(Keys.KEY_VIDEO_DETAILS_COVER);
-        this.preload = JSON.parseObject(getIntent().getStringExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_PRELOAD), MediaResource.class);
+        String preload = getIntent().getStringExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_PRELOAD);
+        if(preload.contains("\"url\":")) //old param
+            this.preload = JSON.parseObject(preload, MediaResourceV1.class);
+        else {
+            this.preload = JSON.parseObject(preload, MediaResource.class);
+            presenter.getVideoUrl(this.aid, this.preload.cid, this.preload.quality);
+        }
 
         pickVideoPlayer.setUp(this.preload, true, "");
 
@@ -81,6 +109,18 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
             presenter.loadVideoDetails(this.aid);
         else
             pickVideoPlayer.loadCoverImage(this.cover);
+
+    }
+
+    @OnClick(R.id.title_layout)
+    public void OnTitleStartClick() {
+        appBarLayout.setExpanded(true, true);
+        pickVideoPlayer.startPlayLogic();
+    }
+
+    @OnClick(R.id.btn_back)
+    public void OnBackBtnClick() {
+        finish();
     }
 
     @Override
@@ -91,5 +131,31 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @Override
     public void onLoadDetailFailed(BiliApiException apiException) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (GSYVideoManager.backFromWindowFull(this)) {
+            return;
+        }
+        super.onBackPressed();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        GSYVideoManager.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        GSYVideoManager.onPause();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        GSYVideoManager.releaseAllVideos();
     }
 }

@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model;
 
 
+import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerItem;
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
@@ -33,7 +34,7 @@ public class AppIndex {
 
     private int idx;
 
-    private List<Banner_item> banner_item;
+    private List<BannerItem> banner_item;
 
     private int tid;
 
@@ -165,11 +166,11 @@ public class AppIndex {
         return this.idx;
     }
 
-    public List<Banner_item> getBanner_item() {
+    public List<BannerItem> getBanner_item() {
         return banner_item;
     }
 
-    public void setBanner_item(List<Banner_item> banner_item) {
+    public void setBanner_item(List<BannerItem> banner_item) {
         this.banner_item = banner_item;
     }
 

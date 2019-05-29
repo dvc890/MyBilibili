@@ -2,6 +2,8 @@ package com.dvc.mybilibili.player.popup;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.View;
@@ -26,22 +28,24 @@ public class QualityPickPopup extends BasePopupWindow {
         super(context);
         this.setPopupGravity(Gravity.RIGHT);
         this.setBlurBackgroundEnable(false);
+        this.setBackground(null);
         this.recyclerView = this.findViewById(R.id.list_recyclerview);
         this.adapter = new BaseQuickAdapter<String, BaseViewHolder>(R.layout.bili_item_quality) {
             @Override
             protected void convert(BaseViewHolder helper, String item) {
                 helper.setText(R.id.quality_desc, item);
-                if(selectedPos == adapter.getParentPosition(item)
+                if(selectedPos == adapter.getData().indexOf(item)
                     || selectedPos == -1 && item.equals(getContext().getString(R.string.player_quality_switch_mode_auto1))) {
                     helper.setTextColor(R.id.quality_desc, Color.parseColor("#d85d84"));
                 }
-                if(getQuality(adapter.getParentPosition(item)) > 96) {//需要大会员
+                if(getQuality(adapter.getData().indexOf(item)) > 96) {//需要大会员
 //                    helper.setText(R.id.need_tips, item);
-                }else if(getQuality(adapter.getParentPosition(item)) > 64) {//需要登录
+                }else if(getQuality(adapter.getData().indexOf(item)) > 64) {//需要登录
 
                 }
             }
         };
+        this.recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
         this.adapter.bindToRecyclerView(this.recyclerView);
     }
 
@@ -58,10 +62,14 @@ public class QualityPickPopup extends BasePopupWindow {
         }
     }
 
-    public void setData(int selectedPos, ArrayList<Integer> support_quality, ArrayList<String> support_description) {
+    public void setSelected(int selectedPos) {
         this.selectedPos = selectedPos;
+    }
+
+    public void setData(ArrayList<Integer> support_quality, ArrayList<String> support_description) {
         this.support_quality = support_quality;
-        support_description.add(getContext().getString(R.string.player_quality_switch_mode_auto1));
+        if(!support_description.contains(getContext().getString(R.string.player_quality_switch_mode_auto1)))
+            support_description.add(getContext().getString(R.string.player_quality_switch_mode_auto1));
         adapter.setNewData(support_description);
     }
 

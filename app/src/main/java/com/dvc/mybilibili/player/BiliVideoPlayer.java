@@ -111,13 +111,13 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
             getStartButton().callOnClick();
         } else {
             startPlayLogic();
-            mCoverImage.setVisibility(GONE);
         }
     }
 
     @Override
     public void startPlayLogic() {
         super.startPlayLogic();
+        mCoverImage.setVisibility(GONE);
         startfristbtn.setVisibility(GONE);
     }
 
@@ -263,6 +263,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         BiliVideoPlayer gsyBaseVideoPlayer = (BiliVideoPlayer) super.startWindowFullscreen(context, actionBar, statusBar);
         gsyBaseVideoPlayer.setOpenPreView(isOpenPreView());
+        setIsTouchWiget(true);
         return gsyBaseVideoPlayer;
     }
 
@@ -273,7 +274,7 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     protected void resolveNormalVideoShow(View oldF, ViewGroup vp, GSYVideoPlayer gsyVideoPlayer) {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
-
+            setIsTouchWiget(false);
         }
     }
 

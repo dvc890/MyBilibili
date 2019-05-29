@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.model.api.service.video;
 import android.os.Looper;
 import android.text.TextUtils;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.app.utils.ParamsMap;
@@ -162,4 +163,12 @@ public interface VideoApiService {
     //Map: "aid","cid","fnval=1"
     @GET("/x/playurl")
     Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoMaterialUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
+
+    @GET("x/player/playurl")
+    Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
+
+//    @Headers("Referer:https://api.bilibili.com/x/web-interface/view?aid={0}/?p=")
+//    @GET("https://interface.bilibili.com/v2/playurl?otype=json")
+    @GET("/v2/playurlproj?otype=json")
+    Observable<GeneralResponse<JSONObject>> getFTVideoUrlV2(@Query("access_key") String access_key, @Query("aid")  int avid, @Query("cid") long cid, @Query("qn") int qn);
 }

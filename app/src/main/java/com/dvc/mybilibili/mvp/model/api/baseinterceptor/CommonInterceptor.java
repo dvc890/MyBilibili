@@ -36,33 +36,15 @@ public class CommonInterceptor implements Interceptor {
     Context context;
     BaseIntercept baseIntercept;
     Map<String, Iintercept> interceptMap;
-    Map<String, String> paramsMap;
     @Inject
     public CommonInterceptor(@ApplicationContext Context context) {
         this.context = context;
         this.interceptMap = new HashMap<>();
-        this.paramsMap = new HashMap<>();
     }
 
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request oldRequest = chain.request();
-        String header = oldRequest.header("Interceptor");
-        paramsMap.clear();
-        if(!TextUtils.isEmpty(header)) {
-            try {
-                Iintercept intercept;
-                if(!interceptMap.containsKey(header))
-                    intercept = Reflect.on(header).create(context).get();
-                else
-                    intercept = interceptMap.get(header);
-                intercept.putParams(paramsMap);
-            }catch (ReflectException e) {}
-        }else {
-            if(this.baseIntercept == null)
-                this.baseIntercept = new BaseIntercept(context);
-            baseIntercept.putParams(paramsMap);
-        }
         HttpUrl url = oldRequest.url();
         RxLogTool.d(TAG, url.toString());
         HttpUrl.Builder authorizedUrlBuilder = url.newBuilder()
@@ -77,7 +59,8 @@ public class CommonInterceptor implements Interceptor {
 //                    + bodyToString(formBodyBuilder.build());
 //            postBodyString += getSignParam(postBodyString);
             Map<String,String> tempMap = bodyToMap(oldRequest.body());
-            tempMap.putAll(paramsMap);
+//            tempMap.putAll(paramsMap);
+            putCommonParams(tempMap, oldRequest);
             String postBodyString = LibBili.m8854a(tempMap).toString();
 //            authorizedUrlBuilder.addQueryParameter("sign", LibBili.m8854a(tempMap).b);
             tempMap.clear();
@@ -90,12 +73,13 @@ public class CommonInterceptor implements Interceptor {
                             .build()
             );
         } else if(oldRequest.method().equals("GET")){
-            for(Map.Entry<String, String> entry : paramsMap.entrySet())
-                authorizedUrlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
+//            for(Map.Entry<String, String> entry : paramsMap.entrySet())
+//                authorizedUrlBuilder.addQueryParameter(entry.getKey(), entry.getValue());
 
 //            authorizedUrlBuilder.addQueryParameter("sign", getSign(/*SignedQuery.a*/(oldRequest.url().url().getQuery()+"&"+SignedQuery.r(paramsMap))));
             Map<String,String> tempMap = urlQueryParameterToMap(oldRequest.url());
-            tempMap.putAll(paramsMap);
+//            tempMap.putAll(paramsMap);
+            putCommonParams(tempMap, oldRequest);
 //            String signString = LibBili.m8854a(paramsMap).b;
 //            authorizedUrlBuilder.addQueryParameter("sign", signString);
             HttpUrl newurl = url.newBuilder().encodedQuery(LibBili.m8854a(tempMap).toString()).build();
@@ -140,6 +124,24 @@ public class CommonInterceptor implements Interceptor {
         }
         catch (final IOException e) {
             return "did not work";
+        }
+    }
+
+    private void putCommonParams(Map<String,String> paramsMap,Request oldRequest) {
+        String header = oldRequest.header("Interceptor");
+        if(!TextUtils.isEmpty(header)) {
+            try {
+                Iintercept intercept;
+                if(!interceptMap.containsKey(header))
+                    intercept = Reflect.on(header).create(context).get();
+                else
+                    intercept = interceptMap.get(header);
+                intercept.putParams(paramsMap);
+            }catch (ReflectException e) {}
+        }else {
+            if(this.baseIntercept == null)
+                this.baseIntercept = new BaseIntercept(context);
+            baseIntercept.putParams(paramsMap);
         }
     }
 

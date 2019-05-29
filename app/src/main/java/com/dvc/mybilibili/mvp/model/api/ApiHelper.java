@@ -9,6 +9,7 @@ import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFe
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 
 import java.util.List;
 
@@ -36,4 +37,10 @@ public interface ApiHelper {
     Observable<LoginInfo> acquireAccessToken(String code);
 
     Observable<BiliVideoDetail> getVideoDetails(int avid, String accessKey);
+
+    Observable<FtVideoUrlInfoBean> getFTVideoUrl(String access_key, int avid, long cid, int qn);
+
+//    Observable<JSONObject> getFTVideoUrlV2(String access_key, int avid, long cid, int qn);
+
+    Observable<FtVideoUrlInfoBean> getFTVideoMaterialUrl(String access_key, int aid, long cid, int fnval);
 }

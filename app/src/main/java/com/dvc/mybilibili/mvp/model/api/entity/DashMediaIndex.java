@@ -4,8 +4,10 @@ import android.support.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
+import java.util.List;
+
 @Keep
-public class AudioDash {
+public class DashMediaIndex {
     @JSONField(name = "id")
     public int id;
     @JSONField(name = "base_url")
@@ -14,6 +16,10 @@ public class AudioDash {
     public long bandwidth;
     @JSONField(name = "codecid")
     public int codecid;
+    @JSONField(name = "backup_url")
+    private List<String> backupUrl;
+    @JSONField(name = "backupUrl")
+    private List<String> backupUrl2;
 
-    public AudioDash() {}
+    public DashMediaIndex() {}
 }

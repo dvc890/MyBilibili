@@ -29,9 +29,12 @@ import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -238,6 +241,44 @@ public class AppApiHelper implements ApiHelper {
                     if(biliVideoDetailGeneralResponse.isSuccess())
                         return biliVideoDetailGeneralResponse.data;
                     throw new BiliApiException(biliVideoDetailGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<FtVideoUrlInfoBean> getFTVideoUrl(String access_key, int avid, long cid, int qn) {
+        Map<String,String> map = new HashMap<>();
+        map.put("avid", avid+"");
+        map.put("cid", cid+"");
+        map.put("qn", qn+"");
+        return this.videoApiService.getFTVideoUrl(access_key, map)
+                .map(ftVideoUrlInfoBeanGeneralResponse -> {
+                    if(ftVideoUrlInfoBeanGeneralResponse.isSuccess())
+                        return ftVideoUrlInfoBeanGeneralResponse.data;
+                    throw new BiliApiException(ftVideoUrlInfoBeanGeneralResponse);
+                });
+    }
+
+//    @Override
+//    public Observable<JSONObject> getFTVideoUrlV2(String access_key, int avid, long cid, int qn) {//"iVGUTjsxvpLeuDCf"
+//        return this.videoApiService.getFTVideoUrlV2(access_key, avid, cid, qn)
+//                .map(ftVideoUrlInfoBeanGeneralResponse -> {
+//                    if(ftVideoUrlInfoBeanGeneralResponse.isSuccess())
+//                        return ftVideoUrlInfoBeanGeneralResponse.data;
+//                    throw new BiliApiException(ftVideoUrlInfoBeanGeneralResponse);
+//                });
+//    }
+
+    @Override
+    public Observable<FtVideoUrlInfoBean> getFTVideoMaterialUrl(String access_key, int aid, long cid, int fnval) {
+        Map<String,String> map = new HashMap<>();
+        map.put("aid", aid+"");
+        map.put("cid", cid+"");
+        map.put("fnval", fnval+"");
+        return this.videoApiService.getFTVideoMaterialUrl(access_key, map)
+                .map(ftVideoUrlInfoBeanGeneralResponse -> {
+                    if(ftVideoUrlInfoBeanGeneralResponse.isSuccess())
+                        return ftVideoUrlInfoBeanGeneralResponse.data;
+                    throw new BiliApiException(ftVideoUrlInfoBeanGeneralResponse);
                 });
     }
 }

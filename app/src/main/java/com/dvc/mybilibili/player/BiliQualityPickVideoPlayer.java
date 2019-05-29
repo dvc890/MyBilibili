@@ -7,13 +7,12 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.mvp.model.api.entity.IMediaResource;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 import com.dvc.mybilibili.player.popup.QualityPickPopup;
 import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
-import com.shuyu.gsyvideoplayer.player.IjkPlayerManager;
-import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
@@ -22,7 +21,6 @@ import com.vondear.rxtool.view.RxToast;
 import java.io.File;
 
 import butterknife.BindView;
-import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
 /**
  * 可以切换清晰度的播放器
@@ -41,7 +39,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 
     @BindView(R.id.pick)
     TextView mSwitchSize;
-    private MediaResource mediaResource;
+    private IMediaResource mediaResource;
     private String mTypeText;
     private QualityPickPopup qualityPickPopup;
 
@@ -74,38 +72,52 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         });
         this.qualityPickPopup = new QualityPickPopup(getContext());
         this.qualityPickPopup.setOnItemClickListener((adapter, view, position) -> {
+            qualityPickPopup.dismiss(true);
             resolveStartChange(position);
         });
     }
 
-    public boolean setUp(MediaResource mediaResource, boolean cacheWithPlay, String title) {
+    public boolean setUp(IMediaResource mediaResource, boolean cacheWithPlay, String title) {
         this.mediaResource = mediaResource;
-//        if(this.mediaResource.getAutoVideoUrl().toLowerCase().contains("quic")) {
+//        if(this.mediaResource.getFTVideoMaterialUrl().toLowerCase().contains("quic")) {
 //            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
 //        } else {
 //            PlayerFactory.setPlayManager(IjkPlayerManager.class);
 //        }
-        return setUp(this.mediaResource.getAutoVideoUrl().replace("quic://", "http://"), cacheWithPlay, title);
+        final String url = getVideoUrl(mSourcePosition);
+        mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
+        mSwitchSize.setText(mTypeText);
+        mSwitchSize.setVisibility(GONE);
+        return setUp(url, cacheWithPlay, title);
+    }
+
+    public <M extends IMediaResource> M getMediaResource() {
+        return (M)mediaResource;
     }
 
     private String getVideoUrl(int position) {
-        try {
-            return this.mediaResource.getVideoUrl(this.mediaResource.support_quality.get(position));
-        }catch (Exception e) {
-            return this.mediaResource.getVideoUrl(this.mediaResource.quality);
+        if(getMediaResource() instanceof MediaResource) {
+            MediaResource mediaResource = getMediaResource();
+            try {
+                return mediaResource.getVideoUrl(mediaResource.support_quality.get(position)).replace("quic://", "http://");
+            }catch (Exception e) {
+                return mediaResource.getVideoUrl().replace("quic://", "http://");
+            }
         }
+        return getMediaResource().getVideoUrl().replace("quic://", "http://");
     }
 
     private String getDescString(int position) {
         try {
-            return this.mediaResource.support_description.get(position);
+            return getMediaResource().support_description.get(position);
         }catch (Exception e) {
             return mContext.getString(R.string.player_quality_switch_mode_auto1);
         }
     }
 
     private void showSwitchPop() {
-        this.qualityPickPopup.setData(mSourcePosition, this.mediaResource.support_quality, this.mediaResource.support_description);
+        this.qualityPickPopup.setSelected(mSourcePosition);
+        this.qualityPickPopup.setData(getMediaResource().support_quality, getMediaResource().support_description);
         this.qualityPickPopup.showPopupWindow();
     }
     /**
@@ -115,7 +127,11 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     @Override
     public GSYBaseVideoPlayer startWindowFullscreen(Context context, boolean actionBar, boolean statusBar) {
         BiliQualityPickVideoPlayer gsyBaseVideoPlayer = (BiliQualityPickVideoPlayer) super.startWindowFullscreen(context, actionBar, statusBar);
-        mSwitchSize.setVisibility(VISIBLE);
+        gsyBaseVideoPlayer.mSwitchSize.setText(mTypeText);
+        gsyBaseVideoPlayer.mSwitchSize.setVisibility(VISIBLE);
+        gsyBaseVideoPlayer.mediaResource = getMediaResource();
+        gsyBaseVideoPlayer.mSourcePosition = mSourcePosition;
+        gsyBaseVideoPlayer.mTypeText = mTypeText;
         return gsyBaseVideoPlayer;
     }
 
@@ -127,7 +143,23 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         super.resolveNormalVideoShow(oldF, vp, gsyVideoPlayer);
         if (gsyVideoPlayer != null) {
             mSwitchSize.setVisibility(GONE);
+            BiliQualityPickVideoPlayer gsyBaseVideoPlayer = (BiliQualityPickVideoPlayer) gsyVideoPlayer;
+            mediaResource = gsyBaseVideoPlayer.getMediaResource();
+            mSourcePosition = gsyBaseVideoPlayer.mSourcePosition;
+            mTypeText = gsyBaseVideoPlayer.mTypeText;
         }
+    }
+
+    @Override
+    public void onAutoCompletion() {
+        super.onAutoCompletion();
+        releaseTmpManager();
+    }
+
+    @Override
+    public void onCompletion() {
+        super.onCompletion();
+        releaseTmpManager();
     }
 
     private void resolveStartChange(int position) {
@@ -144,8 +176,6 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
                 }
                 mPreSourcePosition = mSourcePosition;
                 isChanging = true;
-                mTypeText = name.split(" ")[1];
-                mSwitchSize.setText(name);
                 mSourcePosition = position;
                 //创建临时管理器执行加载播放
                 mTmpManager = GSYVideoManager.tmpInstance(gsyMediaPlayerListener);
@@ -181,7 +211,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         mTmpManager = null;
         final String name = getDescString(mSourcePosition);
         final String url = getVideoUrl(mSourcePosition);
-        mTypeText = name.split(" ")[1];
+        mTypeText = name/*.split(" ")[1]*/;
         mSwitchSize.setText(mTypeText);
         resolveChangeUrl(mCache, mCachePath, url);
         hideLoading();

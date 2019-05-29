@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.app.utils;
 
+import android.support.annotation.DrawableRes;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.View;
@@ -10,10 +11,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
-import com.vondear.rxtool.RxImageTool;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.ashokvarma.bottomnavigation.R;
+import com.dvc.base.utils.Reflect;
+import com.vondear.rxtool.RxImageTool;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 
 public class BottomNavigationBarUtils {
     /**
@@ -26,7 +30,7 @@ public class BottomNavigationBarUtils {
      代表将bottomNavigationBar的文字大小设置为10dp，图片大小为26dp，二者间间距为6dp
      **/
 
-    public static void setBottomNavigationItem(BottomNavigationBar bottomNavigationBar, int space, int imgLen, int textSize){
+    public static void setBottomNavigationItemSize(BottomNavigationBar bottomNavigationBar, int space, int imgLen, int textSize){
         Class barClass = bottomNavigationBar.getClass();
         Field[] fields = barClass.getDeclaredFields();
         for(int i = 0; i < fields.length; i++){

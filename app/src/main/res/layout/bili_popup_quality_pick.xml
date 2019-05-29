@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="120dp"
+    android:layout_width="@dimen/dp_150"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_gravity="right"
-    android:background="@color/black_alpha30">
+    android:background="@color/black_alpha80">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/list_recyclerview"

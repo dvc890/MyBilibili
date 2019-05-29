@@ -3,11 +3,9 @@ package com.dvc.mybilibili.mvp.ui.activity;
 import android.content.Intent;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
-import android.support.design.internal.BottomNavigationMenu;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.content.ContextCompat;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -92,16 +90,16 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 
     private void initBottomNavigationBar(int selectIndex) {
         bottomNavigationBar.addItem(
-                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_home_default, R.string.main_page_homepage)
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_home, R.string.main_page_homepage)
         );
         bottomNavigationBar.addItem(
-                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_partition_default, R.string.main_page_channel)
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_partition, R.string.main_page_channel)
         );
         bottomNavigationBar.addItem(
-                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_moments_default, R.string.main_page_attentions)
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_moments, R.string.main_page_attentions)
         );
         bottomNavigationBar.addItem(
-                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_me_default, R.string.main_page_my_center)
+                new BottomNavigationItem(R.drawable.ic_vector_tab_bar_me, R.string.main_page_my_center)
         );
         //mode_fixed:每个item对应名称，不选中也会显示
         // mode_shifting:每个item对应名称，只有选中才会显示，不选中隐藏
@@ -114,7 +112,7 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         bottomNavigationBar.setAutoHideEnabled(false);//关闭自动隐藏
         bottomNavigationBar.setFirstSelectedPosition(selectIndex);
         bottomNavigationBar.initialise();
-        BottomNavigationBarUtils.setBottomNavigationItem(bottomNavigationBar, 6, 22, 10);
+        BottomNavigationBarUtils.setBottomNavigationItemSize(bottomNavigationBar, 6, 22, 10);
         bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.SimpleOnTabSelectedListener(){
             @Override
             public void onTabSelected(int position) {

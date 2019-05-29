@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.presenter.activity;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
@@ -47,6 +48,22 @@ public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView>{
                     @Override
                     public void onError(BiliApiException apiException, int code) {
                         ifViewAttached(view -> view.onLoadDetailFailed(apiException));
+                    }
+                });
+    }
+
+    public void getVideoUrl(int aid, long cid, int quality) {
+        this.apiHelper.getFTVideoUrlV2(this.user.getAccessKey(), aid, cid, quality)
+                .compose(RxSchedulersHelper.ioAndMainThread())
+                .subscribe(new ObserverCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject jsonObject) {
+
+                    }
+
+                    @Override
+                    public void onError(BiliApiException apiException, int code) {
+
                     }
                 });
     }

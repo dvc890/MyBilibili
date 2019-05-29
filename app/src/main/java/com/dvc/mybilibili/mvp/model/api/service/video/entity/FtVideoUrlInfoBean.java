@@ -3,8 +3,10 @@ package com.dvc.mybilibili.mvp.model.api.service.video.entity;
 import android.support.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 
-import java.util.HashMap;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.List;
 
 @Keep
@@ -19,7 +21,7 @@ public class FtVideoUrlInfoBean {
     @JSONField(name = "accept_quality")
     public List<Integer> acceptQuality;
     @JSONField(name = "durl")
-    public List<HashMap> dUrl;
+    public List<VUrl> dUrl;
     @JSONField(name = "fnval")
     public int fnval;
     @JSONField(name = "fnver")
@@ -42,4 +44,25 @@ public class FtVideoUrlInfoBean {
     public int videoCodecid;
     @JSONField(name = "video_project")
     public boolean videoProject;
+    @JSONField(name = "dash")
+    public MediaResource.DashResource dash;
+
+
+    public class VUrl {
+        @JSONField(name = "order")
+        int order;
+        @JSONField(name = "length")
+        long length;
+        @JSONField(name = "size")
+        long size;
+        @JSONField(name = "ahead")
+        String ahead;
+        @JSONField(name = "vhead")
+        String vhead;
+        @JSONField(name = "url")
+        String url;
+        @Nullable
+        @JSONField(name = "backup_url")
+        String backup_url;
+    }
 }

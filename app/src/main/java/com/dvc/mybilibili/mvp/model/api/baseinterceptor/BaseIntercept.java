@@ -2,8 +2,6 @@ package com.dvc.mybilibili.mvp.model.api.baseinterceptor;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
-import android.support.annotation.NonNull;
-
 
 import com.bilibili.nativelibrary.LibBili;
 import com.dvc.mybilibili.app.application.BiliApplication;
@@ -12,7 +10,6 @@ import com.dvc.mybilibili.mvp.model.account.IAccountHelper;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.HashMap;
 import java.util.Map;
 
 /* compiled from: BL */
@@ -39,7 +36,8 @@ public class BaseIntercept implements Iintercept{
     public void putParams(Map<String, String> map) {
         map.put("platform", "android");
         map.put("mobi_app", "android");//
-        map.put("appkey", LibBili.getAndroidAppKey());
+        if(!map.containsKey("appkey"))
+            map.put("appkey", LibBili.getAndroidAppKey());
         map.put("build", String.valueOf(5410000));
         map.put("channel", "master");
         try {

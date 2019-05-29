@@ -8,79 +8,32 @@ import com.alibaba.fastjson.annotation.JSONField;
 import java.util.ArrayList;
 
 @Keep
-public class MediaResource {
+public class MediaResource extends IMediaResource{
 
-    @JSONField(name = "expire_time")
-    public long expire_time;
-    @JSONField(name = "cid")
-    public long cid;
-    @JSONField(name = "support_quality")
-    public ArrayList<Integer> support_quality;
-    @JSONField(name = "support_formats")
-    public ArrayList<String> support_formats;
-    @JSONField(name = "support_description")
-    public ArrayList<String> support_description;
-    @JSONField(name = "quality")
-    public int quality;
-    @JSONField(name = "file_info")
-    public MediaFileInfos file_info;
-    @JSONField(name = "video_codecid")
-    public int video_codecid;
-    @JSONField(name = "video_project")
-    public boolean video_project;
-    @JSONField(name = "fnver")
-    public int fnver;
-    @JSONField(name = "fnval")
-    public int fnval;
     @JSONField(name = "dash")
-    public VideoDashs dash;
+    public DashResource dash;
 
     public MediaResource() {}
 
-    public String getAutoVideoUrl() {
+    @Override
+    public String getVideoUrl() {
         return getVideoUrl(quality);
     }
 
     public String getVideoUrl(int quality) {
-        for(VideoDash dash : dash.videos) {
+        for(DashMediaIndex dash : dash.videos) {
             if(dash.id == quality) return dash.base_url;
         }
         return dash.videos.get(0).base_url;
     }
 
     @Keep
-    public static class MediaFileInfos {
-
-        @JSONField(name = "16")
-        public Infos _16;
-        @JSONField(name = "32")
-        public Infos _32;
-        @JSONField(name = "64")
-        public Infos _64;
-        @JSONField(name = "80")
-        public Infos _80;
-        @JSONField(name = "112")
-        public Infos _112;
-
-        public MediaFileInfos() {}
-
-        public static class Infos {
-            @JSONField(name = "filesize")
-            public long filesize;
-            @JSONField(name = "timelength")
-            public long timelength;
-
-            public Infos() {}
-        }
-    }
-
-    @Keep
-    public static class VideoDashs {
+    public static class DashResource {
         @JSONField(name = "video")
-        public ArrayList<VideoDash> videos;
+        public ArrayList<DashMediaIndex> videos;
         @JSONField(name = "audio")
-        public ArrayList<AudioDash> audios;
+        public ArrayList<DashMediaIndex> audios;
 
-        public VideoDashs() {}
+        public DashResource() {}
     }
 }
