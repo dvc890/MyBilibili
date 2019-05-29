@@ -367,4 +367,7 @@
 
     <color name="daynight_color_text_body_primary">#111111</color>
     <color name="daynight_color_text_supplementary_dark">#999999</color>
+
+    <color name="yellow_warning_background">#fff1d3</color>
+    <color name="yellow_warning_text_color">#e78b1f</color>
 </resources>

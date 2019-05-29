@@ -1,9 +1,11 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
@@ -19,8 +21,14 @@ import com.dvc.mybilibili.mvp.model.api.entity.MediaResourceV1;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.presenter.activity.VideoDetailsPresenter;
+import com.dvc.mybilibili.mvp.ui.adapter.ViewPagerAdapter;
+import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoCommentFragment;
+import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoDetailPageFragment;
 import com.dvc.mybilibili.player.BiliQualityPickVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -52,6 +60,8 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @BindView(R.id.viewpager)
     ViewPager viewpager;
     private String cover;
+    private VideoDetailPageFragment videoDetailPageFragment;
+    private VideoCommentFragment videoCommentFragment;
 
     @NonNull
     @Override
@@ -82,6 +92,8 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
                 appBarChildAt.setLayoutParams(appBarParams);
             }
         });
+
+        setupViewPager();
     }
 
     @Override
@@ -126,6 +138,9 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @Override
     public void onLoadDetailCompleted(BiliVideoDetail biliVideoDetail) {
         pickVideoPlayer.loadCoverImage(biliVideoDetail.mCover);
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Keys.KEY_VIDEO_DETAILS_DATA, biliVideoDetail);
+        videoDetailPageFragment.setArguments(bundle);
     }
 
     @Override
@@ -157,5 +172,23 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     protected void onDestroy() {
         super.onDestroy();
         GSYVideoManager.releaseAllVideos();
+    }
+
+
+    private void setupViewPager() {
+        this.videoDetailPageFragment = new VideoDetailPageFragment();
+        this.videoCommentFragment = new VideoCommentFragment();
+
+        List<Fragment> views = new ArrayList<>(2);
+        views.add(videoDetailPageFragment);
+        views.add(videoCommentFragment);
+
+        List<String> titles = new ArrayList<>();
+        titles.add(getString(R.string.video_pages_title_desc));
+        titles.add(getString(R.string.video_pages_title_hotfeedback));
+
+        new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
+        tabLayout.setupWithViewPager(viewpager);
+        viewpager.setCurrentItem(1);
     }
 }

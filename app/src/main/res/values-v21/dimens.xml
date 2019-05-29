@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="line_multiplier_padding_bottom_warning">4dp</dimen>
+</resources>

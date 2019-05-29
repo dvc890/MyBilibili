@@ -13,12 +13,15 @@ import com.dvc.mybilibili.mvp.model.account.IAccountHelper;
 import com.dvc.mybilibili.mvp.model.api.ApiHelper;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsView;
+import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoDetailPageFragView;
+import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import javax.inject.Inject;
 
-public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView>{
+public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView> {
 
 
     private final Context context;
@@ -53,11 +56,11 @@ public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView>{
     }
 
     public void getVideoUrl(int aid, long cid, int quality) {
-        this.apiHelper.getFTVideoUrlV2(this.user.getAccessKey(), aid, cid, quality)
+        this.apiHelper.getFTVideoUrl(this.user.getAccessKey(), aid, cid, quality)
                 .compose(RxSchedulersHelper.ioAndMainThread())
-                .subscribe(new ObserverCallback<JSONObject>() {
+                .subscribe(new ObserverCallback<FtVideoUrlInfoBean>() {
                     @Override
-                    public void onSuccess(JSONObject jsonObject) {
+                    public void onSuccess(FtVideoUrlInfoBean ftVideoUrlInfoBean) {
 
                     }
 

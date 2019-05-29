@@ -61,6 +61,8 @@ dependencies {
 //    implementation 'com.github.yyued:SVGAPlayer-Android:2.4.4'
 ////    BasePopup
     implementation 'com.github.razerdp:BasePopup:2.1.9'
+////    ExpandableTextView
+    implementation 'com.ms-square:expandableTextView:0.1.4'
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$parent.ext.daggerVersion"

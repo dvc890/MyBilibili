@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/frame1" android:layout_width="0dp" android:layout_height="51dp" android:layout_marginLeft="12dp" android:foreground="?attr/selectableItemBackgroundBorderless" app:layout_constraintHorizontal_chainStyle="0" app:layout_constraintLeft_toLeftOf="0" app:layout_constraintRight_toLeftOf="@+id/frame6" app:layout_constraintTop_toTopOf="0">
+        <FrameLayout android:layout_width="30dp" android:layout_height="30dp">
+            <ImageView android:layout_gravity="center" android:id="@+id/recommend_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_recommend"/>
+        </FrameLayout>
+        <TextView android:textSize="10sp" android:textColor="@color/daynight_color_text_supplementary_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/recommend_num" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/action_like"/>
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/frame6" android:layout_width="0dp" android:layout_height="51dp" android:foreground="?attr/selectableItemBackgroundBorderless" app:layout_constraintLeft_toRightOf="@+id/frame1" app:layout_constraintRight_toLeftOf="@+id/frame2" app:layout_constraintTop_toTopOf="0">
+        <FrameLayout android:layout_width="30dp" android:layout_height="30dp">
+            <ImageView android:padding="@dimen/dp_3" android:layout_gravity="center" android:id="@+id/dislike_icon" android:layout_width="match_parent" android:layout_height="match_parent" android:src="@drawable/ugcvideo_ic_dislike"/>
+        </FrameLayout>
+        <TextView android:textSize="10sp" android:textColor="@color/daynight_color_text_supplementary_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/dislike_num" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/action_dislike"/>
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/frame2" android:layout_width="0dp" android:layout_height="51dp" android:foreground="?attr/selectableItemBackgroundBorderless" app:layout_constraintLeft_toRightOf="@+id/frame6" app:layout_constraintRight_toLeftOf="@+id/frame3" app:layout_constraintTop_toTopOf="0">
+        <FrameLayout android:layout_width="30dp" android:layout_height="30dp">
+            <ImageView android:layout_gravity="center" android:id="@+id/coin_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_coin"/>
+            <!--<p022tv.danmaku.bili.p023ui.video.widgets.RingProgressBar android:id="@+id/coin_progress" android:layout_width="match_parent" android:layout_height="match_parent"/>-->
+        </FrameLayout>
+        <TextView android:textSize="10sp" android:textColor="@color/daynight_color_text_supplementary_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/coin_num" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/action_take_coin"/>
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/frame3" android:layout_width="0dp" android:layout_height="51dp" android:foreground="?attr/selectableItemBackgroundBorderless" app:layout_constraintLeft_toRightOf="@+id/frame2" app:layout_constraintRight_toLeftOf="@+id/frame5" app:layout_constraintTop_toTopOf="0">
+        <FrameLayout android:layout_width="30dp" android:layout_height="30dp">
+            <ImageView android:layout_gravity="center" android:id="@+id/favorite_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_collect"/>
+            <!--<p022tv.danmaku.bili.p023ui.video.widgets.RingProgressBar android:id="@+id/favorite_progress" android:layout_width="match_parent" android:layout_height="match_parent"/>-->
+        </FrameLayout>
+        <TextView android:textSize="10sp" android:textColor="@color/daynight_color_text_supplementary_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/favorite_num" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/action_favorite"/>
+    </LinearLayout>
+    <LinearLayout android:gravity="center" android:orientation="vertical" android:id="@+id/frame5" android:layout_width="0dp" android:layout_height="51dp" android:layout_marginRight="12dp" android:foreground="?attr/selectableItemBackgroundBorderless" app:layout_constraintHorizontal_chainStyle="0" app:layout_constraintLeft_toRightOf="@+id/frame3" app:layout_constraintRight_toRightOf="0" app:layout_constraintTop_toTopOf="0">
+        <FrameLayout android:layout_width="30dp" android:layout_height="30dp">
+            <ImageView android:layout_gravity="center" android:id="@+id/share_icon" android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/ic_share"/>
+        </FrameLayout>
+        <TextView android:textSize="10sp" android:textColor="@color/daynight_color_text_supplementary_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/share_num" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="@string/action_share"/>
+    </LinearLayout>
+</android.support.constraint.ConstraintLayout>
