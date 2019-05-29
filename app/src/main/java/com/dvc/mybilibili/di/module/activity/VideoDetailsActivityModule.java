@@ -4,10 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dvc.base.di.PerFragment;
-import com.dvc.mybilibili.di.module.fragment.VideoCommentFragmentModule;
-import com.dvc.mybilibili.di.module.fragment.VideoDetailPageFragmentModule;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
-import com.dvc.mybilibili.mvp.ui.fragment.home.HomeFragment;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoCommentFragment;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoDetailPageFragment;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
@@ -21,11 +18,11 @@ import dagger.android.ContributesAndroidInjector;
 public abstract class VideoDetailsActivityModule {
 
     @PerFragment
-    @ContributesAndroidInjector(modules = VideoDetailPageFragmentModule.class)
+    @ContributesAndroidInjector
     abstract VideoDetailPageFragment videoDetailPageFragment();
 
     @PerFragment
-    @ContributesAndroidInjector(modules = VideoCommentFragmentModule.class)
+    @ContributesAndroidInjector//(modules = VideoCommentFragmentModule.class)
     abstract VideoCommentFragment videoCommentFragment();
 
     @Provides
