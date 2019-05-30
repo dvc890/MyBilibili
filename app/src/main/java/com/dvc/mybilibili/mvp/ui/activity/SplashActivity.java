@@ -10,7 +10,7 @@ import android.widget.VideoView;
 
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.app.utils.GlideUtils;
+import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SampleSplash;
 import com.dvc.mybilibili.mvp.model.api.service.splash.entity.Splash;
 import com.dvc.mybilibili.mvp.presenter.activity.SplashPresenter;

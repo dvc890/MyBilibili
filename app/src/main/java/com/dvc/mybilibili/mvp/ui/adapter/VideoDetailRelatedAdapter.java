@@ -8,7 +8,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.app.utils.GlideUtils;
+import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.vondear.rxtool.RxImageTool;
 

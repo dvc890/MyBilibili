@@ -17,7 +17,7 @@ import android.widget.SeekBar;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.app.utils.GlideUtils;
+import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.player.manager.CustomManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;

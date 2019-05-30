@@ -1,6 +1,5 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -14,7 +13,7 @@ import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.retrofit2.responseconverter.CardTypeEnum;
 import com.dvc.mybilibili.app.retrofit2.responseconverter.SearchCardTypeEnum;
 import com.dvc.mybilibili.app.utils.CommandActionUtils;
-import com.dvc.mybilibili.app.utils.GlideUtils;
+import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.feed.FeedExtra;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.BasicIndexItem;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.ADItem;

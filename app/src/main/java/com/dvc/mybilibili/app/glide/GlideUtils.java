@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.app.utils;
+package com.dvc.mybilibili.app.glide;
 
 import android.graphics.drawable.Drawable;
 import android.widget.ImageView;
