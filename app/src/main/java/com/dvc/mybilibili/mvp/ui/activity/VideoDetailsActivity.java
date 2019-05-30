@@ -15,11 +15,13 @@ import com.alibaba.fastjson.JSON;
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
+import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.mvp.model.api.entity.IMediaResource;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResourceV1;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.presenter.activity.VideoDetailsPresenter;
 import com.dvc.mybilibili.mvp.ui.adapter.ViewPagerAdapter;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoCommentFragment;
@@ -40,6 +42,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @Inject
     VideoDetailsPresenter videoDetailsPresenter;
     private int aid;
+    private long cid = -1;
     private int player_width;
     private int player_height;
     private int player_rotate;
@@ -108,19 +111,15 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
         this.player_rotate = getIntent().getIntExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_ROTATE, -1);
         this.cover = getIntent().getStringExtra(Keys.KEY_VIDEO_DETAILS_COVER);
         String preload = getIntent().getStringExtra(Keys.KEY_VIDEO_DETAILS_PLAYER_PRELOAD);
-        if(preload.contains("\"url\":")) //old param
-            this.preload = JSON.parseObject(preload, MediaResourceV1.class);
-        else {
-            this.preload = JSON.parseObject(preload, MediaResource.class);
-            presenter.getVideoUrl(this.aid, this.preload.cid, this.preload.quality);
+        if(!TextUtils.isEmpty(preload)) {
+            if (preload.contains("\"url\":")) //old param
+                this.preload = JSON.parseObject(preload, MediaResourceV1.class);
+            else {
+                this.preload = JSON.parseObject(preload, MediaResource.class);
+            }
+            this.cid = this.preload.cid;
         }
-
-        pickVideoPlayer.setUp(this.preload, true, "");
-
-        if(TextUtils.isEmpty(this.cover))
-            presenter.loadVideoDetails(this.aid);
-        else
-            pickVideoPlayer.loadCoverImage(this.cover);
+        presenter.loadVideoDetails(this.aid);
 
     }
 
@@ -137,14 +136,31 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
 
     @Override
     public void onLoadDetailCompleted(BiliVideoDetail biliVideoDetail) {
-        pickVideoPlayer.loadCoverImage(biliVideoDetail.mCover);
+        this.cover = biliVideoDetail.mCover;
+        if(this.cid == -1)
+            this.cid = biliVideoDetail.findPageByIndex(0).mCid;
         Bundle bundle = new Bundle();
         bundle.putParcelable(Keys.KEY_VIDEO_DETAILS_DATA, biliVideoDetail);
+        bundle.putInt(Keys.KEY_AVID, this.aid);
         videoDetailPageFragment.setArguments(bundle);
+        pickVideoPlayer.setVideoId(this.aid, this.cid);
+        presenter.getVideoUrl(this.aid, this.cid, ParamValueUtils.getQN());
+    }
+
+    @Override
+    public void onLoadVideoUrlCompleted(FtVideoUrlInfoBean ftVideoUrlInfoBean) {
+        if(pickVideoPlayer.getCurrentState() < 0)
+            pickVideoPlayer.setUp(ftVideoUrlInfoBean, true, "");
+        pickVideoPlayer.loadCoverImage(this.cover);
     }
 
     @Override
     public void onLoadDetailFailed(BiliApiException apiException) {
+
+    }
+
+    @Override
+    public void onLoadVideoUrlFailed(BiliApiException apiException) {
 
     }
 
@@ -159,19 +175,22 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @Override
     protected void onResume() {
         super.onResume();
-        GSYVideoManager.onResume();
+        if(pickVideoPlayer.isInPlayingState())
+            pickVideoPlayer.resumeVideo();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        GSYVideoManager.onPause();
+        if(pickVideoPlayer.isInPlayingState())
+            pickVideoPlayer.pauseVideo();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        GSYVideoManager.releaseAllVideos();
+        if(pickVideoPlayer.isInPlayingState())
+            pickVideoPlayer.releaseAllVideos();
     }
 
 
@@ -189,6 +208,6 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
 
         new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
         tabLayout.setupWithViewPager(viewpager);
-        viewpager.setCurrentItem(1);
+        viewpager.setCurrentItem(0);
     }
 }

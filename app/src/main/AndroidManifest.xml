@@ -56,7 +56,6 @@
             android:exported="true"
             android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
             android:windowSoftInputMode="adjustResize"
-            android:launchMode="singleTask"
             android:theme="@style/AppTheme.NoActionBar.Live_Detail"
             android:screenOrientation="portrait">
         </activity>

@@ -2,6 +2,7 @@ package com.dvc.mybilibili.player;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -17,11 +18,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.utils.GlideUtils;
+import com.dvc.mybilibili.player.manager.CustomManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoViewBridge;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -91,6 +94,43 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
         } else {
             imageView.setImageResource(R.drawable.bili_player_play_can_play);
         }
+    }
+
+    @Override
+    public GSYVideoViewBridge getGSYVideoManager() {
+        CustomManager.getCustomManager(getKey()).initContext(getContext().getApplicationContext());
+        return CustomManager.getCustomManager(getKey());
+    }
+
+    @Override
+    protected boolean backFromFull(Context context) {
+        return CustomManager.backFromWindowFull(context, getKey());
+    }
+
+    @Override
+    protected void releaseVideos() {
+        CustomManager.releaseAllVideos(getKey());
+    }
+
+
+//    @Override
+//    protected int getFullId() {
+//        return CustomManager.FULLSCREEN_ID;
+//    }
+//
+//    @Override
+//    protected int getSmallId() {
+//        return CustomManager.SMALL_ID;
+//    }
+
+    public String getKey() {
+        if (mPlayPosition == -22) {
+            Debuger.printfError(getClass().getSimpleName() + " used getKey() " + "******* PlayPosition never set. ********");
+        }
+        if (TextUtils.isEmpty(mPlayTag)) {
+            Debuger.printfError(getClass().getSimpleName() + " used getKey() " + "******* PlayTag never set. ********");
+        }
+        return "MultiVideo" + mPlayPosition + mPlayTag;
     }
 
     public void loadCoverImage(String url) {
@@ -358,5 +398,17 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
                     .load(url).preload(width, height);
 
         }
+    }
+
+    public void releaseAllVideos() {
+        CustomManager.releaseAllVideos(getKey());
+    }
+
+    public void pauseVideo() {
+        ((CustomManager)getGSYVideoManager()).onPause(getKey());
+    }
+
+    public void resumeVideo() {
+        ((CustomManager)getGSYVideoManager()).onResume(getKey());
     }
 }

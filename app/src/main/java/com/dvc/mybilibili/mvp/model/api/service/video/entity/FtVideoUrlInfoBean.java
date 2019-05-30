@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.model.api.service.video.entity;
 import android.support.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.dvc.mybilibili.mvp.model.api.entity.DashMediaIndex;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 
 import org.jetbrains.annotations.Nullable;
@@ -31,7 +32,7 @@ public class FtVideoUrlInfoBean {
     @JSONField(name = "from")
     public String from;
     @JSONField(name = "quality")
-    public String quality;
+    public int quality;
     @JSONField(name = "result")
     public String result;
     @JSONField(name = "seek_param")
@@ -48,21 +49,55 @@ public class FtVideoUrlInfoBean {
     public MediaResource.DashResource dash;
 
 
-    public class VUrl {
+    @Keep
+    public static class VUrl {
         @JSONField(name = "order")
-        int order;
+        public int order;
         @JSONField(name = "length")
-        long length;
+        public long length;
         @JSONField(name = "size")
-        long size;
+        public long size;
         @JSONField(name = "ahead")
-        String ahead;
+        public String ahead;
         @JSONField(name = "vhead")
-        String vhead;
+        public String vhead;
         @JSONField(name = "url")
-        String url;
+        public String url;
         @Nullable
         @JSONField(name = "backup_url")
-        String backup_url;
+        public List<String> backup_url;
+    }
+
+    public boolean isV2Bean() {
+        return dash != null;
+    }
+
+    public List<Integer> getSupportQuality() {
+        return acceptQuality;
+    }
+
+    public int findQuality(int index) {
+        if(getSupportQuality().size() > index) {
+            return getSupportQuality().get(index);
+        }
+        return quality;
+    }
+
+    public List<String> getSupportDescription() {
+        return acceptDescription;
+    }
+
+    public String getVideoUrl() {
+        if(isV2Bean())
+            return getDashVideoUrl(quality);
+        else
+            return dUrl.get(0).url;
+    }
+
+    public String getDashVideoUrl(int quality) {
+        for(DashMediaIndex dash : dash.videos) {
+            if(dash.id == quality) return dash.base_url;
+        }
+        return dash.videos.get(0).base_url;
     }
 }

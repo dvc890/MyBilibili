@@ -20,6 +20,9 @@ public class LiveExt implements Parcelable {
     @JSONField(name = "title")
     public String title;
 
+    public LiveExt() {
+    }
+
     /* compiled from: BL */
     /* renamed from: tv.danmaku.bili.ui.video.api.LiveExt$1 */
     static class C24741 implements Creator<LiveExt> {

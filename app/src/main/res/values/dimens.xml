@@ -62,4 +62,6 @@
     <dimen name="index_card_text_right_info">10sp</dimen>
     <dimen name="line_multiplier_padding_bottom_warning">0.4dp</dimen>
     <dimen name="tag_radius">15dp</dimen>
+    <dimen name="detail_recommend_cover_width">117dp</dimen>
+    <dimen name="detail_recommend_cover_heigth">75dp</dimen>
 </resources>

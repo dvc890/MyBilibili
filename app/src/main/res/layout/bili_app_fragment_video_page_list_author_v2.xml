@@ -1,5 +1,5 @@
 <LinearLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="12dp" android:paddingTop="14dp" android:paddingRight="12dp" android:paddingBottom="7dp" android:layout_width="match_parent" android:layout_height="wrap_content">
-    <de.hdodenhof.circleimageview.CircleImageView
+    <ImageView
         android:id="@+id/avatar_layout"
         android:layout_width="30dp" android:layout_height="30dp"/>
     <LinearLayout
@@ -12,10 +12,13 @@
             <TextView android:textSize="@dimen/text_size_body_primary" android:textColor="@color/daynight_color_text_body_primary" android:ellipsize="end" android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="wrap_content" android:lines="1"/>
             <TextView android:textColor="@color/theme_color_secondary" android:ellipsize="end" android:id="@+id/online_status" android:background="@drawable/shape_solid_transparent_oval_pink" android:paddingLeft="5dp" android:paddingRight="5dp" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="6dp" android:text="@string/br_live_status_online" android:singleLine="true"/>
         </LinearLayout>
-        <TextView android:textColor="@color/daynight_color_text_supplementary_dark" android:ellipsize="end" android:gravity="center_vertical" android:id="@+id/fans" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:singleLine="true"/>
+        <TextView  android:textSize="@dimen/text_size_body_secondary" android:textColor="@color/daynight_color_text_supplementary_dark" android:ellipsize="end" android:gravity="center_vertical" android:id="@+id/fans" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="2dp" android:singleLine="true"/>
     </LinearLayout>
-    <ImageView android:id="@+id/follow"
+    <TextView android:id="@+id/follow"
         android:minWidth="66dp"
         android:minHeight="24dp"
+        android:textColor="@color/white"
+        android:text="@string/focus_topic"
+        android:gravity="center"
         android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="8dp"/>
 </LinearLayout>

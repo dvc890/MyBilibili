@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.text.TextUtils;
 
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
@@ -54,6 +55,7 @@ public class CommandActionUtils {
      * @param command Ep: bilibili://main/login/verify
      */
     public static void start(Context context, String command) {
+        if(TextUtils.isEmpty(command)) return;
         BiliBiliUrl url = createBiliUrl(command);
         if(moduleCommandMap.containsKey(url.host())) {
             Intent intent = new Intent(context, moduleCommandMap.get(url.host()));

@@ -75,7 +75,7 @@
             app:tabTextColor="@color/gray_clip_dark2"
             app:tabSelectedTextColor="?attr/colorAccent"
             app:tabIndicatorColor="?attr/colorAccent"
-            app:tabIndicatorHeight="3dp"
+            app:tabIndicatorHeight="2dp"
             android:background="@color/white"
             android:textSize="15sp"
             android:layout_marginTop="0dp"

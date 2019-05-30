@@ -2,7 +2,6 @@ package com.dvc.mybilibili.player.popup;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -13,6 +12,7 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import razerdp.basepopup.BasePopupWindow;
 
@@ -21,7 +21,7 @@ public class QualityPickPopup extends BasePopupWindow {
     private RecyclerView recyclerView;
     private BaseQuickAdapter adapter;
 
-    private ArrayList<Integer> support_quality;
+    private List<Integer> support_quality;
     private int selectedPos;
 
     public QualityPickPopup(Context context) {
@@ -66,7 +66,7 @@ public class QualityPickPopup extends BasePopupWindow {
         this.selectedPos = selectedPos;
     }
 
-    public void setData(ArrayList<Integer> support_quality, ArrayList<String> support_description) {
+    public void setData(List<Integer> support_quality, List<String> support_description) {
         this.support_quality = support_quality;
         if(!support_description.contains(getContext().getString(R.string.player_quality_switch_mode_auto1)))
             support_description.add(getContext().getString(R.string.player_quality_switch_mode_auto1));

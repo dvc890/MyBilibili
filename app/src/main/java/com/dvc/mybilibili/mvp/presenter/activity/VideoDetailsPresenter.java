@@ -3,7 +3,6 @@ package com.dvc.mybilibili.mvp.presenter.activity;
 import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 
-import com.alibaba.fastjson.JSONObject;
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
@@ -15,8 +14,6 @@ import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsView;
-import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoDetailPageFragView;
-import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import javax.inject.Inject;
@@ -56,17 +53,18 @@ public class VideoDetailsPresenter extends MvpBasePresenter<VideoDetailsView> {
     }
 
     public void getVideoUrl(int aid, long cid, int quality) {
-        this.apiHelper.getFTVideoUrl(this.user.getAccessKey(), aid, cid, quality)
+        //等quic协议支持后，这里改为调用getFTVideoMaterialUrl
+        this.apiHelper.getFTVideoMaterialUrl(this.user.getAccessKey(), aid, cid, quality)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .subscribe(new ObserverCallback<FtVideoUrlInfoBean>() {
                     @Override
                     public void onSuccess(FtVideoUrlInfoBean ftVideoUrlInfoBean) {
-
+                        ifViewAttached(view -> view.onLoadVideoUrlCompleted(ftVideoUrlInfoBean));
                     }
 
                     @Override
                     public void onError(BiliApiException apiException, int code) {
-
+                        ifViewAttached(view -> view.onLoadVideoUrlFailed(apiException));
                     }
                 });
     }

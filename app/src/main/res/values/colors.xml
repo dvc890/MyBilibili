@@ -364,6 +364,8 @@
     <color name="tab_unselected_color">#AAffffff</color>
 
     <color name="index_card_text_video_meta">#ccffffff</color>
+    <color name="index_card_text_light">#999999</color>
+    <color name="index_card_more_menu">#c8c8c8</color>
 
     <color name="daynight_color_text_body_primary">#111111</color>
     <color name="daynight_color_text_supplementary_dark">#999999</color>
