@@ -29,4 +29,6 @@ public class VideoCommentFragPresenter extends MvpBasePresenter<VideoCommentFrag
         this.apiHelper = this.dataManager.getApiHelper();
         this.user = this.dataManager.getUser();
     }
+
+
 }

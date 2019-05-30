@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<View xmlns:android="http://schemas.android.com/apk/res/android" android:id="@+id/high_light" android:background="@color/comment2_anchor_high_light" android:visibility="gone" android:layout_width="match_parent" android:layout_height="match_parent" android:alpha="0"/>

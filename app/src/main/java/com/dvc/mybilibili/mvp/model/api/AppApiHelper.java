@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.mvp.model.api;
 
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
@@ -9,6 +10,7 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -17,6 +19,9 @@ import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
 import com.dvc.mybilibili.mvp.model.api.service.column.ColumnApiService;
 import com.dvc.mybilibili.mvp.model.api.service.comment.BiliCommentApiService;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDialogue;
 import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
@@ -279,6 +284,69 @@ public class AppApiHelper implements ApiHelper {
                     if(ftVideoUrlInfoBeanGeneralResponse.isSuccess())
                         return ftVideoUrlInfoBeanGeneralResponse.data;
                     throw new BiliApiException(ftVideoUrlInfoBeanGeneralResponse);
+                });
+    }
+
+    /**
+     *
+     * @param aid
+     * @param ps 请求的回复楼数
+     * @param mode 首次拉取：1 非首次拉取：3
+     * //@param plat 不明，默认2
+     * //@param type 不明，默认1
+     * @param next cursor，首页不需要传，计数从1开始
+     * @return
+     */
+    @Override
+    public Observable<BiliCommentCursorList> getCommentListByCursorV2(int aid, int ps, int mode, int next) {
+        Map<String,String> map = new HashMap<>();
+        map.put("ps", ps+"");
+        map.put("oid", aid+"");
+        map.put("mode", mode+"");
+        map.put("plat", "2");
+        map.put("type", "1");
+        if(next > 1) map.put("next", next+"");
+        return this.biliCommentApiService.getCommentListByCursorV2(map)
+                .map(commentCursorListGeneralResponse -> {
+                    if(commentCursorListGeneralResponse.isSuccess())
+                        return commentCursorListGeneralResponse.data;
+                    throw new BiliApiException(commentCursorListGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliCommentDetail> getCommentDetail(int aid, long root, int size, int min_id) {
+        Map<String,String> map = new HashMap<>();
+        if(min_id > 1) map.put("min_id", min_id+"");
+        map.put("oid", aid+"");
+        map.put("plat", "2");
+        map.put("root", root+"");
+        map.put("size", size+"");
+        map.put("sort", "0");
+        map.put("type", "1");
+        return this.biliCommentApiService.getCommentDetail(map)
+                .map(commentDetailGeneralResponse -> {
+                    if(commentDetailGeneralResponse.isSuccess())
+                        return commentDetailGeneralResponse.data;
+                    throw new BiliApiException(commentDetailGeneralResponse);
+                });
+    }
+
+    //oid=54028582&plat=2&root=1642592226&size=20&type=1
+    @Override
+    public Observable<BiliCommentDialogue> getCommentDialogue(int aid, long root, int size, int min_id) {
+        Map<String,String> map = new HashMap<>();
+        if(min_id > 1) map.put("min_id", min_id+"");
+        map.put("oid", aid+"");
+        map.put("plat", "2");
+        map.put("root", root+"");
+        map.put("size", size+"");
+        map.put("type", "1");
+        return this.biliCommentApiService.getCommentDialogue(map)
+                .map(commentDetailGeneralResponse -> {
+                    if(commentDetailGeneralResponse.isSuccess())
+                        return commentDetailGeneralResponse.data;
+                    throw new BiliApiException(commentDetailGeneralResponse);
                 });
     }
 }

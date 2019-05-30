@@ -32,17 +32,17 @@
                 app:contentInsetStart="0dp"
                 app:layout_collapseMode="pin">
 
+                <ImageView
+                    android:id="@+id/btn_back"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:padding="12dp"
+                    android:src="@drawable/ic_app_back_white" />
+
                 <RelativeLayout
                     android:id="@+id/title_layout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
-                    <ImageView
-                        android:id="@+id/btn_back"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:padding="12dp"
-                        android:src="@drawable/ic_app_back_white" />
                     <TextView
                         android:id="@+id/title"
                         android:layout_width="wrap_content"
@@ -66,6 +66,14 @@
             </android.support.v7.widget.Toolbar>
 
         </android.support.design.widget.CollapsingToolbarLayout>
+
+    </android.support.design.widget.AppBarLayout>
+
+    <RelativeLayout
+        android:id="@+id/content_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"
             app:tabGravity="center"
@@ -81,15 +89,14 @@
             android:layout_marginTop="0dp"
             android:layout_width="match_parent"
             android:layout_height="48dp"/>
+        <android.support.v4.view.ViewPager
+            android:id="@+id/viewpager"
+            android:layout_below="@id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    </android.support.design.widget.AppBarLayout>
+        </android.support.v4.view.ViewPager>
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/viewpager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-    </android.support.v4.view.ViewPager>
+    </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>

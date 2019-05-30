@@ -103,5 +103,25 @@
 
     <style name="AppTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 
+    <style name="TextAppearance.App.Small">
+        <item name="android:textSize">@dimen/text_size_small</item>
+    </style>
+
+    <style name="Widget.App.Comment"></style>
+
+    <style name="Widget.App.Comment.ActionButton">
+        <item name="android:textSize">@dimen/text_size_body_secondary</item>
+        <item name="android:gravity">clip_horizontal</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">36dp</item>
+        <item name="android:lines">1</item>
+    </style>
+
+    <style name="FollowButton">
+        <item name="android:minWidth">66dp</item>
+        <item name="android:minHeight">24dp</item>
+    </style>
+
 
 </resources>

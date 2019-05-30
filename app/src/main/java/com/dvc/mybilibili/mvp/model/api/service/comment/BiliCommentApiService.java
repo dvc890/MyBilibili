@@ -35,6 +35,7 @@ public interface BiliCommentApiService {
     @GET("/x/v2/reply/reply/cursor")
     Observable<GeneralResponse<BiliCommentDetail>> getCommentDetail(@QueryMap Map<String, String> map);
 
+    //评论：查看对话
     @GET("/x/v2/reply/dialog/cursor")
     Observable<GeneralResponse<BiliCommentDialogue>> getCommentDialogue(@QueryMap Map<String, String> map);
 

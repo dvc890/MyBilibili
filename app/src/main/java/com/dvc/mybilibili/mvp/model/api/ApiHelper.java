@@ -3,6 +3,9 @@ package com.dvc.mybilibili.mvp.model.api;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDialogue;
 import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
@@ -43,4 +46,13 @@ public interface ApiHelper {
 //    Observable<JSONObject> getFTVideoUrlV2(String access_key, int avid, long cid, int qn);
 
     Observable<FtVideoUrlInfoBean> getFTVideoMaterialUrl(String access_key, int aid, long cid, int fnval);
+
+    //ps=20&oid=53911062&mode=0&plat=2&type=1
+    //ps=20&oid=53911062&mode=3&next=2&plat=2&type=1
+    Observable<BiliCommentCursorList> getCommentListByCursorV2(int aid, int ps, int mode, int next);
+
+    Observable<BiliCommentDetail> getCommentDetail(int aid, long root, int size, int min_id);
+
+    //oid=54028582&plat=2&root=1642592226&size=20&type=1
+    Observable<BiliCommentDialogue> getCommentDialogue(int aid, long root, int size, int min_id);
 }

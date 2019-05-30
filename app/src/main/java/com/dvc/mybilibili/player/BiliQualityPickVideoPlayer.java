@@ -18,6 +18,7 @@ import com.dvc.mybilibili.player.popup.QualityPickPopup;
 import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
@@ -29,6 +30,7 @@ import butterknife.BindView;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
 /**
  * 可以切换清晰度的播放器
@@ -95,7 +97,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
         this.mediaResource = mediaResource;
 //        if(this.mediaResource.getFTVideoMaterialUrl().toLowerCase().contains("quic")) {
-//            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
+            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
 //        } else {
 //            PlayerFactory.setPlayManager(IjkPlayerManager.class);
 //        }

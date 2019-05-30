@@ -369,7 +369,22 @@
 
     <color name="daynight_color_text_body_primary">#111111</color>
     <color name="daynight_color_text_supplementary_dark">#999999</color>
+    <color name="daynight_color_text_body_secondary_light">#757575</color>
+    <color name="daynight_color_text_button_white">#ffffff</color>
+    <color name="daynight_color_icon_tint_for_white_bg">#cccccc</color>
+    <color name="daynight_color_background_window">#f4f4f4</color>
 
     <color name="yellow_warning_background">#fff1d3</color>
     <color name="yellow_warning_text_color">#e78b1f</color>
+
+    <color name="comment2_anchor_high_light">#fb7299</color>
+    <color name="comment2_high_light_1">#5090cc</color>
+    <color name="comment2_notice_background">#fff1d3</color>
+    <color name="comment2_notice_text">#e78b1f</color>
+    <color name="comment2_vote_background">#e7e7e7</color>
+    <color name="comment2_window_background">#ffffff</color>
+    <color name="comment2_window_background_alpha95">#f3ffffff</color>
+    <color name="comment_name">#757575</color>
+    <color name="comment_notice_background">#fff1d3</color>
+    <color name="comment_notice_text">#e78b1f</color>
 </resources>
