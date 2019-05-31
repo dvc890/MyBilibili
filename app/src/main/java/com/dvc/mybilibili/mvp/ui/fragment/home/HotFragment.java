@@ -10,7 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> implements HotFragView {
+public class HotFragment extends MvpBaseFragment<HotFragView, HotFragPresenter> implements HotFragView<List> {
 
     @Inject
     HotFragPresenter hotFragPresenter;

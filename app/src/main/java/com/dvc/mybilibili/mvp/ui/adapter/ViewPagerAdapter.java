@@ -80,6 +80,10 @@ public class ViewPagerAdapter extends FragmentPagerAdapter implements ViewPager.
         this.titles = titles;
     }
 
+    public void setTabTitle(int pos, String title) {
+        this.titles.set(pos, title);
+    }
+
     /*@Override
     public void destroyItem(ViewGroup container, int position, Object object) {
     	if(fragments.get(position)!=null){

@@ -41,7 +41,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
 
     @Inject
     VideoDetailsPresenter videoDetailsPresenter;
-    private int aid;
+    private int aid = -1;
     private long cid = -1;
     private int player_width;
     private int player_height;
@@ -65,6 +65,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     private String cover;
     private VideoDetailPageFragment videoDetailPageFragment;
     private VideoCommentFragment videoCommentFragment;
+    private ViewPagerAdapter viewPagerAdapter;
 
     @NonNull
     @Override
@@ -120,7 +121,6 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
             this.cid = this.preload.cid;
         }
         presenter.loadVideoDetails(this.aid);
-
     }
 
     @OnClick(R.id.title_layout)
@@ -206,8 +206,32 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
         titles.add(getString(R.string.video_pages_title_desc));
         titles.add(getString(R.string.video_pages_title_hotfeedback));
 
-        new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
+        this.viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
         tabLayout.setupWithViewPager(viewpager);
         viewpager.setCurrentItem(0);
+        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int i, float v, int i1) {
+
+            }
+
+            @Override
+            public void onPageSelected(int i) {
+                if(i == 1) {
+                    Bundle bundle = new Bundle();
+                    bundle.putInt(Keys.KEY_AVID, aid);
+                    videoCommentFragment.setArguments(bundle);
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int i) {
+
+            }
+        });
+    }
+
+    public void updataCommentTab(int num) {
+        this.tabLayout.getTabAt(1).setText(getString(R.string.comment_count_desc_fmt, num));
     }
 }

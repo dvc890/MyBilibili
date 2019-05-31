@@ -1,7 +1,6 @@
 package com.dvc.mybilibili.mvp.model.api;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.util.DisplayMetrics;
 
 import com.dvc.base.di.ApplicationContext;
@@ -10,7 +9,6 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -291,7 +289,7 @@ public class AppApiHelper implements ApiHelper {
      *
      * @param aid
      * @param ps 请求的回复楼数
-     * @param mode 首次拉取：1 非首次拉取：3
+     * @param mode 综合拉取：1   按最新时间排序拉取：2   按热门排序拉取：3
      * //@param plat 不明，默认2
      * //@param type 不明，默认1
      * @param next cursor，首页不需要传，计数从1开始

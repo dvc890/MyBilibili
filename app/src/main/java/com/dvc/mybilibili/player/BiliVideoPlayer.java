@@ -157,8 +157,8 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
     @Override
     public void startPlayLogic() {
         super.startPlayLogic();
-        mCoverImage.setVisibility(GONE);
-        startfristbtn.setVisibility(GONE);
+        if(mCoverImage != null) mCoverImage.setVisibility(GONE);
+        if(startfristbtn != null) startfristbtn.setVisibility(GONE);
     }
 
     @Override

@@ -5,6 +5,7 @@ import android.os.Parcelable;
 import android.support.annotation.Keep;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.chad.library.adapter.base.entity.MultiItemEntity;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.BiliLevelInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.OfficialVerify;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.VipExtraUserInfo;
@@ -14,7 +15,7 @@ import java.util.List;
 
 @Keep
 /* compiled from: BL */
-public final class BiliComment implements Parcelable {
+public final class BiliComment implements Parcelable, MultiItemEntity {
     public static final int ACTION_HATE = 2;
     public static final int ACTION_LIKE = 1;
     public static final int ATTR_TOP_OPERATIONAL = 1;
@@ -70,7 +71,14 @@ public final class BiliComment implements Parcelable {
     @JSONField(name = "up_action")
     public UpperAction mUpperAction;
 
+    public int ItemType = 1;
+
     public BiliComment() {
+    }
+
+    @Override
+    public int getItemType() {
+        return ItemType;
     }
 
     @Keep
@@ -524,6 +532,10 @@ public final class BiliComment implements Parcelable {
         return this.mFansGrade > 0;
     }
 
+    public boolean isVip() {
+        return this.mMember.vipInfo.isEffectiveVip();
+    }
+
     public String getFace() {
         if (this.mMember == null) {
             return "";
@@ -539,7 +551,7 @@ public final class BiliComment implements Parcelable {
     }
 
     public int getCurrentLevel() {
-        return (this.mMember == null || this.mMember.mLevelInfo == null) ? 0 : this.mMember.mLevelInfo.f6226a;
+        return (this.mMember == null || this.mMember.mLevelInfo == null) ? 0 : this.mMember.mLevelInfo.current_level;
     }
 
     public OfficialVerify getOfficialVerify() {

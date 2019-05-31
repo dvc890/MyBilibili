@@ -13,6 +13,9 @@ public final class BiliPendant implements Parcelable {
     public String name;
     public String pid;
 
+    public BiliPendant() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.app.comm.comment2.model.BiliPendant$1 */
     static class C45591 implements Creator<BiliPendant> {

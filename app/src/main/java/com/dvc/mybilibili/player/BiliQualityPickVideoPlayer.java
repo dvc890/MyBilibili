@@ -76,6 +76,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
+        Debuger.enable();
         //切换视频清晰度
         mSwitchSize.setOnClickListener(v -> {
             if (mHadPlay && !isChanging) {
@@ -97,7 +98,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
         this.mediaResource = mediaResource;
 //        if(this.mediaResource.getFTVideoMaterialUrl().toLowerCase().contains("quic")) {
-            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
+//            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
 //        } else {
 //            PlayerFactory.setPlayManager(IjkPlayerManager.class);
 //        }

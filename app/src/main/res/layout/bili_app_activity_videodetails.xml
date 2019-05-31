@@ -80,6 +80,7 @@
             app:tabMode="fixed"
             app:tabPaddingStart="30dp"
             app:tabPaddingEnd="30dp"
+            app:tabMinWidth="@dimen/dp_100"
             app:tabTextColor="@color/gray_clip_dark2"
             app:tabSelectedTextColor="?attr/colorAccent"
             app:tabIndicatorColor="?attr/colorAccent"

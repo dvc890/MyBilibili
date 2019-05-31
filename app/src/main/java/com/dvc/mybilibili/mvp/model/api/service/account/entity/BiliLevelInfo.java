@@ -12,16 +12,16 @@ public class BiliLevelInfo implements Parcelable {
     public static final Creator<BiliLevelInfo> CREATOR = new C21991();
     @JSONField(name = "current_level")
     /* renamed from: a */
-    public int f6226a;
+    public int current_level;
     @JSONField(name = "current_min")
     /* renamed from: b */
-    public int f6227b;
+    public int current_min;
     @JSONField(name = "current_exp")
     /* renamed from: c */
-    public int f6228c;
+    public int current_exp;
     @JSONField(name = "next_exp")
     /* renamed from: d */
-    public String f6229d;
+    public String next_exp;
 
     public BiliLevelInfo() {
     }
@@ -48,24 +48,24 @@ public class BiliLevelInfo implements Parcelable {
     }
 
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.f6226a);
-        parcel.writeInt(this.f6227b);
-        parcel.writeInt(this.f6228c);
-        parcel.writeString(this.f6229d);
+        parcel.writeInt(this.current_level);
+        parcel.writeInt(this.current_min);
+        parcel.writeInt(this.current_exp);
+        parcel.writeString(this.next_exp);
     }
 
     protected BiliLevelInfo(Parcel parcel) {
-        this.f6226a = parcel.readInt();
-        this.f6227b = parcel.readInt();
-        this.f6228c = parcel.readInt();
-        this.f6229d = parcel.readString();
+        this.current_level = parcel.readInt();
+        this.current_min = parcel.readInt();
+        this.current_exp = parcel.readInt();
+        this.next_exp = parcel.readString();
     }
 
     /* renamed from: a */
     public String mo11427a() {
-        if (TextUtils.isEmpty(this.f6229d)) {
+        if (TextUtils.isEmpty(this.next_exp)) {
             return "-";
         }
-        return this.f6229d;
+        return this.next_exp;
     }
 }

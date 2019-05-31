@@ -31,7 +31,7 @@ import butterknife.BindView;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM;
 
-public class RecommendFragment extends MvpBaseFragment<RecommendFragView, RecommendFragPresenter> implements RecommendFragView<BasicIndexItem>, OnRefreshListener {
+public class RecommendFragment extends MvpBaseFragment<RecommendFragView, RecommendFragPresenter> implements RecommendFragView<List<BasicIndexItem>>, OnRefreshListener {
 
     @Inject
     RecommendFragPresenter recommendFragPresenter;

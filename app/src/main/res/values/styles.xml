@@ -123,5 +123,20 @@
         <item name="android:minHeight">24dp</item>
     </style>
 
+    <style name="Widget.App.EditText">
+        <item name="android:textAppearance">@style/TextAppearance.App.Title</item>
+        <item name="android:textCursorDrawable">@drawable/shape_rect_gray_dary_szie_1</item>
+    </style>
+    <style name="Widget.App.EditText.Default">
+        <item name="android:background">@drawable/ic_edit_text_default</item>
+        <item name="backgroundTint">@color/selector_edittext_focus_pink</item>
+    </style>
+
+    <style name="Widget.App.StaticImageView.Thumb.Avatar">
+        <!--<item name="thumbHeight">76dp</item>-->
+        <!--<item name="thumbRatio">5</item>-->
+        <!--<item name="thumbWidth">76dp</item>-->
+    </style>
+
 
 </resources>
