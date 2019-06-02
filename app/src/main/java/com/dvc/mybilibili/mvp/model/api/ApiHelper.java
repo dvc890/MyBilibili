@@ -2,6 +2,7 @@ package com.dvc.mybilibili.mvp.model.api;
 
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
@@ -55,4 +56,6 @@ public interface ApiHelper {
 
     //oid=54028582&plat=2&root=1642592226&size=20&type=1
     Observable<BiliCommentDialogue> getCommentDialogue(long aid, long root, int size, long min_id);
+
+    Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId);
 }

@@ -9,9 +9,12 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
@@ -61,6 +64,7 @@ public class AppApiHelper implements ApiHelper {
     private final ColumnApiService columnApiService;
     private final BiliCommentApiService biliCommentApiService;
     private final BiliSpaceApiService biliSpaceApiService;
+    private final BiliLiveApiV2Service biliLiveApiV2Service;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
@@ -74,7 +78,8 @@ public class AppApiHelper implements ApiHelper {
                         ChargeApiService chargeApiService,
                         ColumnApiService columnApiService,
                         BiliCommentApiService biliCommentApiService,
-                        BiliSpaceApiService biliSpaceApiService) {
+                        BiliSpaceApiService biliSpaceApiService,
+                        BiliLiveApiV2Service biliLiveApiV2Service) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
@@ -88,6 +93,7 @@ public class AppApiHelper implements ApiHelper {
         this.columnApiService = columnApiService;
         this.biliCommentApiService = biliCommentApiService;
         this.biliSpaceApiService = biliSpaceApiService;
+        this.biliLiveApiV2Service = biliLiveApiV2Service;
     }
 
     @Override
@@ -345,6 +351,16 @@ public class AppApiHelper implements ApiHelper {
                     if(commentDetailGeneralResponse.isSuccess())
                         return commentDetailGeneralResponse.data;
                     throw new BiliApiException(commentDetailGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId) {
+        return this.biliLiveApiV2Service.getRoomSocketConfigV3(roomId)
+                .map(liveSocketConfigGeneralResponse -> {
+                    if(liveSocketConfigGeneralResponse.isSuccess())
+                        return liveSocketConfigGeneralResponse.data;
+                    throw new BiliApiException(liveSocketConfigGeneralResponse);
                 });
     }
 }

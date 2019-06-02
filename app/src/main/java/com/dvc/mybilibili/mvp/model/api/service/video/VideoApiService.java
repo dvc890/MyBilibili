@@ -10,6 +10,7 @@ import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.RecommendUpperInfo;
+import com.dvc.mybilibili.mvp.model.api.service.video.entity.VideoDanmakuInfo;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.VideoRecommend;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.VideoTripleLike;
 
@@ -165,6 +166,12 @@ public interface VideoApiService {
 
     @GET("https://api.bilibili.com/x/player/playurl")
     Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
+
+    @GET("http://api.bilibili.com/x/v2/dm/list.so?&ps=0&type=1&plat=2")
+    Observable<String> getDanmakuList(long aid, long cid) ;
+
+    @GET("http://api.bilibili.com/x/v2/dm/view?type=1&plat=2&ps=0")
+    Observable<GeneralResponse<VideoDanmakuInfo>> getDanmakuInfo(long aid, long cid) ;
 
 //    @Headers("Referer:https://api.bilibili.com/x/web-interface/view?aid={0}/?p=")
 //    @GET("https://interface.bilibili.com/v2/playurl?otype=json")

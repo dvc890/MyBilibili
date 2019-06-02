@@ -2,6 +2,8 @@ package com.dvc.mybilibili.app.retrofit2.callback;
 
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 
+import java.io.IOException;
+
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 
@@ -13,7 +15,11 @@ public abstract class ObserverCallback<T> implements Observer<T> {
 
     @Override
     public void onNext(T t) {
-        onSuccess(t);
+        try {
+            onSuccess(t);
+        } catch (Exception e) {
+            onError(e);
+        }
     }
 
     @Override
@@ -32,7 +38,7 @@ public abstract class ObserverCallback<T> implements Observer<T> {
 
     }
 
-    public abstract void onSuccess(T t);
+    public abstract void onSuccess(T t) throws IOException;
 
     public abstract void onError(BiliApiException apiException, int code);
 }
