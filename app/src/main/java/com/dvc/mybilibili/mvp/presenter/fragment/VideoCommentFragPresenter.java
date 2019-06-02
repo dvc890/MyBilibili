@@ -12,6 +12,7 @@ import com.dvc.mybilibili.mvp.model.account.IAccountHelper;
 import com.dvc.mybilibili.mvp.model.api.ApiHelper;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoCommentFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
@@ -34,9 +35,10 @@ public class VideoCommentFragPresenter extends MvpBasePresenter<VideoCommentFrag
         this.user = this.dataManager.getUser();
     }
 
-    public void getCommentListByCursorV2(int aid, int ps, int mode, int next) {
+    public void getCommentListByCursorV2(long aid, int ps, int mode, int next) {
         this.apiHelper.getCommentListByCursorV2(aid, ps, mode, next)
                 .compose(RxSchedulersHelper.ioAndMainThread())
+                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(new ObserverCallback<BiliCommentCursorList>() {
                     @Override
                     public void onSuccess(BiliCommentCursorList biliCommentCursorList) {

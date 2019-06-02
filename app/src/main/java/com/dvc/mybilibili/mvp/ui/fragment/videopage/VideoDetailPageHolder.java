@@ -12,12 +12,13 @@ import com.dvc.base.BaseMvpHolder;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
+import com.dvc.mybilibili.mvp.ui.widget.PendantAvatarLayout;
 
 import butterknife.BindView;
 
 public class VideoDetailPageHolder extends BaseMvpHolder{
     @BindView(R.id.avatar_layout)
-    ImageView avatarLayout;
+    PendantAvatarLayout avatarLayout;
     @BindView(R.id.title)
     TextView name;
     @BindView(R.id.online_status)
@@ -86,7 +87,9 @@ public class VideoDetailPageHolder extends BaseMvpHolder{
     }
 
     public void init(BiliVideoDetail detail) {
-        GlideUtils.Circle2ImageView(avatarLayout, detail.getAvatar());
+        avatarLayout.setAvatarUrl(detail.getAvatar());
+        avatarLayout.setVerify(detail.ownerExt.officialVerify.type == 1, detail.ownerExt.officialVerify.type >= 0, PendantAvatarLayout.VerifySize.SMALL);
+
         name.setText(detail.getAuthor());
 
         fans.setText(getContext().getString(R.string.bangumi_detail_upper_fan, detail.ownerExt.fans+""));

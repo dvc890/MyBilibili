@@ -1,5 +1,7 @@
 package com.dvc.mybilibili.mvp.model.api.service.bililive;
 
+import android.support.annotation.Nullable;
+
 import com.alibaba.fastjson.JSONObject;
 import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
@@ -16,10 +18,14 @@ import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.giftv2.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.guard.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.livebox.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.livecenter.*;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LiveRoomStatus;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.lottery.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.rank.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.title.*;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.interceptor.C9909b;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.interceptor.beg;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.interceptor.bej;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -306,6 +312,7 @@ public interface BiliLiveApiV2Service {
 //    @RequestInterceptor(C9909b.class)
     Observable<GeneralResponse<List<BiliLiveUpHonorWallInfo>>> getHonorWallInfo(@Query("uid") long j);
 
+    //获取房间的基础信息
     @GET("/xlive/app-room/v1/index/getInfoByRoom")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)
@@ -356,6 +363,7 @@ public interface BiliLiveApiV2Service {
 //    @RequestInterceptor(C9909b.class)
     Observable<GeneralResponse<BiliLiveHomePage.ModuleRooms>> getLiveHomeModuleData(@Query("module_id") int i, @Query("attention_room_id") String str, @Query("page") int i2, @Query("quality") int i3);
 
+    //relation_page=2&rec_page=2&scale=xxhdpi&device_name=PRO6&qn=0
     @GET("/xlive/app-interface/v2/index/getAllList")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)
@@ -1035,4 +1043,15 @@ public interface BiliLiveApiV2Service {
 //    @RequestInterceptor(C9909b.class)
     @POST("/rc/v1/UserTitle/wearTitle")
     Observable<GeneralResponse<List>> wearTitle(@Field("title") String str);
+
+    @GET("/room/v2/Room/get_by_ids")
+    @Headers("Interceptor:"+ beg.CLASSNAME)
+//    @RequestInterceptor(beg.class)
+    Observable<GeneralResponse<Map<String, LiveRoomStatus>>> getLiveRoomStatus(@Query("ids[]") ArrayList<Integer> arrayList, @Query("fields[]") ArrayList<String> arrayList2);
+
+    //cid=7735393&quality=0&https_url_req=0&ptype=2&device_name=PRO6
+    @GET("/room/v1/Room/playUrl")
+    @Headers("Interceptor:"+ bej.CLASSNAME)
+//    @RequestInterceptor(bej.class)
+    Observable<GeneralResponse<LivePlayerInfo>> getPlayUrl(@Query("cid") int i, @Query("quality") int i2, @Nullable @Query("unicom_free") String str, @Query("https_url_req") int i3, @Query("ptype") int i4);
 }

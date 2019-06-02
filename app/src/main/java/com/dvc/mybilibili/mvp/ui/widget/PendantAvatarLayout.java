@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.mvp.ui.widget;
 
 import android.content.Context;
+import android.content.res.TypedArray;
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -50,15 +51,14 @@ public class PendantAvatarLayout extends RelativeLayout {
 
     /* renamed from: a */
     private void init(Context context, AttributeSet attributeSet) {
-//        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, new int[]{16842997});
-//        int dimensionPixelSize = obtainStyledAttributes.getDimensionPixelSize(0, RxImageTool.dip2px(60.0f));
-        int dimensionPixelSize = RxImageTool.dip2px(60.0f);
-//        obtainStyledAttributes.recycle();
+        TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, new int[]{android.R.attr.layout_height});
+        int dimensionPixelSize = obtainStyledAttributes.getDimensionPixelSize(0, RxImageTool.dip2px(60.0f));
+        obtainStyledAttributes.recycle();
         int i = (int) (((float) dimensionPixelSize) * 0.5f);
         View inflate = LayoutInflater.from(context).inflate(R.layout.bili_app_layout_comment2_pendant_avatar, this, true);
-        this.avatar = (ImageView) inflate.findViewById(R.id.avatar);
-        this.pendant = (ImageView) inflate.findViewById(R.id.pendant);
-        this.verify = (ImageView) inflate.findViewById(R.id.verify);
+        this.avatar = inflate.findViewById(R.id.avatar);
+        this.pendant = inflate.findViewById(R.id.pendant);
+        this.verify = inflate.findViewById(R.id.verify);
         LayoutParams layoutParams = new LayoutParams(i, i);
         layoutParams.addRule(13);
         this.avatar.setLayoutParams(layoutParams);
@@ -96,12 +96,12 @@ public class PendantAvatarLayout extends RelativeLayout {
     }
 
     /* renamed from: a */
-    public void setVerify(boolean z, boolean z2, VerifySize verifySize) {
-        if (z || z2) {
+    public void setVerify(boolean isPresonal, boolean hasVerify, VerifySize verifySize) {
+        if (isPresonal || hasVerify) {
             int a = RxImageTool.dip2px(verifySize.dp);
             this.verify.getLayoutParams().width = a;
             this.verify.getLayoutParams().height = a;
-            if (z) {
+            if (isPresonal) {
                 this.verify.setImageResource(setPresonal(verifySize));
             } else {
                 this.verify.setImageResource(setOragnization(verifySize));

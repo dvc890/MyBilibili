@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<translate xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:interpolator="@android:interpolator/accelerate_decelerate" android:duration="200" android:fillAfter="true" android:fromYDelta="100%" android:toYDelta="0%"/>

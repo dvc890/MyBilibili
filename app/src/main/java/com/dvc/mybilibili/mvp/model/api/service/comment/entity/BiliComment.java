@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.model.api.service.comment.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.Keep;
+import android.support.annotation.Nullable;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.chad.library.adapter.base.entity.MultiItemEntity;
@@ -214,28 +215,28 @@ public final class BiliComment implements Parcelable, MultiItemEntity {
         public static final Creator<Label> CREATOR = new C18011();
         @JSONField(name = "rpid")
         /* renamed from: a */
-        public long f5596a;
+        public long rpid;
         @JSONField(name = "content")
         /* renamed from: b */
-        public String f5597b;
+        public String content;
         @JSONField(name = "text_color")
         /* renamed from: c */
-        public String f5598c;
+        public String text_color;
         @JSONField(name = "text_color_n")
         /* renamed from: d */
-        public String f5599d;
+        public String text_color_n;
         @JSONField(name = "bg_color")
         /* renamed from: e */
-        public String f5600e;
+        public String bg_color;
         @JSONField(name = "bg_color_n")
         /* renamed from: f */
-        public String f5601f;
+        public String bg_color_n;
         @JSONField(name = "link")
         /* renamed from: g */
-        public String f5602g;
+        public String link;
         @JSONField(name = "position")
         /* renamed from: h */
-        public String f5603h;
+        public String position;
 
         public Label() {
         }
@@ -262,25 +263,25 @@ public final class BiliComment implements Parcelable, MultiItemEntity {
         }
 
         public void writeToParcel(Parcel parcel, int i) {
-            parcel.writeLong(this.f5596a);
-            parcel.writeString(this.f5597b);
-            parcel.writeString(this.f5598c);
-            parcel.writeString(this.f5599d);
-            parcel.writeString(this.f5600e);
-            parcel.writeString(this.f5601f);
-            parcel.writeString(this.f5602g);
-            parcel.writeString(this.f5603h);
+            parcel.writeLong(this.rpid);
+            parcel.writeString(this.content);
+            parcel.writeString(this.text_color);
+            parcel.writeString(this.text_color_n);
+            parcel.writeString(this.bg_color);
+            parcel.writeString(this.bg_color_n);
+            parcel.writeString(this.link);
+            parcel.writeString(this.position);
         }
 
         protected Label(Parcel parcel) {
-            this.f5596a = parcel.readLong();
-            this.f5597b = parcel.readString();
-            this.f5598c = parcel.readString();
-            this.f5599d = parcel.readString();
-            this.f5600e = parcel.readString();
-            this.f5601f = parcel.readString();
-            this.f5602g = parcel.readString();
-            this.f5603h = parcel.readString();
+            this.rpid = parcel.readLong();
+            this.content = parcel.readString();
+            this.text_color = parcel.readString();
+            this.text_color_n = parcel.readString();
+            this.bg_color = parcel.readString();
+            this.bg_color_n = parcel.readString();
+            this.link = parcel.readString();
+            this.position = parcel.readString();
         }
     }
 
@@ -594,6 +595,15 @@ public final class BiliComment implements Parcelable, MultiItemEntity {
         return this.mUpperAction != null && this.mUpperAction.mIsReply;
     }
 
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if(obj instanceof BiliComment) {
+            return ((BiliComment)obj).mMid == this.mMid;
+        }
+        return super.equals(obj);
+    }
+
+    @Override
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("BiliComment{, mMid=");

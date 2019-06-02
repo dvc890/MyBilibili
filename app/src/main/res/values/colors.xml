@@ -371,6 +371,7 @@
     <color name="daynight_color_text_supplementary_dark">#999999</color>
     <color name="daynight_color_text_body_secondary_light">#757575</color>
     <color name="daynight_color_text_button_white">#ffffff</color>
+    <color name="daynight_color_text_headline">#212121</color>
     <color name="daynight_color_icon_tint_for_white_bg">#cccccc</color>
     <color name="daynight_color_background_window">#f4f4f4</color>
 
@@ -387,4 +388,5 @@
     <color name="comment_name">#757575</color>
     <color name="comment_notice_background">#fff1d3</color>
     <color name="comment_notice_text">#e78b1f</color>
+
 </resources>

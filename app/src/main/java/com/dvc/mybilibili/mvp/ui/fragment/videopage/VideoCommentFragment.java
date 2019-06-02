@@ -3,18 +3,25 @@ package com.dvc.mybilibili.mvp.ui.fragment.videopage;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.utils.LoadStateViewUtils;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliComment;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
+import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
 import com.dvc.mybilibili.mvp.presenter.fragment.VideoCommentFragPresenter;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
 import com.dvc.mybilibili.mvp.ui.adapter.VideoCommentAdapter;
+import com.dvc.mybilibili.mvp.ui.view.BiliCommentDetailView;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
@@ -26,7 +33,7 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, VideoCommentFragPresenter> implements VideoCommentFragView<BiliCommentCursorList>, OnRefreshListener {
+public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, VideoCommentFragPresenter> implements VideoCommentFragView<BiliCommentCursorList>, OnRefreshListener, BaseQuickAdapter.OnItemChildClickListener, BaseQuickAdapter.OnItemClickListener {
 
     @Inject
     VideoCommentFragPresenter videoCommentFragPresenter;
@@ -46,6 +53,7 @@ public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, 
     private int aid = -1;
     private int next = 1;
     private int mode = MODE_HOT;
+    private BiliCommentDetailView commentDetailView;
 
     @NonNull
     @Override
@@ -71,11 +79,14 @@ public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, 
     protected void initViews() {
         mSwipeRefreshLayout.setOnRefreshListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
+        mRecyclerView.addItemDecoration(new DividerItemDecoration(getContext(), DividerItemDecoration.VERTICAL));
         commentAdapter = new VideoCommentAdapter(new ArrayList<>());
         commentAdapter.setOnLoadMoreListener(() -> {
             loadData(false,false);
         });
         commentAdapter.bindToRecyclerView(mRecyclerView);
+        commentAdapter.setOnItemChildClickListener(this);
+        commentAdapter.setOnItemClickListener(this);
     }
 
     @Override
@@ -131,7 +142,11 @@ public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, 
             commentAdapter.addReplies(moreData.replies);
         else
             commentAdapter.addHotItems(moreData.replies);
-        commentAdapter.loadMoreComplete();
+        if(moreData.replies.size() < pagesize) {
+            commentAdapter.loadMoreEnd();
+            commentAdapter.setEnableLoadMore(false);
+        }else
+            commentAdapter.loadMoreComplete();
     }
 
     @Override
@@ -156,6 +171,26 @@ public class VideoCommentFragment extends MvpBaseFragment<VideoCommentFragView, 
     public void noMoreData() {
         commentAdapter.loadMoreEnd();
         commentAdapter.setEnableLoadMore(false);
+    }
+
+    @Override
+    public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+        VideoCommentAdapter commentAdapter = (VideoCommentAdapter)adapter;
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        VideoCommentAdapter commentAdapter = (VideoCommentAdapter)adapter;
+        if (view.getId() == R.id.replynumtip) {
+            BiliComment biliComment = commentAdapter.getItem(position);
+            if(position == -1) biliComment = (BiliComment) view.getTag();
+            showReplyFragment(biliComment);
+        }
+    }
+
+    private void showReplyFragment(BiliComment item) {
+        if(commentDetailView == null) commentDetailView = new BiliCommentDetailView(getContext());
+        commentDetailView.show(((RelativeLayout)getView().getParent().getParent()),this.aid, item);
     }
 
     private void updateTabData(int num) {

@@ -1,9 +1,11 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.widget.Space;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewStub;
@@ -17,12 +19,16 @@ import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.base.utils.Reflect;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
+import com.dvc.mybilibili.app.utils.DateTimeFormatUtils;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliComment;
+import com.dvc.mybilibili.mvp.ui.widget.CommentReplyView;
 import com.dvc.mybilibili.mvp.ui.widget.PendantAvatarLayout;
 import com.shuyu.textutillib.RichTextView;
 import com.vondear.rxtool.RxImageTool;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -31,19 +37,22 @@ import butterknife.ButterKnife;
 
 public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, BaseViewHolder> {
 
+    private final int WF_TYPE = 1111;
+    private final int NM_TYPE = 2222;
+
     public VideoCommentAdapter(List<BiliComment> data) {
         super(data);
-        addItemType(1, R.layout.bili_app_list_item_comment2_primary_comment_with_follow);//has followbtn
-        addItemType(2, R.layout.bili_app_list_item_comment2_primary_comment_normal);//not followbtn
+        addItemType(WF_TYPE, R.layout.bili_app_list_item_comment2_primary_comment_with_follow);//has followbtn
+        addItemType(NM_TYPE, R.layout.bili_app_list_item_comment2_primary_comment_normal);//not followbtn
     }
 
     @Override
     protected void convert(BaseViewHolder helper, BiliComment item) {
         switch (item.getItemType()) {
-            case 1://has followbtn
+            case WF_TYPE://has followbtn
                 ((hasFollowViewHolder)helper).convert(item);
                 break;
-            case 2://not has followbtn
+            case NM_TYPE://not has followbtn
                 ((notHasFollowViewHolder) helper).convert(item);
                 break;
         }
@@ -52,9 +61,9 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
     @Override
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         switch (viewType) {
-            case 1://has followbtn
+            case WF_TYPE://has followbtn
                 return new hasFollowViewHolder(getItemView(Reflect.on(this).call("getLayoutId", viewType).get(), parent));
-            case 2://not has followbtn
+            case NM_TYPE://not has followbtn
                 return new notHasFollowViewHolder(getItemView(Reflect.on(this).call("getLayoutId", viewType).get(), parent));
         }
         return super.onCreateViewHolder(parent, viewType);
@@ -72,28 +81,28 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
     public void setNewHotItems(List<BiliComment> hots) {
         if(hots == null || hots.size() == 0) return;
         for(BiliComment comment : hots)
-            comment.ItemType = 1;
+            comment.ItemType = WF_TYPE;
         setNewData(hots);
     }
 
     public void addHotItems(List<BiliComment> hots) {
         if(hots == null || hots.size() == 0) return;
         for(BiliComment comment : hots)
-            comment.ItemType = 1;
+            comment.ItemType = WF_TYPE;
         addData(hots);
     }
 
     public void setNewReplies(List<BiliComment> replies) {
         if(replies == null || replies.size() == 0) return;
         for(BiliComment comment : replies)
-            comment.ItemType = 2;
+            comment.ItemType = NM_TYPE;
         setNewData(replies);
     }
 
     public void addReplies(List<BiliComment> replies) {
         if(replies == null || replies.size() == 0) return;
         for(BiliComment comment : replies)
-            comment.ItemType = 2;
+            comment.ItemType = NM_TYPE;
         addData(replies);
     }
 
@@ -144,6 +153,7 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
         ViewStub highLight;
         @BindView(R.id.secondary)
         ViewStub secondary;
+        CommentReplyView replyView;
 
         public notHasFollowViewHolder(View view) {
             super(view);
@@ -151,6 +161,46 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
         }
 
         public void convert(BiliComment item) {
+            avatarLayout.setAvatarUrl(item.getFace());
+            avatarLayout.setPendantUrl(item.getPendant().image);
+            avatarLayout.setVerify(item.getOfficialVerify().type == 1, item.getOfficialVerify().type >= 0, PendantAvatarLayout.VerifySize.SMALL);
+            fans.setVisibility(View.GONE);
+            if(item.isVip()) name.setTextColor(Color.parseColor("#ff4081"));
+            else name.setTextColor(Color.parseColor("#999999"));
+            name.setText(item.getNickName());
+            setLevelImage(level, item.getCurrentLevel());
+            floor.setText("#"+item.mFloor);floor.setVisibility(View.VISIBLE);
+            time.setText(DateTimeFormatUtils.getTimeStr(time.getContext(), item.mPubTimeMs));
+            if (item.isTop()) {
+                labelTop.setText(R.string.stick);labelTop.setVisibility(View.VISIBLE);
+            } else {
+                labelTop.setText("");labelTop.setVisibility(View.GONE);
+            }
+            message.setText(item.getMsg());
+            voteCardLayout.setVisibility(item.mContent.mVote == null? View.GONE: View.VISIBLE);
+            like.setText(item.mRatingCount+"");
+            Drawable drawable = dislike.getResources().getDrawable(R.drawable.selector_vector_dislike);
+            drawable.setBounds(0, 0, RxImageTool.dip2px(16), RxImageTool.dip2px(16));
+            dislike.setCompoundDrawables(drawable, null, null, null);
+            upperLike.setVisibility(item.isUpperLiked()?View.VISIBLE:View.GONE);
+
+            if(item.mReply != null && item.mReply.size() > 0) {
+                if(replyView == null) {
+                    replyView = (CommentReplyView) secondary.inflate();
+                    replyView.setId(R.id.replies);
+                    replyView.setTag(item);
+                }
+                replyView.setData(item.mReply, new CommentReplyView.BiliCommentReplyViewPresenter(item));
+                replyView.setMoreOnClickListener(v -> {
+                    if(getOnItemChildClickListener() != null) {
+                        getOnItemChildClickListener().onItemChildClick(VideoCommentAdapter.this, v, getData().indexOf(item));
+                    }
+                });
+                replyView.setVisibility(View.VISIBLE);
+            }else {
+                if(replyView != null)
+                    replyView.setVisibility(View.GONE);
+            }
 
         }
     }
@@ -202,7 +252,7 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
         ViewStub highLight;
         @BindView(R.id.secondary)
         ViewStub secondary;
-        private SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmsssss", Locale.getDefault());
+        CommentReplyView replyView;
 
         public hasFollowViewHolder(View view) {
             super(view);
@@ -212,6 +262,8 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
         public void convert(BiliComment item) {
             avatarLayout.setAvatarUrl(item.getFace());
             avatarLayout.setPendantUrl(item.getPendant().image);
+            avatarLayout.setVerify(item.getOfficialVerify().type == 1, item.getOfficialVerify().type >= 0, PendantAvatarLayout.VerifySize.SMALL);
+            fans.setVisibility(View.GONE);
             if(item.isVip()) name.setTextColor(Color.parseColor("#ff4081"));
             else name.setTextColor(Color.parseColor("#999999"));
             name.setText(item.getNickName());
@@ -219,15 +271,37 @@ public class VideoCommentAdapter extends BaseMultiItemQuickAdapter<BiliComment, 
             if(item.isFollowed()) follow.setText(R.string.followed);
             else follow.setText(R.string.to_follow_without_plus);
             floor.setText("#"+item.mFloor);floor.setVisibility(View.VISIBLE);
-            time.setText(simpleDateFormat.format(item.mPubTimeMs));
-            if (item.isUpperTop()) labelTop.setText(R.string.stick);
+            time.setText(DateTimeFormatUtils.getTimeStr(time.getContext(), item.mPubTimeMs));
+            if (item.isTop()) {
+                labelTop.setText(R.string.stick);labelTop.setVisibility(View.VISIBLE);
+            } else {
+                labelTop.setText("");labelTop.setVisibility(View.GONE);
+            }
             message.setText(item.getMsg());
             voteCardLayout.setVisibility(item.mContent.mVote == null? View.GONE: View.VISIBLE);
-//            like.setText();
+            like.setText(item.mRatingCount+"");
             Drawable drawable = dislike.getResources().getDrawable(R.drawable.selector_vector_dislike);
-            drawable.setBounds(0, 0, RxImageTool.dip2px(13), RxImageTool.dip2px(13));
+            drawable.setBounds(0, 0, RxImageTool.dip2px(16), RxImageTool.dip2px(16));
             dislike.setCompoundDrawables(drawable, null, null, null);
             upperLike.setVisibility(item.isUpperLiked()?View.VISIBLE:View.GONE);
+            if(item.mReply != null && item.mReply.size() > 0) {
+                if(replyView == null) {
+                    replyView = (CommentReplyView) secondary.inflate();
+                    replyView.setId(R.id.replies);
+                    replyView.setTag(item);
+                }
+                replyView.setData(item.mReply, new CommentReplyView.BiliCommentReplyViewPresenter(item));
+                replyView.setMoreOnClickListener(v -> {
+                    if(getOnItemChildClickListener() != null) {
+                        v.setTag(item);
+                        getOnItemChildClickListener().onItemChildClick(VideoCommentAdapter.this, v, getData().indexOf(item));
+                    }
+                });
+                replyView.setVisibility(View.VISIBLE);
+            }else {
+                if(replyView != null)
+                    replyView.setVisibility(View.GONE);
+            }
         }
     }
 

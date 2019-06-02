@@ -296,7 +296,7 @@ public class AppApiHelper implements ApiHelper {
      * @return
      */
     @Override
-    public Observable<BiliCommentCursorList> getCommentListByCursorV2(int aid, int ps, int mode, int next) {
+    public Observable<BiliCommentCursorList> getCommentListByCursorV2(long aid, int ps, int mode, int next) {
         Map<String,String> map = new HashMap<>();
         map.put("ps", ps+"");
         map.put("oid", aid+"");
@@ -313,7 +313,7 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<BiliCommentDetail> getCommentDetail(int aid, long root, int size, int min_id) {
+    public Observable<BiliCommentDetail> getCommentDetail(long aid, long root, int size, long min_id) {
         Map<String,String> map = new HashMap<>();
         if(min_id > 1) map.put("min_id", min_id+"");
         map.put("oid", aid+"");
@@ -332,7 +332,7 @@ public class AppApiHelper implements ApiHelper {
 
     //oid=54028582&plat=2&root=1642592226&size=20&type=1
     @Override
-    public Observable<BiliCommentDialogue> getCommentDialogue(int aid, long root, int size, int min_id) {
+    public Observable<BiliCommentDialogue> getCommentDialogue(long aid, long root, int size, long min_id) {
         Map<String,String> map = new HashMap<>();
         if(min_id > 1) map.put("min_id", min_id+"");
         map.put("oid", aid+"");

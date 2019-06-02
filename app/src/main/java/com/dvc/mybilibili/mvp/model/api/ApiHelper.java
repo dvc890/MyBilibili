@@ -49,10 +49,10 @@ public interface ApiHelper {
 
     //ps=20&oid=53911062&mode=0&plat=2&type=1
     //ps=20&oid=53911062&mode=3&next=2&plat=2&type=1
-    Observable<BiliCommentCursorList> getCommentListByCursorV2(int aid, int ps, int mode, int next);
+    Observable<BiliCommentCursorList> getCommentListByCursorV2(long aid, int ps, int mode, int next);
 
-    Observable<BiliCommentDetail> getCommentDetail(int aid, long root, int size, int min_id);
+    Observable<BiliCommentDetail> getCommentDetail(long aid, long root, int size, long min_id);
 
     //oid=54028582&plat=2&root=1642592226&size=20&type=1
-    Observable<BiliCommentDialogue> getCommentDialogue(int aid, long root, int size, int min_id);
+    Observable<BiliCommentDialogue> getCommentDialogue(long aid, long root, int size, long min_id);
 }

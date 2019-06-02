@@ -40,6 +40,14 @@ public class FragmentUtils {
 
     }
 
+    public static void removeContent(FragmentManager fragmentManager, Fragment currentFragment) {
+        if(fragmentManager == null) return ;
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        if(fragmentManager.findFragmentByTag(currentFragment.getTag()) != null)
+            fragmentTransaction.remove(currentFragment);
+
+    }
+
     private static String makeFragmentName(int viewId, long id) {
         return "android:switcher:" + viewId + ":" + id;
     }

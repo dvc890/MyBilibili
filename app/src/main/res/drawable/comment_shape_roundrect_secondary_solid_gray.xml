@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt">
     <corners android:radius="@dimen/corner_radius"/>
-    <solid android:color="@color/daynight_color_background_window"/>
+    <solid android:color="@color/daynight_color_icon_tint_for_white_bg"/>
 </shape>

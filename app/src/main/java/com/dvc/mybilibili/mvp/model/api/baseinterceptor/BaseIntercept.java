@@ -2,6 +2,7 @@ package com.dvc.mybilibili.mvp.model.api.baseinterceptor;
 
 import android.content.Context;
 import android.support.annotation.CallSuper;
+import android.text.TextUtils;
 
 import com.bilibili.nativelibrary.LibBili;
 import com.dvc.mybilibili.app.application.BiliApplication;
@@ -50,32 +51,22 @@ public class BaseIntercept implements Iintercept{
         }
     }
 
-//    public Map<String, String> mo7410e() {
-//        HashMap<String, String> f6674c = new HashMap(1);
-//        if (this.f6673b) {
-//            m7911a(f6674c);
+//    public void mo35843a(C23722a c23722a) {
+//        String a = C4377d.m19745a();
+//        if (!TextUtils.isEmpty(a)) {
+//            c23722a.mo79987a("Display-ID", a);
 //        }
-//        this.f6674c.putAll(C2495h.f6671a.m9389a());
-//        return this.f6674c;
-//    }
-//
-//    /* renamed from: a */
-//    public static void m7911a(@NonNull Map<String, String> map) {
-//        if (C1814a.m7905a() > 0) {
-//            map.put("parent_mode", "1");
-//        } else {
-//            map.remove("parent_mode");
+//        a = C4376c.m19743a();
+//        if (!TextUtils.isEmpty(a)) {
+//            c23722a.mo79987a("Buvid", a);
 //        }
-//        String jSONObject = null;
-//        try {
-//            jSONObject = new JSONObject().put("appId", 1)
-//                    .put("platform", 3)
-//                    .put("version", "5.41.0")
-//                    .put("abtest", ""/*C1812a.m7902b()*/).toString();
-//        } catch (JSONException e) {
-//            e.printStackTrace();
+//        a = C1793a.m7864b();
+//        if (!TextUtils.isEmpty(a)) {
+//            c23722a.mo79987a("User-Agent", a);
 //        }
-//        map.put("statistics", jSONObject);
-//
+//        a = C4378e.m19747a();
+//        if (!TextUtils.isEmpty(a)) {
+//            c23722a.mo79987a("Device-ID", a);
+//        }
 //    }
 }
