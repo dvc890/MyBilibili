@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.mvp.model.api;
 
+import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
@@ -58,4 +59,6 @@ public interface ApiHelper {
     Observable<BiliCommentDialogue> getCommentDialogue(long aid, long root, int size, long min_id);
 
     Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId);
+
+    Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid);
 }

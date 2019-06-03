@@ -80,10 +80,13 @@ public class FastJsonConverterFactory extends Converter.Factory {
 
         @Override
         public T convert(ResponseBody value) throws IOException {
-            String content = value.string();
-            if (this.type == String.class) {
-                return (T) content;
+            if(this.type.toString().equals("byte[]")) {
+                return (T) value.bytes();
             }
+            if (this.type == String.class) {
+                return (T) value.string();
+            }
+            String content = value.string();
             if(((ParameterizedType)this.type).getRawType() == GeneralResponse.class) {
                 Type[] types = ((ParameterizedType)this.type).getActualTypeArguments();
                 if(types != null && types.length >= 1) {

@@ -6,10 +6,13 @@ import android.util.Log;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.alibaba.fastjson.JSON;
+import com.bumptech.glide.util.ByteBufferUtil;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.danmaku.live.PackageRepository;
+import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
@@ -69,6 +72,12 @@ public class TestActivity extends DaggerAppCompatActivity {
 //                biliVideoPlayer.startPlayLogic());
 //        biliVideoPlayer.startPlayLogic();
         Debuger.enable();
+
+        BiliApplication.getDataManager().getApiHelper().getDanmakuListV2(13197279, 21642717)
+                .compose(RxSchedulersHelper.AllioThread())
+                .subscribe(videoDanmaku -> {
+                    long oid = videoDanmaku.oid;
+                });
 
         liveApiV2Service.getRoomSocketConfigV3(21349375)
                 .compose(RxSchedulersHelper.AllioThread())

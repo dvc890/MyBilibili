@@ -168,10 +168,16 @@ public interface VideoApiService {
     Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
 
     @GET("http://api.bilibili.com/x/v2/dm/list.so?&ps=0&type=1&plat=2")
-    Observable<String> getDanmakuList(long aid, long cid) ;
+    Observable<byte[]> getDanmakuListV2(@Query("aid") long aid, @Query("oid") long cid) ;
 
     @GET("http://api.bilibili.com/x/v2/dm/view?type=1&plat=2&ps=0")
-    Observable<GeneralResponse<VideoDanmakuInfo>> getDanmakuInfo(long aid, long cid) ;
+    Observable<GeneralResponse<VideoDanmakuInfo>> getDanmakuInfo(@Query("aid") long aid, @Query("oid") long cid) ;
+
+    @GET("http://api.bilibili.com/x/v1/dm/list.so?")
+    Observable<String> getDanmakuList(@Query("oid") long cid) ;
+
+//    @GET("https://comment.bilibili.com/{cid}.xml")
+//    Observable<String> getDanmakus(@Path("cid") long cid);
 
 //    @Headers("Referer:https://api.bilibili.com/x/web-interface/view?aid={0}/?p=")
 //    @GET("https://interface.bilibili.com/v2/playurl?otype=json")

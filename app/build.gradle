@@ -63,6 +63,9 @@ dependencies {
     implementation 'com.github.razerdp:BasePopup:2.1.9'
 ////    RickText
     implementation 'com.github.CarGuo.RickText:textUtilsLib:v2.1.5'
+////    弹幕引擎·烈焰弹幕使
+    implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
+    implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"

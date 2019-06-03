@@ -7,9 +7,9 @@ import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.net.AppNetWorkStatusManager;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
+import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -37,10 +37,14 @@ import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.GZIPInputStream;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -361,6 +365,29 @@ public class AppApiHelper implements ApiHelper {
                     if(liveSocketConfigGeneralResponse.isSuccess())
                         return liveSocketConfigGeneralResponse.data;
                     throw new BiliApiException(liveSocketConfigGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid) {
+        return this.videoApiService.getDanmakuListV2(aid, cid)
+                .map(bytes -> {
+                    ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+                    int jsonlen = byteBuffer.getInt();
+                    byte json[] = new byte[jsonlen];
+                    System.arraycopy(bytes, 4, json, 0, jsonlen);
+                    byte[] gzbytes = new byte[bytes.length-jsonlen-4];
+                    System.arraycopy(bytes, 4+jsonlen, gzbytes, 0, bytes.length-jsonlen-4);
+                    ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                    GZIPInputStream gis = new GZIPInputStream(new ByteArrayInputStream(gzbytes));
+//                    int len1 = -1;
+//                    byte[] b1 = new byte[1024];
+//                    while ((len1 = gis.read(b1)) != -1) {
+//                        byteArrayOutputStream.write(b1, 0, len1);
+//                    }
+//                    byteArrayOutputStream.close();
+//                    String dmXml = byteArrayOutputStream.toString();
+                    return VideoDanmaku.create(new String(json, "utf8"), gis);
                 });
     }
 }
