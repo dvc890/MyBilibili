@@ -35,6 +35,8 @@ public class BaseMvpHolder<V extends MvpView> extends BaseViewHolder {
 
     public BaseMvpHolder(View view) {
         super(view);
+        if(view instanceof MvpView)
+            viewRef = new WeakReference<>((V) view);
         unbinder = ButterKnife.bind(this, view);
         this.context = view.getContext();
     }

@@ -16,6 +16,7 @@ import com.dvc.mybilibili.mvp.model.api.service.splash.entity.SplashData;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 
+import java.io.InputStream;
 import java.util.List;
 
 import io.reactivex.Observable;
@@ -61,4 +62,6 @@ public interface ApiHelper {
     Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId);
 
     Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid);
+
+    Observable<InputStream> getDanmakuStreamV2(long aid, long cid);
 }

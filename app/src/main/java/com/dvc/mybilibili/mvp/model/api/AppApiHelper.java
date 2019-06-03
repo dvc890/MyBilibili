@@ -39,6 +39,7 @@ import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.HashMap;
@@ -388,6 +389,18 @@ public class AppApiHelper implements ApiHelper {
 //                    byteArrayOutputStream.close();
 //                    String dmXml = byteArrayOutputStream.toString();
                     return VideoDanmaku.create(new String(json, "utf8"), gis);
+                });
+    }
+
+    @Override
+    public Observable<InputStream> getDanmakuStreamV2(long aid, long cid) {
+        return this.videoApiService.getDanmakuListV2(aid, cid)
+                .map(bytes -> {
+                    ByteBuffer byteBuffer = ByteBuffer.wrap(bytes);
+                    int jsonlen = byteBuffer.getInt();
+                    byte[] gzbytes = new byte[bytes.length-jsonlen-4];
+                    System.arraycopy(bytes, 4+jsonlen, gzbytes, 0, bytes.length-jsonlen-4);
+                    return new GZIPInputStream(new ByteArrayInputStream(gzbytes));
                 });
     }
 }

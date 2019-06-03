@@ -2,6 +2,7 @@ package com.dvc.mybilibili.player;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.Gravity;
@@ -18,6 +19,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
+import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.manager.CustomManager;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
@@ -29,6 +31,7 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoViewBridge;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import master.flame.danmaku.ui.widget.DanmakuView;
 
 public class BiliVideoPlayer extends StandardGSYVideoPlayer {
 
@@ -293,6 +296,10 @@ public class BiliVideoPlayer extends StandardGSYVideoPlayer {
      */
     public void setOpenPreView(boolean localFile) {
         this.mOpenPreView = localFile;
+    }
+
+    public boolean getHadPlay() {
+        return mHadPlay;
     }
 
     /**

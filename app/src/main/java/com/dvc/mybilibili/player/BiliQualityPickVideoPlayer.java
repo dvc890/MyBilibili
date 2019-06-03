@@ -14,6 +14,7 @@ import com.dvc.mybilibili.mvp.model.api.entity.IMediaResource;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
+import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.popup.QualityPickPopup;
 import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -55,6 +56,8 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     private int aid;
     private long cid;
 
+    protected DanMaKuHolder danmakuHolder;
+
     public BiliQualityPickVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
     }
@@ -88,11 +91,14 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
             qualityPickPopup.dismiss(true);
             resolveStartChange(position);
         });
+        this.danmakuHolder = new DanMaKuHolder(this);
     }
 
     public void setVideoId(int aid, long cid) {
         this.aid = aid;
         this.cid = cid;
+        //初始化弹幕显示
+        this.danmakuHolder.initDanmaku(this.aid, this.cid);
     }
 
     public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
@@ -160,6 +166,13 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         gsyBaseVideoPlayer.mTypeText = mTypeText;
         gsyBaseVideoPlayer.aid = aid;
         gsyBaseVideoPlayer.cid = cid;
+        //对弹幕设置偏移记录
+        gsyBaseVideoPlayer.danmakuHolder.setParser(this.danmakuHolder.getParser());
+        gsyBaseVideoPlayer.danmakuHolder.initDanmaku(this.aid, this.cid);
+        gsyBaseVideoPlayer.danmakuHolder.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
+        gsyBaseVideoPlayer.danmakuHolder.setDanmaKuShow(this.danmakuHolder.getDanmaKuShow());
+        gsyBaseVideoPlayer.danmakuHolder.onPrepareDanmaku(gsyBaseVideoPlayer);
+        this.danmakuHolder.releaseDanmaku(this);
         return gsyBaseVideoPlayer;
     }
 
@@ -177,6 +190,14 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
             mTypeText = gsyBaseVideoPlayer.mTypeText;
             aid = gsyBaseVideoPlayer.aid;
             cid = gsyBaseVideoPlayer.cid;
+            //对弹幕设置偏移记录
+            this.danmakuHolder.setDanmaKuShow(gsyBaseVideoPlayer.danmakuHolder.getDanmaKuShow());
+            if (gsyBaseVideoPlayer.danmakuHolder.getDanmakuView() != null &&
+                    gsyBaseVideoPlayer.danmakuHolder.getDanmakuView().isPrepared()) {
+                this.danmakuHolder.resolveDanmakuSeek(this, gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
+                this.danmakuHolder.resolveDanmakuShow();
+                this.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);
+            }
         }
     }
 
@@ -190,6 +211,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     public void onCompletion() {
         super.onCompletion();
         releaseTmpManager();
+        this.danmakuHolder.releaseDanmaku(this);
     }
 
     private void resolveStartChange(int position) {
@@ -361,4 +383,57 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 
         }
     };
+
+    @Override
+    public void onPrepared() {
+        super.onPrepared();
+        this.danmakuHolder.onPrepareDanmaku(this);
+    }
+
+    @Override
+    public void onVideoPause() {
+        super.onVideoPause();
+        this.danmakuHolder.danmakuOnPause();
+    }
+
+    @Override
+    public void onVideoResume(boolean isResume) {
+        super.onVideoResume(isResume);
+        this.danmakuHolder.danmakuOnResume();
+    }
+
+    @Override
+    public void onSeekComplete() {
+        super.onSeekComplete();
+        int time = mProgressBar.getProgress() * getDuration() / 100;
+        //如果已经初始化过的，直接seek到对于位置
+        if (getHadPlay() && this.danmakuHolder.getDanmakuView() != null
+                && this.danmakuHolder.getDanmakuView().isPrepared()) {
+            this.danmakuHolder.resolveDanmakuSeek(this, time);
+        } else if (mHadPlay && this.danmakuHolder.getDanmakuView() != null
+                && !this.danmakuHolder.getDanmakuView().isPrepared()) {
+            //如果没有初始化过的，记录位置等待
+            this.danmakuHolder.setDanmakuStartSeekPosition(time);
+        }
+    }
+
+    @Override
+    protected void clickStartIcon() {
+        super.clickStartIcon();
+        if (getCurrentState() == CURRENT_STATE_PLAYING) {
+            this.danmakuHolder.danmakuOnResume();
+        } else if (getCurrentState() == CURRENT_STATE_PAUSE) {
+            this.danmakuHolder.danmakuOnPause();
+        }
+    }
+
+    @Override
+    public void onClick(View v) {
+        super.onClick(v);
+        switch (v.getId()) {
+            case R.id.toogle_danmaku:
+                this.danmakuHolder.resolveDanmakuShow();
+                break;
+        }
+    }
 }
