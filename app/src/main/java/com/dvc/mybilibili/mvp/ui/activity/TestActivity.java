@@ -5,43 +5,26 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 
 import com.airbnb.lottie.LottieAnimationView;
-import com.alibaba.fastjson.JSON;
-import com.bumptech.glide.util.ByteBufferUtil;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.app.application.BiliApplication;
-import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.danmaku.live.PackageRepository;
-import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
-import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
-import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
-import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.player.BiliVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
-import com.shuyu.gsyvideoplayer.video.StandardGSYVideoPlayer;
 
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
-import java.nio.ByteBuffer;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import dagger.android.support.DaggerAppCompatActivity;
-import io.reactivex.functions.Consumer;
 
 public class TestActivity extends DaggerAppCompatActivity {
 
@@ -72,12 +55,6 @@ public class TestActivity extends DaggerAppCompatActivity {
 //                biliVideoPlayer.startPlayLogic());
 //        biliVideoPlayer.startPlayLogic();
         Debuger.enable();
-
-        BiliApplication.getDataManager().getApiHelper().getDanmakuListV2(13197279, 21642717)
-                .compose(RxSchedulersHelper.AllioThread())
-                .subscribe(videoDanmaku -> {
-                    long oid = videoDanmaku.oid;
-                });
 
         liveApiV2Service.getRoomSocketConfigV3(21349375)
                 .compose(RxSchedulersHelper.AllioThread())

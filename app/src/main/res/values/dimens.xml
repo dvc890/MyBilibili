@@ -69,4 +69,9 @@
 
     <dimen name="comment_horizontal_padding">12dp</dimen>
     <dimen name="comment_vertical_padding">16dp</dimen>
+
+    <dimen name="xplayer_live_ctrl_icon_padding">10dp</dimen>
+    <dimen name="xplayer_live_ctrl_icon_width">44dp</dimen>
+    <dimen name="xplayer_live_ctrl_icon_height">44dp</dimen>
+    <dimen name="xplayer_live_ctrl_icon_margin">4dp</dimen>
 </resources>

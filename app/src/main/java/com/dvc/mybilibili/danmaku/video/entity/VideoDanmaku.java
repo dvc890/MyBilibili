@@ -59,13 +59,13 @@ public class VideoDanmaku {
                 String[] values = node.getAttributes().getNamedItem("p").getNodeValue().split(",");
                 long dmid = Long.valueOf(values[0]);
                 danmaku.getDanmu(dmid).unk1 = Integer.valueOf(values[1]);
-                danmaku.getDanmu(dmid).unk2 = Integer.valueOf(values[2]);
-                danmaku.getDanmu(dmid).unk3 = Integer.valueOf(values[3]);
-                danmaku.getDanmu(dmid).unk4 = Integer.valueOf(values[4]);
-                danmaku.getDanmu(dmid).unk5 = Integer.valueOf(values[5]);
-                danmaku.getDanmu(dmid).time = Integer.valueOf(values[6]);
-                danmaku.getDanmu(dmid).unk6 = Integer.valueOf(values[7]);
-                danmaku.getDanmu(dmid).color = Long.decode("0x"+values[8]);
+                danmaku.getDanmu(dmid).time = Integer.valueOf(values[2]);
+                danmaku.getDanmu(dmid).type = Integer.valueOf(values[3]);
+                danmaku.getDanmu(dmid).textsize = Integer.valueOf(values[4]);
+                danmaku.getDanmu(dmid).color = Integer.valueOf(values[5]);
+                danmaku.getDanmu(dmid).timestamp = Integer.valueOf(values[6]);
+                danmaku.getDanmu(dmid).pooltype = Integer.valueOf(values[7]);
+                danmaku.getDanmu(dmid).userhash = values[8];
                 danmaku.getDanmu(dmid).msg = node.getTextContent();
                 continue;
             }
@@ -91,13 +91,13 @@ public class VideoDanmaku {
         @JSONField(name = "dmid")
         public long dmid;
         public int unk1;//0
-        public int unk2;//49414
-        public int unk3;//1
-        public int unk4;//25
-        public int unk5;//16777215
-        public long time;//1502364195
-        public int unk6;//0
-        public long color;//6f407c54
+        public int time;//49414
+        public int type;//1
+        public int textsize;//25
+        public int color;//16777215
+        public long timestamp;//1502364195
+        public int pooltype;//0
+        public String userhash;//6f407c54
         public String msg;
     }
 }

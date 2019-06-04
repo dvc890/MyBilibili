@@ -219,7 +219,7 @@ public class BiliLiveSendGift {
         public static class SmallTV {
             @JSONField(name = "cmd")
             public String mCmd;
-            @JSONField(name = "msg")
+            @JSONField(name = "text")
             public String mMsg;
             @JSONField(name = "rnd")
             public long mRandomNum;

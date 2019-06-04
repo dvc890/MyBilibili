@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:fitsSystemWindows="false"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.dvc.mybilibili.player.BiliLiveVideoPlayer
+        android:id="@+id/player"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_200"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        app:layout_constraintTop_toBottomOf="@id/player"
+        app:tabGravity="center"
+        app:tabMode="fixed"
+        app:tabPaddingStart="30dp"
+        app:tabPaddingEnd="30dp"
+        app:tabMinWidth="@dimen/dp_100"
+        app:tabTextColor="@color/gray_clip_dark2"
+        app:tabSelectedTextColor="?attr/colorAccent"
+        app:tabIndicatorColor="?attr/colorAccent"
+        app:tabIndicatorHeight="2dp"
+        android:background="@color/white"
+        android:textSize="15sp"
+        android:layout_marginTop="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"/>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/viewpager"
+        app:layout_constraintTop_toBottomOf="@id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</android.support.constraint.ConstraintLayout>

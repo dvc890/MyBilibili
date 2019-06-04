@@ -23,10 +23,6 @@
             android:windowSoftInputMode="adjustNothing"
             android:configChanges="orientation|screenSize|keyboardHidden|uiMode|keyboard|layoutDirection"
             android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name="com.dvc.mybilibili.mvp.ui.activity.LoginActivity"
             android:launchMode="singleTask"
@@ -58,6 +54,18 @@
             android:windowSoftInputMode="adjustResize"
             android:theme="@style/AppTheme.NoActionBar.Live_Detail"
             android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name="com.dvc.mybilibili.mvp.ui.activity.LiveRoomActivity"
+            android:exported="true"
+            android:configChanges="keyboardHidden|orientation|screenLayout|screenSize|smallestScreenSize"
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/AppTheme.NoActionBar.Live_Detail"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
 
 

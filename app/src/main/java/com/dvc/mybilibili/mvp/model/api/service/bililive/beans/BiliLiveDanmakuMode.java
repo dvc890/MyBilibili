@@ -11,7 +11,7 @@ public class BiliLiveDanmakuMode {
     public String mHintType;
     @JSONField(name = "mode")
     public int mMode;
-    @JSONField(name = "msg")
+    @JSONField(name = "text")
     public String mMsg;
     @JSONField(name = "name")
     public String mName;

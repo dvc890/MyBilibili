@@ -374,6 +374,7 @@
     <color name="daynight_color_text_headline">#212121</color>
     <color name="daynight_color_icon_tint_for_white_bg">#cccccc</color>
     <color name="daynight_color_background_window">#f4f4f4</color>
+    <color name="daynight_color_text_body_secondary_dark">#505050</color>
 
     <color name="yellow_warning_background">#fff1d3</color>
     <color name="yellow_warning_text_color">#e78b1f</color>

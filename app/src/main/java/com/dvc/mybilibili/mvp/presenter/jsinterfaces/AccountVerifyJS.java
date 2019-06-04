@@ -35,7 +35,7 @@ public class AccountVerifyJS extends AndroidInterfaceWeb<IAccountVerify>{
                     verifyResult(parseObject.getString("ticket"), parseObject.getString("target_url"), callbackId);
                 } else if (!TextUtils.isEmpty(callbackId)) {
                     int code = -2;
-                    String message = "No access_token msg";
+                    String message = "No access_token text";
                     parseObject = new JSONObject();
                     parseObject.put("code", code);
                     parseObject.put("message", message);

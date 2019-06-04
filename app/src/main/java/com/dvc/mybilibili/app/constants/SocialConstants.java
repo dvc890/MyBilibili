@@ -46,7 +46,7 @@ public class SocialConstants {
     public static final String PARAM_REC_IMG = "recImg";
     public static final String PARAM_REC_IMG_DESC = "recImgDec";
     public static final String PARAM_SEND_IMG = "sendImg";
-    public static final String PARAM_SEND_MSG = "msg";
+    public static final String PARAM_SEND_MSG = "text";
     public static final String PARAM_SHARE_URL = "shareurl";
     public static final String PARAM_SOURCE = "source";
     public static final String PARAM_SPECIFIED = "specified";

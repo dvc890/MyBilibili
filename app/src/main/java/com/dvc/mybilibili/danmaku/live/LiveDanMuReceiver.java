@@ -1,8 +1,5 @@
 package com.dvc.mybilibili.danmaku.live;
 
-import android.util.Log;
-
-import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
@@ -10,7 +7,7 @@ import com.dvc.mybilibili.danmaku.live.runnable.CallbackDispatchRunnable;
 import com.dvc.mybilibili.danmaku.live.runnable.HeartBeatRunnable;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
-
+import com.vondear.rxtool.RxLogTool;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -19,6 +16,8 @@ import java.io.OutputStream;
 import java.net.Socket;
 import java.util.List;
 import java.util.Vector;
+
+import io.reactivex.schedulers.Schedulers;
 
 
 /**
@@ -93,7 +92,8 @@ public class LiveDanMuReceiver implements Closeable {
     public LiveDanMuReceiver connect(long roomId) throws IOException {
         this.roomId = roomId;
         BiliApplication.getDataManager().getApiHelper().getRoomSocketConfigV3(getRoomId())
-                .compose(RxSchedulersHelper.AllioThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.newThread())
                 .subscribe(new ObserverCallback<BiliLiveSocketConfig>() {
 
                     private Socket connectSocket(List<BiliLiveSocketConfig.DanmuHostPort> hostPortList) throws IOException {
@@ -113,7 +113,7 @@ public class LiveDanMuReceiver implements Closeable {
                     @Override
                     public void onSuccess(BiliLiveSocketConfig biliLiveSocketConfig) throws IOException {
 
-                        Socket socket = connectSocket(biliLiveSocketConfig.getServerList());
+                        socket = connectSocket(biliLiveSocketConfig.getServerList());
                         socket.setSoTimeout(SOCKET_TIMEOUT);
                         OutputStream outputStream = socket.getOutputStream();
                         //发送进房数据包
@@ -124,7 +124,8 @@ public class LiveDanMuReceiver implements Closeable {
 
                         if (!PackageRepository.readAndValidateJoinSuccessPackage(inputStream)) {
                             socket.close();
-                            Log.d(TAG, "Join live channel failed");
+                            RxLogTool.d(TAG, "Join live channel failed");
+                            return;
                         }
 
                         //定时发送心跳包
@@ -138,6 +139,8 @@ public class LiveDanMuReceiver implements Closeable {
                         for (int i = 0; i < callbacks.size(); i++) {
                             callbacks.get(i).onConnect();
                         }
+
+                        waitUntilCallbackDispatchThreadExit();
                     }
 
                     @Override

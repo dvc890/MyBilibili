@@ -22,6 +22,9 @@ public class LivePlayerInfo implements Parcelable {
     @JSONField(name = "durl")
     public ArrayList<DurlInfo> mDurlList;
 
+    public LivePlayerInfo() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class DurlInfo implements Parcelable {

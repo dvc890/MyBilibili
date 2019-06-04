@@ -31,7 +31,7 @@ public class BiliLiveRaffleEnd {
         public String mGiftName;
         @JSONField(name = "giftNum")
         public int mGiftNum;
-        @JSONField(name = "msg")
+        @JSONField(name = "text")
         public String mMsg;
         @JSONField(name = "uname")
         public String mUname;

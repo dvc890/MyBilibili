@@ -18,7 +18,7 @@ public class BiliLiveDanmakuColor {
     public int mColorValue;
     @JSONField(name = "hint_type")
     public int mHintType;
-    @JSONField(name = "msg")
+    @JSONField(name = "text")
     public String mMessage;
     @JSONField(name = "status")
     public int mStatus;

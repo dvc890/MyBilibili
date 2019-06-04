@@ -14,7 +14,9 @@ import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.RegionApiService;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.charge.ChargeApiService;
@@ -360,16 +362,6 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId) {
-        return this.biliLiveApiV2Service.getRoomSocketConfigV3(roomId)
-                .map(liveSocketConfigGeneralResponse -> {
-                    if(liveSocketConfigGeneralResponse.isSuccess())
-                        return liveSocketConfigGeneralResponse.data;
-                    throw new BiliApiException(liveSocketConfigGeneralResponse);
-                });
-    }
-
-    @Override
     public Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid) {
         return this.videoApiService.getDanmakuListV2(aid, cid)
                 .map(bytes -> {
@@ -401,6 +393,46 @@ public class AppApiHelper implements ApiHelper {
                     byte[] gzbytes = new byte[bytes.length-jsonlen-4];
                     System.arraycopy(bytes, 4+jsonlen, gzbytes, 0, bytes.length-jsonlen-4);
                     return new GZIPInputStream(new ByteArrayInputStream(gzbytes));
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveSocketConfig> getRoomSocketConfigV3(long roomId) {
+        return this.biliLiveApiV2Service.getRoomSocketConfigV3(roomId)
+                .map(liveSocketConfigGeneralResponse -> {
+                    if(liveSocketConfigGeneralResponse.isSuccess())
+                        return liveSocketConfigGeneralResponse.data;
+                    throw new BiliApiException(liveSocketConfigGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveRoomInfo> getRoomInfo(long roomid) {
+        return this.biliLiveApiV2Service.getInfoByRoom((int) roomid)
+                .map(biliLiveRoomInfoGeneralResponse -> {
+                    if(biliLiveRoomInfoGeneralResponse.isSuccess())
+                        return biliLiveRoomInfoGeneralResponse.data;
+                    throw new BiliApiException(biliLiveRoomInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<LivePlayerInfo> getLiveRoomPlayUrl(long roomId, int quality) {
+        return this.biliLiveApiV2Service.getPlayUrl((int) roomId, quality, null, 0, 2)
+                .map(livePlayerInfoGeneralResponse -> {
+                    if(livePlayerInfoGeneralResponse.isSuccess())
+                        return livePlayerInfoGeneralResponse.data;
+                    throw new BiliApiException(livePlayerInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(int roomId) {
+        return this.biliLiveApiV2Service.getm3u8PlayUrl(roomId)
+                .map(livePlayerInfoGeneralResponse -> {
+                    if(livePlayerInfoGeneralResponse.isSuccess())
+                        return livePlayerInfoGeneralResponse.data;
+                    throw new BiliApiException(livePlayerInfoGeneralResponse);
                 });
     }
 }

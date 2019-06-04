@@ -27,7 +27,6 @@ import com.dvc.mybilibili.mvp.ui.adapter.ViewPagerAdapter;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoCommentFragment;
 import com.dvc.mybilibili.mvp.ui.fragment.videopage.VideoDetailPageFragment;
 import com.dvc.mybilibili.player.BiliQualityPickVideoPlayer;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -166,7 +165,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
 
     @Override
     public void onBackPressed() {
-        if (GSYVideoManager.backFromWindowFull(this)) {
+        if (pickVideoPlayer.backFromWindowFull(this)) {
             return;
         }
         super.onBackPressed();

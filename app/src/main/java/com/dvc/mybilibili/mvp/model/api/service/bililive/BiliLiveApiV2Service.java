@@ -867,7 +867,7 @@ public interface BiliLiveApiV2Service {
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)
     @POST("/room_ex/v1/Danmu/danmuReport")
-    Observable<GeneralResponse<Object>> postDanmuReport(@Field("roomid") int i, @Field("uid") long j, @Field("msg") String str, @Field("reason") String str2, @Field("reason_id") int i2, @Field("danmaku_ts") long j2, @Field("danmaku_sign") String str3);
+    Observable<GeneralResponse<Object>> postDanmuReport(@Field("roomid") int i, @Field("uid") long j, @Field("text") String str, @Field("reason") String str2, @Field("reason_id") int i2, @Field("danmaku_ts") long j2, @Field("danmaku_sign") String str3);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+C9909b.CLASSNAME)
@@ -890,7 +890,7 @@ public interface BiliLiveApiV2Service {
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)
     @POST("/banned_service/v1/Silent/room_block_user")
-    Observable<GeneralResponse<BiliLiveSilentUser>> postUserSilent(@Field("roomid") int i, @Field("content") String str, @Field("type") int i2, @Field("hour") float f, @Field("msg") String str2, @Field("msg_time") long j);
+    Observable<GeneralResponse<BiliLiveSilentUser>> postUserSilent(@Field("roomid") int i, @Field("content") String str, @Field("type") int i2, @Field("hour") float f, @Field("text") String str2, @Field("msg_time") long j);
 
     @GET("/pay/v1/Proxy/quickPay")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
@@ -1053,5 +1053,9 @@ public interface BiliLiveApiV2Service {
     @GET("/room/v1/Room/playUrl")
     @Headers("Interceptor:"+ bej.CLASSNAME)
 //    @RequestInterceptor(bej.class)
-    Observable<GeneralResponse<LivePlayerInfo>> getPlayUrl(@Query("cid") int i, @Query("quality") int i2, @Nullable @Query("unicom_free") String str, @Query("https_url_req") int i3, @Query("ptype") int i4);
+    Observable<GeneralResponse<LivePlayerInfo>> getPlayUrl(@Query("cid") int roomId, @Query("quality") int quality, @Nullable @Query("unicom_free") String unicom_free, @Query("https_url_req") int https_url_req, @Query("ptype") int ptype);
+
+//    https://live.bilibili.com/api/h5playurl?roomid=3387575
+    @GET("https://live.bilibili.com/api/h5playurl")
+    Observable<GeneralResponse<LivePlayerInfo>> getm3u8PlayUrl(@Query("roomid") int roomId);
 }

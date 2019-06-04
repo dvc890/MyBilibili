@@ -7,9 +7,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.ImageSpan;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import master.flame.danmaku.controller.IDanmakuView;
 import master.flame.danmaku.danmaku.model.BaseDanmaku;
 import master.flame.danmaku.danmaku.model.android.BaseCacheStuffer;
@@ -24,9 +21,13 @@ class DanamakuAdapter extends BaseCacheStuffer.Proxy{
     @Override
     public void prepareDrawing(BaseDanmaku danmaku, boolean fromWorkerThread) {
         if (mDanmakuView != null) {
-            if(mDanmakuView.getHeight() < mDanmakuView.getView().getContext().getResources().getDisplayMetrics().heightPixels)
-                danmaku.textSize /= 2;
-            mDanmakuView.invalidateDanmaku(danmaku, false);
+            if(mDanmakuView.getHeight() == mDanmakuView.getView().getContext().getResources().getDisplayMetrics().widthPixels) {
+                //h
+            }else {
+                //v
+            danmaku.textSize *= (float) mDanmakuView.getWidth()/mDanmakuView.getView().getContext().getResources().getDisplayMetrics().widthPixels;
+            }
+            mDanmakuView.invalidateDanmaku(danmaku, true);
         }
     }
 

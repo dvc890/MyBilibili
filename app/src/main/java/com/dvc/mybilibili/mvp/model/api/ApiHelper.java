@@ -3,7 +3,9 @@ package com.dvc.mybilibili.mvp.model.api;
 import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
@@ -64,4 +66,10 @@ public interface ApiHelper {
     Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid);
 
     Observable<InputStream> getDanmakuStreamV2(long aid, long cid);
+
+    Observable<BiliLiveRoomInfo> getRoomInfo(long roomid);
+
+    Observable<LivePlayerInfo> getLiveRoomPlayUrl(long roomId, int quality);
+
+    Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(int roomId);
 }

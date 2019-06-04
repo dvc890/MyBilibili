@@ -7,6 +7,6 @@ import com.alibaba.fastjson.annotation.JSONField;
 @Keep
 /* compiled from: BL */
 public class BiliLiveRoomTips {
-    @JSONField(name = "msg")
+    @JSONField(name = "text")
     public String mMsg;
 }

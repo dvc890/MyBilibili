@@ -1,9 +1,6 @@
 package com.dvc.mybilibili.player.danmaku;
 
-import android.graphics.Color;
-import android.os.SystemClock;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.dvc.base.BaseMvpHolder;
@@ -15,10 +12,8 @@ import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.player.BiliVideoPlayer;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
-import java.util.concurrent.locks.Lock;
 
 import butterknife.BindView;
 import master.flame.danmaku.controller.IDanmakuView;
@@ -33,7 +28,6 @@ import master.flame.danmaku.danmaku.model.android.Danmakus;
 import master.flame.danmaku.danmaku.model.android.SpannedCacheStuffer;
 import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
 import master.flame.danmaku.danmaku.parser.IDataSource;
-import master.flame.danmaku.ui.widget.DanmakuView;
 
 public class DanMaKuHolder extends BaseMvpHolder {
 
@@ -207,6 +201,10 @@ public class DanMaKuHolder extends BaseMvpHolder {
     }
 
     private void initParser() {
+        if(aid == 0 || cid == 0) {
+            setParser(createParser(null));
+            return;
+        }
         BiliApplication.getDataManager().getApiHelper().getDanmakuStreamV2(aid, cid)
                 .compose(RxSchedulersHelper.AllioThread())
                 .subscribe(new ObserverCallback<InputStream>() {
@@ -264,11 +262,18 @@ public class DanMaKuHolder extends BaseMvpHolder {
     /**
      添加弹幕数据
      */
-    private void addDanmaku(BaseDanmaku danmaku) {
-//        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+    public void addDanmaku(String text, int color, boolean isLive) {
+        BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || getDanmakuView() == null) {
             return;
         }
+        danmaku.isLive = isLive;
+        danmaku.textColor = color;
+        danmaku.text = text;
+        danmaku.padding = 5;
+        danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
+        danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
+        danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
         getDanmakuView().addDanmaku(danmaku);
 
     }

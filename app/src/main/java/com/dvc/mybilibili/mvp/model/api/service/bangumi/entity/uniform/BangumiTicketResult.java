@@ -11,7 +11,7 @@ public class BangumiTicketResult {
     @Nullable
     @JSONField(name = "expire_time_text")
     public String expireTime;
-    @JSONField(name = "msg")
+    @JSONField(name = "text")
     public String failMsg;
     @JSONField(name = "status")
     public boolean isSuccess;

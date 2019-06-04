@@ -10,28 +10,21 @@ import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
-import com.dvc.mybilibili.mvp.model.api.entity.IMediaResource;
-import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.popup.QualityPickPopup;
-import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
-import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
-import com.shuyu.gsyvideoplayer.player.PlayerFactory;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
+import com.shuyu.gsyvideoplayer.video.base.GSYVideoViewBridge;
 import com.vondear.rxtool.view.RxToast;
 
 import java.io.File;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
-import io.reactivex.ObservableEmitter;
-import io.reactivex.ObservableOnSubscribe;
-import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 
 /**
  * 可以切换清晰度的播放器
@@ -39,12 +32,12 @@ import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 
     //记住切换数据源类型
-    private int mType = 0;
+    private String mTmpTag = "";
     //数据源
     private int mSourcePosition = -1;
     private int mPreSourcePosition = 0;
 
-    private GSYVideoManager mTmpManager;
+    private GSYVideoViewBridge mTmpManager;
 
     private boolean isChanging;
 
@@ -79,7 +72,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
-        Debuger.enable();
+//        Debuger.enable();
         //切换视频清晰度
         mSwitchSize.setOnClickListener(v -> {
             if (mHadPlay && !isChanging) {
@@ -93,6 +86,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         });
         this.danmakuHolder = new DanMaKuHolder(this);
     }
+
 
     public void setVideoId(int aid, long cid) {
         this.aid = aid;
@@ -164,15 +158,13 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         gsyBaseVideoPlayer.mediaResource = getMediaResource();
         gsyBaseVideoPlayer.mSourcePosition = mSourcePosition;
         gsyBaseVideoPlayer.mTypeText = mTypeText;
-        gsyBaseVideoPlayer.aid = aid;
-        gsyBaseVideoPlayer.cid = cid;
+        gsyBaseVideoPlayer.setVideoId(aid, cid);
         //对弹幕设置偏移记录
         gsyBaseVideoPlayer.danmakuHolder.setParser(this.danmakuHolder.getParser());
-        gsyBaseVideoPlayer.danmakuHolder.initDanmaku(this.aid, this.cid);
         gsyBaseVideoPlayer.danmakuHolder.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
         gsyBaseVideoPlayer.danmakuHolder.setDanmaKuShow(this.danmakuHolder.getDanmaKuShow());
         gsyBaseVideoPlayer.danmakuHolder.onPrepareDanmaku(gsyBaseVideoPlayer);
-        this.danmakuHolder.releaseDanmaku(this);
+//        this.danmakuHolder.releaseDanmaku(this);
         return gsyBaseVideoPlayer;
     }
 
@@ -188,15 +180,17 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
             mediaResource = gsyBaseVideoPlayer.getMediaResource();
             mSourcePosition = gsyBaseVideoPlayer.mSourcePosition;
             mTypeText = gsyBaseVideoPlayer.mTypeText;
-            aid = gsyBaseVideoPlayer.aid;
-            cid = gsyBaseVideoPlayer.cid;
+            this.setVideoId(gsyBaseVideoPlayer.aid, gsyBaseVideoPlayer.cid);
             //对弹幕设置偏移记录
             this.danmakuHolder.setDanmaKuShow(gsyBaseVideoPlayer.danmakuHolder.getDanmaKuShow());
             if (gsyBaseVideoPlayer.danmakuHolder.getDanmakuView() != null &&
                     gsyBaseVideoPlayer.danmakuHolder.getDanmakuView().isPrepared()) {
+//                this.danmakuHolder.setParser(gsyBaseVideoPlayer.danmakuHolder.getParser());
+//                this.danmakuHolder.setDanmakuStartSeekPosition(gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
+//                this.danmakuHolder.onPrepareDanmaku(gsyBaseVideoPlayer);
                 this.danmakuHolder.resolveDanmakuSeek(this, gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
                 this.danmakuHolder.resolveDanmakuShow();
-                this.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);
+                gsyBaseVideoPlayer.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);
             }
         }
     }
@@ -234,8 +228,11 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
                                 isChanging = true;
                                 mSourcePosition = position;
                                 //创建临时管理器执行加载播放
-                                mTmpManager = GSYVideoManager.tmpInstance(gsyMediaPlayerListener);
-                                mTmpManager.initContext(getContext().getApplicationContext());
+                                mTmpTag = url+aid+""+cid;
+                                mTmpManager = getTmpGSYVideoManager(mTmpTag);
+                                mTmpManager.setListener(gsyMediaPlayerListener);
+//                                mTmpManager = GSYVideoManager.tmpInstance(gsyMediaPlayerListener);
+//                                mTmpManager.initContext(getContext().getApplicationContext());
                                 resolveChangeUrl(mCache, mCachePath, url);
                                 mTmpManager.prepare(mUrl, mMapHeadData, mLooping, mSpeed, mCache, mCachePath, null);
                                 changeUiToPlayingBufferingShow();
@@ -325,19 +322,24 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         @Override
         public void onSeekComplete() {
             if (mTmpManager != null) {
-                GSYVideoBaseManager manager = GSYVideoManager.instance();
-                GSYVideoManager.changeManager(mTmpManager);
-                mTmpManager.setLastListener(manager.lastListener());
-                mTmpManager.setListener(manager.listener());
+//                GSYVideoBaseManager manager = GSYVideoManager.instance();
+//                GSYVideoManager.changeManager(mTmpManager);
+//                mTmpManager.setLastListener(manager.lastListener());
+//                mTmpManager.setListener(manager.listener());
+                GSYVideoViewBridge orgmanager = getGSYVideoManager();
+                setPlayTag(mTmpTag);//切换管理者
+                mTmpManager.setLastListener(orgmanager.lastListener());
+                mTmpManager.setLastListener(orgmanager.listener());
 
-                manager.setDisplay(null);
+                orgmanager.setDisplay(null);
+                orgmanager.releaseMediaPlayer();
+                changeUiToPlayingClear();
 
                 Debuger.printfError("**** showDisplay onSeekComplete ***** " + mSurface);
                 Debuger.printfError("**** showDisplay onSeekComplete isValid***** " + mSurface.isValid());
                 mTmpManager.setDisplay(mSurface);
-                changeUiToPlayingClear();
+                addTextureView();//重新添加渲染器，不然会有最后一针画面残留
                 resolveChangedResult(true);
-                manager.releaseMediaPlayer();
             }
         }
 
@@ -436,4 +438,6 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
                 break;
         }
     }
+
+
 }

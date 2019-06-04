@@ -3,12 +3,14 @@ package com.dvc.mybilibili.di.module;
 import com.dvc.base.di.PerActivity;
 import com.dvc.mybilibili.di.module.activity.AccountVerifyWebActivityModule;
 import com.dvc.mybilibili.di.module.activity.HomeActivityModule;
+import com.dvc.mybilibili.di.module.activity.LiveRoomActivityModule;
 import com.dvc.mybilibili.di.module.activity.LoginActivityModule;
 import com.dvc.mybilibili.di.module.activity.SplashActivityModule;
 import com.dvc.mybilibili.di.module.activity.TestActivityModule;
 import com.dvc.mybilibili.di.module.activity.VideoDetailsActivityModule;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
+import com.dvc.mybilibili.mvp.ui.activity.LiveRoomActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;
 import com.dvc.mybilibili.mvp.ui.activity.SplashActivity;
 import com.dvc.mybilibili.mvp.ui.activity.TestActivity;
@@ -43,4 +45,8 @@ public abstract class ActivityBindingModule {
     @PerActivity
     @ContributesAndroidInjector(modules = VideoDetailsActivityModule.class)
     abstract VideoDetailsActivity videoDetailsActivity();
+
+    @PerActivity
+    @ContributesAndroidInjector(modules = LiveRoomActivityModule.class)
+    abstract LiveRoomActivity liveRoomActivity();
 }

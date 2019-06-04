@@ -5,6 +5,8 @@ import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
 import com.dvc.mybilibili.danmaku.live.interfaces.SocketMsgParserProcess;
 
 import org.jetbrains.annotations.NotNull;
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @SocketMsgType(types = {"DANMU_MSG", "ROOM_BLOCK_MSG", "USER_TOAST_MSG", "room_admin_entrance"})
@@ -19,8 +21,11 @@ public class SocketDanMuParserProcess extends SocketMsgParserProcess<ILiveDanMuC
 
     @Override
     public void process(String cmd, JSONObject jSONObject, ILiveDanMuCallback liveDanMuCallback) {
-        switch (cmd) {
+        String ccmd = cmd;
+        if(cmd.contains(":")) ccmd = cmd.split(":")[0];
+        switch (ccmd) {
             case "DANMU_MSG":
+//                {"cmd":"DANMU_MSG:4:0:2:2:2:0","info":[[0,1,25,16777215,1559639767,32114652,0,"10499927",0,0,0],"泫雅的歌(･∀･)",[6834602,"芝芝莓莓w",0,0,0,10000,1,""],[],[12,0,6406234,"\u003e50000"],["",""],0,0,null,{"ts":1559639767,"ct":"CA962D53"}]}
                 liveDanMuCallback.onDanMuMSGPackage(formatDanmu(jSONObject));
                 break;
             case "ROOM_BLOCK_MSG":
@@ -54,24 +59,13 @@ public class SocketDanMuParserProcess extends SocketMsgParserProcess<ILiveDanMuC
     }
 
     private DanMuMSGEntity formatDanmu(JSONObject jSONObject) {
-//        JSONArray optJSONArray = jSONObject.optJSONArray("info");
-//        if (optJSONArray != null && optJSONArray.length() >= 2) {
-//            try {
-//                String danmakuAttr = optJSONArray.getString(DANMU_ATTR_INDEX);
-//                int length = danmakuAttr.length() - 1;
-////                if (danmakuAttr == null) {
-////                    throw new TypeCastException("null cannot be cast to non-null type java.lang.String");
-////                }
-//                danmakuAttr = danmakuAttr.substring(1, length);
-//                C25673c a = bel.m94106a(string, optJSONArray.optString(1));
-//                if (a != null) {
-//                    JSONArray optJSONArray2 = optJSONArray.optJSONArray(DANMU_ATTR_INDEX);
-//                    this.f23869b.mo31143a(a, m31078b(optJSONArray), m31077a(optJSONArray2));
-//                }
-//                } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-        return new DanMuMSGEntity();
+        JSONArray optJSONArray = jSONObject.optJSONArray("info");
+        DanMuMSGEntity danMuMSGEntity = new DanMuMSGEntity();
+        try {
+            danMuMSGEntity = new DanMuMSGEntity(optJSONArray);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return danMuMSGEntity;
     }
 }
