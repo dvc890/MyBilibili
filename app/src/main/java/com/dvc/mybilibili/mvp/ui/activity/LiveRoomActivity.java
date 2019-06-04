@@ -98,6 +98,14 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
         super.onDestroy();
         if(player.isInPlayingState())
             player.releaseAllVideos();
+        if(LiveDanMuReceiver.getInstance().isConnected()) try {
+            LiveDanMuReceiver.getInstance().close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            LiveDanMuReceiver.getInstance().removeCallback(this);
+        }
+
     }
 
     public void initDanMu() {
