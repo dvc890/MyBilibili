@@ -1,16 +1,17 @@
 package com.dvc.mybilibili.mvp.presenter.activity;
 
 import android.arch.lifecycle.Lifecycle;
+import android.content.Context;
 
-import com.dvc.base.MvpBasePresenter;
+import com.dvc.base.di.ApplicationContext;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.DataManager;
-import com.dvc.mybilibili.mvp.model.api.ApiHelper;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
+import com.dvc.mybilibili.mvp.presenter.MyMvpBasePresenter;
 import com.dvc.mybilibili.mvp.ui.activity.LiveRoomView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
@@ -18,17 +19,11 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
-public class LiveRoomPresenter extends MvpBasePresenter<LiveRoomView> {
-
-    private final DataManager dataManager;
-    private final ApiHelper apiHelper;
-    private final LifecycleProvider<Lifecycle.Event> provider;
+public class LiveRoomPresenter extends MyMvpBasePresenter<LiveRoomView> {
 
     @Inject
-    public LiveRoomPresenter(DataManager dataManager, LifecycleProvider<Lifecycle.Event> provider) {
-        this.dataManager = dataManager;
-        this.apiHelper = dataManager.getApiHelper();
-        this.provider = provider;
+    public LiveRoomPresenter(@ApplicationContext Context context, DataManager dataManager, LifecycleProvider<Lifecycle.Event> provider) {
+        super(context, dataManager, provider);
     }
 
     public void loadRoomInfo(long roomId) {

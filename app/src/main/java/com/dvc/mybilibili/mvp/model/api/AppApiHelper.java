@@ -10,10 +10,15 @@ import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomMode;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveUpInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
@@ -54,6 +59,7 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.rx_cache2.EvictProvider;
+import retrofit2.http.Query;
 
 @Singleton
 public class AppApiHelper implements ApiHelper {
@@ -406,6 +412,7 @@ public class AppApiHelper implements ApiHelper {
                 });
     }
 
+    //获取房间的基础信息
     @Override
     public Observable<BiliLiveRoomInfo> getRoomInfo(long roomid) {
         return this.biliLiveApiV2Service.getInfoByRoom((int) roomid)
@@ -433,6 +440,52 @@ public class AppApiHelper implements ApiHelper {
                     if(livePlayerInfoGeneralResponse.isSuccess())
                         return livePlayerInfoGeneralResponse.data;
                     throw new BiliApiException(livePlayerInfoGeneralResponse);
+                });
+    }
+
+    /**
+     * 获取弹幕的颜色列表
+     * @param roomid
+     * @return
+     */
+    @Override
+    public Observable<BiliLiveDanmakuConfig> getDanmakuConfig(long roomid) {
+        return this.biliLiveApiV2Service.getDanmakuConfig((int) roomid)
+                .map(liveDanmakuConfigGeneralResponse -> {
+                    if(liveDanmakuConfigGeneralResponse.isSuccess())
+                        return liveDanmakuConfigGeneralResponse.data;
+                    throw new BiliApiException(liveDanmakuConfigGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveHomePage> getLiveHomePageData(int relation_page, int rec_page, int quality) {
+        String scale = "xxhdpi";
+        return this.biliLiveApiV2Service.getLiveHomePageData(relation_page, rec_page, scale, quality)
+                .map(biliLiveHomePageGeneralResponse -> {
+                    if(biliLiveHomePageGeneralResponse.isSuccess())
+                        return biliLiveHomePageGeneralResponse.data;
+                    throw new BiliApiException(biliLiveHomePageGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<Boolean> isPortraitLiveRoom(long room_id) {
+        return this.biliLiveApiV2Service.getLiveRoomMode((int) room_id)
+                .map(biliLiveRoomModeGeneralResponse -> {
+                    if(biliLiveRoomModeGeneralResponse.isSuccess())
+                        return biliLiveRoomModeGeneralResponse.data.mIsPortrait;
+                    throw new BiliApiException(biliLiveRoomModeGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveUpInfo> getLiveRoomUpInfo(long uid) {
+        return this.biliLiveApiV2Service.getLiveRoomUpInfo(uid)
+                .map(biliLiveUpInfoGeneralResponse -> {
+                    if(biliLiveUpInfoGeneralResponse.isSuccess())
+                        return biliLiveUpInfoGeneralResponse.data;
+                    throw new BiliApiException(biliLiveUpInfoGeneralResponse);
                 });
     }
 }

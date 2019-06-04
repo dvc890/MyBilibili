@@ -4,7 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.mybilibili.mvp.model.DataManager;
-import com.dvc.mybilibili.mvp.ui.fragment.GuideFragView;
+import com.dvc.mybilibili.mvp.ui.fragment.web.GuideFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
 import javax.inject.Inject;
@@ -18,9 +18,5 @@ public class GuideFragPresenter extends MvpBasePresenter<GuideFragView> {
     public GuideFragPresenter(DataManager dataManager, LifecycleProvider<Lifecycle.Event> provider) {
         this.dataManager = dataManager;
         this.provider = provider;
-    }
-
-    public void loadUrl() {
-
     }
 }

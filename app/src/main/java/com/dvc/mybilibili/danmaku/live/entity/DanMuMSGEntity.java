@@ -22,6 +22,7 @@ public class DanMuMSGEntity {
     public DanMuMSGEntity() {}
 
     public DanMuMSGEntity(JSONArray info) throws JSONException {
+        this.info = info;
         pooltype = info.getJSONArray(0).getInt(0);
         type = info.getJSONArray(0).getInt(1);
         textsize = info.getJSONArray(0).getInt(2);

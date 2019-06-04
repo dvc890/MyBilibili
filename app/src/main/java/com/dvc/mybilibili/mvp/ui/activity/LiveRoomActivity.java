@@ -40,6 +40,8 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
     @BindView(R.id.viewpager)
     ViewPager viewpager;
 
+    private long roomId;
+
     @NonNull
     @Override
     public LiveRoomPresenter createPresenter() {
@@ -134,6 +136,8 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     @Override
     public void onDanMuMSGPackage(DanMuMSGEntity danMuMSGEntity) {
+        if(player.isInPlayingState())
+            player.sendDanmaku(danMuMSGEntity.text, danMuMSGEntity.color, danMuMSGEntity.textsize);
         runOnUiThread(()->RxToast.normal(String.format("%1$s[%2$d](%3$s):%4$s",danMuMSGEntity.username, danMuMSGEntity.userlevel, danMuMSGEntity.userrank, danMuMSGEntity.text)));
     }
 

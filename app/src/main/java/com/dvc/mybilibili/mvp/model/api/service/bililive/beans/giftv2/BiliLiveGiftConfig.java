@@ -77,6 +77,9 @@ public class BiliLiveGiftConfig implements Parcelable {
     @JSONField(name = "webp")
     public String mWebp;
 
+    public BiliLiveGiftConfig() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class NumSelect implements Parcelable {
@@ -85,6 +88,9 @@ public class BiliLiveGiftConfig implements Parcelable {
         public String mNum;
         @JSONField(name = "text")
         public String mText;
+
+        public NumSelect() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bililive.videoliveplayer.net.beans.giftv2.BiliLiveGiftConfig$NumSelect$1 */

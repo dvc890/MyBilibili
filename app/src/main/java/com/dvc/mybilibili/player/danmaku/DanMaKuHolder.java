@@ -262,7 +262,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
     /**
      添加弹幕数据
      */
-    public void addDanmaku(String text, int color, boolean isLive) {
+    public void addDanmaku(String text, int color, float textsize, boolean isLive) {
         BaseDanmaku danmaku = mDanmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
         if (danmaku == null || getDanmakuView() == null) {
             return;
@@ -272,7 +272,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
         danmaku.text = text;
         danmaku.padding = 5;
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
-        danmaku.textSize = 25f * (mParser.getDisplayer().getDensity() - 0.6f);
+        danmaku.textSize = textsize * (mParser.getDisplayer().getDensity() - 0.6f);
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
         getDanmakuView().addDanmaku(danmaku);
 

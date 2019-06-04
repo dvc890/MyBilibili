@@ -30,6 +30,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     protected DanMaKuHolder danmakuHolder;
     private LivePlayerInfo mediaResource;
     private long roomid;
+    private boolean isFrist = true;
 
     public BiliLiveVideoPlayer(Context context, Boolean fullFlag) {
         super(context, fullFlag);
@@ -72,8 +73,9 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 
     }
 
-    public void sendDanmaku(String text, int color) {
-        this.danmakuHolder.addDanmaku(text, color, true);
+    public void sendDanmaku(String text, int color, float testsize) {
+        if(this.getCurrentState() == CURRENT_STATE_PLAYING)
+            this.danmakuHolder.addDanmaku(text, color, testsize, true);
     }
 
     /**
@@ -127,6 +129,14 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     }
 
     @Override
+    public void startPlayLogic() {
+        if(isFrist) {
+            mLoadingProgressBar = findViewById(R.id.guicu_loadingview);
+        }
+        super.startPlayLogic();
+    }
+
+    @Override
     public void onAutoCompletion() {
         super.onAutoCompletion();
     }
@@ -141,6 +151,11 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     public void onPrepared() {
         super.onPrepared();
         this.danmakuHolder.onPrepareDanmaku(this);
+        if(isFrist) {
+            mLoadingProgressBar.setVisibility(GONE);
+            mLoadingProgressBar = findViewById(R.id.loading);
+            isFrist = false;
+        }
     }
 
     @Override
@@ -163,7 +178,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         if (getHadPlay() && this.danmakuHolder.getDanmakuView() != null
                 && this.danmakuHolder.getDanmakuView().isPrepared()) {
             this.danmakuHolder.resolveDanmakuSeek(this, time);
-        } else if (mHadPlay && this.danmakuHolder.getDanmakuView() != null
+        } else if (getHadPlay() && this.danmakuHolder.getDanmakuView() != null
                 && !this.danmakuHolder.getDanmakuView().isPrepared()) {
             //如果没有初始化过的，记录位置等待
             this.danmakuHolder.setDanmakuStartSeekPosition(time);
@@ -188,7 +203,16 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
                 this.danmakuHolder.resolveDanmakuShow();
                 break;
             case R.id.refresh:
+                Refresh();
                 break;
         }
+    }
+
+    private void Refresh() {
+        getGSYVideoManager().setDisplay(null);
+        getGSYVideoManager().releaseMediaPlayer();
+        changeUiToPlayingClear();
+        setPlayTag(getPlayTag()+getPlayTag().hashCode());
+        startPlayLogic();
     }
 }

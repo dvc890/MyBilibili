@@ -795,7 +795,7 @@ public final class BiliLiveHomePage {
         private int count;
         @JSONField(name = "id")
         /* renamed from: id */
-        private int f5997id;
+        private int id;
 //        @NotNull
 //        private final Lazy isSquareCard$delegate = LazyKt__LazyJVMKt.lazy(new BiliLiveHomePage$ModuleInfo$isSquareCard$2(this));
         @JSONField(name = "link")
@@ -816,11 +816,11 @@ public final class BiliLiveHomePage {
 //        }
 
         public final int getId() {
-            return this.f5997id;
+            return this.id;
         }
 
         public final void setId(int i) {
-            this.f5997id = i;
+            this.id = i;
         }
 
         public final int getType() {

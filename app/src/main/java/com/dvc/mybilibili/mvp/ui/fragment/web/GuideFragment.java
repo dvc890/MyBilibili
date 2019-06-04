@@ -1,15 +1,13 @@
-package com.dvc.mybilibili.mvp.ui.fragment;
+package com.dvc.mybilibili.mvp.ui.fragment.web;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.FrameLayout;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.dvc.base.MvpBaseFragment;
@@ -17,7 +15,6 @@ import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.presenter.fragment.GuideFragPresenter;
 import com.dvc.mybilibili.R;
 import com.just.agentweb.AgentWeb;
-import com.just.agentweb.WebChromeClient;
 import com.just.agentweb.WebViewClient;
 
 import javax.inject.Inject;

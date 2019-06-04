@@ -9,6 +9,21 @@
         android:layout_height="match_parent"
         android:gravity="center"/>
 
+    <RelativeLayout
+        android:id="@+id/guicu_loadingview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/gray_20"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/placeholder_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/anim_video_loading" />
+    </RelativeLayout>
+
     <master.flame.danmaku.ui.widget.DanmakuView
         android:id="@+id/danmaku_view"
         android:layout_width="match_parent"
@@ -36,12 +51,12 @@
     <FrameLayout android:id="@+id/progress_controllers_view" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true">
         <View android:id="@+id/shadow" android:background="@drawable/shape_toolbar_gradient_shadow_reverse" android:layout_width="match_parent" android:layout_height="60dp"/>
         <LinearLayout android:gravity="center" android:layout_gravity="bottom|center_vertical|center_horizontal|center" android:orientation="horizontal" android:id="@+id/layout_bottom" android:background="@null" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginBottom="8dp">
-            <ImageView android:id="@+id/start" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12dp" android:src="@drawable/bili_player_portrait_ctrl_play_pause"/>
+            <ImageView android:id="@+id/start" android:background="?attr/selectableItemBackgroundBorderless" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginLeft="12dp" android:src="@drawable/bili_player_portrait_ctrl_play_pause"/>
             <ImageView android:id="@+id/refresh" android:background="?attr/selectableItemBackgroundBorderless" android:padding="@dimen/xplayer_live_ctrl_icon_padding" android:visibility="visible" android:layout_width="@dimen/xplayer_live_ctrl_icon_width" android:layout_height="@dimen/xplayer_live_ctrl_icon_height" android:layout_marginRight="@dimen/xplayer_live_ctrl_icon_margin" android:src="@drawable/live_ic_player_refresh" android:layout_gravity="center_vertical"/>
             <Space android:paddingLeft="12dp" android:paddingRight="12dp" android:layout_width="0dp" android:layout_height="wrap_content" android:maxHeight="2dp" android:minHeight="2dp" android:layout_weight="1"/>
             <TextView android:textSize="10sp" android:textStyle="bold" android:textColor="#ffffff" android:gravity="center" android:layout_gravity="center" android:id="@+id/current" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
-            <ImageView android:id="@+id/toogle_danmaku" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/xplayer_live_ctrl_icon_margin" android:src="@drawable/live_ic_danmu_open"/>
-            <ImageView android:id="@+id/fullscreen" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/xplayer_live_ctrl_icon_margin" android:src="@drawable/ic_player_portrait_fullscreen"/>
+            <ImageView android:id="@+id/toogle_danmaku" android:background="?attr/selectableItemBackgroundBorderless" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/xplayer_live_ctrl_icon_margin" android:src="@drawable/live_ic_danmu_open"/>
+            <ImageView android:id="@+id/fullscreen" android:background="?attr/selectableItemBackgroundBorderless" android:paddingLeft="8dp" android:paddingRight="8dp" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="@dimen/xplayer_live_ctrl_icon_margin" android:src="@drawable/ic_player_portrait_fullscreen"/>
         </LinearLayout>
 
         <RelativeLayout

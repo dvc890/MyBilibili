@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.ui.fragment;
+package com.dvc.mybilibili.mvp.ui.fragment.web;
 
 import com.hannesdorfmann.mosby3.mvp.MvpView;
 

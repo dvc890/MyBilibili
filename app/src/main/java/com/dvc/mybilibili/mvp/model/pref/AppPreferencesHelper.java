@@ -24,10 +24,12 @@ public class AppPreferencesHelper implements PreferencesHelper {
 
     }
 
+    @Override
     public boolean isFristOpenApp() {
         return this.appPreferences.getInt("persist.is.first.start", 0) == 0;
     }
 
+    @Override
     public void NotFristOpenApp() {
         this.appEditor.putInt("persist.is.first.start", 1).apply();
     }

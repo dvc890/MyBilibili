@@ -389,5 +389,6 @@
     <color name="comment_name">#757575</color>
     <color name="comment_notice_background">#fff1d3</color>
     <color name="comment_notice_text">#e78b1f</color>
+    <color name="_text__gray_light">#ffbababa</color>
 
 </resources>

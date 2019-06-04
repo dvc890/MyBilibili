@@ -125,6 +125,7 @@ public class LiveDanMuReceiver implements Closeable {
                         if (!PackageRepository.readAndValidateJoinSuccessPackage(inputStream)) {
                             socket.close();
                             RxLogTool.d(TAG, "Join live channel failed");
+                            onError(new BiliApiException(BiliApiException.E_FAIL, "Join live channel failed"), BiliApiException.E_FAIL);
                             return;
                         }
 
