@@ -12,6 +12,9 @@
     <dimen name="text_size_title">15sp</dimen>
     <dimen name="text_size_xlarge">16sp</dimen>
     <dimen name="text_size_xxlarge">18sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_tiny">10sp</dimen>
+    <dimen name="text_very_small">12sp</dimen>
 
     <dimen name="corner_banner">8dp</dimen>
     <dimen name="corner_card">4dp</dimen>

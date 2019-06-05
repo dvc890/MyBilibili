@@ -97,7 +97,7 @@ public class CallbackDispatchRunnable implements Runnable {
             processer = new SocketMsgParserProcess<ILiveDanMuCallback>() {
                 @Override
                 public void process(String cmd, JSONObject jSONObject, ILiveDanMuCallback liveDanMuCallback) {
-
+                    liveDanMuCallback.onOnlineCountPackage(onlineCount);
                 }
             };
         } else {    //未知数据包

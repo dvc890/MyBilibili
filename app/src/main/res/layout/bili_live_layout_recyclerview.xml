@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.RecyclerView xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:scrollbarStyle="outsideOverlay" android:orientation="vertical" android:id="@+id/recycler" android:scrollbars="vertical" android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dp_8"
+    android:paddingRight="@dimen/dp_8" />

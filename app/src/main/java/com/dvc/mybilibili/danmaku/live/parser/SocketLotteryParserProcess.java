@@ -1,5 +1,7 @@
 package com.dvc.mybilibili.danmaku.live.parser;
 
+import com.alibaba.fastjson.JSON;
+import com.dvc.mybilibili.danmaku.live.entity.SendGiftEntity;
 import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
 import com.dvc.mybilibili.danmaku.live.interfaces.SocketMsgParserProcess;
 
@@ -27,6 +29,7 @@ public class SocketLotteryParserProcess extends SocketMsgParserProcess<ILiveDanM
                 break;
             case "SEND_GIFT":
 //                {"cmd":"SEND_GIFT","data":{"giftName":"\u8fa3\u6761","num":1,"uname":"\u5371\u96691","face":"http:\/\/i0.hdslb.com\/bfs\/face\/d2a03b0e81271e4acad750bd373c67c9241eee75.jpg","guard_level":0,"rcost":10295391,"uid":14501792,"top_list":[],"timestamp":1559639739,"giftId":1,"giftType":0,"action":"\u5582\u98df","super":0,"super_gift_num":0,"price":100,"rnd":"960955714","newMedal":0,"newTitle":0,"medal":[],"title":"","beatId":"","biz_source":"live","metadata":"","remain":0,"gold":0,"silver":0,"eventScore":0,"eventNum":0,"smalltv_msg":[],"specialGift":null,"notice_msg":[],"capsule":null,"addFollow":0,"effect_block":1,"coin_type":"silver","total_coin":100,"effect":0,"tag_image":"","user_count":0}}
+                iLiveDanMuCallback.onSendGiftPackage(JSON.parseObject(jSONObject.optJSONObject("data").toString(), SendGiftEntity.class));
                 break;
             case "COMBO_SEND":
                 break;

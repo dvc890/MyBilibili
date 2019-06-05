@@ -15,6 +15,8 @@ public class Keys {
     public final static String KEY_PREVIEW_IMAGE_POSITION = "key_preview_position";
     public final static String KEY_PREVIEW_IMAGE_ORIENTATION = "key_preview_Orientation";
 
+    public final static String KEY_MAIN_SHOW_NAVI = "main_show_navi";
+
     public final static String KEY_AVID = "avid";
     public final static String KEY_VIDEO_DETAILS_PLAYER_WIDTH = "player_width";
     public final static String KEY_VIDEO_DETAILS_PLAYER_HEIGHT = "player_height";

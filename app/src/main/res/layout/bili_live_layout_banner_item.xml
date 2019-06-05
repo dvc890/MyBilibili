@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@color/live_daynight_bg_color_gray_light_1" android:clickable="true" android:layout_width="match_parent" android:layout_height="wrap_content" android:foreground="?attr/selectableItemBackgroundBorderless">
+    <!--app:placeholderImageScaleType="5" app:thumbHeight="100dp" app:thumbWidth="320dp" app:viewAspectRatio="3.2"-->
+    <ImageView android:id="@+id/image" android:layout_width="match_parent" android:layout_height="wrap_content" android:src="@drawable/bili_default_image_tv" />
+    <ViewStub android:id="@+id/error_layout" android:layout="@layout/bili_live_layout_banner_error" android:inflatedId="@+id/error_layout_inflate" android:layout_width="match_parent" android:layout_height="match_parent"/>
+</FrameLayout>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:orientation="vertical" android:layout_width="match_parent" android:layout_height="wrap_content">
+    <FrameLayout android:background="?attr/selectableItemBackground" android:layout_width="match_parent" android:layout_height="44dp" android:layout_marginLeft="13dp" android:layout_marginRight="6dp">
+        <TextView android:textAppearance="@style/TextAppearance.App.Title" android:textSize="14sp" android:textColor="@color/live_daynight_text_color_black" android:gravity="center_vertical" android:id="@+id/title" android:layout_width="wrap_content" android:layout_height="match_parent" android:maxLines="1"/>
+        <LinearLayout android:gravity="center_vertical" android:layout_gravity="right|center_vertical|center_horizontal|center" android:orientation="horizontal" android:id="@+id/refresh_group" android:paddingTop="1dp" android:layout_width="wrap_content" android:layout_height="match_parent">
+            <TextView android:textSize="13sp" android:textColor="@color/theme_color_live_text_assist_dark" android:gravity="center_vertical" android:id="@+id/text_more" android:layout_width="wrap_content" android:layout_height="match_parent" android:text="@string/live_home_view_more_tips" android:drawableRight="@drawable/live_more_ico" android:drawablePadding="2dp" android:drawableTint="@color/theme_color_live_text_assist_dark"/>
+        </LinearLayout>
+    </FrameLayout>
+</LinearLayout>

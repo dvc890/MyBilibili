@@ -8,7 +8,7 @@ import com.dvc.mybilibili.danmaku.live.entity.PreparingEntity;
 import com.dvc.mybilibili.danmaku.live.entity.RoomAdminsEntity;
 import com.dvc.mybilibili.danmaku.live.entity.SendGiftEntity;
 import com.dvc.mybilibili.danmaku.live.entity.SysGiftEntity;
-import com.dvc.mybilibili.danmaku.live.entity.SysMSGEntity;
+import com.dvc.mybilibili.danmaku.live.entity.NoticeMsgEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeGuardEntity;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
@@ -50,7 +50,7 @@ public interface ILiveDanMuCallback {
      * On system message package.
      */
     //收到系统消息数据包
-    void onSysMSGPackage(SysMSGEntity sysMSGEntity);
+    void onNoticeMsgPackage(NoticeMsgEntity sysMSGEntity);
 
     /**
      * On send gift package.

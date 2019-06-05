@@ -8,9 +8,7 @@
     <color name="colorAccent">#ff4081</color>
     <color name="colorPrimary">#fb7299</color>
     <color name="colorPrimaryDark">#fb7299</color>
-    <color name="daynight_color_view_background">#fafafa</color>
     <color name="line_bg">#e6e6e6</color>
-    <color name="daynight_color_window_background">#eaeaea</color>
 
     <color name="nav_footer_icon_color">#999999</color>
 
@@ -375,6 +373,8 @@
     <color name="daynight_color_icon_tint_for_white_bg">#cccccc</color>
     <color name="daynight_color_background_window">#f4f4f4</color>
     <color name="daynight_color_text_body_secondary_dark">#505050</color>
+    <color name="daynight_color_view_background">#fafafa</color>
+    <color name="daynight_color_window_background">#eaeaea</color>
 
     <color name="yellow_warning_background">#fff1d3</color>
     <color name="yellow_warning_text_color">#e78b1f</color>
@@ -391,4 +391,23 @@
     <color name="comment_notice_text">#e78b1f</color>
     <color name="_text__gray_light">#ffbababa</color>
 
+    <color name="live_daynight_text_color_gray">#999999</color>
+    <color name="live_daynight_text_color_black">#212121</color>
+    <color name="live_daynight_text_color_black_light_1">#505050</color>
+    <color name="live_daynight_bg_color_white">#ffffff</color>
+    <color name="live_daynight_bg_color_gray_light_1">#cccccc</color>
+    <color name="live_daynight_bg_color_gray_light_4">#f4f4f4</color>
+    <color name="live_daynight_text_color_white">#ffffff</color>
+
+    <color name="live_hour_rank_bronze">#e2b496</color>
+    <color name="live_hour_rank_gold">#ffc245</color>
+    <color name="live_hour_rank_nickname_bronze">#c18c74</color>
+    <color name="live_hour_rank_nickname_gold">#ff970e</color>
+    <color name="live_hour_rank_nickname_silver">#6a8bb7</color>
+    <color name="live_hour_rank_silver">#a1b7d2</color>
+
+    <color name="home_fab_ripple">@color/fab_color_shadow</color>
+    <color name="hint_text_color">#ffc0c0c0</color>
+    <color name="sponsor_orange_dark">#ffa726</color>
+    <color name="hourrank_border_color">#ffbd15</color>
 </resources>

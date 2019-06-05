@@ -13,8 +13,6 @@ import com.dvc.mybilibili.mvp.presenter.MyMvpBasePresenter;
 import com.dvc.mybilibili.mvp.ui.fragment.home.LiveFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
-import java.io.IOException;
-
 import javax.inject.Inject;
 
 public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
@@ -24,8 +22,8 @@ public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
         super(context, dataManager, provider);
     }
 
-    public void loadData() {
-        this.apiHelper.getLiveHomePageData(2, 2, 0)
+    public void loadData(int relation_page, int rec_page) {
+        this.apiHelper.getLiveHomePageData(relation_page, rec_page, 0)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_PAUSE))
                 .subscribe(new ObserverCallback<BiliLiveHomePage>() {

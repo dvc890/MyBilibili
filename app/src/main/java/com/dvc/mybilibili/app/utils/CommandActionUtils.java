@@ -9,6 +9,7 @@ import android.text.TextUtils;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
+import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
 
 import java.net.URLDecoder;
@@ -28,6 +29,7 @@ public class CommandActionUtils {
 //        moduleCommandMap.put("main/authorspace/", AuthorSpaceProxyActivity.class);
 //        moduleCommandMap.put("main/download-list", VideoDownloadListActivity.class);
 //        moduleCommandMap.put("main/go-to-answer", AnswerActivity.class);
+        moduleCommandMap.put("main/login", LoginActivity.class);
         moduleCommandMap.put("main/login/verify", AccountVerifyWebActivity.class);
 //        moduleCommandMap.put("main/login-dialog/", PlayerLoginActivity.class);
 //        moduleCommandMap.put("main/register/fast", RegisterFastWebActivity.class);
@@ -44,7 +46,6 @@ public class CommandActionUtils {
 //        moduleCommandMap.put("main/danmaku-block", DanmakuBlockActivity.class);
 //        moduleCommandMap.put("main/favorite", FavoriteBoxActivity.class);
 //        moduleCommandMap.put("main/favorite/topic", C26470a.class);
-        moduleCommandMap.put("root", HomeActivity.class);
 //        moduleCommandMap.put("space/:mid/", AuthorSpaceProxyActivity.class);
         moduleCommandMap.put("user_center", HomeActivity.class);
         moduleCommandMap.put("video", VideoDetailsActivity.class);
@@ -57,20 +58,49 @@ public class CommandActionUtils {
     public static void start(Context context, String command) {
         if(TextUtils.isEmpty(command)) return;
         BiliBiliUrl url = createBiliUrl(command);
-        if(moduleCommandMap.containsKey(url.host())) {
-            Intent intent = new Intent(context, moduleCommandMap.get(url.host()));
-            if(url.getBundle() != null)
-            intent.putExtras(url.getBundle());
-            if(isVideoAction(url))
+        Intent intent = new Intent();
+        Class targetClass = null;
+        if(isMain(url)) {
+            targetClass = moduleCommandMap.get(url.main());
+        } else {
+            targetClass = moduleCommandMap.get(url.host());
+        }
+        if(targetClass != null) {
+            intent.setClass(context, targetClass);
+            if (url.getBundle() != null)
+                intent.putExtras(url.getBundle());
+            if (isVideoAction(url))
                 intent.putExtra(Keys.KEY_AVID, Integer.valueOf(url.getLastPathSegment()));
+            if (isHome(url))
+                putExtra2HomeIntent(url, intent);
             intent.setData(url.toUri());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
     }
 
+    private static void putExtra2HomeIntent(BiliBiliUrl url, Intent intent) {
+        switch (url.getLastPathSegment()) {
+            case "shownavi":
+                intent.putExtra(Keys.KEY_MAIN_SHOW_NAVI, true);
+                break;
+        }
+    }
+
+    public static boolean isHome(BiliBiliUrl url) {
+        return ("home".contains(url.host()));
+    }
+
+    public static boolean isMain(BiliBiliUrl url) {
+        return ("main".contains(url.host()));
+    }
+
     public static boolean isVideoAction(BiliBiliUrl url) {
         return ("video".contains(url.host()) || "bangumi".contains(url.host()));
+    }
+
+    public static void toMainLogin(Context context) {
+        start(context, createBiliUrl("main/login", null).url());
     }
 
     public static BiliBiliUrl createBiliUrl(String url) {
@@ -78,8 +108,10 @@ public class CommandActionUtils {
     }
     public static BiliBiliUrl createBiliUrl(String main, Map<String,String> queryParameter) {
         String url = "bilibili://"+main;
-        for(Map.Entry<String, String> entry : queryParameter.entrySet()){
-            url += entry.getKey() +"&"+ entry.getValue();
+        if(queryParameter != null) {
+            for (Map.Entry<String, String> entry : queryParameter.entrySet()) {
+                url += entry.getKey() + "&" + entry.getValue();
+            }
         }
         return new BiliBiliUrl(url);
     }
@@ -99,7 +131,7 @@ public class CommandActionUtils {
             this.uri = Uri.parse(url);
             this.scheme = url.substring(0, url.indexOf("://"));
             this.host = url.split("://")[1].split("/")[0];
-            this.main = url.contains("?")? url.substring(url.indexOf(this.host)+this.host.length()+1, url.indexOf("?")): url.split("://")[1].split("/")[1];
+            this.main = url.contains("?")? url.substring(url.indexOf(this.host)/*+this.host.length()*/+1, url.indexOf("?")): url.split("://")[1]/*.split("/")[1]*/;
             this.query = url.contains("?")? url.substring(url.indexOf("?")+1) : "";
             this.bundle = new Bundle();
             this.queryParameter = new HashMap<>();

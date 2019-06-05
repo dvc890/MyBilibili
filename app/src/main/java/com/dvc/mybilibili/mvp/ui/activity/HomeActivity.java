@@ -1,11 +1,13 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -20,6 +22,7 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.utils.BottomNavigationBarUtils;
 import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
+import com.dvc.mybilibili.mvp.ui.activity.viewholder.HomeNavigationHolder;
 import com.dvc.mybilibili.mvp.ui.fragment.home.HomeFragment;
 
 import java.util.HashMap;
@@ -28,8 +31,9 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 
-public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> implements HomeView{
+public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> implements HomeView {
 
     @Inject
     HomePresenter homePresenter;
@@ -40,11 +44,14 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
     BottomNavigationBar bottomNavigationBar;
     @BindView(R.id.nav_view)
     NavigationView navigationView;
+    @BindView(R.id.drawer)
+    DrawerLayout drawer;
 
     private int selectIndex;
     private Fragment mCurrentFragment;
     private FragmentManager fragmentManager;
     private Map<String, Fragment> fragmentMap;
+    private HomeNavigationHolder homeNavigationHolder;
 
     @NonNull
     @Override
@@ -69,17 +76,22 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         fragmentMap = new HashMap<>();
         initBottomNavigationBar(selectIndex);
         navigationView.addView(
-                LayoutInflater.from(this).inflate(R.layout.bili_view_navigation_footer, null,true),
+                LayoutInflater.from(this).inflate(R.layout.bili_view_navigation_footer, null, true),
                 new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
+        homeNavigationHolder = new HomeNavigationHolder(navigationView);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(!intent.hasExtra(Keys.KEY_SELECT_INDEX)) return;
-        int type =intent.getIntExtra(Keys.KEY_SELECT_INDEX,0);
-        if (type > -1 && type < 4){
-            bottomNavigationBar.selectTab(type);
+        if (intent.hasExtra(Keys.KEY_SELECT_INDEX)) {
+            int type = intent.getIntExtra(Keys.KEY_SELECT_INDEX, 0);
+            if (type > -1 && type < 4) {
+                bottomNavigationBar.selectTab(type);
+            }
+        }
+        if (intent.hasExtra(Keys.KEY_MAIN_SHOW_NAVI)) {
+            drawer.openDrawer(navigationView, true);
         }
     }
 
@@ -113,7 +125,7 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         bottomNavigationBar.setFirstSelectedPosition(selectIndex);
         bottomNavigationBar.initialise();
         BottomNavigationBarUtils.setBottomNavigationItemSize(bottomNavigationBar, 6, 22, 10);
-        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.SimpleOnTabSelectedListener(){
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.SimpleOnTabSelectedListener() {
             @Override
             public void onTabSelected(int position) {
                 doOnTabSelected(position);
@@ -128,9 +140,9 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         switch (positionId) {
             case 0:
                 tag = Tags.TAG_HOME_FRAGMENT;
-                if(!fragmentMap.containsKey(tag)){
+                if (!fragmentMap.containsKey(tag)) {
                     fragment = new HomeFragment();
-                }else
+                } else
                     fragment = fragmentMap.get(tag);
                 mCurrentFragment = FragmentUtils.switchContent(fragmentManager, mCurrentFragment, fragment, contentFrameLayout.getId(), positionId, false);
                 fragmentMap.put(tag, mCurrentFragment);
@@ -163,6 +175,13 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 //                fragmentMap.put(tag, mCurrentFragment);
 //                break;
         }
+    }
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
     }
 
     public static class Tags {

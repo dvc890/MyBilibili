@@ -13,7 +13,7 @@ import com.dvc.mybilibili.danmaku.live.entity.PreparingEntity;
 import com.dvc.mybilibili.danmaku.live.entity.RoomAdminsEntity;
 import com.dvc.mybilibili.danmaku.live.entity.SendGiftEntity;
 import com.dvc.mybilibili.danmaku.live.entity.SysGiftEntity;
-import com.dvc.mybilibili.danmaku.live.entity.SysMSGEntity;
+import com.dvc.mybilibili.danmaku.live.entity.NoticeMsgEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeGuardEntity;
 import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
@@ -125,6 +125,11 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
     }
 
     @Override
+    public void onConnectError(BiliApiException apiException) {
+
+    }
+
+    @Override
     public void onDisconnect() {
 
     }
@@ -142,7 +147,7 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
     }
 
     @Override
-    public void onSysMSGPackage(SysMSGEntity sysMSGEntity) {
+    public void onNoticeMsgPackage(NoticeMsgEntity sysMSGEntity) {
 
     }
 
@@ -178,11 +183,6 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     @Override
     public void onRoomAdminsPackage(RoomAdminsEntity roomAdminsEntity) {
-
-    }
-
-    @Override
-    public void onConnectError(BiliApiException apiException) {
 
     }
 }
