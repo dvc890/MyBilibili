@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.util.List;
 
 import io.reactivex.Observable;
+import retrofit2.http.Query;
 
 public interface ApiHelper {
     Observable<SampleSplash> getSplashV2();
@@ -79,6 +80,8 @@ public interface ApiHelper {
     Observable<BiliLiveDanmakuConfig> getDanmakuConfig(long roomid);
 
     Observable<BiliLiveHomePage> getLiveHomePageData(int relation_page, int rec_page, int quality);
+
+    Observable<BiliLiveHomePage.ModuleRooms> getLiveHomeModuleData(int module_id, String attention_room_id, int page, @Query("quality") int quality);
 
     Observable<Boolean> isPortraitLiveRoom(long room_id);
 

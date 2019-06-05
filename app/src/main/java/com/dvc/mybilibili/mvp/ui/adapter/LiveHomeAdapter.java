@@ -17,6 +17,7 @@ import com.dvc.mybilibili.mvp.ui.adapter.livehomeholder.recommendViewHolder;
 import com.dvc.mybilibili.mvp.ui.adapter.livehomeholder.tagViewHolder;
 import com.vondear.rxtool.RxLogTool;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.ModuleUnit, BaseViewHolder> {
@@ -45,7 +46,7 @@ public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.
         addItemType(HOURRANK_TYPE, R.layout.bili_live_hour_rank_layout);
         addItemType(RECOMM_TYPE, R.layout.content_main);
         addItemType(FOLLOWED_TYPE, R.layout.content_main);
-        addItemType(TAG_TYPE, R.layout.bili_live_home_tag_v2);
+        addItemType(TAG_TYPE, R.layout.content_main);
         addItemType(0, R.layout.content_main);
     }
 
@@ -119,15 +120,22 @@ public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.
         List<BiliLiveHomePage.ModuleRooms> rooms = biliLiveHomePage.getRooms();
 
         getData().clear();
-        if(banner.getCardList().size() > 0) addData(banner);
-        if(entrance.getCardList().size() > 0) addData(entrance);
-        if(attentions.getCardList().size() > 0) addData(attentions);
-        if(rooms.size() > 0) addData(rooms.get(0));
-        if(hourrank.getCardList().size() > 0) addData(hourrank);
-        if(rooms.size() > 1) addData(rooms.subList(1, rooms.size()-1));
-
+        List<BiliLiveHomePage.ModuleUnit> tmp = new ArrayList();
+        if(banner.getCardList().size() > 0)
+            tmp.add(banner);
+        if(entrance.getCardList().size() > 0)
+            tmp.add(entrance);
+        if(attentions.getCardList().size() > 0)
+            tmp.add(attentions);
+        if(rooms.size() > 0)
+            tmp.add(rooms.get(0));
+        if(hourrank.getCardList().size() > 0)
+            tmp.add(hourrank);
+        if(rooms.size() > 1)
+            tmp.addAll(rooms.subList(1, rooms.size()));
+        addData(tmp);
         //footerview : bili_live_layout_home_load_all
-        removeAllFooterView();
-        addFooterView(LayoutInflater.from(mContext).inflate(R.layout.bili_live_layout_home_load_all, null));
+//        removeAllFooterView();
+//        addFooterView(LayoutInflater.from(mContext).inflate(R.layout.bili_live_layout_home_load_all, null));
     }
 }

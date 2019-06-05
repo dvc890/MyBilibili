@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -24,7 +25,14 @@ public class partitonViewHolder extends DIYViewHolder {
         return R.layout.bili_live_layout_home_partition_head;
     }
 
-    @OnClick(R.id.refresh_group)
-    public void onRefreshClicked() {
+    @OnClick(R.id.more_group)
+    public void onMoreClicked() {
+
+    }
+
+    @Override
+    public void convert(BiliLiveHomePage.ModuleRooms item) {
+        super.convert(item);
+        title.setText(item.getModuleInfo().getTitle());
     }
 }

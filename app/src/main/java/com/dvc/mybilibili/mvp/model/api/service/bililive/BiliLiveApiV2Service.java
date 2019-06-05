@@ -358,6 +358,7 @@ public interface BiliLiveApiV2Service {
 //    @RequestInterceptor(C9909b.class)
     Observable<GeneralResponse<List<BiliLiveHistoryItem>>> getLiveHistoryList(@Query("pn") int i, @Query("ps") int i2);
 
+    //module_id=3&attention_room_id=&page=2&device_name=PRO%206&qn=0
     @GET("/xlive/app-interface/v2/index/change")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)

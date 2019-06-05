@@ -61,6 +61,7 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
     protected void initViews() {
         this.mSwipeRefreshLayout.setOnRefreshListener(this);
         this.mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        this.mRecyclerView.setPadding(0,0,0,0);
         this.liveHomeAdapter = new LiveHomeAdapter(null);
         this.liveHomeAdapter.bindToRecyclerView(mRecyclerView);
         this.liveHomeAdapter.openLoadAnimation(SLIDEIN_BOTTOM);

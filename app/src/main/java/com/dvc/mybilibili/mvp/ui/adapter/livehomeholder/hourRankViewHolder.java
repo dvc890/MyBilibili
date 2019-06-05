@@ -31,6 +31,20 @@ public class hourRankViewHolder extends BaseViewHolder {
     }
 
     public void convert(BiliLiveHomePage.ModuleHourRank item) {
-
+        this.title.setText(item.getModuleInfo().getTitle());
+        this.time.setText(item.getDynamicInfo().getSubTitle());
+        for(BiliLiveHomePage.Card card : item.getCardList()) {
+            if(card.getRank() == 1) {
+                rankGold.setCardData(card);
+                rankGold.setScale(1.3f);
+            } else if(card.getRank() == 2)
+                rankSilver.setCardData(card);
+            else if(card.getRank() == 3)
+                rankBronze.setCardData(card);
+        }
+        if(more.getTag() == null) {
+            more.setTag(item);
+            addOnClickListener(more.getId());
+        }
     }
 }

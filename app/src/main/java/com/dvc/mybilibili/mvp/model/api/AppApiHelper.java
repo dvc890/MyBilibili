@@ -470,6 +470,16 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Observable<BiliLiveHomePage.ModuleRooms> getLiveHomeModuleData(int module_id, String attention_room_id, int page, int quality) {
+        return this.biliLiveApiV2Service.getLiveHomeModuleData(module_id, attention_room_id, page, quality)
+                .map(moduleRoomsGeneralResponse -> {
+                    if(moduleRoomsGeneralResponse.isSuccess())
+                        return moduleRoomsGeneralResponse.data;
+                    throw new BiliApiException(moduleRoomsGeneralResponse);
+                });
+    }
+
+    @Override
     public Observable<Boolean> isPortraitLiveRoom(long room_id) {
         return this.biliLiveApiV2Service.getLiveRoomMode((int) room_id)
                 .map(biliLiveRoomModeGeneralResponse -> {

@@ -109,7 +109,7 @@ public class PegasusRecommendAdapter extends BaseMultiItemQuickAdapter<BasicInde
             }
         }, item.bannerItem)
                 .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
-                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.CENTER_HORIZONTAL);
+                .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
         if(item.bannerItem.isEmpty()){
             convenientBanner.setVisibility(View.GONE);
         }else {

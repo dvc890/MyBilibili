@@ -17,6 +17,7 @@ import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 import com.vondear.rxtool.RxImageTool;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class LiveHourRankView extends FrameLayout {
@@ -53,6 +54,7 @@ public class LiveHourRankView extends FrameLayout {
     /* renamed from: a */
     private void init(Context context) {
         LayoutInflater.from(context).inflate(R.layout.bili_live_hour_rank_item, this);
+        ButterKnife.bind(this, this);
         this.avatarNickname.setText("- -");
         this.liveArea.setText("- -");
     }

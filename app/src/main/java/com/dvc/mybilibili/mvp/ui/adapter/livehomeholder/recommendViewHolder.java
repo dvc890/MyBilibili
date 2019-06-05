@@ -6,6 +6,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -35,5 +36,11 @@ public class recommendViewHolder extends DIYViewHolder {
 
     @OnClick(R.id.refresh_group)
     public void onRefreshClicked() {
+    }
+
+    @Override
+    public void convert(BiliLiveHomePage.ModuleRooms item) {
+        super.convert(item);
+        title.setText(item.getModuleInfo().getTitle());
     }
 }

@@ -13,6 +13,8 @@ import com.dvc.mybilibili.mvp.presenter.MyMvpBasePresenter;
 import com.dvc.mybilibili.mvp.ui.fragment.home.LiveFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
 public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
@@ -35,6 +37,23 @@ public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
                     @Override
                     public void onError(BiliApiException apiException, int code) {
                         ifViewAttached(view -> view.loadDataFailed(apiException));
+                    }
+                });
+    }
+
+    public void refreshModuleData(int module_id, String attention_room_id, int page) {
+        this.apiHelper.getLiveHomeModuleData(module_id, attention_room_id, page, 0)
+                .compose(RxSchedulersHelper.ioAndMainThread())
+                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_PAUSE))
+                .subscribe(new ObserverCallback<BiliLiveHomePage.ModuleRooms>() {
+                    @Override
+                    public void onSuccess(BiliLiveHomePage.ModuleRooms moduleRooms) throws IOException {
+
+                    }
+
+                    @Override
+                    public void onError(BiliApiException apiException, int code) {
+
                     }
                 });
     }
