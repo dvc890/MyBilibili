@@ -16,6 +16,8 @@ public interface IAccountHelper {
 
     void setToken(AccessToken accessToken);
 
+    void setAccountInfo(AccountInfo accountInfo);
+
     AccountInfo getAccountInfo();
 
     CookieInfo getCookieInfo();

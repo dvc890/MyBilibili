@@ -35,8 +35,9 @@ public class followedViewHolder extends DIYViewHolder {
     }
 
     @Override
-    public void convert(BiliLiveHomePage.ModuleRooms item) {
+    public void convert(BiliLiveHomePage.ModuleUnit item) {
         super.convert(item);
         title.setText(item.getModuleInfo().getTitle());
+        subTitle.setText(getContext().getString(R.string.live_my_attention_count, item.getDynamicInfo().getAttentionCount()));
     }
 }

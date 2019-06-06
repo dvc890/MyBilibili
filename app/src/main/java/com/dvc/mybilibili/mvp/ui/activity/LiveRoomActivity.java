@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.danmaku.live.LiveDanMuReceiver;
 import com.dvc.mybilibili.danmaku.live.entity.DanMuMSGEntity;
 import com.dvc.mybilibili.danmaku.live.entity.LiveEntity;
@@ -41,6 +42,7 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
     ViewPager viewpager;
 
     private long roomId;
+    private String title = "";
 
     @NonNull
     @Override
@@ -59,15 +61,22 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     @Override
     protected void loadDatas() {
-        //test
-        player.setRoomId(24541);
-        presenter.loadLivePlayUrl(24541);
+        roomId = getIntent().getLongExtra(Keys.KEY_ROOMID, 0);
+        if(roomId == 0) {
+            finish();
+            return;
+        }
+        if(getIntent().hasExtra(Keys.KEY_TITLE))
+            title = getIntent().getStringExtra(Keys.KEY_TITLE);
+        player.setRoomId(roomId);
+        presenter.loadLivePlayUrl(roomId);
         initDanMu();
     }
 
     @Override
     public void onPlayUrl(LivePlayerInfo livePlayerInfo) {
-        player.setUp(livePlayerInfo, false, "测试");
+        player.setUp(livePlayerInfo, false, title);
+        player.startPlayLogic();
     }
 
     @Override
@@ -81,7 +90,9 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
             return;
         }
         super.onBackPressed();
-    }@Override
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         if(player.isInPlayingState())
@@ -113,7 +124,7 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
     public void initDanMu() {
         try {
             LiveDanMuReceiver.getInstance().addCallback(this);
-            LiveDanMuReceiver.getInstance().connect(24541);
+            LiveDanMuReceiver.getInstance().connect(roomId);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -141,9 +152,11 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     @Override
     public void onDanMuMSGPackage(DanMuMSGEntity danMuMSGEntity) {
-        if(player.isInPlayingState())
-            player.sendDanmaku(danMuMSGEntity.text, danMuMSGEntity.color, danMuMSGEntity.textsize);
-        runOnUiThread(()->RxToast.normal(String.format("%1$s[%2$d](%3$s):%4$s",danMuMSGEntity.username, danMuMSGEntity.userlevel, danMuMSGEntity.userrank, danMuMSGEntity.text)));
+        if(player.isIfCurrentIsFullscreen()) {
+            if (player.isInPlayingState())
+                player.sendDanmaku(danMuMSGEntity.text, danMuMSGEntity.color, danMuMSGEntity.textsize);
+        } else
+            runOnUiThread(()->RxToast.normal(String.format("%1$s[%2$d](%3$s):%4$s",danMuMSGEntity.username, danMuMSGEntity.userlevel, danMuMSGEntity.userrank, danMuMSGEntity.text)));
     }
 
     @Override

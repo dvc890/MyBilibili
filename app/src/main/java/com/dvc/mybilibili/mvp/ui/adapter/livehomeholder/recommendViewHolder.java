@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.mvp.ui.adapter.livehomeholder;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -8,12 +9,10 @@ import android.widget.TextView;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
+import org.w3c.dom.Text;
+
 import butterknife.BindView;
 import butterknife.OnClick;
-
-/**
- * Created by Administrator on 2019/6/5.
- */
 
 public class recommendViewHolder extends DIYViewHolder {
 
@@ -25,8 +24,18 @@ public class recommendViewHolder extends DIYViewHolder {
     @BindView(R.id.icon_refresh)
     ImageView iconRefresh;
 
+    TextView more;
+
     public recommendViewHolder(View view) {
         super(view);
+    }
+
+    @Override
+    public boolean init() {
+        if(!super.init()) return false;
+        LayoutInflater.from(getContext()).inflate(R.layout.bili_live_layout_home_view_more_video, getLinearLayout(), true);
+        more = getLinearLayout().findViewById(R.id.text);
+        return true;
     }
 
     @Override
@@ -39,8 +48,9 @@ public class recommendViewHolder extends DIYViewHolder {
     }
 
     @Override
-    public void convert(BiliLiveHomePage.ModuleRooms item) {
+    public void convert(BiliLiveHomePage.ModuleUnit item) {
         super.convert(item);
         title.setText(item.getModuleInfo().getTitle());
+        more.setText(getContext().getString(R.string.live_home_view_more_tips_1,item.getModuleInfo().getCount()));
     }
 }

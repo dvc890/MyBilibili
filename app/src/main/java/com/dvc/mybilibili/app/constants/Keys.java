@@ -16,8 +16,15 @@ public class Keys {
     public final static String KEY_PREVIEW_IMAGE_ORIENTATION = "key_preview_Orientation";
 
     public final static String KEY_MAIN_SHOW_NAVI = "main_show_navi";
+    public final static String KEY_MAIN_REFRESH_NAVI = "main_refresh_navi";
 
     public final static String KEY_AVID = "avid";
+    public final static String KEY_ROOMID = "roomid";
+    public final static String KEY_PLAY_URL = "play_url";
+    public final static String KEY_PLAY_URL_H265 = "play_url_h265";
+    public final static String KEY_LIVE_COVER = "cover";
+    public final static String KEY_LIVE_CURRENT_QUALITY = "current_quality";
+    public final static String KEY_TITLE = "title";
     public final static String KEY_VIDEO_DETAILS_PLAYER_WIDTH = "player_width";
     public final static String KEY_VIDEO_DETAILS_PLAYER_HEIGHT = "player_height";
     public final static String KEY_VIDEO_DETAILS_PLAYER_ROTATE = "player_rotate";

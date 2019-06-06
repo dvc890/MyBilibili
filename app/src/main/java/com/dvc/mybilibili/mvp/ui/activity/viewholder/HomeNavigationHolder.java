@@ -13,6 +13,7 @@ import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.ui.widget.PendantAvatarLayout;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
@@ -26,7 +27,7 @@ public class HomeNavigationHolder extends BaseMvpHolder implements View.OnClickL
     @BindView(R.id.profile_cover_image)
     ImageView profile_cover_image;
     @BindView(R.id.avatar_layout)
-    ImageView avatar_layout;
+    PendantAvatarLayout avatar_layout;
     @BindView(R.id.user_nick_text)
     TextView user_nick_tv;
     @BindView(R.id.level)
@@ -75,10 +76,16 @@ public class HomeNavigationHolder extends BaseMvpHolder implements View.OnClickL
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void refrashAvatar(LoginInfo loginInfo) {
         if (this.dataManager.getUser().isLogin()) {
-            GlideUtils.Circle2ImageView(avatar_layout, this.dataManager.getUser().getAccountInfo().getAvatar());
+            avatar_layout.setAvatarUrl(this.dataManager.getUser().getAccountInfo().getAvatar());
+            avatar_layout.setPendantUrl(this.dataManager.getUser().getAccountInfo().getPendantInfo().getImage());
+            if(this.dataManager.getUser().getAccountInfo().getVipInfo().isEffectiveYearVip())
+            avatar_layout.showBigVipIcon(PendantAvatarLayout.VerifySize.LARGE);
             profile_cover_image.setImageResource(R.drawable.bili_drawerbg_logined);
             user_nick_tv.setText(this.dataManager.getUser().getAccountInfo().getUserName());
         } else {
+            avatar_layout.setAvatarUrl(null);
+            avatar_layout.setPendantUrl(null);
+            avatar_layout.hideBigVipIcon();
             profile_cover_image.setImageResource(R.drawable.bili_drawerbg_not_logined);
             user_nick_tv.setText(R.string.nav_login_click_avatar);
         }

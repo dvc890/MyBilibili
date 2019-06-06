@@ -55,25 +55,6 @@ public class TestActivity extends DaggerAppCompatActivity {
 //                biliVideoPlayer.startPlayLogic());
 //        biliVideoPlayer.startPlayLogic();
         Debuger.enable();
-
-        liveApiV2Service.getRoomSocketConfigV3(21349375)
-                .compose(RxSchedulersHelper.AllioThread())
-                .subscribe(biliLiveSocketConfigGeneralResponse -> {
-                    BiliLiveSocketConfig config = biliLiveSocketConfigGeneralResponse.data;
-                    Socket socket = new Socket(config.getServerList().get(0).getHost(),
-                            config.getServerList().get(0).getPort());
-                    OutputStream outputStream = socket.getOutputStream();
-                    //发送进房数据包
-                    outputStream.write(PackageRepository.getJoinPackage(21349375));
-                    outputStream.flush();
-
-                    InputStream inputStream = socket.getInputStream();
-
-                    if (!PackageRepository.readAndValidateJoinSuccessPackage(inputStream)) {
-                        socket.close();
-                        Log.d("dvc", "Join live channel failed");
-                    }
-                });
     }
 //    @Override
 //    public void onConfigurationChanged(Configuration newConfig) {

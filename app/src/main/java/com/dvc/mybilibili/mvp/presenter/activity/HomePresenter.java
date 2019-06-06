@@ -18,8 +18,4 @@ public class HomePresenter extends MyMvpBasePresenter<HomeView> {
         super(context, dataManager, provider);
     }
 
-    public void test() {
-
-
-    }
 }

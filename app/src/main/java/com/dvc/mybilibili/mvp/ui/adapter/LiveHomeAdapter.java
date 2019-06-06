@@ -67,7 +67,7 @@ public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.
                 ((recommendViewHolder)helper).convert((BiliLiveHomePage.ModuleRooms) item);
                 break;
             case FOLLOWED_TYPE:
-                ((followedViewHolder)helper).convert((BiliLiveHomePage.ModuleRooms) item);
+                ((followedViewHolder)helper).convert((BiliLiveHomePage.ModuleAttentions) item);
                 break;
             case TAG_TYPE:
                 ((tagViewHolder)helper).convert((BiliLiveHomePage.ModuleEntrancesV2) item);

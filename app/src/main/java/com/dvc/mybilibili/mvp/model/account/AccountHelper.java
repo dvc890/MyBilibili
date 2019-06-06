@@ -53,7 +53,8 @@ public class AccountHelper implements IAccountHelper {
         this.appEditor = this.appPreferences.edit();
         this.parserConfig = new ParserConfig();
         this.token = getToken();
-        this.accountInfo = getAccountInfo();
+//        this.accountInfo = getAccountInfo();
+//        loadAccountInfo();
     }
 
     @Override
@@ -68,8 +69,10 @@ public class AccountHelper implements IAccountHelper {
 
     @Override
     public void loadToLoginInfo(LoginInfo loginInfo) {
-        this.token = loginInfo.token_info;
-        this.cookieInfo = loginInfo.cookie_info;
+        if(loginInfo != null) {
+            this.token = loginInfo.token_info;
+            this.cookieInfo = loginInfo.cookie_info;
+        }
         loadAccountInfo();
     }
 
@@ -85,6 +88,11 @@ public class AccountHelper implements IAccountHelper {
             this.token = toClass(AccessToken.class, this.appPreferences.getString(KEY_ACCOUNT_TOKEN_CONTENT_STR, null));
         }
         return this.token;
+    }
+
+    @Override
+    public void setAccountInfo(AccountInfo accountInfo) {
+        this.accountInfo = accountInfo;
     }
 
     @Override

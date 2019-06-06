@@ -18,15 +18,15 @@
             android:layout_gravity="center"
             android:scaleType="fitCenter"
             android:background="@drawable/white_corner_bg"
-            android:src="@drawable/bili_default_image_tv"
-            style="@style/Widget.App.StaticImageView.Thumb.VideoCover"/>
+            android:src="@drawable/bili_default_image_tv"/>
+            <!--style="@style/Widget.App.StaticImageView.Thumb.VideoCover"-->
         <ImageView android:id="@+id/cover_shadow"
             android:visibility="gone"
             android:layout_width="match_parent" android:layout_height="wrap_content"
             android:foreground="@color/black_alpha20"
             android:src="@drawable/bili_default_image_tv"
-            android:background="@drawable/white_corner_bg"
-            style="@style/Widget.App.StaticImageView.Thumb.VideoCover"/>
+            android:background="@drawable/white_corner_bg"/>
+            <!--style="@style/Widget.App.StaticImageView.Thumb.VideoCover"-->
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_gravity="center" android:id="@+id/square_cover"
             android:visibility="gone"

@@ -1,21 +1,25 @@
 package com.dvc.mybilibili.mvp.ui.adapter.livehomeholder;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.glide.GlideUtils;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
+
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.ButterKnife;
 
@@ -29,7 +33,7 @@ public abstract class DIYViewHolder extends BaseViewHolder {
     private LinearLayout linearLayout;
 
     private RecyclerView recyclerView;
-    private BaseQuickAdapter<BiliLiveHomePage.Card, BaseViewHolder> adapter;
+    protected BaseQuickAdapter<BiliLiveHomePage.Card, BaseViewHolder> adapter;
 
     public DIYViewHolder(View view) {
         super(view);
@@ -76,6 +80,19 @@ public abstract class DIYViewHolder extends BaseViewHolder {
             }
         };
         this.adapter.bindToRecyclerView(recyclerView);
+        this.adapter.setOnItemClickListener((adapter, view, position) -> {
+            Map<String, String> map = new HashMap<>();
+            map.put(Keys.KEY_TITLE, this.adapter.getItem(position).getTitle());
+            if(!TextUtils.isEmpty(this.adapter.getItem(position).getPlayUrl()))
+                map.put(Keys.KEY_PLAY_URL, URLEncoder.encode(this.adapter.getItem(position).getPlayUrl()));
+            if(!TextUtils.isEmpty(this.adapter.getItem(position).getPlayUrlH265()))
+                map.put(Keys.KEY_PLAY_URL_H265, URLEncoder.encode(this.adapter.getItem(position).getPlayUrlH265()));
+            if(!TextUtils.isEmpty(this.adapter.getItem(position).getCover()))
+                map.put(Keys.KEY_LIVE_COVER, URLEncoder.encode(this.adapter.getItem(position).getCover()));
+            CommandActionUtils.start(getContext(),
+                    CommandActionUtils.createBiliUrl("https://live.bilibili.com/"+this.adapter.getItem(position).getRoomId(), map).url());
+            ;
+        });
         return true;
     }
 
@@ -89,7 +106,7 @@ public abstract class DIYViewHolder extends BaseViewHolder {
 
     protected abstract int getHeadLayoutId();
 
-    public void convert(BiliLiveHomePage.ModuleRooms item) {
+    public void convert(BiliLiveHomePage.ModuleUnit item) {
         adapter.setNewData(item.getCardList());
     }
 }

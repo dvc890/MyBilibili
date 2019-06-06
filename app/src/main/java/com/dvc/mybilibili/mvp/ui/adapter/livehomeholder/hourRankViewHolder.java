@@ -36,7 +36,10 @@ public class hourRankViewHolder extends BaseViewHolder {
         for(BiliLiveHomePage.Card card : item.getCardList()) {
             if(card.getRank() == 1) {
                 rankGold.setCardData(card);
-                rankGold.setScale(1.3f);
+                if(rankGold.getTag() == null) {
+                    rankGold.setScale(1.3f);
+                    rankGold.setTag(1.3f);
+                }
             } else if(card.getRank() == 2)
                 rankSilver.setCardData(card);
             else if(card.getRank() == 3)

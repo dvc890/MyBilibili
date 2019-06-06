@@ -2,6 +2,7 @@ package com.dvc.mybilibili.mvp.ui.widget;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.support.annotation.DrawableRes;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -52,7 +53,9 @@ public class PendantAvatarLayout extends RelativeLayout {
     /* renamed from: a */
     private void init(Context context, AttributeSet attributeSet) {
         TypedArray obtainStyledAttributes = context.obtainStyledAttributes(attributeSet, new int[]{android.R.attr.layout_height});
+        TypedArray srcStyledAttributes = context.obtainStyledAttributes(attributeSet, new int[]{android.R.attr.src});
         int dimensionPixelSize = obtainStyledAttributes.getDimensionPixelSize(0, RxImageTool.dip2px(60.0f));
+
         obtainStyledAttributes.recycle();
         int i = (int) (((float) dimensionPixelSize) * 0.5f);
         View inflate = LayoutInflater.from(context).inflate(R.layout.bili_app_layout_comment2_pendant_avatar, this, true);
@@ -62,6 +65,7 @@ public class PendantAvatarLayout extends RelativeLayout {
         LayoutParams layoutParams = new LayoutParams(i, i);
         layoutParams.addRule(13);
         this.avatar.setLayoutParams(layoutParams);
+        this.avatar.setImageResource(srcStyledAttributes.getResourceId(0, 0));
     }
 
     /* renamed from: a */
@@ -93,6 +97,14 @@ public class PendantAvatarLayout extends RelativeLayout {
         } else {
             GlideUtils.Default2ImageView(this.pendant, str, 0);
         }
+    }
+
+    public void showBigVipIcon(VerifySize verifySize) {
+        setVerifyImageRes(setVip(verifySize));
+    }
+
+    public void hideBigVipIcon() {
+        setVerifyImageRes(0);
     }
 
     /* renamed from: a */
@@ -145,6 +157,19 @@ public class PendantAvatarLayout extends RelativeLayout {
                 return R.drawable.ic_authentication_personal_size_22;
             default:
                 return R.drawable.ic_authentication_personal_size_8;
+        }
+    }
+
+    private int setVip(VerifySize verifySize) {
+        switch (verifySize) {
+            case SMALL:
+            case MIDDLE:
+                return R.drawable.ic_vip_v_18;
+            case LARGE:
+            case SUPER:
+                return R.drawable.ic_vip_v_22;
+            default:
+                return R.drawable.ic_vip_v_18;
         }
     }
 }

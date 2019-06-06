@@ -129,7 +129,7 @@ public final class BiliLiveHomePage {
         private boolean hasReport;
         @JSONField(name = "id")
         /* renamed from: id */
-        private int f5996id;
+        private int id;
         private boolean isNetWorking;
         @JSONField(name = "link")
         @NotNull
@@ -186,11 +186,11 @@ public final class BiliLiveHomePage {
         private String title = "";
 
         public final int getId() {
-            return this.f5996id;
+            return this.id;
         }
 
         public final void setId(int i) {
-            this.f5996id = i;
+            this.id = i;
         }
 
         public final long getPkId() {

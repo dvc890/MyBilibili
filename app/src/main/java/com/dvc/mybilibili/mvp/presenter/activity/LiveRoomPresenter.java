@@ -9,7 +9,6 @@ import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
-import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.mvp.presenter.MyMvpBasePresenter;
 import com.dvc.mybilibili.mvp.ui.activity.LiveRoomView;
@@ -33,23 +32,6 @@ public class LiveRoomPresenter extends MyMvpBasePresenter<LiveRoomView> {
                 .subscribe(new ObserverCallback<BiliLiveRoomInfo>() {
                     @Override
                     public void onSuccess(BiliLiveRoomInfo biliLiveRoomInfo) throws IOException {
-
-                    }
-
-                    @Override
-                    public void onError(BiliApiException apiException, int code) {
-
-                    }
-                });
-    }
-
-    public void loadDanMaKuSocketInfo(long roomId) {
-        this.apiHelper.getRoomSocketConfigV3(roomId)
-                .compose(RxSchedulersHelper.ioAndMainThread())
-                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(new ObserverCallback<BiliLiveSocketConfig>() {
-                    @Override
-                    public void onSuccess(BiliLiveSocketConfig biliLiveSocketConfig) throws IOException {
 
                     }
 

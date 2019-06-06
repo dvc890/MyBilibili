@@ -8,7 +8,9 @@ import android.text.TextUtils;
 
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
+import com.dvc.mybilibili.mvp.ui.activity.BaseWebViewActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
+import com.dvc.mybilibili.mvp.ui.activity.LiveRoomActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
 
@@ -18,10 +20,12 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class CommandActionUtils {
 
     private static Map<String, Class> moduleCommandMap;
+    private static Map<String, Class> moduleWebCommandMap;
 
     static {
         moduleCommandMap = new HashMap<>();
@@ -49,6 +53,15 @@ public class CommandActionUtils {
 //        moduleCommandMap.put("space/:mid/", AuthorSpaceProxyActivity.class);
         moduleCommandMap.put("user_center", HomeActivity.class);
         moduleCommandMap.put("video", VideoDetailsActivity.class);
+        moduleCommandMap.put("live", LiveRoomActivity.class);
+
+        moduleWebCommandMap = new HashMap<>();
+        moduleWebCommandMap.put("live.bilibili.com", LiveRoomActivity.class);
+//        moduleWebCommandMap.put("live.bilibili.com/app/area", LiveAreaActivity.class);
+//        moduleWebCommandMap.put("live.bilibili.com/app/mytag/", LiveMyTagActivity.class);
+//        moduleWebCommandMap.put("live.bilibili.com/p/html/live-app-rank/index.html", LiveRankActivity.class);
+//        moduleWebCommandMap.put("www.bilibili.com/read/:cv", *.class);
+//        moduleWebCommandMap.put("www.bilibili.com/bangumi/play/:ep", *.class);
     }
     /**
      *
@@ -60,10 +73,18 @@ public class CommandActionUtils {
         BiliBiliUrl url = createBiliUrl(command);
         Intent intent = new Intent();
         Class targetClass = null;
-        if(isMain(url)) {
-            targetClass = moduleCommandMap.get(url.main());
-        } else {
-            targetClass = moduleCommandMap.get(url.host());
+        if(isSupportActionUrl(url.url())) {
+            if(isInteger(url.getLastPathSegment())) {
+                targetClass = moduleWebCommandMap.get(url.host());
+            } else {
+                targetClass = moduleWebCommandMap.get(url.main());
+            }
+        }else {
+            if (isMain(url)) {
+                targetClass = moduleCommandMap.get(url.main());
+            } else {
+                targetClass = moduleCommandMap.get(url.host());
+            }
         }
         if(targetClass != null) {
             intent.setClass(context, targetClass);
@@ -73,6 +94,8 @@ public class CommandActionUtils {
                 intent.putExtra(Keys.KEY_AVID, Integer.valueOf(url.getLastPathSegment()));
             if (isHome(url))
                 putExtra2HomeIntent(url, intent);
+            if(isLive(url))
+                intent.putExtra(Keys.KEY_ROOMID, Long.valueOf(url.getLastPathSegment()));
             intent.setData(url.toUri());
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
@@ -83,6 +106,9 @@ public class CommandActionUtils {
         switch (url.getLastPathSegment()) {
             case "shownavi":
                 intent.putExtra(Keys.KEY_MAIN_SHOW_NAVI, true);
+                break;
+            case "refreshnavi":
+                intent.putExtra(Keys.KEY_MAIN_REFRESH_NAVI, true);
                 break;
         }
     }
@@ -95,6 +121,10 @@ public class CommandActionUtils {
         return ("main".contains(url.host()));
     }
 
+    public static boolean isLive(BiliBiliUrl url) {
+        return url.host().contains("live");
+    }
+
     public static boolean isVideoAction(BiliBiliUrl url) {
         return ("video".contains(url.host()) || "bangumi".contains(url.host()));
     }
@@ -103,15 +133,39 @@ public class CommandActionUtils {
         start(context, createBiliUrl("main/login", null).url());
     }
 
+    public static void toWeb(Context context, String title, String url) {
+        if(CommandActionUtils.isSupportActionUrl(url)) {
+            Map<String, String> map = new HashMap<>();
+            map.put(Keys.KEY_TITLE, title);
+            CommandActionUtils.start(context, CommandActionUtils.createBiliUrl(url, map).url());
+            return;
+        }
+        BaseWebViewActivity.start(context, title, url);
+    }
+
+    public static boolean isSupportActionUrl(String netUrl) {
+        BiliBiliUrl url = new BiliBiliUrl(netUrl);
+        if(moduleWebCommandMap.containsKey(url.host())) return true;
+        if(moduleWebCommandMap.containsKey(url.main())) return true;
+        return false;
+    }
+
+    private static boolean isInteger(String str) {
+        Pattern pattern = Pattern.compile("^[-\\+]?[\\d]*$");
+        return pattern.matcher(str).matches();
+    }
+
     public static BiliBiliUrl createBiliUrl(String url) {
         return new BiliBiliUrl(url);
     }
     public static BiliBiliUrl createBiliUrl(String main, Map<String,String> queryParameter) {
-        String url = "bilibili://"+main;
+        String url = main.contains("://")?main:"bilibili://"+main;
         if(queryParameter != null) {
+            url +="?";
             for (Map.Entry<String, String> entry : queryParameter.entrySet()) {
-                url += entry.getKey() + "&" + entry.getValue();
+                url += entry.getKey() + "=" + entry.getValue()+"&";
             }
+            url = url.substring(0,url.length()-1);
         }
         return new BiliBiliUrl(url);
     }

@@ -9,10 +9,16 @@ import android.widget.ImageView;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
+import com.dvc.mybilibili.player.manager.CustomManager;
+import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import butterknife.BindView;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
  * 直播用的播放器
@@ -55,6 +61,22 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         this.danmakuHolder = new DanMaKuHolder(this);
         this.refresh.setOnClickListener(this);
 //        Debuger.enable();
+    }
+
+    public void setMyOptionModelList() {
+//        List<VideoOptionModel> list = new ArrayList<>();
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_transport", "tcp"));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_flags", "prefer_tcp"));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "allowed_media_types", "video"));//根据媒体类型来配置
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 20000));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "buffer_size", 1316));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "infbuf", 1));  // 无限读
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "analyzemaxduration", 100));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10240));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1));
+        //  关闭播放器缓冲，这个必须关闭，否则会出现播放一段时间后，一直卡主，控制台打印 FFP_MSG_BUFFERING_START
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0));
+//        ((CustomManager)getGSYVideoManager()).setOptionModelList(list);
     }
 
     public boolean setUp(LivePlayerInfo mediaResource, boolean cacheWithPlay, String title) {
@@ -131,8 +153,10 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     @Override
     public void startPlayLogic() {
         if(isFrist) {
+            mLoadingProgressBar.setVisibility(GONE);
             mLoadingProgressBar = findViewById(R.id.guicu_loadingview);
         }
+        setMyOptionModelList();
         super.startPlayLogic();
     }
 
@@ -206,6 +230,12 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
                 Refresh();
                 break;
         }
+    }
+
+    @Override
+    protected void touchSurfaceMoveFullLogic(float absDeltaX, float absDeltaY) {
+        super.touchSurfaceMoveFullLogic(absDeltaX, absDeltaY);
+        mChangePosition = false;//禁止全屏手势调整进度
     }
 
     private void Refresh() {

@@ -12,7 +12,10 @@ import android.view.ViewGroup;
 
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.app.utils.CommandActionUtils;
+import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.presenter.fragment.HomeFragPresenter;
 import com.dvc.mybilibili.mvp.ui.adapter.ViewPagerAdapter;
 
@@ -40,7 +43,10 @@ public class HomeFragment extends MvpBaseFragment<HomeFragView, HomeFragPresente
     CircleImageView iv_avatar;
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
+
     Unbinder unbinder;
+
+    private boolean isLogined = false;
 
     @NonNull
     @Override
@@ -90,17 +96,25 @@ public class HomeFragment extends MvpBaseFragment<HomeFragView, HomeFragPresente
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        // TODO: inflate a fragment view
-        View rootView = super.onCreateView(inflater, container, savedInstanceState);
-        unbinder = ButterKnife.bind(this, rootView);
-        return rootView;
+    public void onResume() {
+        presenter.loadAccountInfo();
+        super.onResume();
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
+    public void onLoginUpdate(AccountInfo accountInfo) {
+        if(!isLogined && accountInfo != null) {
+            GlideUtils.Default2ImageView(iv_avatar, accountInfo.getAvatar(), R.drawable.bili_default_avatar);
+            CommandActionUtils.start(getContext(), CommandActionUtils.createBiliUrl("home/refreshnavi", null).url());
+        }
+    }
+
+    @Override
+    public void onLoginError(BiliApiException apiException) {
+        if(isLogined && apiException.isTokenExpired()) {
+            iv_avatar.setImageResource(R.drawable.bili_default_avatar);
+            CommandActionUtils.start(getContext(), CommandActionUtils.createBiliUrl("home/refreshnavi", null).url());
+        }
     }
 
     @OnClick(R.id.iv_avatar)

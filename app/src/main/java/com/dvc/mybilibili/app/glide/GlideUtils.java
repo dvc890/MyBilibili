@@ -29,7 +29,7 @@ public class GlideUtils {
                 .dontAnimate();
         RequestBuilder<Drawable> requestBuilder =
                 manager.load(url)
-                        .transition(new DrawableTransitionOptions().crossFade(300))
+//                        .transition(new DrawableTransitionOptions().crossFade(300))
                         .apply(options);
         if(placeholderResId > 0)
             requestBuilder.placeholder(placeholderResId);

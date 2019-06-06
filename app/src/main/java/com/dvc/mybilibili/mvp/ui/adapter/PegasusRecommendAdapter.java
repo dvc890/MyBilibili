@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -88,7 +89,8 @@ public class PegasusRecommendAdapter extends BaseMultiItemQuickAdapter<BasicInde
         helper.setText(R.id.cover_left_text1, item.coverLeftText1);
         helper.setText(R.id.cover_left_text2, item.coverLeftText2);
         helper.setText(R.id.cover_right_text, item.coverRightText);
-        helper.setText(R.id.desc, item.descButton.text);
+        if(item.descButton != null && !TextUtils.isEmpty(item.descButton.text))
+            helper.setText(R.id.desc, item.descButton.text);
         helper.setText(R.id.title, item.title);
         GlideUtils.TopRoundedCorners2ImageView(helper.getView(R.id.cover), item.cover, 16);
     }

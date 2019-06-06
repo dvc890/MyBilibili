@@ -93,11 +93,13 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         if (intent.hasExtra(Keys.KEY_MAIN_SHOW_NAVI)) {
             drawer.openDrawer(navigationView, true);
         }
+        if(intent.hasExtra(Keys.KEY_MAIN_REFRESH_NAVI)) {
+            homeNavigationHolder.refrashAvatar(null);
+        }
     }
 
     @Override
     protected void loadDatas() {
-        presenter.test();
     }
 
     private void initBottomNavigationBar(int selectIndex) {
@@ -175,13 +177,6 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 //                fragmentMap.put(tag, mCurrentFragment);
 //                break;
         }
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        // TODO: add setContentView(...) invocation
-        ButterKnife.bind(this);
     }
 
     public static class Tags {
