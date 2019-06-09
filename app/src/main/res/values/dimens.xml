@@ -77,4 +77,6 @@
     <dimen name="xplayer_live_ctrl_icon_width">44dp</dimen>
     <dimen name="xplayer_live_ctrl_icon_height">44dp</dimen>
     <dimen name="xplayer_live_ctrl_icon_margin">4dp</dimen>
+
+    <dimen name="labels_text_size">13sp</dimen>
 </resources>

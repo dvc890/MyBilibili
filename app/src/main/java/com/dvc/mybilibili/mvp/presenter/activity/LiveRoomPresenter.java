@@ -25,30 +25,14 @@ public class LiveRoomPresenter extends MyMvpBasePresenter<LiveRoomView> {
         super(context, dataManager, provider);
     }
 
-    public void loadRoomInfo(long roomId) {
-        this.apiHelper.getRoomInfo(roomId)
-                .compose(RxSchedulersHelper.ioAndMainThread())
-                .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
-                .subscribe(new ObserverCallback<BiliLiveRoomInfo>() {
-                    @Override
-                    public void onSuccess(BiliLiveRoomInfo biliLiveRoomInfo) throws IOException {
-
-                    }
-
-                    @Override
-                    public void onError(BiliApiException apiException, int code) {
-
-                    }
-                });
-    }
-
     public void loadLivePlayUrl(long roomId) {
-        this.apiHelper.getLiveRoomPlayUrl(roomId, 4)
+        this.apiHelper.getLiveRoomPlayUrl(roomId, 3)
+//        this.apiHelper.getLiveRoomM3u8PlayUrl(roomId)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))
                 .subscribe(new ObserverCallback<LivePlayerInfo>() {
                     @Override
-                    public void onSuccess(LivePlayerInfo livePlayerInfo) throws IOException {
+                    public void onSuccess(LivePlayerInfo livePlayerInfo) {
                         ifViewAttached(view -> view.onPlayUrl(livePlayerInfo));
                     }
 

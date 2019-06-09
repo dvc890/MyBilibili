@@ -1,16 +1,21 @@
 package com.dvc.mybilibili.player;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.dvc.base.thread.PRunnable;
+import com.dvc.base.thread.ThreadManager;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.manager.CustomManager;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
+import com.shuyu.gsyvideoplayer.player.PlayerFactory;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
@@ -18,6 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import tv.danmaku.ijk.media.exo2.Exo2PlayerManager;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
 /**
@@ -57,6 +63,8 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 
     @Override
     protected void init(Context context) {
+        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
+        GSYVideoType.enableMediaCodecTexture();
         super.init(context);
         this.danmakuHolder = new DanMaKuHolder(this);
         this.refresh.setOnClickListener(this);
@@ -64,7 +72,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     }
 
     public void setMyOptionModelList() {
-//        List<VideoOptionModel> list = new ArrayList<>();
+        List<VideoOptionModel> list = new ArrayList<>();
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_transport", "tcp"));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "rtsp_flags", "prefer_tcp"));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "allowed_media_types", "video"));//根据媒体类型来配置
@@ -75,8 +83,11 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "probesize", 10240));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1));
         //  关闭播放器缓冲，这个必须关闭，否则会出现播放一段时间后，一直卡主，控制台打印 FFP_MSG_BUFFERING_START
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0));
-//        ((CustomManager)getGSYVideoManager()).setOptionModelList(list);
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0));
+//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 50));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "protocol_whitelist", "crypto,file,http,https,tcp,tls,udp"));
+        ((CustomManager)getGSYVideoManager()).setOptionModelList(list);
+
     }
 
     public boolean setUp(LivePlayerInfo mediaResource, boolean cacheWithPlay, String title) {
@@ -113,6 +124,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         gsyBaseVideoPlayer.mediaResource = getMediaResource();
         gsyBaseVideoPlayer.mSourcePosition = mSourcePosition;
         gsyBaseVideoPlayer.setRoomId(roomid);
+        gsyBaseVideoPlayer.isFrist = isFrist;
         //对弹幕设置偏移记录
         gsyBaseVideoPlayer.danmakuHolder.setParser(this.danmakuHolder.getParser());
         gsyBaseVideoPlayer.danmakuHolder.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
@@ -134,6 +146,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
             mediaResource = gsyBaseVideoPlayer.getMediaResource();
             mSourcePosition = gsyBaseVideoPlayer.mSourcePosition;
             this.setRoomId(gsyBaseVideoPlayer.roomid);
+            this.isFrist = gsyBaseVideoPlayer.isFrist;
             //对弹幕设置偏移记录
             this.danmakuHolder.setDanmaKuShow(gsyBaseVideoPlayer.danmakuHolder.getDanmaKuShow());
             if (gsyBaseVideoPlayer.danmakuHolder.getDanmakuView() != null &&
@@ -155,6 +168,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         if(isFrist) {
             mLoadingProgressBar.setVisibility(GONE);
             mLoadingProgressBar = findViewById(R.id.guicu_loadingview);
+            ((AnimationDrawable)((ImageView)mLoadingProgressBar.findViewById(R.id.placeholder_iv)).getDrawable()).start();
         }
         setMyOptionModelList();
         super.startPlayLogic();
@@ -176,6 +190,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         super.onPrepared();
         this.danmakuHolder.onPrepareDanmaku(this);
         if(isFrist) {
+            ((AnimationDrawable)((ImageView)mLoadingProgressBar.findViewById(R.id.placeholder_iv)).getDrawable()).start();
             mLoadingProgressBar.setVisibility(GONE);
             mLoadingProgressBar = findViewById(R.id.loading);
             isFrist = false;
@@ -237,6 +252,15 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         super.touchSurfaceMoveFullLogic(absDeltaX, absDeltaY);
         mChangePosition = false;//禁止全屏手势调整进度
     }
+
+//    Runnable super_resolveUIState;
+//    @Override
+//    protected void resolveUIState(int state) {
+//        if(super_resolveUIState != null)
+//            ThreadManager.get().getMainHandler().removeCallbacks(super_resolveUIState);
+//        super_resolveUIState = ()->super.resolveUIState(state);
+//        ThreadManager.get().getMainHandler().postDelayed(super_resolveUIState, 1000);
+//    }
 
     private void Refresh() {
         getGSYVideoManager().setDisplay(null);

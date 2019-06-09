@@ -5,6 +5,7 @@ import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomHistoryMsg;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveUpInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
@@ -73,9 +74,11 @@ public interface ApiHelper {
 
     Observable<BiliLiveRoomInfo> getRoomInfo(long roomid);
 
+    Observable<BiliLiveRoomHistoryMsg> getRoomHistoryMsg(long room_id);
+
     Observable<LivePlayerInfo> getLiveRoomPlayUrl(long roomId, int quality);
 
-    Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(int roomId);
+    Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(long roomId);
 
     Observable<BiliLiveDanmakuConfig> getDanmakuConfig(long roomid);
 

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.dvc.mybilibili.mvp.ui.widget.LiveGuardMsgView  xmlns:android="http://schemas.android.com/apk/res/android" android:orientation="horizontal"  android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="4dp" android:layout_marginRight="4dp">
+    <TextView android:textSize="@dimen/labels_text_size" android:id="@+id/text" android:layout_width="match_parent" android:layout_height="wrap_content" android:lineSpacingExtra="2dp" android:padding="@dimen/dp_6"/>
+</com.dvc.mybilibili.mvp.ui.widget.LiveGuardMsgView>

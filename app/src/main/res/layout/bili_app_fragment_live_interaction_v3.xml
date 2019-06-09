@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:layout_width="match_parent" android:layout_height="match_parent">
+    <RelativeLayout android:id="@+id/layout_interaction" android:background="@color/theme_color_bg_gray_1" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_above="@+id/input_layout">
+        <TextSwitcher android:id="@+id/switcher" android:paddingTop="1dp" android:paddingBottom="1dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true"/>
+        <android.support.v7.widget.RecyclerView android:scrollbarStyle="outsideOverlay" android:orientation="vertical" android:id="@+id/recycler" android:scrollbars="vertical" android:layout_width="match_parent" android:layout_height="match_parent" android:layout_marginTop="68dp" android:layout_above="@+id/switcher"/>
+        <include layout="@layout/live_layout_new_msg_bottom"/>
+        <!--<LinearLayout android:orientation="vertical" android:id="@+id/operate_layout" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="68dp" android:layout_alignParentTop="true">-->
+            <!--<com.bilibili.bililive.videoliveplayer.p009ui.roomv3.notice.widget.HalfScreenNoticeView android:id="@+id/notice_layout" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content"/>-->
+            <!--<com.bilibili.bililive.videoliveplayer.p009ui.widget.LiveIntegralAnimationView android:id="@+id/integral" android:visibility="gone" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginLeft="12dp" android:layout_marginTop="6dp" android:layout_marginRight="63dp"/>-->
+        <!--</LinearLayout>-->
+        <FrameLayout android:id="@+id/live_room_up_info_fl" android:layout_width="match_parent" android:layout_height="68dp" android:layout_alignParentTop="true">
+            <include android:id="@+id/live_room_up_info_layout" android:layout_width="match_parent" android:layout_height="68dp" layout="@layout/bili_live_room_up_info_layout"/>
+            <View android:id="@+id/live_room_up_info_mask" android:background="@color/black_alpha30" android:visibility="gone" android:layout_width="match_parent" android:layout_height="68dp"/>
+        </FrameLayout>
+        <!--<p022tv.danmaku.bili.widget.LoadingImageView android:id="@+id/loading_view" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_margin="24dp" android:layout_centerInParent="true"/>-->
+    </RelativeLayout>
+    <LinearLayout android:gravity="center_vertical" android:orientation="horizontal" android:id="@+id/input_layout" android:background="@color/theme_color_bg_white" android:paddingLeft="12dp" android:paddingTop="8dp" android:paddingRight="12dp" android:paddingBottom="8dp" android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_alignParentBottom="true" android:layout_centerVertical="true">
+        <com.dvc.mybilibili.mvp.ui.widget.LiveMyUserCardEntrance android:layout_gravity="center_vertical" android:id="@+id/myUserCardEntrance" android:layout_width="34dp" android:layout_height="34dp" android:layout_marginRight="6dp"/>
+        <TextView android:textColor="@color/orange" android:gravity="center" android:layout_gravity="center_vertical" android:id="@+id/medal_action" android:background="@drawable/ic_live_medal_un_wear_normal" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginRight="8dp"/>
+        <TextView android:textSize="14sp" android:textColor="@color/live_player_feedback_edit_hint" android:gravity="center_vertical" android:id="@+id/input" android:background="@drawable/live_shape_round_danmaku_input_background" android:paddingLeft="16dp" android:paddingRight="16dp" android:focusable="false" android:focusableInTouchMode="false" android:layout_width="0dp" android:layout_height="32dp" android:layout_marginRight="12dp" android:layout_marginBottom="1dp" android:minHeight="32dp" android:text="@string/live_hint_input_danmu" android:singleLine="true" android:layout_weight="1"/>
+        <LinearLayout android:orientation="horizontal" android:id="@+id/live_input_banner_layout" android:visibility="gone" android:layout_width="wrap_content" android:layout_height="wrap_content"/>
+        <FrameLayout android:id="@+id/action_layout" android:layout_width="34dp" android:layout_height="34dp">
+            <ImageView android:layout_gravity="center_horizontal" android:id="@+id/action_button" android:layout_width="34dp" android:layout_height="34dp" android:scaleType="centerCrop" android:src="@drawable/live_ic_send_gift" />
+            <!--<com.bilibili.bililive.videoliveplayer.player.widgets.BreatheBadge android:layout_gravity="top|right|center_vertical|center_horizontal|center" android:id="@+id/badge" android:visibility="gone" android:layout_width="5dp" android:layout_height="5dp" android:layout_margin="2dp"/>-->
+        </FrameLayout>
+    </LinearLayout>
+</RelativeLayout>

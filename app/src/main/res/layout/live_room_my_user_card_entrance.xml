@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:layout_width="wrap_content" android:layout_height="wrap_content">
+    <ImageView android:id="@+id/user_mng_entrance_avatar" android:layout_width="34dp" android:layout_height="34dp" android:src="@drawable/bili_default_avatar" />
+    <ImageView android:layout_gravity="end" android:id="@+id/user_mng_entrance_avatar_badge" android:visibility="gone" android:layout_width="7dp" android:layout_height="7dp" android:layout_marginTop="3dp" android:src="@drawable/live_shape_room_my_user_card_badge"/>
+</merge>

@@ -1,7 +1,7 @@
 <LinearLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:gravity="center_vertical" android:orientation="horizontal" android:paddingLeft="12dp" android:paddingTop="14dp" android:paddingRight="12dp" android:paddingBottom="7dp" android:layout_width="match_parent" android:layout_height="wrap_content">
     <com.dvc.mybilibili.mvp.ui.widget.PendantAvatarLayout
         android:id="@+id/avatar_layout"
-        android:layout_width="30dp" android:layout_height="30dp"/>
+        android:layout_width="60dp" android:layout_height="60dp"/>
     <LinearLayout
         android:gravity="center_vertical"
         android:orientation="vertical" android:id="@+id/desc_layout"

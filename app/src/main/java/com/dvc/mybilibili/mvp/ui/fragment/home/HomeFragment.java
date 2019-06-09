@@ -44,8 +44,6 @@ public class HomeFragment extends MvpBaseFragment<HomeFragView, HomeFragPresente
     @BindView(R.id.tab_layout)
     TabLayout tabLayout;
 
-    Unbinder unbinder;
-
     private boolean isLogined = false;
 
     @NonNull

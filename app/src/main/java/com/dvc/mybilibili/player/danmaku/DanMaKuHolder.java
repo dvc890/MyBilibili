@@ -22,6 +22,7 @@ import master.flame.danmaku.danmaku.loader.IllegalDataException;
 import master.flame.danmaku.danmaku.loader.android.DanmakuLoaderFactory;
 import master.flame.danmaku.danmaku.model.BaseDanmaku;
 import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.Duration;
 import master.flame.danmaku.danmaku.model.IDisplayer;
 import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
@@ -51,7 +52,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
         super(view);
         this.player = view;
 //        if(mSendDanmaku != null) mSendDanmaku.setOnClickListener(this.player);
-        if(mToogleDanmaku != null) mToogleDanmaku.setOnClickListener(this.player);
+        if(mToogleDanmaku != null) mToogleDanmaku.setOnClickListener(v->resolveDanmakuShow());
     }
 
     public void initDanmaku(int aid, long cid) {
@@ -72,10 +73,10 @@ public class DanMaKuHolder extends BaseMvpHolder {
         mDanmakuContext = DanmakuContext.create();
         mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)//描边
                 .setDuplicateMergingEnabled(false)//重复不合并
-                .setScrollSpeedFactor(1.2f)//弹幕滚动速度
-                .setScaleTextSize(1.2f)
+                .setScrollSpeedFactor(2f)//弹幕滚动速度
+//                .setScaleTextSize(1.2f)
                 .setCacheStuffer(new SpannedCacheStuffer(), danamakuAdapter) // 图文混排使用SpannedCacheStuffer
-                .setMaximumLines(maxLinesPair)
+//                .setMaximumLines(maxLinesPair)
                 .preventOverlapping(overlappingEnablePair);
 
         if (mDanmakuView != null) {
@@ -274,6 +275,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级
         danmaku.textSize = textsize * (mParser.getDisplayer().getDensity() - 0.6f);
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
+
         getDanmakuView().addDanmaku(danmaku);
 
     }

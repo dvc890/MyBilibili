@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.utils.LoadStateViewUtils;
@@ -30,7 +31,7 @@ import butterknife.Unbinder;
 
 import static com.chad.library.adapter.base.BaseQuickAdapter.SLIDEIN_BOTTOM;
 
-public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresenter> implements LiveFragView, OnRefreshListener {
+public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresenter> implements LiveFragView, OnRefreshListener, BaseQuickAdapter.OnItemChildClickListener {
 
     @Inject
     LiveFragPresenter liveFragPresenter;
@@ -65,6 +66,7 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
         this.liveHomeAdapter = new LiveHomeAdapter(null);
         this.liveHomeAdapter.bindToRecyclerView(mRecyclerView);
         this.liveHomeAdapter.openLoadAnimation(SLIDEIN_BOTTOM);
+        this.liveHomeAdapter.setOnItemChildClickListener(this);
     }
 
     @Override
@@ -138,5 +140,19 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
     @OnClick(R.id.btn_live)
     public void onLiveClicked() {
         RxToast.normal("后续开发");
+    }
+
+    @Override
+    public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        switch (view.getId()) {
+            case R.id.more://小时榜 查看更多
+                break;
+            case R.id.refresh_group://推荐分类 换一换
+                break;
+            case R.id.text://推荐分类 查看更多推荐直播
+                break;
+            case R.id.text_more://分类 查看更多
+                break;
+        }
     }
 }

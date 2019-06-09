@@ -5,6 +5,7 @@ import android.widget.TextView;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
 import butterknife.BindView;
@@ -22,6 +23,7 @@ public class followedViewHolder extends DIYViewHolder {
 
     public followedViewHolder(View view) {
         super(view);
+        addOnClickListener(R.id.text_more);
     }
 
     @Override

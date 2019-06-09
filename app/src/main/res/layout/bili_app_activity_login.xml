@@ -104,12 +104,14 @@
                 android:background="@android:color/transparent"
                 android:drawablePadding="@dimen/dp_10"
                 android:drawableStart="@drawable/ic_login_username_default"
+                android:drawableTint="@color/selector_edittext_focus_pink"
                 android:hint="@string/mycenter_login_name_et_hint"
                 android:inputType="textVisiblePassword"
                 android:maxLines="1"
                 android:textColor="@color/black_80"
                 android:textColorHint="@color/gray_20"
-                android:textSize="@dimen/sp_14"/>
+                android:textSize="@dimen/sp_14"
+                style="@style/Widget.App.EditText.Default"/>
 
             <ImageButton
                 android:id="@+id/delete_username"
@@ -132,16 +134,21 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/dp_48"
             android:layout_gravity="center_horizontal"
-            android:layout_marginStart="@dimen/dp_8"
+            android:layout_marginStart="@dimen/dp_7"
             android:background="@android:color/transparent"
             android:drawablePadding="@dimen/dp_10"
             android:drawableStart="@drawable/ic_login_password_default"
+            android:drawableTint="@color/selector_edittext_focus_pink"
             android:hint="@string/mycenter_login_pwd_et_hint"
             android:inputType="textPassword"
             android:maxLines="1"
             android:textColor="@color/black_80"
             android:textColorHint="@color/gray_20"
-            android:textSize="@dimen/sp_14"/>
+            android:textSize="@dimen/sp_14"
+            android:imeOptions="actionDone"
+            android:imeActionLabel="@string/br_login"
+            android:nextFocusDown="@id/btn_login"
+            style="@style/Widget.App.EditText.Default"/>
     </LinearLayout>
 
     <LinearLayout

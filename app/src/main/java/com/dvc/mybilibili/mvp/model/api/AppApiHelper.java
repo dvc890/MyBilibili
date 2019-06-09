@@ -17,6 +17,7 @@ import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomHistoryMsg;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomMode;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveUpInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
@@ -424,6 +425,16 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
+    public Observable<BiliLiveRoomHistoryMsg> getRoomHistoryMsg(long room_id) {
+        return this.biliLiveApiV2Service.getRoomHistoryMsg((int) room_id)
+                .map(liveRoomHistoryMsgGeneralResponse -> {
+                    if(liveRoomHistoryMsgGeneralResponse.isSuccess())
+                        return liveRoomHistoryMsgGeneralResponse.data;
+                    throw new BiliApiException(liveRoomHistoryMsgGeneralResponse);
+                });
+    }
+
+    @Override
     public Observable<LivePlayerInfo> getLiveRoomPlayUrl(long roomId, int quality) {
         return this.biliLiveApiV2Service.getPlayUrl((int) roomId, quality, null, 0, 2)
                 .map(livePlayerInfoGeneralResponse -> {
@@ -434,8 +445,8 @@ public class AppApiHelper implements ApiHelper {
     }
 
     @Override
-    public Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(int roomId) {
-        return this.biliLiveApiV2Service.getm3u8PlayUrl(roomId)
+    public Observable<LivePlayerInfo> getLiveRoomM3u8PlayUrl(long roomId) {
+        return this.biliLiveApiV2Service.getm3u8PlayUrl((int) roomId)
                 .map(livePlayerInfoGeneralResponse -> {
                     if(livePlayerInfoGeneralResponse.isSuccess())
                         return livePlayerInfoGeneralResponse.data;

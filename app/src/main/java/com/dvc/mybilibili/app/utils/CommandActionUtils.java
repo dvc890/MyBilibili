@@ -192,9 +192,9 @@ public class CommandActionUtils {
             if(query.length() > 0) {
                 if(this.query.contains("&")) {
                     for(String q : this.query.split("&"))
-                        queryParameter.put(q.split("=")[0], URLDecoder.decode(q.split("=")[1]).replace("\\u0026", "&"));
+                        if(q.split("=").length>1) queryParameter.put(q.split("=")[0], URLDecoder.decode(q.split("=")[1]).replace("\\u0026", "&"));
                 }else {
-                    queryParameter.put(query.split("=")[0], URLDecoder.decode(query.split("=")[1]).replace("\\u0026", "&"));
+                    if(query.split("=").length>1) queryParameter.put(query.split("=")[0], URLDecoder.decode(query.split("=")[1]).replace("\\u0026", "&"));
                 }
                 for(Map.Entry<String, String> entry : queryParameter.entrySet())
                     bundle.putString(entry.getKey(), entry.getValue());

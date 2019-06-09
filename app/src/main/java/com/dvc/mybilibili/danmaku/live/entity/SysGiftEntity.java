@@ -1,4 +1,4 @@
 package com.dvc.mybilibili.danmaku.live.entity;
 
-public class SysGiftEntity {
+public class SysGiftEntity extends BaseMsgEntity{
 }

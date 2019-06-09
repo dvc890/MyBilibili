@@ -18,6 +18,7 @@ public class partitonViewHolder extends DIYViewHolder {
 
     public partitonViewHolder(View view) {
         super(view);
+        addOnClickListener(R.id.text_more);
     }
 
     @Override

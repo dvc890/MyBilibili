@@ -1,7 +1,9 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 
 import com.dvc.base.MvpBaseActivity;
@@ -18,19 +20,24 @@ import com.dvc.mybilibili.danmaku.live.entity.NoticeMsgEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeEntity;
 import com.dvc.mybilibili.danmaku.live.entity.WelcomeGuardEntity;
 import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
+import com.dvc.mybilibili.danmaku.live.interfaces.SimpleLiveCallBack;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.mvp.presenter.activity.LiveRoomPresenter;
+import com.dvc.mybilibili.mvp.ui.adapter.ViewPagerAdapter;
+import com.dvc.mybilibili.mvp.ui.fragment.live.LiveRoomInteractionFragment;
 import com.dvc.mybilibili.player.BiliLiveVideoPlayer;
 import com.vondear.rxtool.view.RxToast;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 
-public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPresenter> implements LiveRoomView, ILiveDanMuCallback {
+public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPresenter> implements LiveRoomView {
 
     @Inject
     LiveRoomPresenter liveRoomPresenter;
@@ -43,6 +50,8 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     private long roomId;
     private String title = "";
+    private ArrayList<Fragment> views;
+    private SimpleLiveCallBack simpleLiveCallBack;
 
     @NonNull
     @Override
@@ -57,6 +66,7 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
 
     @Override
     protected void initViews() {
+        setupViewPager();
     }
 
     @Override
@@ -71,6 +81,11 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
         player.setRoomId(roomId);
         presenter.loadLivePlayUrl(roomId);
         initDanMu();
+
+        Bundle bundle = new Bundle();
+        bundle.putLong(Keys.KEY_ROOMID, roomId);
+        for(Fragment fragment : views)
+            fragment.setArguments(bundle);
     }
 
     @Override
@@ -116,86 +131,47 @@ public class LiveRoomActivity extends MvpBaseActivity<LiveRoomView, LiveRoomPres
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            LiveDanMuReceiver.getInstance().removeCallback(this);
+            LiveDanMuReceiver.getInstance().removeCallback(simpleLiveCallBack);
         }
 
     }
 
     public void initDanMu() {
         try {
-            LiveDanMuReceiver.getInstance().addCallback(this);
+            this.simpleLiveCallBack = new SimpleLiveCallBack() {
+                @Override
+                public void onDanMuMSGPackage(DanMuMSGEntity danMuMSGEntity) {
+                    if(player.isIfCurrentIsFullscreen()) {
+                        if (player.isInPlayingState())
+                            player.sendDanmaku(danMuMSGEntity.text, danMuMSGEntity.color, danMuMSGEntity.textsize);
+                    }
+                }
+            };
+            LiveDanMuReceiver.getInstance().addCallback(simpleLiveCallBack);
             LiveDanMuReceiver.getInstance().connect(roomId);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onConnect() {
+    private void setupViewPager() {
+        views = new ArrayList<>(6);
+        LiveRoomInteractionFragment liveRoomInteractionFragment = new LiveRoomInteractionFragment();
+        views.add(liveRoomInteractionFragment);
+        List<String> titles = new ArrayList<>(6);
+        titles.add(getResources().getText(R.string.interaction).toString());
+        titles.add(getResources().getText(R.string.widget_anchor).toString());
+        titles.add(getResources().getText(R.string.live_contribution).toString());
+        titles.add(getResources().getText(R.string.fleet).toString());
+        titles.add(getResources().getText(R.string.more_tab_live).toString());
+        titles.add(getResources().getText(R.string.love_club).toString());
 
+        new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
+        tabLayout.setupWithViewPager(viewpager);
+        viewpager.setCurrentItem(0);
     }
 
-    @Override
-    public void onConnectError(BiliApiException apiException) {
-
-    }
-
-    @Override
-    public void onDisconnect() {
-
-    }
-
-    @Override
-    public void onOnlineCountPackage(int onlineCount) {
-
-    }
-
-    @Override
-    public void onDanMuMSGPackage(DanMuMSGEntity danMuMSGEntity) {
-        if(player.isIfCurrentIsFullscreen()) {
-            if (player.isInPlayingState())
-                player.sendDanmaku(danMuMSGEntity.text, danMuMSGEntity.color, danMuMSGEntity.textsize);
-        } else
-            runOnUiThread(()->RxToast.normal(String.format("%1$s[%2$d](%3$s):%4$s",danMuMSGEntity.username, danMuMSGEntity.userlevel, danMuMSGEntity.userrank, danMuMSGEntity.text)));
-    }
-
-    @Override
-    public void onNoticeMsgPackage(NoticeMsgEntity sysMSGEntity) {
-
-    }
-
-    @Override
-    public void onSendGiftPackage(SendGiftEntity sendGiftEntity) {
-
-    }
-
-    @Override
-    public void onSysGiftPackage(SysGiftEntity sysGiftEntity) {
-
-    }
-
-    @Override
-    public void onWelcomePackage(WelcomeEntity welcomeEntity) {
-
-    }
-
-    @Override
-    public void onWelcomeGuardPackage(WelcomeGuardEntity welcomeGuardEntity) {
-
-    }
-
-    @Override
-    public void onLivePackage(LiveEntity liveEntity) {
-
-    }
-
-    @Override
-    public void onPreparingPackage(PreparingEntity preparingEntity) {
-
-    }
-
-    @Override
-    public void onRoomAdminsPackage(RoomAdminsEntity roomAdminsEntity) {
-
+    public void setFleetNum(int num) {
+//        R.string.fleet_num
     }
 }

@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.ui.adapter.livehomeholder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridLayout;
@@ -12,12 +13,13 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
 public class tagViewHolder extends BaseViewHolder {
 
     private final RecyclerView recyclerView;
-    private final BaseQuickAdapter adapter;
+    private final BaseQuickAdapter<BiliLiveHomePage.Card, BaseViewHolder> adapter;
 
     public tagViewHolder(View view) {
         super(view);
@@ -38,7 +40,8 @@ public class tagViewHolder extends BaseViewHolder {
         };
         this.adapter.bindToRecyclerView(recyclerView);
         this.adapter.setOnItemClickListener((adapter, view1, position) -> {
-
+            if(TextUtils.isEmpty(this.adapter.getItem(position).getLink())) return;
+            CommandActionUtils.toWeb(view1.getContext(), this.adapter.getItem(position).getTitle(), this.adapter.getItem(position).getLink());
         });
     }
 

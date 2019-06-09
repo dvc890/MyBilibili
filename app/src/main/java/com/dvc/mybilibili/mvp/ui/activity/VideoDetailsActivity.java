@@ -208,12 +208,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
         this.viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager(), viewpager, views, titles);
         tabLayout.setupWithViewPager(viewpager);
         viewpager.setCurrentItem(0);
-        viewpager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
-
-            }
-
+        viewpager.addOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
             @Override
             public void onPageSelected(int i) {
                 if(i == 1) {
@@ -221,11 +216,6 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
                     bundle.putInt(Keys.KEY_AVID, aid);
                     videoCommentFragment.setArguments(bundle);
                 }
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
             }
         });
     }

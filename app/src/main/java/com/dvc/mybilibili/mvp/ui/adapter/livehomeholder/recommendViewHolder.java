@@ -35,6 +35,7 @@ public class recommendViewHolder extends DIYViewHolder {
         if(!super.init()) return false;
         LayoutInflater.from(getContext()).inflate(R.layout.bili_live_layout_home_view_more_video, getLinearLayout(), true);
         more = getLinearLayout().findViewById(R.id.text);
+        addOnClickListener(R.id.refresh_group, more.getId());
         return true;
     }
 

@@ -410,4 +410,5 @@
     <color name="hint_text_color">#ffc0c0c0</color>
     <color name="sponsor_orange_dark">#ffa726</color>
     <color name="hourrank_border_color">#ffbd15</color>
+    <color name="live_player_feedback_edit_hint">#999999</color>
 </resources>

@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.mvp.ui.adapter.livehomeholder;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -9,6 +10,7 @@ import com.bigkoo.convenientbanner.holder.Holder;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.BannerItem;
 import com.dvc.mybilibili.mvp.ui.adapter.PegasusRecommendAdapter;
@@ -37,7 +39,8 @@ public class bannerViewHolder extends BaseViewHolder {
                 .setPageIndicator(new int[]{R.mipmap.ic_page_indicator, R.mipmap.ic_page_indicator_focused})
                 .setPageIndicatorAlign(ConvenientBanner.PageIndicatorAlign.ALIGN_PARENT_RIGHT);
         this.banner.setOnItemClickListener(position -> {
-
+            if(TextUtils.isEmpty(item.getCardList().get(position).getLink())) return;
+            CommandActionUtils.toWeb(banner.getContext(), item.getCardList().get(position).getTitle(), item.getCardList().get(position).getLink());
         });
         this.banner.setVisibility(View.VISIBLE);
     }
