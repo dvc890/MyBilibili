@@ -6,6 +6,7 @@ import android.support.annotation.Keep;
 import com.alibaba.fastjson.annotation.JSONField;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Keep
 public class MediaResource extends IMediaResource{
@@ -35,5 +36,13 @@ public class MediaResource extends IMediaResource{
         public ArrayList<DashMediaIndex> audios;
 
         public DashResource() {}
+
+        public List<DashMediaIndex> getAudioList() {
+            return this.audios;
+        }
+
+        public List<DashMediaIndex> getVideoList() {
+            return this.videos;
+        }
     }
 }

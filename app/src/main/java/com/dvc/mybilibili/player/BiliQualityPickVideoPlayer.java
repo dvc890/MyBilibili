@@ -14,6 +14,7 @@ import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.popup.QualityPickPopup;
+import com.dvc.mybilibili.player.utils.VideoViewParams;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
@@ -72,7 +73,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
-//        Debuger.enable();
+        Debuger.enable();
         //切换视频清晰度
         mSwitchSize.setOnClickListener(v -> {
             if (mHadPlay && !isChanging) {
@@ -95,19 +96,25 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         this.danmakuHolder.initDanmaku(this.aid, this.cid);
     }
 
+//    public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
+//        this.mediaResource = mediaResource;
+//        String url = mediaResource.getVideoUrl().replaceFirst("quic","http");
+//        mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
+//        mSwitchSize.setText(mTypeText);
+//        mSwitchSize.setVisibility(GONE);
+//        setPlayTag(url+this.aid+""+this.cid);
+//        boolean state = setUp(url, cacheWithPlay, title);
+//        startfristbtn.setVisibility(state?VISIBLE:GONE);
+//        return state;
+//    }
+
     public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
         this.mediaResource = mediaResource;
-//        if(this.mediaResource.getFTVideoMaterialUrl().toLowerCase().contains("quic")) {
-//            PlayerFactory.setPlayManager(Exo2PlayerManager.class);
-//        } else {
-//            PlayerFactory.setPlayManager(IjkPlayerManager.class);
-//        }
-        String url = mediaResource.getVideoUrl().replace("quic","http");
         mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
         mSwitchSize.setText(mTypeText);
         mSwitchSize.setVisibility(GONE);
-        setPlayTag(url+this.aid+""+this.cid);
-        boolean state = setUp(url, cacheWithPlay, title);
+        setPlayTag(mediaResource.dash.videos.get(0).id+this.aid+""+this.cid);
+        boolean state = setDashUp(VideoViewParams.toBundleData(mediaResource.dash), cacheWithPlay, title, mediaResource.quality);
         startfristbtn.setVisibility(state?VISIBLE:GONE);
         return state;
     }

@@ -22,4 +22,8 @@ public class DashMediaIndex {
     private List<String> backupUrl2;
 
     public DashMediaIndex() {}
+
+    public List<String> getBackupUrl() {
+        return this.backupUrl;
+    }
 }

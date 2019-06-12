@@ -5,9 +5,7 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.TextSwitcher;
 
 import com.dvc.base.MvpBaseFragment;
@@ -167,8 +165,10 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
 
     @Override
     public void onOnlineCountPackage(int onlineCount) {
-        holder.infoOnline.setText(getContext().getString(R.string.live_info_online, onlineCount + ""));
-        holder.infoOnline.setVisibility(View.VISIBLE);
+        ThreadManager.get().getMainHandler().postAtFrontOfQueue(() -> {
+            holder.infoOnline.setText(getContext().getString(R.string.live_info_online, onlineCount + ""));
+            holder.infoOnline.setVisibility(View.VISIBLE);
+        });
     }
 
     @Override

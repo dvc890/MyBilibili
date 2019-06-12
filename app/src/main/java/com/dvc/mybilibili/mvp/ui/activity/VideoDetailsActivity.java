@@ -91,8 +91,10 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
                 AppBarLayout.LayoutParams appBarParams = (AppBarLayout.LayoutParams) appBarChildAt.getLayoutParams();
 //                appBarParams.setScrollFlags( AppBarLayout.LayoutParams.SCROLL_FLAG_SCROLL
 //                        | AppBarLayout.LayoutParams.SCROLL_FLAG_EXIT_UNTIL_COLLAPSED);// 重置折叠效果
-                appBarParams.setScrollFlags(0);//这个加了之后不可滑动
-                appBarChildAt.setLayoutParams(appBarParams);
+                if(appBarParams.getScrollFlags() != 0) {
+                    appBarParams.setScrollFlags(0);//这个加了之后不可滑动
+                    appBarChildAt.setLayoutParams(appBarParams);
+                }
             }
         });
 
