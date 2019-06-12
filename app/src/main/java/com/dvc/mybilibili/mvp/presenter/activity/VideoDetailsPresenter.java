@@ -42,6 +42,7 @@ public class VideoDetailsPresenter extends MyMvpBasePresenter<VideoDetailsView> 
 
     public void getVideoUrl(int aid, long cid, int quality) {
         //等quic协议支持后，这里改为调用getFTVideoMaterialUrl
+//        this.apiHelper.getFTVideoUrl(this.user.getAccessKey(), aid, cid, quality)
         this.apiHelper.getFTVideoMaterialUrl(this.user.getAccessKey(), aid, cid, quality)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .subscribe(new ObserverCallback<FtVideoUrlInfoBean>() {

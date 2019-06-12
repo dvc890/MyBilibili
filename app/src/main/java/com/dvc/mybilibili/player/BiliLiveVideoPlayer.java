@@ -67,13 +67,13 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 //        Debuger.enable();
     }
 
+    @Override
     public void setMyOptionModelList() {
         List<VideoOptionModel> list = new ArrayList<>();list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "vn", 1));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist", "quic,ijkio,async,cache,crypto,file,http,https,ijkhttphook,ijkinject,ijklivehook,ijklongurl,ijksegment,ijktcphook,pipe,rtp,tcp,tls,udp,ijkurlhook,data"));
 //        int maxMemory = (int) Runtime.getRuntime().maxMemory();
 //        int capacity;
 //        if (maxMemory > 25165824) {

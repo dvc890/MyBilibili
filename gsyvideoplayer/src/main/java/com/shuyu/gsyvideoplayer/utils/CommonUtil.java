@@ -7,6 +7,7 @@ import android.content.ContextWrapper;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -281,5 +282,29 @@ public class CommonUtil {
         return context.getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_90 ||
                 context.getWindowManager().getDefaultDisplay().getRotation() == Surface.ROTATION_270;
 
+    }
+
+    public static String makeUrl(@NonNull String url, boolean isLive, boolean isClip, boolean isIjkIOEnable, boolean isDashRes) {
+        StringBuilder stringBuilder = new StringBuilder();
+        if (isLive) {
+            stringBuilder.append("ijklivehook:");
+            stringBuilder.append(url);
+            return stringBuilder.toString();
+        } else if (isClip) {
+            stringBuilder.append("ijkio:cache:httphook:ffio:");
+            stringBuilder.append(url);
+            return stringBuilder.toString();
+        } else if (!url.startsWith("http://") && !url.startsWith("https://")) {
+            return url;
+        } else if (isIjkIOEnable) {
+            stringBuilder.append("ijkio:cache:httphook:ffio:");
+            stringBuilder.append(url);
+            return stringBuilder.toString();
+        } else if(isDashRes) {
+            stringBuilder.append("async:ijkhttphook:");
+            stringBuilder.append(url);
+            return stringBuilder.toString();
+        }
+        return url;
     }
 }

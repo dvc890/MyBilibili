@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.player.utils;
 
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 
 import com.dvc.mybilibili.mvp.model.api.entity.DashMediaIndex;
 import com.dvc.mybilibili.mvp.model.api.entity.MediaResource;

@@ -94,6 +94,16 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         this.cid = cid;
         //初始化弹幕显示
         this.danmakuHolder.initDanmaku(this.aid, this.cid);
+//        Map<String ,String> map = new HashMap<>();
+//        map.put("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0");
+//        map.put("Accept", "*/*");
+//        map.put("Accept-Language", "en-US,en;q=0.5");
+//        map.put("Accept-Encoding", "gzip, deflate, br");
+//        map.put("Range", "bytes=0-");  // Range 的值要为 bytes=0- 才能下载完整视频
+//        map.put("Referer", "https://api.bilibili.com/x/web-interface/view?aid="+aid);  // 注意修改referer,必须要加的!
+//        map.put("Origin", "https://www.bilibili.com");
+//        map.put("Connection", "keep-alive");
+//        setMapHeadData(map);
     }
 
 //    public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {

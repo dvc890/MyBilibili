@@ -12,6 +12,7 @@ import android.view.Surface;
 import com.shuyu.gsyvideoplayer.cache.ICacheManager;
 import com.shuyu.gsyvideoplayer.model.GSYModel;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
+import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.utils.RawDataSourceProvider;
@@ -73,10 +74,11 @@ public class IjkPlayerManager implements IPlayerManager {
             if (gsyModel.isCache() && cacheManager != null) {
                 cacheManager.doCacheLogic(context, mediaPlayer, gsyModel, gsyModel.getMapHeadData(), gsyModel.getCachePath());
             } else {
+                String url = gsyModel.getUrl();
                 if(gsyModel.isDashRes()) {
+                    mediaPlayer.setDataSource(context, Uri.parse(CommonUtil.makeUrl(url, false, false, false, true)));
                     mediaPlayer.setDashDataSource(gsyModel.getDashRes(), 0 , gsyModel.getDashVideoCurId());
                 } else {
-                    String url = gsyModel.getUrl();
                     if (!TextUtils.isEmpty(url)) {
                         Uri uri = Uri.parse(url);
                         if (uri.getScheme().equals(ContentResolver.SCHEME_ANDROID_RESOURCE)) {
@@ -95,7 +97,7 @@ public class IjkPlayerManager implements IPlayerManager {
             if (gsyModel.getSpeed() != 1 && gsyModel.getSpeed() > 0) {
                 mediaPlayer.setSpeed(gsyModel.getSpeed());
             }
-//            mediaPlayer.native_setLogLevel(logLevel);
+            mediaPlayer.nativeSetLogLevel(logLevel);
             initIJKOption(mediaPlayer, optionModelList);
         } catch (IOException e) {
             e.printStackTrace();

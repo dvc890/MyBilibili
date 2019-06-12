@@ -1151,7 +1151,7 @@ public abstract class GSYVideoControlView extends GSYVideoView implements View.O
         mCachePath = cachePath;
         mSetUpLazy = true;
         mTitle = title;
-        mMapHeadData = mapHeadData;
+        if(mapHeadData != null) mMapHeadData = mapHeadData;
         if (isCurrentMediaListener() &&
                 (System.currentTimeMillis() - mSaveChangeViewTIme) < CHANGE_DELAY_TIME)
             return false;
