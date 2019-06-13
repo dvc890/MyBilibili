@@ -19,6 +19,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.player.manager.CustomManager;
+import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
 import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
@@ -161,6 +162,7 @@ public abstract class BiliVideoPlayer extends StandardGSYVideoPlayer {
 
     @Override
     public void startPlayLogic() {
+        setMyOptionModelList(((CustomManager)getGSYVideoManager()));
         super.startPlayLogic();
         if(mCoverImage != null) mCoverImage.setVisibility(GONE);
         if(startfristbtn != null) startfristbtn.setVisibility(GONE);
@@ -304,10 +306,10 @@ public abstract class BiliVideoPlayer extends StandardGSYVideoPlayer {
         return mHadPlay;
     }
 
-    public void setMyOptionModelList(){
+    public void setMyOptionModelList(GSYVideoBaseManager manager){
         List<VideoOptionModel> list = new ArrayList<>();
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", "Bilibili Freedoooooom/MarkII"));
-        ((CustomManager)getGSYVideoManager()).setOptionModelList(list);
+        manager.setOptionModelList(list);
     }
 
     /**

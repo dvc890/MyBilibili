@@ -151,7 +151,7 @@ public class VideoDetailsActivity extends MvpBaseActivity<VideoDetailsView, Vide
     @Override
     public void onLoadVideoUrlCompleted(FtVideoUrlInfoBean ftVideoUrlInfoBean) {
         if(pickVideoPlayer.getCurrentState() < 0)
-            pickVideoPlayer.setUp(ftVideoUrlInfoBean, false, "");
+            pickVideoPlayer.setUp(ftVideoUrlInfoBean, false, "", ftVideoUrlInfoBean.quality);
         pickVideoPlayer.loadCoverImage(this.cover);
     }
 

@@ -1,6 +1,8 @@
 package com.dvc.mybilibili.player;
 
 import android.content.Context;
+import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,17 +17,26 @@ import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.dvc.mybilibili.player.popup.QualityPickPopup;
 import com.dvc.mybilibili.player.utils.VideoViewParams;
+import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.listener.GSYMediaPlayerListener;
+import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
+import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoViewBridge;
 import com.vondear.rxtool.view.RxToast;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import io.reactivex.Observable;
+import tv.danmaku.ijk.media.player.IjkCodecHelper;
+import tv.danmaku.ijk.media.player.IjkMediaMeta;
+import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+import tv.danmaku.ijk.media.player.listener.BiliMediaCodecSelectListener;
 
 /**
  * 可以切换清晰度的播放器
@@ -94,16 +105,6 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         this.cid = cid;
         //初始化弹幕显示
         this.danmakuHolder.initDanmaku(this.aid, this.cid);
-//        Map<String ,String> map = new HashMap<>();
-//        map.put("User-Agent", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10.13; rv:56.0) Gecko/20100101 Firefox/56.0");
-//        map.put("Accept", "*/*");
-//        map.put("Accept-Language", "en-US,en;q=0.5");
-//        map.put("Accept-Encoding", "gzip, deflate, br");
-//        map.put("Range", "bytes=0-");  // Range 的值要为 bytes=0- 才能下载完整视频
-//        map.put("Referer", "https://api.bilibili.com/x/web-interface/view?aid="+aid);  // 注意修改referer,必须要加的!
-//        map.put("Origin", "https://www.bilibili.com");
-//        map.put("Connection", "keep-alive");
-//        setMapHeadData(map);
     }
 
 //    public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
@@ -118,15 +119,57 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 //        return state;
 //    }
 
-    public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title) {
+    public boolean setUp(FtVideoUrlInfoBean mediaResource, boolean cacheWithPlay, String title, int quality) {
         this.mediaResource = mediaResource;
         mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
         mSwitchSize.setText(mTypeText);
         mSwitchSize.setVisibility(GONE);
-        setPlayTag(mediaResource.dash.videos.get(0).id+this.aid+""+this.cid);
-        boolean state = setDashUp(VideoViewParams.toBundleData(mediaResource.dash), cacheWithPlay, title, mediaResource.quality);
+        setPlayTag(quality+this.aid+""+this.cid);
+//        mSourcePosition = mediaResource.findPos(quality);
+        boolean state = setDashUp(VideoViewParams.toBundleData(mediaResource.dash), cacheWithPlay, title, quality);
         startfristbtn.setVisibility(state?VISIBLE:GONE);
         return state;
+    }
+
+    @Override
+    public void setMyOptionModelList(GSYVideoBaseManager manager) {
+        List<VideoOptionModel> list = new ArrayList<>();
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", "Bilibili Freedoooooom/MarkII"));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "connect_timeout", 10000000));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 2000000));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "icy", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_convert", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "safe", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", 7200000));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_audio_read_len", 3072));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_audio_recv_buffer_size", 10240));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_video_recv_buffer_size", 102400));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_recv_buffer_size_max", 1048576));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-tcp-hook", "ijktcphook"));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist", "quic,ijkio,async,cache,crypto,file,http,https,ijkhttphook,ijkfilehook, ijkinject,ijklivehook,ijklongurl,ijksegment,ijktcphook,pipe,rtp,tcp,tls,udp,ijkurlhook,data"));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 61));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1));
+        int pos = mSourcePosition!=-1?mSourcePosition:mediaResource.findPos(-1);
+        int codecid = getMediaResource().dash.getVideoList().get(pos).codecid;
+        String str = codecid != 7 ? codecid != 12 ? "video/avc" : "video/hevc" : "video/avc";
+        if (!TextUtils.isEmpty(str)) {
+            BiliMediaCodecSelectListener biliMediaCodecSelectListener = new BiliMediaCodecSelectListener(getContext());
+            String string = biliMediaCodecSelectListener.getBestCodecName(str);
+            if(TextUtils.isEmpty(string)){
+                IjkCodecHelper.getBestCodecName(str);
+                biliMediaCodecSelectListener.setBestCodecName(str, string);
+            }
+
+            if (!TextUtils.isEmpty(string)) {
+                GSYVideoType.enableMediaCodec();
+                list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "async-init-decoder", 1));
+                list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "video-mime-type", str));
+                list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-default-name", string));
+            }
+        }
+        manager.setOptionModelList(list);
     }
 
     public FtVideoUrlInfoBean getMediaResource() {
@@ -134,7 +177,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     }
 
     private Observable<String> getVideoUrl(int position) {
-        if(getMediaResource().dash != null) {
+        if(getMediaResource().isV2Bean()) {
             return Observable.create(emitter -> {
                 emitter.onNext(getMediaResource().getDashVideoUrl(getMediaResource().findQuality(position)).replace("quic://", "http://"));
             });
@@ -206,6 +249,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
 //                this.danmakuHolder.setDanmakuStartSeekPosition(gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
 //                this.danmakuHolder.onPrepareDanmaku(gsyBaseVideoPlayer);
                 this.danmakuHolder.resolveDanmakuSeek(this, gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
+                this.danmakuHolder.setDanmaKuShow(gsyBaseVideoPlayer.danmakuHolder.getDanmaKuShow());
                 this.danmakuHolder.resolveDanmakuShow();
                 gsyBaseVideoPlayer.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);
             }
@@ -232,35 +276,47 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
                     || mCurrentState == GSYVideoPlayer.CURRENT_STATE_PAUSE)) {
                 showLoading();
                 mPreSourcePosition = mSourcePosition;
-                getVideoUrl(position)
-                        .compose(RxSchedulersHelper.ioAndThisThread())
-                        .subscribe(new ObserverCallback<String>() {
-                            @Override
-                            public void onSuccess(String url) {
-                                cancelProgressTimer();
-                                hideAllWidget();
-                                if (mTitle != null && mTitleTextView != null) {
-                                    mTitleTextView.setText(mTitle);
+                /*if(getMediaResource().isV2Bean() && getGSYVideoManager().getPlayer().getMediaPlayer() instanceof IjkMediaPlayer) {
+                    ((IjkMediaPlayer)getGSYVideoManager().getPlayer().getMediaPlayer()).switchDashVideoStream(getMediaResource().findQuality(position));
+                } else*/ {
+                    getVideoUrl(position)
+                            .compose(RxSchedulersHelper.ioAndThisThread())
+                            .subscribe(new ObserverCallback<String>() {
+                                @Override
+                                public void onSuccess(String url) {
+                                    cancelProgressTimer();
+                                    hideAllWidget();
+                                    if (mTitle != null && mTitleTextView != null) {
+                                        mTitleTextView.setText(mTitle);
+                                    }
+                                    isChanging = true;
+                                    mSourcePosition = position;
+                                    //创建临时管理器执行加载播放
+                                    if(getMediaResource().isV2Bean() && getGSYVideoManager().getPlayer().getMediaPlayer() instanceof IjkMediaPlayer) {
+                                        mTmpTag = getMediaResource().findQuality(position) + aid + "" + cid;
+                                    } else {
+                                        mTmpTag = url + aid + "" + cid;
+                                    }
+                                    mTmpManager = getTmpGSYVideoManager(mTmpTag);
+                                    mTmpManager.setListener(gsyMediaPlayerListener);
+                                    setMyOptionModelList((GSYVideoBaseManager) mTmpManager);
+                                    if(getMediaResource().isV2Bean() && getGSYVideoManager().getPlayer().getMediaPlayer() instanceof IjkMediaPlayer) {
+                                        Bundle bundle = VideoViewParams.toBundleData(getMediaResource().dash);
+                                        bundle.putInt(IjkMediaMeta.IJKM_DASH_KEY_CUR_VIDEO_ID, getMediaResource().findQuality(position));
+                                        mTmpManager.prepare(bundle, mMapHeadData, mLooping, mSpeed, mCache, mCachePath, null);
+                                    }else {
+                                        resolveChangeUrl(mCache, mCachePath, url);
+                                        mTmpManager.prepare(mUrl, mMapHeadData, mLooping, mSpeed, mCache, mCachePath, null);
+                                    }
+                                    changeUiToPlayingBufferingShow();
                                 }
-                                isChanging = true;
-                                mSourcePosition = position;
-                                //创建临时管理器执行加载播放
-                                mTmpTag = url+aid+""+cid;
-                                mTmpManager = getTmpGSYVideoManager(mTmpTag);
-                                mTmpManager.setListener(gsyMediaPlayerListener);
-//                                mTmpManager = GSYVideoManager.tmpInstance(gsyMediaPlayerListener);
-//                                mTmpManager.initContext(getContext().getApplicationContext());
-                                resolveChangeUrl(mCache, mCachePath, url);
-                                mTmpManager.prepare(mUrl, mMapHeadData, mLooping, mSpeed, mCache, mCachePath, null);
-                                changeUiToPlayingBufferingShow();
-                            }
 
-                            @Override
-                            public void onError(BiliApiException apiException, int code) {
+                                @Override
+                                public void onError(BiliApiException apiException, int code) {
 
-                            }
-                        });
-
+                                }
+                            });
+                }
             }
         } else {
             RxToast.warning( "已经是 " + name);
@@ -287,22 +343,29 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     private void resolveChangedResult(boolean isSucs) {
         isChanging = false;
         mTmpManager = null;
-        getVideoUrl(mSourcePosition)
-                .compose(RxSchedulersHelper.ioAndThisThread())
-                .subscribe(new ObserverCallback<String>() {
-                    @Override
-                    public void onSuccess(String url) {
-                        mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
-                        mSwitchSize.setText(mTypeText);
-                        resolveChangeUrl(mCache, mCachePath, url);
-                        hideLoading();
-                    }
+        if(getMediaResource().isV2Bean() && getGSYVideoManager().getPlayer().getMediaPlayer() instanceof IjkMediaPlayer) {
+            mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
+            mSwitchSize.setText(mTypeText);
+            resolveChangeUrl(mCache, mCachePath, null);
+            hideLoading();
+        }else {
+            getVideoUrl(mSourcePosition)
+                    .compose(RxSchedulersHelper.ioAndThisThread())
+                    .subscribe(new ObserverCallback<String>() {
+                        @Override
+                        public void onSuccess(String url) {
+                            mTypeText = getDescString(mSourcePosition)/*.split(" ")[1]*/;
+                            mSwitchSize.setText(mTypeText);
+                            resolveChangeUrl(mCache, mCachePath, url);
+                            hideLoading();
+                        }
 
-                    @Override
-                    public void onError(BiliApiException apiException, int code) {
+                        @Override
+                        public void onError(BiliApiException apiException, int code) {
 
-                    }
-                });
+                        }
+                    });
+        }
     }
 
     private void releaseTmpManager() {

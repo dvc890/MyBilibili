@@ -10,7 +10,7 @@ import android.widget.ImageView;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
-import com.dvc.mybilibili.player.manager.CustomManager;
+import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
@@ -68,7 +68,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     }
 
     @Override
-    public void setMyOptionModelList() {
+    public void setMyOptionModelList(GSYVideoBaseManager manager) {
         List<VideoOptionModel> list = new ArrayList<>();list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0));
@@ -103,7 +103,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 50));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "protocol_whitelist", "crypto,file,http,https,tcp,tls,udp"));
-        ((CustomManager)getGSYVideoManager()).setOptionModelList(list);
+        manager.setOptionModelList(list);
 
     }
 
@@ -187,7 +187,6 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
             mLoadingProgressBar = findViewById(R.id.guicu_loadingview);
             ((AnimationDrawable)((ImageView)mLoadingProgressBar.findViewById(R.id.placeholder_iv)).getDrawable()).start();
         }
-        setMyOptionModelList();
         super.startPlayLogic();
     }
 

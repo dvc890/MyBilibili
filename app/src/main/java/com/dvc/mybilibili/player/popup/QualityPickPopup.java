@@ -11,7 +11,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.mybilibili.R;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import razerdp.basepopup.BasePopupWindow;
@@ -37,7 +36,8 @@ public class QualityPickPopup extends BasePopupWindow {
                 if(selectedPos == adapter.getData().indexOf(item)
                     || selectedPos == -1 && item.equals(getContext().getString(R.string.player_quality_switch_mode_auto1))) {
                     helper.setTextColor(R.id.quality_desc, Color.parseColor("#d85d84"));
-                }
+                } else
+                    helper.setTextColor(R.id.quality_desc, Color.WHITE);
                 if(getQuality(adapter.getData().indexOf(item)) > 96) {//需要大会员
 //                    helper.setText(R.id.need_tips, item);
                 }else if(getQuality(adapter.getData().indexOf(item)) > 64) {//需要登录

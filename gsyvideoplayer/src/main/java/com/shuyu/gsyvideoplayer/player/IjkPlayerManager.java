@@ -12,7 +12,6 @@ import android.view.Surface;
 import com.shuyu.gsyvideoplayer.cache.ICacheManager;
 import com.shuyu.gsyvideoplayer.model.GSYModel;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
-import com.shuyu.gsyvideoplayer.utils.CommonUtil;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.utils.RawDataSourceProvider;
@@ -24,6 +23,7 @@ import java.util.List;
 import tv.danmaku.ijk.media.player.IMediaPlayer;
 import tv.danmaku.ijk.media.player.IjkLibLoader;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+import tv.danmaku.ijk.media.player.listener.BiliMediaCodecSelectListener;
 
 /**
  * IJKPLayer
@@ -61,6 +61,8 @@ public class IjkPlayerManager implements IPlayerManager {
                 return true;
             }
         });
+        BiliMediaCodecSelectListener biliMediaCodecSelectListener = new BiliMediaCodecSelectListener(context);
+        mediaPlayer.setOnMediaCodecSelectListener(biliMediaCodecSelectListener);
         GSYModel gsyModel = (GSYModel) msg.obj;
         try {
             //开启硬解码
@@ -69,6 +71,19 @@ public class IjkPlayerManager implements IPlayerManager {
                 mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 1);
                 mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-auto-rotate", 1);
                 mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-handle-resolution-change", 1);
+
+                mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-decoder-switch", 1);
+                if(false) {//是否使用h265
+                    mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "dash-h265", 1);
+                    String string = biliMediaCodecSelectListener.getBestCodecName("video/avc");
+                    String a2 = biliMediaCodecSelectListener.getBestCodecName("video/hevc");
+                    if (!TextUtils.isEmpty(string)) {
+                        mediaPlayer.setOption(4, "mediacodec-default-avc-name", string);
+                    }
+                    if (!TextUtils.isEmpty(a2)) {
+                        mediaPlayer.setOption(4, "mediacodec-default-hevc-name", a2);
+                    }
+                }
             }
 
             if (gsyModel.isCache() && cacheManager != null) {
@@ -76,7 +91,7 @@ public class IjkPlayerManager implements IPlayerManager {
             } else {
                 String url = gsyModel.getUrl();
                 if(gsyModel.isDashRes()) {
-                    mediaPlayer.setDataSource(context, Uri.parse(CommonUtil.makeUrl(url, false, false, false, true)));
+                    mediaPlayer.setDataSource(context, Uri.parse("ijkdash"));
                     mediaPlayer.setDashDataSource(gsyModel.getDashRes(), 0 , gsyModel.getDashVideoCurId());
                 } else {
                     if (!TextUtils.isEmpty(url)) {

@@ -83,6 +83,15 @@ public class FtVideoUrlInfoBean {
         return quality;
     }
 
+    public int findPos(int quality) {
+        int defpos = 0;
+        for(int pos = 0; pos < getSupportQuality().size(); pos++) {
+            if (getSupportQuality().get(pos) == quality) return pos;
+            if (getSupportQuality().get(pos) == this.quality) defpos = pos;
+        }
+        return defpos;
+    }
+
     public List<String> getSupportDescription() {
         return acceptDescription;
     }
