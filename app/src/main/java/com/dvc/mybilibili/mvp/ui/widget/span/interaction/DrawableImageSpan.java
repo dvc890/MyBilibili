@@ -44,9 +44,10 @@ public class DrawableImageSpan extends C6278c {
             if (resources != null) {
                 dimensionPixelSize = resources.getDimensionPixelSize(R.dimen.text_size_small);
                 f68558v = dimensionPixelSize;
+            } else {
+                dimensionPixelSize = 0;
+                f68558v = dimensionPixelSize;
             }
-            dimensionPixelSize = 0;
-            f68558v = dimensionPixelSize;
         }
         return f68558v;
     }

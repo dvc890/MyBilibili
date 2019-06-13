@@ -2,6 +2,7 @@ package com.dvc.mybilibili.player;
 
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +17,12 @@ import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import tv.danmaku.ijk.media.player.IjkCodecHelper;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
+import tv.danmaku.ijk.media.player.listener.BiliMediaCodecSelectListener;
 
 /**
  * 直播用的播放器
@@ -68,12 +70,40 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     }
 
     @Override
-    public void setMyOptionModelList(GSYVideoBaseManager manager) {
-        List<VideoOptionModel> list = new ArrayList<>();list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 0));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec", 0));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "vn", 1));
+    public List<VideoOptionModel> setMyOptionModelList(GSYVideoBaseManager manager) {
+        List<VideoOptionModel> list = super.setMyOptionModelList(manager);
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "opensles", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "soundtouch", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "start-on-prepared", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "skip-calc-frame-rate", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "play-buffer-water-mark", 500));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "play-buffer-wait-time", 500));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "auto-water-mark", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enough-buffer-percent", 60));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "early_framedrop", 1));
+        String str = "video/avc";
+        BiliMediaCodecSelectListener biliMediaCodecSelectListener = new BiliMediaCodecSelectListener(getContext());
+        String string = biliMediaCodecSelectListener.getBestCodecName(str);
+        if(TextUtils.isEmpty(string)){
+            IjkCodecHelper.getBestCodecName(str);
+            biliMediaCodecSelectListener.setBestCodecName(str, string);
+        }
+
+        if (!TextUtils.isEmpty(string)) {
+            GSYVideoType.enableMediaCodec();
+            list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "async-init-decoder", 1));
+            list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "video-mime-type", str));
+            list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-default-name", string));
+            list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "is-hevc-supported", 1));
+            list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-all-videos", 1));
+        }
+
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_frame", 0));
+
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "hls_io_protocol_enable", 1));
 //        int maxMemory = (int) Runtime.getRuntime().maxMemory();
 //        int capacity;
 //        if (maxMemory > 25165824) {
@@ -85,7 +115,6 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 //        }
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "async-forwards-capacity", maxMemory));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "async-backwards-capacity", capacity));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", "Bilibili Freedoooooom/MarkII"));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "cache_file_close", 0));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-buffer-size", 8388608));
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "min-frames", 120));
@@ -101,10 +130,9 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 //        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "flush_packets", 1));
         //  关闭播放器缓冲，这个必须关闭，否则会出现播放一段时间后，一直卡主，控制台打印 FFP_MSG_BUFFERING_START
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "packet-buffering", 0));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "framedrop", 50));
-//        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "protocol_whitelist", "crypto,file,http,https,tcp,tls,udp"));
         manager.setOptionModelList(list);
 
+        return list;
     }
 
     public boolean setUp(LivePlayerInfo mediaResource, boolean cacheWithPlay, String title) {

@@ -306,10 +306,23 @@ public abstract class BiliVideoPlayer extends StandardGSYVideoPlayer {
         return mHadPlay;
     }
 
-    public void setMyOptionModelList(GSYVideoBaseManager manager){
+    public List<VideoOptionModel> setMyOptionModelList(GSYVideoBaseManager manager){
         List<VideoOptionModel> list = new ArrayList<>();
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 61));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-accurate-seek", 1));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "accurate-seek-timeout", 500));
+
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", "Bilibili Freedoooooom/MarkII"));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "connect_timeout", 10000000));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 2000000));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "icy", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_convert", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "safe", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-tcp-hook", "ijktcphook"));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist", "quic,ijkio,async,cache,crypto,file,http,https,ijkhttphook,ijkfilehook, ijkinject,ijklivehook,ijklongurl,ijksegment,ijktcphook,pipe,rtp,tcp,tls,udp,ijkurlhook,data"));
         manager.setOptionModelList(list);
+        return list;
     }
 
     /**

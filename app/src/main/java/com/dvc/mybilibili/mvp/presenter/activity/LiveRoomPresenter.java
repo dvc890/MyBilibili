@@ -8,13 +8,10 @@ import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePlayerInfo;
 import com.dvc.mybilibili.mvp.presenter.MyMvpBasePresenter;
 import com.dvc.mybilibili.mvp.ui.activity.LiveRoomView;
 import com.trello.rxlifecycle2.LifecycleProvider;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 
@@ -26,7 +23,7 @@ public class LiveRoomPresenter extends MyMvpBasePresenter<LiveRoomView> {
     }
 
     public void loadLivePlayUrl(long roomId) {
-        this.apiHelper.getLiveRoomPlayUrl(roomId, 3)
+        this.apiHelper.getLiveRoomPlayUrl(roomId, 4)
 //        this.apiHelper.getLiveRoomM3u8PlayUrl(roomId)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_DESTROY))

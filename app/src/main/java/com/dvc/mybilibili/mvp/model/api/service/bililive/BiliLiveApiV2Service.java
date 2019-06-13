@@ -751,6 +751,24 @@ public interface BiliLiveApiV2Service {
     @POST("/heartbeat/v1/OnLine/mobileOnline")
     Observable<GeneralResponse<BiliLiveActivityReceiveInfo>> getUserOnlineHeart(@Field("room_id") long j, @Field("scale") String str);
 
+    @FormUrlEncoded
+    @Headers("Interceptor:"+C9909b.CLASSNAME)
+//    @RequestInterceptor(C9909b.class)
+    @POST("https://live-trace.bilibili.com/xlive/data-interface/v1/heartbeat/mobileEntry")
+    Observable<String> getHeartbeatMobileEntry(@Field("room_id") long j, @Field("scale") String str);
+
+    @FormUrlEncoded
+    @Headers("Interceptor:"+C9909b.CLASSNAME)
+//    @RequestInterceptor(C9909b.class)
+    @POST("https://live-trace.bilibili.com/xlive/data-interface/v1/heartbeat/mobileExit")
+    Observable<String> sendHeartbeatMobileExit(@Field("room_id") long j, @Field("scale") String str);
+
+    @FormUrlEncoded
+    @Headers("Interceptor:"+C9909b.CLASSNAME)
+//    @RequestInterceptor(C9909b.class)
+    @POST("https://live-trace.bilibili.com/xlive/data-interface/v1/heartbeat/mobileHeartBeat")
+    Observable<String> sendHeartBeatMobile(@Field("room_id") long j, @Field("scale") String str);
+
     @GET("/live_user/v1/UserInfo/get_mobile_user")
     @Headers("Interceptor:"+C9909b.CLASSNAME)
 //    @RequestInterceptor(C9909b.class)

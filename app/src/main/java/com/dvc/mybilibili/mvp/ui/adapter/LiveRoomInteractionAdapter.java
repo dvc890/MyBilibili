@@ -2,7 +2,6 @@ package com.dvc.mybilibili.mvp.ui.adapter;
 
 import android.graphics.Color;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.style.ForegroundColorSpan;
@@ -26,7 +25,7 @@ public class LiveRoomInteractionAdapter extends BaseQuickAdapter<BaseMsgEntity, 
     @Override
     public void addData(@NonNull BaseMsgEntity data) {
         if(getData().size() == MAX_MSGLOG_NUM)
-            getData().remove(0);
+            remove(0);
         super.addData(data);
     }
 

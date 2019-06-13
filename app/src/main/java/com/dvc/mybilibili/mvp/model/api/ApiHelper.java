@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.model.api;
 import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveActivityReceiveInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomHistoryMsg;
@@ -71,6 +72,8 @@ public interface ApiHelper {
     Observable<VideoDanmaku> getDanmakuListV2(long aid, long cid);
 
     Observable<InputStream> getDanmakuStreamV2(long aid, long cid);
+
+    Observable<BiliLiveActivityReceiveInfo> getUserOnlineHeart(long room_id);
 
     Observable<BiliLiveRoomInfo> getRoomInfo(long roomid);
 

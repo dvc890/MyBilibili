@@ -28,7 +28,6 @@ import com.shuyu.gsyvideoplayer.video.base.GSYVideoViewBridge;
 import com.vondear.rxtool.view.RxToast;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -132,25 +131,15 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     }
 
     @Override
-    public void setMyOptionModelList(GSYVideoBaseManager manager) {
-        List<VideoOptionModel> list = new ArrayList<>();
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "user_agent", "Bilibili Freedoooooom/MarkII"));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "connect_timeout", 10000000));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "timeout", 2000000));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "icy", 0));
+    public List<VideoOptionModel> setMyOptionModelList(GSYVideoBaseManager manager) {
+        List<VideoOptionModel> list = super.setMyOptionModelList(manager);
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "auto_convert", 0));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "safe", 0));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dns_cache_timeout", 7200000));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_audio_read_len", 3072));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_audio_recv_buffer_size", 10240));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_video_recv_buffer_size", 102400));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "dash_recv_buffer_size_max", 1048576));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "http-tcp-hook", "ijktcphook"));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 0));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "protocol_whitelist", "quic,ijkio,async,cache,crypto,file,http,https,ijkhttphook,ijkfilehook, ijkinject,ijklivehook,ijklongurl,ijksegment,ijktcphook,pipe,rtp,tcp,tls,udp,ijkurlhook,data"));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "max-fps", 61));
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "render-wait-start", 1));
         int pos = mSourcePosition!=-1?mSourcePosition:mediaResource.findPos(-1);
         int codecid = getMediaResource().dash.getVideoList().get(pos).codecid;
         String str = codecid != 7 ? codecid != 12 ? "video/avc" : "video/hevc" : "video/avc";
@@ -170,6 +159,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
             }
         }
         manager.setOptionModelList(list);
+        return list;
     }
 
     public FtVideoUrlInfoBean getMediaResource() {

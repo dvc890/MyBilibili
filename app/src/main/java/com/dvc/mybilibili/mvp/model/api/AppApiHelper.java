@@ -10,15 +10,14 @@ import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
-import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveActivityReceiveInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomHistoryMsg;
-import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveRoomMode;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveUpInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.roominfo.BiliLiveRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
@@ -60,7 +59,6 @@ import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 import io.rx_cache2.EvictProvider;
-import retrofit2.http.Query;
 
 @Singleton
 public class AppApiHelper implements ApiHelper {
@@ -410,6 +408,17 @@ public class AppApiHelper implements ApiHelper {
                     if(liveSocketConfigGeneralResponse.isSuccess())
                         return liveSocketConfigGeneralResponse.data;
                     throw new BiliApiException(liveSocketConfigGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<BiliLiveActivityReceiveInfo> getUserOnlineHeart(long room_id) {
+        String scale = "xxhdpi";
+        return this.biliLiveApiV2Service.getUserOnlineHeart(room_id, scale)
+                .map(biliLiveActivityReceiveInfoGeneralResponse -> {
+                    if(biliLiveActivityReceiveInfoGeneralResponse.isSuccess())
+                        return biliLiveActivityReceiveInfoGeneralResponse.data;
+                    throw new BiliApiException(biliLiveActivityReceiveInfoGeneralResponse);
                 });
     }
 

@@ -5,6 +5,7 @@ import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.danmaku.live.interfaces.ILiveDanMuCallback;
 import com.dvc.mybilibili.danmaku.live.runnable.CallbackDispatchRunnable;
 import com.dvc.mybilibili.danmaku.live.runnable.HeartBeatRunnable;
+import com.dvc.mybilibili.danmaku.live.runnable.UserHeartRunnable;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.gateway.socketconfig.BiliLiveSocketConfig;
 import com.vondear.rxtool.RxLogTool;
@@ -34,6 +35,7 @@ public class LiveDanMuReceiver implements Closeable {
     private Long random;
     private Socket socket;
     private List<ILiveDanMuCallback> callbacks = new Vector<>();
+    private Thread userHeartThread;
     private Thread heartBeatThread;
     private Thread callbackDispatchThread;
 
@@ -132,6 +134,8 @@ public class LiveDanMuReceiver implements Closeable {
                         //定时发送心跳包
                         heartBeatThread = new Thread(new HeartBeatRunnable(outputStream));
                         heartBeatThread.start();
+                        userHeartThread = new Thread(new UserHeartRunnable(getRoomId()));
+                        userHeartThread.start();
                         //启动回调分发线程
                         callbackDispatchThread = new Thread(new CallbackDispatchRunnable(LiveDanMuReceiver.this, inputStream, callbacks));
                         callbackDispatchThread.start();
@@ -170,6 +174,13 @@ public class LiveDanMuReceiver implements Closeable {
         if (heartBeatThread != null) {
             try {
                 heartBeatThread.interrupt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (userHeartThread != null) {
+            try {
+                userHeartThread.interrupt();
             } catch (Exception e) {
                 e.printStackTrace();
             }
