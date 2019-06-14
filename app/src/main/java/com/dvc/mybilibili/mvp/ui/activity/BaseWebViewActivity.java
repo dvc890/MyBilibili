@@ -12,11 +12,11 @@ import com.dvc.base.MvpBaseActivity;
 import com.dvc.base.utils.FragmentUtils;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
-import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.ui.fragment.web.GuideFragment;
 import com.hannesdorfmann.mosby3.mvp.MvpBasePresenter;
 import com.hannesdorfmann.mosby3.mvp.MvpPresenter;
 import com.just.agentweb.AgentWeb;
+import com.just.agentweb.WebViewClient;
 
 import butterknife.BindView;
 
@@ -47,6 +47,7 @@ public abstract class BaseWebViewActivity extends MvpBaseActivity {
         Bundle bundle = new Bundle();
         bundle.putString(Keys.KEY_WEB_TITLE, getIntent().getStringExtra(Keys.KEY_WEB_TITLE));
         bundle.putString(Keys.KEY_WEB_URL, getIntent().getStringExtra(Keys.KEY_WEB_URL));
+        fragment.setWebViewClient(getWebViewClient());
         fragment.setArguments(bundle);
         FragmentUtils.switchContent(getSupportFragmentManager(), null, fragment, contentFrameLayout.getId(), 0, false);
 
@@ -69,8 +70,12 @@ public abstract class BaseWebViewActivity extends MvpBaseActivity {
         return this.fragment.getWebView();
     }
 
+    protected WebViewClient getWebViewClient() {
+        return null;
+    }
+
     public static void start(Context context, String title, String url) {
-        Intent intent = new Intent(context, BaseWebViewActivity.class);
+        Intent intent = new Intent(context, WebViewActivity.class);
         intent.putExtra(Keys.KEY_WEB_TITLE, title);
         intent.putExtra(Keys.KEY_WEB_URL, url);
         context.startActivity(intent);

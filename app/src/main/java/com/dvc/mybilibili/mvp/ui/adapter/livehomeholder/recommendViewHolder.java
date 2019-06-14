@@ -9,8 +9,6 @@ import android.widget.TextView;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
 
-import org.w3c.dom.Text;
-
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -53,5 +51,6 @@ public class recommendViewHolder extends DIYViewHolder {
         super.convert(item);
         title.setText(item.getModuleInfo().getTitle());
         more.setText(getContext().getString(R.string.live_home_view_more_tips_1,item.getModuleInfo().getCount()));
+        getView(R.id.refresh_group).setTag(item);
     }
 }

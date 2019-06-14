@@ -145,7 +145,10 @@ public class CommandActionUtils {
 
     public static boolean isSupportActionUrl(String netUrl) {
         BiliBiliUrl url = new BiliBiliUrl(netUrl);
-        if(moduleWebCommandMap.containsKey(url.host())) return true;
+        if(moduleWebCommandMap.containsKey(url.host())) {
+            if(url.host.equals("live.bilibili.com")) return isInteger(url.getLastPathSegment());
+            return true;
+        }
         if(moduleWebCommandMap.containsKey(url.main())) return true;
         return false;
     }
@@ -185,7 +188,7 @@ public class CommandActionUtils {
             this.uri = Uri.parse(url);
             this.scheme = url.substring(0, url.indexOf("://"));
             this.host = url.split("://")[1].split("/")[0];
-            this.main = url.contains("?")? url.substring(url.indexOf(this.host)/*+this.host.length()*/+1, url.indexOf("?")): url.split("://")[1]/*.split("/")[1]*/;
+            this.main = url.contains("?")? url.substring(url.indexOf(this.host)/*+this.host.length()*/, url.indexOf("?")): url.split("://")[1]/*.split("/")[1]*/;
             this.query = url.contains("?")? url.substring(url.indexOf("?")+1) : "";
             this.bundle = new Bundle();
             this.queryParameter = new HashMap<>();

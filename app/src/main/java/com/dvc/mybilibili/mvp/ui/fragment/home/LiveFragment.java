@@ -8,10 +8,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.app.utils.LoadStateViewUtils;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveHomePage;
@@ -46,6 +49,7 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
     private int relation_page = 1;
     private int rec_page = 1;
     private LiveHomeAdapter liveHomeAdapter;
+    private int recom_page = 1;
 
     @NonNull
     @Override
@@ -106,9 +110,10 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
     public void onResume() {
         super.onResume();
         rec_page = 1;
-        if (SystemClock.uptimeMillis() - tmpTime > 60000 * 5) {
+        recom_page = 1;
+//        if (SystemClock.uptimeMillis() - tmpTime > 60000 * 5) {
             mSwipeRefreshLayout.autoRefresh();
-        }
+//        }
         tmpTime = SystemClock.uptimeMillis();
     }
 
@@ -120,6 +125,7 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
 
     @Override
     public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+        recom_page = 1;
         presenter.loadData(relation_page, rec_page);
     }
 
@@ -144,10 +150,28 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
 
     @Override
     public void onItemChildClick(BaseQuickAdapter adapter, View view, int position) {
+        BiliLiveHomePage.ModuleUnit moduleUnit;
         switch (view.getId()) {
             case R.id.more://小时榜 查看更多
+                moduleUnit = (BiliLiveHomePage.ModuleUnit) view.getTag();
+                CommandActionUtils.toWeb(getContext(), moduleUnit.getModuleInfo().getTitle(), moduleUnit.getModuleInfo().getLink());
                 break;
             case R.id.refresh_group://推荐分类 换一换
+                Animation rotate = AnimationUtils.loadAnimation(getContext(), R.anim.rotate_360);
+                view.findViewById(R.id.icon_refresh).setAnimation(rotate);
+                view.findViewById(R.id.icon_refresh).startAnimation(rotate);
+                moduleUnit = (BiliLiveHomePage.ModuleUnit) view.getTag();
+                presenter.refreshModuleData(moduleUnit.getModuleInfo().getId(), null, recom_page++, moduleRooms -> {
+                    rotate.cancel();
+                    if(moduleRooms == null) return;
+                    for(int pos = 0; pos < liveHomeAdapter.getData().size(); pos++) {
+                        if(moduleUnit.getModuleInfo().getType() == liveHomeAdapter.getData().get(pos).getModuleInfo().getType()) {
+                            adapter.setData(pos, moduleRooms);
+                            break;
+                        }
+                    }
+                    if(recom_page == 5) recom_page = 1;
+                });
                 break;
             case R.id.text://推荐分类 查看更多推荐直播
                 break;

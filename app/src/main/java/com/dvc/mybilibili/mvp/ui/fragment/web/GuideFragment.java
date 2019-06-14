@@ -1,19 +1,17 @@
 package com.dvc.mybilibili.mvp.ui.fragment.web;
 
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.dvc.base.MvpBaseFragment;
+import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.mvp.presenter.fragment.GuideFragPresenter;
-import com.dvc.mybilibili.R;
 import com.just.agentweb.AgentWeb;
 import com.just.agentweb.WebViewClient;
 
@@ -38,6 +36,7 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
     GuideFragPresenter guideFragPresenter;
     private String title = null;
     private String url = null;
+    private WebViewClient webViewClient;
 
     @NonNull
     @Override
@@ -74,10 +73,10 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
 
     @Override
     public void OnLoadUrl(String url) {
-        agentWeb = AgentWeb.with(this)
+        AgentWeb.CommonBuilder builder = AgentWeb.with(this)
                 .setAgentWebParent(web_contentview, new FrameLayout.LayoutParams(-1,-1))
-                .useDefaultIndicator()
-//                .setWebChromeClient(new WebChromeClient() {
+                .useDefaultIndicator();
+//              builder.setWebChromeClient(new WebChromeClient() {
 //                    @Override
 //                    public void onProgressChanged(WebView view, int newProgress) {
 //                        if (progressBar_load != null) {
@@ -85,34 +84,9 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
 //                        }
 //                        super.onProgressChanged(view, newProgress);
 //                    }
-//                })
-                .setWebViewClient(new WebViewClient() {
-                    @Override
-                    public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                        if (progressBar_load != null) {
-//                            progressBar_load.setVisibility(View.VISIBLE);
-//                        }
-                        super.onPageStarted(view, url, favicon);
-                    }
-
-                    @Override
-                    public void onPageFinished(WebView view, String url) {
-//                        if (progressBar_load != null) {
-//                            progressBar_load.setVisibility(View.GONE);
-//                        }
-                        super.onPageFinished(view, url);
-                    }
-
-//                    @Override
-//                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                        if (url!=null){
-//                            ActionUtils.toWeb(getContext(), "", url);
-//                            return true;
-//                        }
-//                        return super.shouldOverrideUrlLoading(view, url);
-//                    }
-                })
-                .createAgentWeb().ready().go(url);
+//                });
+        if(webViewClient != null) builder.setWebViewClient(webViewClient);
+        agentWeb = builder.createAgentWeb().ready().go(url);
     }
 
     @OnClick(R.id.btn_back)
@@ -126,6 +100,10 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
         toolbar.setVisibility(isVisible?View.VISIBLE:View.GONE);
         if(!TextUtils.isEmpty(title))
             title_tv.setText(title);
+    }
+
+    public void setWebViewClient(WebViewClient webViewClient) {
+        this.webViewClient = webViewClient;
     }
 
     public AgentWeb getWebView() {

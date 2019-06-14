@@ -35,5 +35,6 @@ public class partitonViewHolder extends DIYViewHolder {
     public void convert(BiliLiveHomePage.ModuleUnit item) {
         super.convert(item);
         title.setText(item.getModuleInfo().getTitle());
+        textMore.setTag(item);
     }
 }

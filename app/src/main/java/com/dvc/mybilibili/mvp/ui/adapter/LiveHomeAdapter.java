@@ -1,6 +1,5 @@
 package com.dvc.mybilibili.mvp.ui.adapter;
 
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -81,24 +80,33 @@ public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.
     public BaseViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         try {
             View view = getItemView(Reflect.on(this).call("getLayoutId", viewType).get(), parent);
+            BaseViewHolder holder = null;
             switch (viewType) {
                 case BANNER_TYPE:
-                    return new bannerViewHolder(view);
+                    holder = new bannerViewHolder(view);
+                    break;
                 case PARTITON_TYPE1:
                 case PARTITON_TYPE2:
-                    return new partitonViewHolder(view);
+                    holder = new partitonViewHolder(view);
+                    break;
                 case HOURRANK_TYPE:
-                    return new hourRankViewHolder(view);
+                    holder = new hourRankViewHolder(view);
+                    break;
                 case RECOMM_TYPE:
-                    return new recommendViewHolder(view);
+                    holder = new recommendViewHolder(view);
+                    break;
                 case FOLLOWED_TYPE:
-                    return new followedViewHolder(view);
+                    holder = new followedViewHolder(view);
+                    break;
                 case TAG_TYPE:
-                    return new tagViewHolder(view);
+                    holder = new tagViewHolder(view);
+                    break;
                 default:
                     RxLogTool.e("not find viewtype:"+viewType);
                     return super.onCreateViewHolder(parent, 0);
             }
+            Reflect.on(holder).call("setAdapter", this);
+            return holder;
         } catch (Exception e) {
             RxLogTool.e("not find viewtype:"+viewType);
             return super.onCreateViewHolder(parent, 0);

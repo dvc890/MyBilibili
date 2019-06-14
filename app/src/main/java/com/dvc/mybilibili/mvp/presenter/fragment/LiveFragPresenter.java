@@ -17,6 +17,8 @@ import java.io.IOException;
 
 import javax.inject.Inject;
 
+import io.reactivex.functions.Consumer;
+
 public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
 
     @Inject
@@ -41,19 +43,27 @@ public class LiveFragPresenter extends MyMvpBasePresenter<LiveFragView> {
                 });
     }
 
-    public void refreshModuleData(int module_id, String attention_room_id, int page) {
+    public void refreshModuleData(int module_id, String attention_room_id, int page, Consumer<BiliLiveHomePage.ModuleRooms> consumer) {
         this.apiHelper.getLiveHomeModuleData(module_id, attention_room_id, page, 0)
                 .compose(RxSchedulersHelper.ioAndMainThread())
                 .compose(provider.bindUntilEvent(Lifecycle.Event.ON_PAUSE))
                 .subscribe(new ObserverCallback<BiliLiveHomePage.ModuleRooms>() {
                     @Override
                     public void onSuccess(BiliLiveHomePage.ModuleRooms moduleRooms) throws IOException {
-
+                        try {
+                            consumer.accept(moduleRooms);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
 
                     @Override
                     public void onError(BiliApiException apiException, int code) {
-
+                        try {
+                            consumer.accept(null);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
                     }
                 });
     }
