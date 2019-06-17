@@ -147,7 +147,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
             BiliMediaCodecSelectListener biliMediaCodecSelectListener = new BiliMediaCodecSelectListener(getContext());
             String string = biliMediaCodecSelectListener.getBestCodecName(str);
             if(TextUtils.isEmpty(string)){
-                IjkCodecHelper.getBestCodecName(str);
+                string = IjkCodecHelper.getBestCodecName(str);
                 biliMediaCodecSelectListener.setBestCodecName(str, string);
             }
 

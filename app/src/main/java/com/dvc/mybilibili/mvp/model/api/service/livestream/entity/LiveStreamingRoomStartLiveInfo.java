@@ -21,6 +21,9 @@ public class LiveStreamingRoomStartLiveInfo implements Parcelable {
     @JSONField(name = "try_time")
     public String tryTime;
 
+    public LiveStreamingRoomStartLiveInfo() {
+    }
+
     @Keep
     /* compiled from: BL */
     public static class Rtmp implements Parcelable {
@@ -33,6 +36,9 @@ public class LiveStreamingRoomStartLiveInfo implements Parcelable {
         public String newLink;
         @JSONField(name = "provider")
         public String provider;
+
+        public Rtmp() {
+        }
 
         /* compiled from: BL */
         /* renamed from: com.bilibili.bilibililive.api.entity.LiveStreamingRoomStartLiveInfo$Rtmp$1 */

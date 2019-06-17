@@ -1,12 +1,12 @@
 package com.dvc.mybilibili.mvp.model.api.service.bililive.interceptor;
 
 import android.content.Context;
-import android.text.TextUtils;
 
 import com.dvc.mybilibili.mvp.model.api.baseinterceptor.BaseIntercept;
 
-import java.io.PrintStream;
 import java.util.Map;
+
+import okhttp3.Request;
 
 public class bej extends BaseIntercept {
     private static final String f78742c = "Bilibili Freedoooooom/MarkII";
@@ -28,15 +28,12 @@ public class bej extends BaseIntercept {
         map.put("appkey", m122271a(3, "fSDRQgpusmIbrzyc"));
     }
 
-//    public void mo35843a(C23722a c23722a) {
-//        super.mo35843a(c23722a);
-//        c23722a.mo79987a("User-Agent", f78742c);
-//        String str = f78743d;
-//        StringBuilder stringBuilder = new StringBuilder();
-//        stringBuilder.append(C2198d.m8642a(C1905b.m8107a()).mo11371j());
-//        stringBuilder.append("");
-//        c23722a.mo79987a(str, stringBuilder.toString());
-//    }
+    public void setHeader(Request.Builder request) {
+        super.setHeader(request);
+        request.addHeader("User-Agent", f78742c);
+        if(getiAccountHelper().isLogin())
+            request.addHeader(f78743d, getiAccountHelper().getToken().mid+"");
+    }
 
     public static String m122271a(int i, String str) {
         StringBuilder stringBuilder = new StringBuilder();
@@ -48,11 +45,10 @@ public class bej extends BaseIntercept {
                 i2 += i4 * i2;
                 i4++;
                 i3 = (((b + i2) - 65) % 57) + 65;
-                PrintStream printStream = System.out;
                 StringBuilder stringBuilder2 = new StringBuilder();
                 stringBuilder2.append("t");
                 stringBuilder2.append(i2);
-                printStream.println(stringBuilder2.toString());
+                System.out.println(stringBuilder2.toString());
             }
             stringBuilder.append((char) i3);
         }

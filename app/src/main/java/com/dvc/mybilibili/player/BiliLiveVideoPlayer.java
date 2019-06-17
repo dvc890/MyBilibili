@@ -86,7 +86,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         BiliMediaCodecSelectListener biliMediaCodecSelectListener = new BiliMediaCodecSelectListener(getContext());
         String string = biliMediaCodecSelectListener.getBestCodecName(str);
         if(TextUtils.isEmpty(string)){
-            IjkCodecHelper.getBestCodecName(str);
+            string = IjkCodecHelper.getBestCodecName(str);
             biliMediaCodecSelectListener.setBestCodecName(str, string);
         }
 
@@ -102,7 +102,7 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_loop_filter", 0));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_CODEC, "skip_frame", 0));
 
-        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 0));
+        list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "reconnect", 1));
         list.add(new VideoOptionModel(IjkMediaPlayer.OPT_CATEGORY_FORMAT, "hls_io_protocol_enable", 1));
 //        int maxMemory = (int) Runtime.getRuntime().maxMemory();
 //        int capacity;

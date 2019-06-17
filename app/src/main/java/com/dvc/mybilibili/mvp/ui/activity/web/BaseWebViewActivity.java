@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.ui.activity;
+package com.dvc.mybilibili.mvp.ui.activity.web;
 
 import android.content.Context;
 import android.content.Intent;

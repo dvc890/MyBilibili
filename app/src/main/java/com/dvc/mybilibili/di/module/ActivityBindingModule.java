@@ -9,14 +9,14 @@ import com.dvc.mybilibili.di.module.activity.SplashActivityModule;
 import com.dvc.mybilibili.di.module.activity.TestActivityModule;
 import com.dvc.mybilibili.di.module.activity.VideoDetailsActivityModule;
 import com.dvc.mybilibili.di.module.activity.WebViewActivityModule;
-import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
+import com.dvc.mybilibili.mvp.ui.activity.web.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LiveRoomActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;
 import com.dvc.mybilibili.mvp.ui.activity.SplashActivity;
 import com.dvc.mybilibili.mvp.ui.activity.TestActivity;
 import com.dvc.mybilibili.mvp.ui.activity.VideoDetailsActivity;
-import com.dvc.mybilibili.mvp.ui.activity.WebViewActivity;
+import com.dvc.mybilibili.mvp.ui.activity.web.WebViewActivity;
 
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;

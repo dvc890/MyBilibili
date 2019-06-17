@@ -111,9 +111,9 @@ public class LiveFragment extends MvpBaseFragment<LiveFragView, LiveFragPresente
         super.onResume();
         rec_page = 1;
         recom_page = 1;
-//        if (SystemClock.uptimeMillis() - tmpTime > 60000 * 5) {
-            mSwipeRefreshLayout.autoRefresh();
-//        }
+        if (SystemClock.uptimeMillis() - tmpTime > 60000 * 2) {
+            onRefresh(mSwipeRefreshLayout);
+        }
         tmpTime = SystemClock.uptimeMillis();
     }
 

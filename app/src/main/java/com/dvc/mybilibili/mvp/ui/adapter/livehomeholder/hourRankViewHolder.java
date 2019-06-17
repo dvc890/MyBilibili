@@ -38,6 +38,7 @@ public class hourRankViewHolder extends BaseViewHolder {
         rankSilver.setOnClickListener(listener);
         rankGold.setOnClickListener(listener);
         rankBronze.setOnClickListener(listener);
+        addOnClickListener(more.getId());
     }
 
     public void convert(BiliLiveHomePage.ModuleHourRank item) {
@@ -63,10 +64,7 @@ public class hourRankViewHolder extends BaseViewHolder {
                 }
             }
         }
-        if(more.getTag() == null) {
-            more.setTag(item);
-            addOnClickListener(more.getId());
-        }
+        more.setTag(item);
     }
 
     View.OnClickListener listener = v -> {

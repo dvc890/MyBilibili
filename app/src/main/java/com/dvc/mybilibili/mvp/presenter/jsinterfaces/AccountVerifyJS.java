@@ -10,7 +10,7 @@ import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
-import com.dvc.mybilibili.mvp.ui.activity.IAccountVerify;
+import com.dvc.mybilibili.mvp.ui.activity.web.IAccountVerify;
 import com.just.agentweb.AgentWeb;
 import com.vondear.rxtool.view.RxToast;
 

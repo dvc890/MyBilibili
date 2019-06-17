@@ -127,8 +127,9 @@ public class CommonInterceptor implements Interceptor {
         }
     }
 
-    private void putCommonParams(Map<String,String> paramsMap,Request oldRequest) {
+    private Request.Builder putCommonParams(Map<String,String> paramsMap, Request oldRequest) {
         String header = oldRequest.header("Interceptor");
+        Request.Builder builder = oldRequest.newBuilder();
         if(!TextUtils.isEmpty(header)) {
             try {
                 Iintercept intercept;
@@ -137,12 +138,14 @@ public class CommonInterceptor implements Interceptor {
                 else
                     intercept = interceptMap.get(header);
                 intercept.putParams(paramsMap);
+                intercept.setHeader(builder);
             }catch (ReflectException e) {}
         }else {
             if(this.baseIntercept == null)
                 this.baseIntercept = new BaseIntercept(context);
             baseIntercept.putParams(paramsMap);
         }
+        return builder;
     }
 
 

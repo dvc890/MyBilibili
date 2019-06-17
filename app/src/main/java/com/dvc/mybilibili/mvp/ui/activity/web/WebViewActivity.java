@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.ui.activity;
+package com.dvc.mybilibili.mvp.ui.activity.web;
 
 import android.graphics.Bitmap;
 import android.os.Build;
@@ -21,7 +21,12 @@ public class WebViewActivity extends BaseWebViewActivity {
         return new WebViewClient() {
             @Override
             public void onPageStarted(WebView view, String url, Bitmap favicon) {
-                super.onPageStarted(view, url, favicon);
+                if (CommandActionUtils.isSupportActionUrl(url)){
+                    CommandActionUtils.toWeb(getBaseContext(), "", url);
+                    getWebView().getUrlLoader().stopLoading();
+                }
+                else
+                    super.onPageStarted(view, url, favicon);
             }
 
             @Override
@@ -38,7 +43,7 @@ public class WebViewActivity extends BaseWebViewActivity {
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
-            @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
+            @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, WebResourceRequest request) {
                 if (CommandActionUtils.isSupportActionUrl(request.getUrl().toString())){

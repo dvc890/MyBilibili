@@ -7,8 +7,8 @@ import android.os.Bundle;
 import android.text.TextUtils;
 
 import com.dvc.mybilibili.app.constants.Keys;
-import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
-import com.dvc.mybilibili.mvp.ui.activity.BaseWebViewActivity;
+import com.dvc.mybilibili.mvp.ui.activity.web.AccountVerifyWebActivity;
+import com.dvc.mybilibili.mvp.ui.activity.web.BaseWebViewActivity;
 import com.dvc.mybilibili.mvp.ui.activity.HomeActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LiveRoomActivity;
 import com.dvc.mybilibili.mvp.ui.activity.LoginActivity;

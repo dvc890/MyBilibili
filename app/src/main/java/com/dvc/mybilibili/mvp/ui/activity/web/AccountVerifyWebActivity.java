@@ -1,4 +1,4 @@
-package com.dvc.mybilibili.mvp.ui.activity;
+package com.dvc.mybilibili.mvp.ui.activity.web;
 
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;

@@ -37,6 +37,7 @@ public class GSYVideoType {
      */
     public final static int TEXTURE = 0;
 
+    private static boolean MEDIA_CODEC_H265 = false;
 
     //显示比例类型
     private static int TYPE = SCREEN_TYPE_DEFAULT;
@@ -79,11 +80,23 @@ public class GSYVideoType {
         sTextureMediaPlay = false;
     }
 
+    public static void enableUseH265() {
+        MEDIA_CODEC_H265 = true;
+    }
+
+    public static void disableUseH265() {
+        MEDIA_CODEC_H265 = false;
+    }
+
     /**
      * 是否开启硬解码
      */
     public static boolean isMediaCodec() {
         return MEDIA_CODEC_FLAG;
+    }
+
+    public static boolean isUseH265() {
+        return MEDIA_CODEC_H265;
     }
 
     /**

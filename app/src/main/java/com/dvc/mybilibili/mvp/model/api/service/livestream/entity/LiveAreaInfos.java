@@ -6,7 +6,7 @@ import java.util.List;
 
 /* compiled from: BL */
 /* renamed from: com.bilibili.bilibililive.api.entity.a */
-public class C1939a {
+public class LiveAreaInfos {
     @JSONField(name = "id")
     /* renamed from: a */
     public int id;
@@ -20,12 +20,12 @@ public class C1939a {
     /* renamed from: a */
     public void mo9006a() {
         for (BaseLiveArea baseLiveArea : this.list) {
-            baseLiveArea.f5798c = this.name;
+            baseLiveArea.parent_name = this.name;
         }
     }
 
     /* renamed from: b */
-    public boolean mo9007b() {
-        return "\u6e38\u620f".equals(this.name);
+    public boolean isGameArea() {
+        return "游戏".equals(this.name);
     }
 }

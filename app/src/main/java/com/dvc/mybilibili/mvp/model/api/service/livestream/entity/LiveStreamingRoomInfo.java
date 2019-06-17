@@ -40,6 +40,9 @@ public class LiveStreamingRoomInfo implements Parcelable {
     public String try_time;
     public String uname;
 
+    public LiveStreamingRoomInfo() {
+    }
+
     /* compiled from: BL */
     /* renamed from: com.bilibili.bilibililive.api.entity.LiveStreamingRoomInfo$1 */
     static class C52681 implements Creator<LiveStreamingRoomInfo> {

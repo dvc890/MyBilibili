@@ -13,6 +13,8 @@ import org.json.JSONObject;
 
 import java.util.Map;
 
+import okhttp3.Request;
+
 /* compiled from: BL */
 /* renamed from: b.ewf */
 public class BaseIntercept implements Iintercept{
@@ -51,22 +53,20 @@ public class BaseIntercept implements Iintercept{
         }
     }
 
-//    public void mo35843a(C23722a c23722a) {
+    public void setHeader(Request.Builder request) {
 //        String a = C4377d.m19745a();
 //        if (!TextUtils.isEmpty(a)) {
-//            c23722a.mo79987a("Display-ID", a);
+//            request.mo79987a("Display-ID", a);
 //        }
 //        a = C4376c.m19743a();
 //        if (!TextUtils.isEmpty(a)) {
-//            c23722a.mo79987a("Buvid", a);
+//            request.mo79987a("Buvid", a);
 //        }
-//        a = C1793a.m7864b();
-//        if (!TextUtils.isEmpty(a)) {
-//            c23722a.mo79987a("User-Agent", a);
-//        }
+        request.addHeader("User-Agent", "Mozilla/5.0 BiliDroid/5.41.0 (bbcallen@gmail.com)");
+
 //        a = C4378e.m19747a();
 //        if (!TextUtils.isEmpty(a)) {
-//            c23722a.mo79987a("Device-ID", a);
+//            request.mo79987a("Device-ID", a);
 //        }
-//    }
+    }
 }

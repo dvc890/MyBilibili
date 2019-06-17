@@ -73,16 +73,18 @@ public class IjkPlayerManager implements IPlayerManager {
                 mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-handle-resolution-change", 1);
 
                 mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "enable-decoder-switch", 1);
-                if(false) {//是否使用h265
+                if(GSYVideoType.isUseH265()) {//是否使用h265
                     mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "dash-h265", 1);
                     String string = biliMediaCodecSelectListener.getBestCodecName("video/avc");
                     String a2 = biliMediaCodecSelectListener.getBestCodecName("video/hevc");
                     if (!TextUtils.isEmpty(string)) {
-                        mediaPlayer.setOption(4, "mediacodec-default-avc-name", string);
+                        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-default-avc-name", string);
                     }
                     if (!TextUtils.isEmpty(a2)) {
-                        mediaPlayer.setOption(4, "mediacodec-default-hevc-name", a2);
+                        mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "mediacodec-default-hevc-name", a2);
                     }
+                } else {
+                    mediaPlayer.setOption(IjkMediaPlayer.OPT_CATEGORY_PLAYER, "dash-h265", 0);
                 }
             }
 

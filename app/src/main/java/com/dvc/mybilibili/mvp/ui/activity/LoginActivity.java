@@ -2,7 +2,6 @@ package com.dvc.mybilibili.mvp.ui.activity;
 
 import android.content.Intent;
 import android.support.annotation.NonNull;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,6 +16,7 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.presenter.activity.LoginPresenter;
+import com.dvc.mybilibili.mvp.ui.activity.web.AccountVerifyWebActivity;
 import com.jakewharton.rxbinding2.view.RxView;
 import com.jakewharton.rxbinding2.widget.RxTextView;
 import com.vondear.rxtool.view.RxToast;

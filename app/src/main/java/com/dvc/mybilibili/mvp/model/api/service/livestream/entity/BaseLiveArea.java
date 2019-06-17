@@ -10,13 +10,16 @@ public class BaseLiveArea implements Parcelable {
     public static final Creator<BaseLiveArea> CREATOR = new C19281();
     @JSONField(name = "id")
     /* renamed from: a */
-    public int f5796a;
+    public int id;
     @JSONField(name = "name")
     /* renamed from: b */
-    public String f5797b;
+    public String name;
     @JSONField(name = "parent_name")
     /* renamed from: c */
-    public String f5798c;
+    public String parent_name;
+
+    public BaseLiveArea() {
+    }
 
     /* compiled from: BL */
     /* renamed from: com.bilibili.bilibililive.api.entity.BaseLiveArea$1 */
@@ -40,14 +43,14 @@ public class BaseLiveArea implements Parcelable {
     }
 
     public BaseLiveArea(Parcel parcel) {
-        this.f5796a = parcel.readInt();
-        this.f5797b = parcel.readString();
-        this.f5798c = parcel.readString();
+        this.id = parcel.readInt();
+        this.name = parcel.readString();
+        this.parent_name = parcel.readString();
     }
 
     public void writeToParcel(Parcel parcel, int i) {
-        parcel.writeInt(this.f5796a);
-        parcel.writeString(this.f5797b);
-        parcel.writeString(this.f5798c);
+        parcel.writeInt(this.id);
+        parcel.writeString(this.name);
+        parcel.writeString(this.parent_name);
     }
 }

@@ -33,11 +33,14 @@ import com.dvc.mybilibili.mvp.ui.fragment.live.holder.LiveRoomInteractionHolder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import master.flame.danmaku.danmaku.util.SystemClock;
 
 public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInteractionView, LiveRoomInteractionPresenter> implements LiveRoomInteractionView, ILiveDanMuCallback {
 
@@ -53,6 +56,7 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
     private LiveRoomInteractionAdapter adapter;
     private long roomId = 0;
     private boolean notScrollInBottom = false;
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @NonNull
     @Override
@@ -173,17 +177,21 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
 
     @Override
     public void onDanMuMSGPackage(DanMuMSGEntity danMuMSGEntity) {
-        ThreadManager.get().getMainHandler().postAtFrontOfQueue(() -> {
-            try {
-                adapter.addData(danMuMSGEntity);
-                if (!notScrollInBottom)
-                    onNewMsgClicked();
-                else {
-                    holder.showNewMsgTips();
+        executor.execute(()->{
+            ThreadManager.get().getMainHandler().postAtFrontOfQueue(() -> {
+                try {
+                    adapter.addData(danMuMSGEntity);
+                    if (!notScrollInBottom)
+                        onNewMsgClicked();
+                    else {
+                        holder.showNewMsgTips();
+                    }
+                } catch (Exception e) {
                 }
-            } catch (Exception e) {
-            }
+            });
+            SystemClock.sleep(500);
         });
+
     }
 
     @Override

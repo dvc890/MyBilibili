@@ -10,7 +10,7 @@ import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.BiliLiveHotWis
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.BiliLiveRoomDanmuConfig;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.BiliLiveWish;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.BiliLiveWishConfig;
-import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.C1939a;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveAreaInfos;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.ChangeLiveStreamInfo;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.HistoryArea;
 import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.IncomeDetailInfo;
@@ -78,10 +78,11 @@ public interface LiveStreamApiService {
     //@RequestInterceptor(aoz.class)
     Observable<GeneralResponse<List<BiliLiveTitle>>> getAppUserTitle(@Query("scale") String str);
 
+    //获取直播分区列表（推流的时候也需要该信息）
     @GET("http://api.live.bilibili.com/room/v1/Area/getList")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<List<C1939a>>> getAreaList();
+    Observable<GeneralResponse<List<LiveAreaInfos>>> getAreaList();
 
     @GET("client/v1/Game/getCallList")
     @Headers("Interceptor:"+aoz.CLASSNAME)
@@ -205,6 +206,7 @@ public interface LiveStreamApiService {
     //@RequestInterceptor(aoz.class)
     Observable<GeneralResponse<BiliLiveAddWish>> publishWish(@Query("type_id") int i, @Query("wish_limit") int i2, @Query("content") String str);
 
+    //设置粉丝徽章的命名
     @GET("/fans_medal/v1/medal/open")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
@@ -216,11 +218,19 @@ public interface LiveStreamApiService {
     @POST("/banned_service/v1/Shield/shield_keyword")
     Observable<GeneralResponse<List<String>>> setShieldKeyword(@Field("set_room_shield") int i, @Field("keyword") String str, @Field("type") int i2);
 
+    /**
+     *
+     * @param room_id
+     * @param area_v2
+     * @param type 横屏：1，竖屏：2
+     * @param freeFlow 联通："unicom"  非联通：null
+     * @return
+     */
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
     @POST("/room/v1/Room/startLive")
-    Observable<GeneralResponse<LiveStreamingRoomStartLiveInfo>> startLiveStreaming(@Field("room_id") int room_id, @Field("area_v2") int i2, @Field("type") int i3, @Field("freeFlow") String str);
+    Observable<GeneralResponse<LiveStreamingRoomStartLiveInfo>> startLiveStreaming(@Field("room_id") int room_id, @Field("area_v2") int area_v2, @Field("type") int type, @Field("freeFlow") String freeFlow);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)
