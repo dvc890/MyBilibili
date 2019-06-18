@@ -4,7 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.dvc.base.di.PerFragment;
-import com.dvc.mybilibili.mvp.ui.activity.AccountVerifyWebActivity;
+import com.dvc.mybilibili.mvp.ui.activity.web.AccountVerifyWebActivity;
 import com.dvc.mybilibili.mvp.ui.fragment.web.GuideFragment;
 import com.trello.lifecycle2.android.lifecycle.AndroidLifecycle;
 import com.trello.rxlifecycle2.LifecycleProvider;

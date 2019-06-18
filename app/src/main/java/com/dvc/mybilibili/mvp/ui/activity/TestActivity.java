@@ -7,11 +7,18 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
+import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
+import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
+import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.LiveStreamApiService;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStartLiveInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStopLiveInfo;
 import com.dvc.mybilibili.mvp.model.api.service.video.VideoApiService;
 import com.dvc.mybilibili.player.BiliVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
@@ -26,7 +33,11 @@ import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
+import io.kickflip.sdk.view.GLCameraEncoderView;
+import me.lake.librestreaming.ws.StreamAVOption;
+import me.lake.librestreaming.ws.StreamLiveCameraView;
 
 public class TestActivity extends DaggerAppCompatActivity implements Camera.PreviewCallback, SurfaceHolder.Callback {
 
@@ -34,10 +45,14 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
     LottieAnimationView lottieAnimationView;
     @BindView(R.id.bilivideoplayer)
     BiliVideoPlayer biliVideoPlayer;
-//    @BindView(R.id.animation_view2)
+    //    @BindView(R.id.animation_view2)
 //    SVGAImageView svgaImageView;
     @BindView(R.id.camera_surface)
     SurfaceView cameraView;
+    @BindView(R.id.stream_previewView)
+    StreamLiveCameraView streamLiveCameraView;
+    @BindView(R.id.GLCameraEncoderView)
+    GLCameraEncoderView glCameraEncoderView;
 
     OrientationUtils orientationUtils;
 
@@ -45,6 +60,8 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
     VideoApiService videoApiService;
     @Inject
     BiliLiveApiV2Service liveApiV2Service;
+    @Inject
+    LiveStreamApiService liveStreamApiService;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,15 +76,53 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
 //                biliVideoPlayer.startPlayLogic());
 //        biliVideoPlayer.startPlayLogic();
 //        Debuger.enable();
+        streamLiveCameraView.init(this, new StreamAVOption());
+        glCameraEncoderView.a();
         new RxPermissions(this)
                 .request(Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO)
                 .compose(RxSchedulersHelper.ioAndMainThread())
-                .subscribe(b->{
-                    if(true) cameraView.getHolder().addCallback(this);
+                .subscribe(b -> {
+                    if (true) cameraView.getHolder().addCallback(this);
                 });
     }
 
+
+    @OnClick({R.id.start, R.id.stop})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.start:
+                liveStreamApiService.startLiveStreaming(884852, 2, 1, "unicom")
+                        .compose(RxSchedulersHelper.ioAndMainThread())
+                        .subscribe(new ObserverCallback<GeneralResponse<LiveStreamingRoomStartLiveInfo>>() {
+                            @Override
+                            public void onSuccess(GeneralResponse<LiveStreamingRoomStartLiveInfo> liveStreamingRoomStartLiveInfoGeneralResponse) throws IOException {
+                                liveStreamingRoomStartLiveInfoGeneralResponse.isSuccess();
+                            }
+
+                            @Override
+                            public void onError(BiliApiException apiException, int code) {
+                                apiException.canRetry();
+                            }
+                        });
+                break;
+            case R.id.stop:
+                liveStreamApiService.stopLiveStreaming(884852)
+                        .compose(RxSchedulersHelper.ioAndMainThread())
+                        .subscribe(new ObserverCallback<GeneralResponse<LiveStreamingRoomStopLiveInfo>>() {
+                            @Override
+                            public void onSuccess(GeneralResponse<LiveStreamingRoomStopLiveInfo> liveStreamingRoomStopLiveInfoGeneralResponse) throws IOException {
+                                liveStreamingRoomStopLiveInfoGeneralResponse.isSuccess();
+                            }
+
+                            @Override
+                            public void onError(BiliApiException apiException, int code) {
+                                apiException.canRetry();
+                            }
+                        });
+                break;
+        }
+    }
 
     private void testCamera(SurfaceHolder holder) {
         Camera camera = Camera.open(1);
@@ -85,10 +140,11 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
         camera.setParameters(parameters);
         try {
             camera.setPreviewDisplay(holder);
-            camera.setPreviewCallback(this);
+            camera.setPreviewCallbackWithBuffer(this);
+            camera.addCallbackBuffer(new byte[parameters.getPreviewSize().width* parameters.getPreviewSize().height*3 / 2]);
             camera.startPreview(); // 开始预览
             camera.autoFocus((success, camera1) -> {
-            camera.setDisplayOrientation(90);
+                camera.setDisplayOrientation(90);
             }); // 自动对焦
         } catch (IOException e) {
             e.printStackTrace();
@@ -113,8 +169,8 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
 
     @Override
     public void onPreviewFrame(byte[] data, Camera camera) {
-//        RxLogTool.e(data);
-
+        RxLogTool.e(data);
+        camera.addCallbackBuffer(data);
     }
 
     @Override
@@ -125,7 +181,7 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
-        RxToast.info("surfaceChanged:"+format+" "+width+" "+height);
+        RxToast.info("surfaceChanged:" + format + " " + width + " " + height);
     }
 
     @Override

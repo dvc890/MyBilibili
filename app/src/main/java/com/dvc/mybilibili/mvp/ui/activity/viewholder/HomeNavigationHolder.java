@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.dvc.base.BaseMvpHolder;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.application.BiliApplication;
-import com.dvc.mybilibili.app.glide.GlideUtils;
 import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
@@ -77,9 +76,10 @@ public class HomeNavigationHolder extends BaseMvpHolder implements View.OnClickL
     public void refrashAvatar(LoginInfo loginInfo) {
         if (this.dataManager.getUser().isLogin()) {
             avatar_layout.setAvatarUrl(this.dataManager.getUser().getAccountInfo().getAvatar());
-            avatar_layout.setPendantUrl(this.dataManager.getUser().getAccountInfo().getPendantInfo().getImage());
+            if(this.dataManager.getUser().getAccountInfo().getPendantInfo() != null)
+                avatar_layout.setPendantUrl(this.dataManager.getUser().getAccountInfo().getPendantInfo().getImage());
             if(this.dataManager.getUser().getAccountInfo().getVipInfo().isEffectiveYearVip())
-            avatar_layout.showBigVipIcon(PendantAvatarLayout.VerifySize.LARGE);
+                avatar_layout.showBigVipIcon(PendantAvatarLayout.VerifySize.LARGE);
             profile_cover_image.setImageResource(R.drawable.bili_drawerbg_logined);
             user_nick_tv.setText(this.dataManager.getUser().getAccountInfo().getUserName());
         } else {

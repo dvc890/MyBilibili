@@ -41,6 +41,12 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project (':base')
+    implementation project(":livestreamsdk")
+    implementation project(":gsyvideoplayer")
+////    GSYVideoPlayer
+//    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.3' //高版本需要AndroidX
+//    implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.3'//是否需要ExoPlayer模式
+//    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.3'
 
     implementation 'com.alibaba:fastjson:1.1.71.android'
     implementation 'org.jetbrains:annotations-java5:15.0@jar'
@@ -51,11 +57,6 @@ dependencies {
     implementation 'com.bigkoo:ConvenientBanner:2.1.4'
 ////    下拉刷新
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-24'
-////    GSYVideoPlayer
-//    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.3' //高版本需要AndroidX
-//    implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.3'//是否需要ExoPlayer模式
-//    implementation 'com.shuyu:gsyVideoPlayer-armv7a:6.0.3'
-    implementation project(":gsyvideoplayer")
 ////    lottie
     implementation 'com.airbnb.android:lottie:2.7.0'//更高版本要用AndroidX
 ////    SVGAPlayer

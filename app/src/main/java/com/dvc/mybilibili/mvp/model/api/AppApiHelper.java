@@ -30,6 +30,12 @@ import com.dvc.mybilibili.mvp.model.api.service.comment.BiliCommentApiService;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDialogue;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.LiveStreamApiService;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveAreaInfos;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStartLiveInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStopLiveInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.SimpleRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.passport.BiliAuthService;
 import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.TMFeedIndexService;
@@ -77,6 +83,7 @@ public class AppApiHelper implements ApiHelper {
     private final BiliCommentApiService biliCommentApiService;
     private final BiliSpaceApiService biliSpaceApiService;
     private final BiliLiveApiV2Service biliLiveApiV2Service;
+    private final LiveStreamApiService liveStreamApiService;
 
     @Inject
     public AppApiHelper(@ApplicationContext Context context, CacheProviders cacheProviders,
@@ -91,7 +98,8 @@ public class AppApiHelper implements ApiHelper {
                         ColumnApiService columnApiService,
                         BiliCommentApiService biliCommentApiService,
                         BiliSpaceApiService biliSpaceApiService,
-                        BiliLiveApiV2Service biliLiveApiV2Service) {
+                        BiliLiveApiV2Service biliLiveApiV2Service,
+                        LiveStreamApiService liveStreamApiService) {
         this.context = context;
         this.cacheProviders = cacheProviders;
         this.biliSplashApiV2Service = biliSplashApiV2Service;
@@ -106,6 +114,7 @@ public class AppApiHelper implements ApiHelper {
         this.biliCommentApiService = biliCommentApiService;
         this.biliSpaceApiService = biliSpaceApiService;
         this.biliLiveApiV2Service = biliLiveApiV2Service;
+        this.liveStreamApiService = liveStreamApiService;
     }
 
     @Override
@@ -516,6 +525,66 @@ public class AppApiHelper implements ApiHelper {
                     if(biliLiveUpInfoGeneralResponse.isSuccess())
                         return biliLiveUpInfoGeneralResponse.data;
                     throw new BiliApiException(biliLiveUpInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<SimpleRoomInfo> createLiveRoom() {
+        return this.liveStreamApiService.createLiveRoom()
+                .map(simpleRoomInfoGeneralResponse -> {
+                    if(simpleRoomInfoGeneralResponse.isSuccess())
+                        return simpleRoomInfoGeneralResponse.data;
+                    throw new BiliApiException(simpleRoomInfoGeneralResponse);
+                });
+    }
+
+    //获取直播分区列表（推流的时候也需要该信息）
+    @Override
+    public Observable<List<LiveAreaInfos>> getAreaList() {
+        return this.liveStreamApiService.getAreaList()
+                .map(liveareainfos -> {
+                    if(liveareainfos.isSuccess())
+                        return liveareainfos.data;
+                    throw new BiliApiException(liveareainfos);
+                });
+    }
+
+    //设置粉丝徽章的命名
+    @Override
+    public Observable<LiveStreamingRoomInfo> setFansMedal(String name) {
+        return this.liveStreamApiService.setFansMedal(name)
+                .map(liveStreamingRoomInfoGeneralResponse -> {
+                    if(liveStreamingRoomInfoGeneralResponse.isSuccess())
+                        return liveStreamingRoomInfoGeneralResponse.data;
+                    throw new BiliApiException(liveStreamingRoomInfoGeneralResponse);
+                });
+    }
+
+    /**
+     *
+     * @param room_id
+     * @param area_v2
+     * @param type 横屏：1，竖屏：2
+     * @param freeFlow 联通："unicom"  非联通：null
+     * @return
+     */
+    @Override
+    public Observable<LiveStreamingRoomStartLiveInfo> startLiveStreaming(int room_id, int area_v2, int type, String freeFlow) {
+        return this.liveStreamApiService.startLiveStreaming(room_id, area_v2, type, freeFlow)
+                .map(liveStreamingRoomStartLiveInfoGeneralResponse -> {
+                    if(liveStreamingRoomStartLiveInfoGeneralResponse.isSuccess())
+                        return liveStreamingRoomStartLiveInfoGeneralResponse.data;
+                    throw new BiliApiException(liveStreamingRoomStartLiveInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable<LiveStreamingRoomStopLiveInfo> stopLiveStreaming(int room_id) {
+        return this.liveStreamApiService.stopLiveStreaming(room_id)
+                .map(liveStreamingRoomStopLiveInfoGeneralResponse -> {
+                    if(liveStreamingRoomStopLiveInfoGeneralResponse.isSuccess())
+                        return liveStreamingRoomStopLiveInfoGeneralResponse.data;
+                    throw new BiliApiException(liveStreamingRoomStopLiveInfoGeneralResponse);
                 });
     }
 }

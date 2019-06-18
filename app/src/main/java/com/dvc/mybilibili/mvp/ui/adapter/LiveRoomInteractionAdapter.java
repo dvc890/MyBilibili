@@ -24,9 +24,9 @@ public class LiveRoomInteractionAdapter extends BaseQuickAdapter<BaseMsgEntity, 
 
     @Override
     public void addData(@NonNull BaseMsgEntity data) {
-        if(getData().size() == MAX_MSGLOG_NUM)
-            remove(0);
         super.addData(data);
+        if(getData().size() >= MAX_MSGLOG_NUM)
+            remove(0);
     }
 
     @Override

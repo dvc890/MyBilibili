@@ -1,1 +1,1 @@
-include ':app', ':base', ':gsyvideoplayer'
+include ':app', ':base', ':gsyvideoplayer', ':livestreamsdk'

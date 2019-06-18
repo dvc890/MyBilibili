@@ -210,7 +210,7 @@ public interface LiveStreamApiService {
     @GET("/fans_medal/v1/medal/open")
     @Headers("Interceptor:"+aoz.CLASSNAME)
     //@RequestInterceptor(aoz.class)
-    Observable<GeneralResponse<LiveStreamingRoomInfo>> setFansMedal(@Query("name") String str);
+    Observable<GeneralResponse<LiveStreamingRoomInfo>> setFansMedal(@Query("name") String name);
 
     @FormUrlEncoded
     @Headers("Interceptor:"+aoz.CLASSNAME)

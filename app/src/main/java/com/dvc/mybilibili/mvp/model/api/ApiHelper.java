@@ -15,6 +15,11 @@ import com.dvc.mybilibili.mvp.model.api.service.category.entity.CategoryIndex;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentCursorList;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDetail;
 import com.dvc.mybilibili.mvp.model.api.service.comment.entity.BiliCommentDialogue;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveAreaInfos;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStartLiveInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.LiveStreamingRoomStopLiveInfo;
+import com.dvc.mybilibili.mvp.model.api.service.livestream.entity.SimpleRoomInfo;
 import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AuthKey;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.model.AppIndex;
 import com.dvc.mybilibili.mvp.model.api.service.pegasus.entity.modelv2.PegasusFeedResponse;
@@ -92,4 +97,15 @@ public interface ApiHelper {
     Observable<Boolean> isPortraitLiveRoom(long room_id);
 
     Observable<BiliLiveUpInfo> getLiveRoomUpInfo(long uid);
+
+    Observable<SimpleRoomInfo> createLiveRoom();
+
+    Observable<List<LiveAreaInfos>> getAreaList();
+
+    //设置粉丝徽章的命名
+    Observable<LiveStreamingRoomInfo> setFansMedal(String name);
+
+    Observable<LiveStreamingRoomStartLiveInfo> startLiveStreaming(int room_id, int area_v2, int type, String freeFlow);
+
+    Observable<LiveStreamingRoomStopLiveInfo> stopLiveStreaming(int room_id);
 }

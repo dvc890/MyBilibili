@@ -15,6 +15,8 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 import java.util.Map;
 
+import okhttp3.Request;
+
 /* compiled from: BL */
 /* renamed from: b.aoz */
 public class aoz extends BaseIntercept {
@@ -26,6 +28,12 @@ public class aoz extends BaseIntercept {
 
     public aoz(Context context) {
         super(context);
+    }
+
+    @Override
+    public void setHeader(Request.Builder request) {
+        super.setHeader(request);
+        this.httpurl = request.build().url().toString();
     }
 
     /* Access modifiers changed, original: protected */

@@ -3,6 +3,7 @@ package com.dvc.mybilibili.mvp.ui.fragment.live;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -81,6 +82,7 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
         adapter = new LiveRoomInteractionAdapter();
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter.bindToRecyclerView(recycler);
+        ((DefaultItemAnimator)recycler.getItemAnimator()).setSupportsChangeAnimations(false);
         recycler.addOnScrollListener(new RecyclerView.OnScrollListener() {
             //用来标记是否正在向最后一个滑动
             boolean isSlidingToLast = false;
@@ -90,7 +92,7 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
                 super.onScrollStateChanged(recyclerView, newState);
                 LinearLayoutManager manager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 // 当不滚动时
-                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                if (newState == RecyclerView.SCROLL_STATE_IDLE || newState == RecyclerView.SCROLL_STATE_DRAGGING) {
                     //获取最后一个完全显示的ItemPosition
                     int lastVisibleItem = manager.findLastCompletelyVisibleItemPosition();
                     int totalItemCount = manager.getItemCount();
@@ -112,7 +114,7 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
                     isSlidingToLast = true;
                 } else {
                     //小于等于0表示停止或向上滚动
-                    isSlidingToLast = false;
+                    if(dy != 0) isSlidingToLast = false;
                 }
             }
         });
@@ -155,6 +157,7 @@ public class LiveRoomInteractionFragment extends MvpBaseFragment<LiveRoomInterac
         for (BiliLiveRoomHistoryMsg.Msg msg : mRooms)
             danMuMSGEntityList.add(new DanMuMSGEntity(msg));
         adapter.setNewData(danMuMSGEntityList);
+        onNewMsgClicked();
     }
 
     @Override

@@ -63,7 +63,7 @@ public final class LibBili {
         try {
             byte[] bytes = str.getBytes(SignedQuery.HttpUtils.ENCODING_UTF_8);
             try {
-                return C16894a.m66575a(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
+                return a.encrypt(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
             } catch (Exception unused) {
                 return bArr;
             }
@@ -77,7 +77,7 @@ public final class LibBili {
         try {
             byte[] bytes = str.getBytes(SignedQuery.HttpUtils.ENCODING_UTF_8);
             try {
-                return C16894a.m66576b(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
+                return a.decrypt(new SecretKeySpec(Arrays.copyOf(bytes, 16), "AES"), b(str), bArr);
             } catch (Exception unused) {
                 return bArr;
             }

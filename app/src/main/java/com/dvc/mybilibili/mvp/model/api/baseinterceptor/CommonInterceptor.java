@@ -60,14 +60,14 @@ public class CommonInterceptor implements Interceptor {
 //            postBodyString += getSignParam(postBodyString);
             Map<String,String> tempMap = bodyToMap(oldRequest.body());
 //            tempMap.putAll(paramsMap);
-            putCommonParams(tempMap, oldRequest);
+            Request.Builder newBuilder = putCommonParams(tempMap, oldRequest);
             String postBodyString = LibBili.m8854a(tempMap).toString();
 //            authorizedUrlBuilder.addQueryParameter("sign", LibBili.m8854a(tempMap).b);
             tempMap.clear();
             MediaType mediaType = oldRequest.body().contentType();
             if(mediaType == null )mediaType = MediaType.parse("application/x-www-form-urlencoded");
             return chain.proceed(
-                    oldRequest.newBuilder()
+                    newBuilder
                             .post(RequestBody.create(mediaType, postBodyString))
                             .url(authorizedUrlBuilder.build())
                             .build()
@@ -137,8 +137,8 @@ public class CommonInterceptor implements Interceptor {
                     intercept = Reflect.on(header).create(context).get();
                 else
                     intercept = interceptMap.get(header);
-                intercept.putParams(paramsMap);
                 intercept.setHeader(builder);
+                intercept.putParams(paramsMap);
             }catch (ReflectException e) {}
         }else {
             if(this.baseIntercept == null)
