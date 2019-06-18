@@ -89,4 +89,6 @@ dependencies {
     api "com.github.vondear.RxTool:RxUI:v$parent.ext.rxtoolVersion"//UI库
 ////    bga-swipebacklayout(侧滑退出控件)
     api 'cn.bingoogolapple:bga-swipebacklayout:1.2.0@aar'
+////    RxPermissions
+    api 'com.github.tbruyelle:rxpermissions:0.10.2'
 }

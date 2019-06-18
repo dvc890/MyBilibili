@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import tv.danmaku.ijk.media.player.IjkMediaPlayer;
 
-public abstract class BiliVideoPlayer extends StandardGSYVideoPlayer {
+public class BiliVideoPlayer extends StandardGSYVideoPlayer {
 
     ImageView mCoverImage;
     String mCoverOriginUrl;
