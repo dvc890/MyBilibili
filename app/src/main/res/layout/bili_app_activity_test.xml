@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    
+
     <me.lake.librestreaming.ws.StreamLiveCameraView
         android:id="@+id/stream_previewView"
         android:layout_width="match_parent"

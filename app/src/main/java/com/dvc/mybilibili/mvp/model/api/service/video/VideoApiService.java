@@ -1,12 +1,14 @@
 package com.dvc.mybilibili.mvp.model.api.service.video;
 
 import android.os.Looper;
+import android.support.annotation.Nullable;
 import android.text.TextUtils;
 
 import com.dvc.mybilibili.app.retrofit2.BaseUrl;
 import com.dvc.mybilibili.app.utils.ParamValueUtils;
 import com.dvc.mybilibili.app.utils.ParamsMap;
 import com.dvc.mybilibili.mvp.model.api.response.GeneralResponse;
+import com.dvc.mybilibili.mvp.model.api.service.bililive.interceptor.bej;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.BiliVideoDetail;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.FtVideoUrlInfoBean;
 import com.dvc.mybilibili.mvp.model.api.service.video.entity.RecommendUpperInfo;
@@ -21,6 +23,7 @@ import io.reactivex.Observable;
 import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -166,6 +169,19 @@ public interface VideoApiService {
 
     @GET("https://api.bilibili.com/x/player/playurl")
     Observable<GeneralResponse<FtVideoUrlInfoBean>> getFTVideoUrl(@Query("access_key") String access_key, @QueryMap Map<String, String> map);
+
+    /**
+     *
+     * @param aid
+     * @param cid
+     * @param mid
+     * @param quality
+     * @param unicom_free 联通为1，其他null
+     * @return
+     */
+    @GET("/v2/playurlproj?force_host=0&fnval=16&npcybs=0&otype=json&fourk=0")
+    @Headers("Interceptor:"+ bej.CLASSNAME)
+    Observable<GeneralResponse<FtVideoUrlInfoBean>> getDLANVideoUrl(@Query("aid") int aid, @Query("cid") int cid, @Query("mid") int mid, @Query("qn") int quality, @Nullable @Query("unicom_free") String unicom_free);
 
     @GET("http://api.bilibili.com/x/v2/dm/list.so?&ps=0&type=1&plat=2")
     Observable<byte[]> getDanmakuListV2(@Query("aid") long aid, @Query("oid") long cid) ;
