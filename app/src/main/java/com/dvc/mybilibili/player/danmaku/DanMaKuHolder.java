@@ -1,5 +1,6 @@
 package com.dvc.mybilibili.player.danmaku;
 
+import android.graphics.Color;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
@@ -63,11 +64,11 @@ public class DanMaKuHolder extends BaseMvpHolder {
         maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 10); // 滚动弹幕最大显示5行
         // 设置是否禁止重叠
         HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<Integer, Boolean>();
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, false);
 
         DanamakuAdapter danamakuAdapter = new DanamakuAdapter(mDanmakuView);
         mDanmakuContext = DanmakuContext.create();
@@ -76,7 +77,8 @@ public class DanMaKuHolder extends BaseMvpHolder {
                 .setScrollSpeedFactor(2f)//弹幕滚动速度
 //                .setScaleTextSize(1.2f)
                 .setCacheStuffer(new SpannedCacheStuffer(), danamakuAdapter) // 图文混排使用SpannedCacheStuffer
-//                .setMaximumLines(maxLinesPair)
+                .setMaximumLines(maxLinesPair)
+                .setMaximumVisibleSizeInScreen(-1) //同屏最大显示数量(弹幕密度(只对滚动有效))
                 .preventOverlapping(overlappingEnablePair);
 
         if (mDanmakuView != null) {
@@ -270,6 +272,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
         }
         danmaku.isLive = isLive;
         danmaku.textColor = color;
+        danmaku.textShadowColor = color <= Color.BLACK ? Color.WHITE : Color.BLACK;
         danmaku.text = text;
         danmaku.padding = 5;
         danmaku.priority = 8;  // 可能会被各种过滤器过滤并隐藏显示，所以提高等级

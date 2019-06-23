@@ -35,9 +35,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
-import io.kickflip.sdk.view.GLCameraEncoderView;
-import me.lake.librestreaming.ws.StreamAVOption;
-import me.lake.librestreaming.ws.StreamLiveCameraView;
 
 public class TestActivity extends DaggerAppCompatActivity implements Camera.PreviewCallback, SurfaceHolder.Callback {
 
@@ -49,10 +46,6 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
 //    SVGAImageView svgaImageView;
     @BindView(R.id.camera_surface)
     SurfaceView cameraView;
-    @BindView(R.id.stream_previewView)
-    StreamLiveCameraView streamLiveCameraView;
-    @BindView(R.id.GLCameraEncoderView)
-    GLCameraEncoderView glCameraEncoderView;
 
     OrientationUtils orientationUtils;
 
@@ -76,8 +69,6 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
 //                biliVideoPlayer.startPlayLogic());
 //        biliVideoPlayer.startPlayLogic();
 //        Debuger.enable();
-        streamLiveCameraView.init(this, new StreamAVOption());
-        glCameraEncoderView.a();
         new RxPermissions(this)
                 .request(Manifest.permission.CAMERA,
                         Manifest.permission.RECORD_AUDIO)

@@ -30,5 +30,6 @@ dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
 
     implementation project (':base')
-    api 'com.github.WangShuo1143368701:WSLiveDemo:v1.7'
+
+//    api 'com.github.WangShuo1143368701:WSLiveDemo:v1.7'
 }
