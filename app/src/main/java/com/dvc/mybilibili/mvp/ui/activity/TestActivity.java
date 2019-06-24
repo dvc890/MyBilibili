@@ -1,12 +1,9 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
 import android.Manifest;
-import android.graphics.ImageFormat;
-import android.hardware.Camera;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 
 import com.airbnb.lottie.LottieAnimationView;
@@ -24,7 +21,6 @@ import com.dvc.mybilibili.player.BiliVideoPlayer;
 import com.shuyu.gsyvideoplayer.GSYVideoManager;
 import com.shuyu.gsyvideoplayer.utils.OrientationUtils;
 import com.tbruyelle.rxpermissions2.RxPermissions;
-import com.vondear.rxtool.RxLogTool;
 import com.vondear.rxtool.view.RxToast;
 
 import java.io.IOException;
@@ -35,8 +31,9 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import dagger.android.support.DaggerAppCompatActivity;
+import io.kickflip.sdk.view.MyCameraEncoderView;
 
-public class TestActivity extends DaggerAppCompatActivity implements Camera.PreviewCallback, SurfaceHolder.Callback {
+public class TestActivity extends DaggerAppCompatActivity implements SurfaceHolder.Callback {
 
     @BindView(R.id.animation_view)
     LottieAnimationView lottieAnimationView;
@@ -45,7 +42,7 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
     //    @BindView(R.id.animation_view2)
 //    SVGAImageView svgaImageView;
     @BindView(R.id.camera_surface)
-    SurfaceView cameraView;
+    MyCameraEncoderView cameraView;
 
     OrientationUtils orientationUtils;
 
@@ -79,7 +76,7 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
     }
 
 
-    @OnClick({R.id.start, R.id.stop})
+    @OnClick({R.id.start, R.id.stop, R.id.swcamera})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.start:
@@ -96,6 +93,7 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
                                 apiException.canRetry();
                             }
                         });
+                cameraView.startPush("rtmp://192.168.0.61/test/");
                 break;
             case R.id.stop:
                 liveStreamApiService.stopLiveStreaming(884852)
@@ -111,36 +109,40 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
                                 apiException.canRetry();
                             }
                         });
+                cameraView.stopPush();
+                break;
+            case R.id.swcamera:
+                cameraView.swCamera();
                 break;
         }
     }
 
-    private void testCamera(SurfaceHolder holder) {
-        Camera camera = Camera.open(1);
-        Camera.Parameters parameters = camera.getParameters();
-        for (Camera.Size size : parameters.getSupportedPictureSizes()) {
-            RxLogTool.d(size.width + "  " + size.height);
-        }
-        RxLogTool.d("============");
-        for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
-            RxLogTool.d(size.width + "  " + size.height);
-        }
-//        parameters.setPreviewSize(1080,1920);
-//        parameters.setPreviewFpsRange(30000, 30000);
-        parameters.setPictureFormat(ImageFormat.NV21); // 设置图片格式
-        camera.setParameters(parameters);
-        try {
-            camera.setPreviewDisplay(holder);
-            camera.setPreviewCallbackWithBuffer(this);
-            camera.addCallbackBuffer(new byte[parameters.getPreviewSize().width* parameters.getPreviewSize().height*3 / 2]);
-            camera.startPreview(); // 开始预览
-            camera.autoFocus((success, camera1) -> {
-                camera.setDisplayOrientation(90);
-            }); // 自动对焦
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+//    private void testCamera(SurfaceHolder holder) {
+//        Camera camera = Camera.open(1);
+//        Camera.Parameters parameters = camera.getParameters();
+//        for (Camera.Size size : parameters.getSupportedPictureSizes()) {
+//            RxLogTool.d(size.width + "  " + size.height);
+//        }
+//        RxLogTool.d("============");
+//        for (Camera.Size size : parameters.getSupportedPreviewSizes()) {
+//            RxLogTool.d(size.width + "  " + size.height);
+//        }
+////        parameters.setPreviewSize(1080,1920);
+////        parameters.setPreviewFpsRange(30000, 30000);
+//        parameters.setPictureFormat(ImageFormat.NV21); // 设置图片格式
+//        camera.setParameters(parameters);
+//        try {
+//            camera.setPreviewDisplay(holder);
+//            camera.setPreviewCallbackWithBuffer(this);
+//            camera.addCallbackBuffer(new byte[parameters.getPreviewSize().width* parameters.getPreviewSize().height*3 / 2]);
+//            camera.startPreview(); // 开始预览
+//            camera.autoFocus((success, camera1) -> {
+//                camera.setDisplayOrientation(90);
+//            }); // 自动对焦
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 //    @Override
 //    public void onConfigurationChanged(Configuration newConfig) {
 //        super.onConfigurationChanged(newConfig);
@@ -156,22 +158,17 @@ public class TestActivity extends DaggerAppCompatActivity implements Camera.Prev
             return;
         }
         super.onBackPressed();
-    }
-
-    @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        RxLogTool.e(data);
-        camera.addCallbackBuffer(data);
+        cameraView.exit();
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        testCamera(holder);
         RxToast.info("surfaceCreated");
     }
 
     @Override
     public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
+        cameraView.requestCamera();
         RxToast.info("surfaceChanged:" + format + " " + width + " " + height);
     }
 

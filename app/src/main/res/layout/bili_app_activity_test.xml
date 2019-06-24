@@ -9,18 +9,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
-    <Button
-        android:id="@+id/start"
-        android:text="start"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/start"
+            android:text="start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
         <Button
             android:id="@+id/stop"
             android:text="stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        <Button
+            android:id="@+id/swcamera"
+            android:text="swcamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
     </LinearLayout>
-    <SurfaceView
+    <io.kickflip.sdk.view.MyCameraEncoderView
         android:id="@+id/camera_surface"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -48,11 +53,11 @@
         app:lottie_autoPlay="true" />
 
     <!--<com.opensource.svgaplayer.SVGAImageView-->
-        <!--android:id="@+id/animation_view2"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_width="match_parent"-->
-        <!--app:source="anim/camera_live_loading_land.svga"-->
-        <!--app:autoPlay="true"-->
-        <!--android:background="#000" />-->
+    <!--android:id="@+id/animation_view2"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_width="match_parent"-->
+    <!--app:source="anim/camera_live_loading_land.svga"-->
+    <!--app:autoPlay="true"-->
+    <!--android:background="#000" />-->
 
 </LinearLayout>

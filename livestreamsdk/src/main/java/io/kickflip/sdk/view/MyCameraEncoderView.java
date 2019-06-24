@@ -12,14 +12,16 @@ import android.media.MediaFormat;
 import android.media.MediaRecorder;
 import android.os.Build;
 import android.os.Handler;
-import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Surface;
 import android.view.SurfaceView;
+import android.view.WindowManager;
 import android.widget.Toast;
 
+import com.dvc.base.thread.ThreadManager;
 import com.vondear.rxtool.RxLogTool;
 
 import java.io.IOException;
@@ -33,20 +35,17 @@ import java.util.concurrent.Executors;
 
 import io.kickflip.sdk.RTMPTool;
 
-import static android.media.MediaFormat.KEY_BIT_RATE;
-import static android.media.MediaFormat.KEY_MAX_INPUT_SIZE;
-
 public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCallback {
 
     private static final String VCODEC_MIME = "video/avc";
     private final int FRAME_RATE = 15;
-    private int MAX_BUFFER_SIZE = 8192;
     static final int NAL_SPS = 7;
     private boolean isStreaming = false;
     Camera camera;
     private volatile CameraHandler handler;
     private int cameraId;
-    private int facing;
+
+    private int facing = Camera.CameraInfo.CAMERA_FACING_BACK;
     private String flashMode;
     private MediaCodec mMediaCodec;
     private ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -75,8 +74,7 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
     }
 
     private void init() {
-        handler = new CameraHandler(new HandlerThread("Camera").getLooper());
-        initMediaCodec();
+        handler = new CameraHandler(ThreadManager.get().getHandler("Camera").getLooper());
         initAudioDevice();
     }
 
@@ -85,9 +83,12 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
     }
 
     public void startPush(String rtmpurl) {
+        if(isStreaming()) return;
         isStreaming = true;
         RTMPTool.get.connectServer(rtmpurl);
         RTMPTool.get.sendVideoMeta(this.camera.getParameters().getPreviewSize().width, this.camera.getParameters().getPreviewSize().height, FRAME_RATE, aSampleRate, aBuffer.length);
+        presentationTimeUs = new Date().getTime() * 1000;
+        recordThread.start();
     }
 
     public void stopPush() {
@@ -95,13 +96,17 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
         RTMPTool.get.disconnectServer();
     }
 
-    public void requestCamera(int cameraId) {
-        if (Camera.getNumberOfCameras() != 1 && this.cameraId != cameraId) {
-            this.cameraId = cameraId;
+    public void swCamera() {
+        if(facing == 1) facing = 0; else  facing = 1;
+        requestCamera();
+    }
+
+    public void requestCamera() {
+        if (Camera.getNumberOfCameras() != 1) {
             if (this.camera != null) {
                 this.handler.sendMessage(this.handler.obtainMessage(5));
-                this.handler.sendMessage(this.handler.obtainMessage(4));
             }
+            this.handler.sendMessage(this.handler.obtainMessage(4));
         }
     }
 
@@ -136,8 +141,8 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
             this.camera.setPreviewDisplay(getHolder());
             this.camera.startPreview();
             recordThread = new Thread(fetchAudioRunnable());
-            presentationTimeUs = new Date().getTime() * 1000;
             mAudioRecord.startRecording();
+            initMediaCodec();
         } catch (IOException var2) {
         }
 
@@ -179,7 +184,7 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
             } else {
                 Camera.Parameters parameters = this.camera.getParameters();
 //                this.a(parameters);
-                parameters.setPictureFormat(ImageFormat.YV12); // 设置图片格式
+                parameters.setPictureFormat(ImageFormat.NV21); // 设置图片格式
                 List focusModes = parameters.getSupportedFocusModes();
                 if (focusModes.contains("continuous-video")) {
                     parameters.setFocusMode("continuous-video");
@@ -194,12 +199,45 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
                 parameters.setRecordingHint(true);
                 this.setPreviewSize(parameters, w, h);
                 this.camera.setParameters(parameters);
+                updataCameraDisplayOrientation();
                 int[] previewFpsRange = new int[2];
                 Camera.Size previewSize = parameters.getPreviewSize();
                 parameters.getPreviewFpsRange(previewFpsRange);
             }
         }
     }
+
+    private void updataCameraDisplayOrientation() {
+        android.hardware.Camera.CameraInfo info =
+                new android.hardware.Camera.CameraInfo();
+        android.hardware.Camera.getCameraInfo(this.cameraId, info);
+        int rotation = ((WindowManager)getContext().getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getRotation();
+        int degrees = 0;
+        switch (rotation) {
+            case Surface.ROTATION_0:
+                degrees = 0;
+                break;
+            case Surface.ROTATION_90:
+                degrees = 90;
+                break;
+            case Surface.ROTATION_180:
+                degrees = 180;
+                break;
+            case Surface.ROTATION_270:
+                degrees = 270;
+                break;
+        }
+
+        int result;
+        if (info.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
+            result = (info.orientation + degrees) % 360;
+            result = (360 - result) % 360;  // compensate the mirror
+        } else {  // back-facing
+            result = (info.orientation - degrees + 360) % 360;
+        }
+        this.camera.setDisplayOrientation(result);
+    }
+
 
     private void releaseCamera() {
 
@@ -262,15 +300,15 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
     }
 
     @Override
-    public void onPreviewFrame(byte[] data, Camera camera) {
-        final byte[] tmp = data.clone();
+    public void onPreviewFrame(final byte[] data, final Camera camera) {
+//        final byte[] tmp = data.clone();
         executor.execute(new Runnable() {
             @Override
             public void run() {
-                if(isStreaming()) onGetVideoFrame(tmp);
+                if(isStreaming()) onGetVideoFrame(data);
+                camera.addCallbackBuffer(data);
             }
         });
-        camera.addCallbackBuffer(data);
     }
 
     private Runnable fetchAudioRunnable() {
@@ -316,14 +354,22 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
 
     private void onGetVideoFrame(byte[] buf) {
         final int LENGTH = getHeight() * getWidth();
-        //YV12数据转化成COLOR_FormatYUV420Planar
-        RxLogTool.d(LENGTH + "  " + (buf.length - LENGTH));
-        for (int i = LENGTH; i < (LENGTH + LENGTH / 4); i++) {
-            byte temp = buf[i];
-            buf[i] = buf[i + LENGTH / 4];
-            buf[i + LENGTH / 4] = temp;
-//            char x = 128;
-//            buf[i] = (byte) x;
+//        //YV12数据转化成COLOR_FormatYUV420Planar
+//        RxLogTool.d(LENGTH + "  " + (buf.length - LENGTH));
+//        for (int i = LENGTH; i < (LENGTH + LENGTH / 4); i++) {
+//            byte temp = buf[i];
+//            buf[i] = buf[i + LENGTH / 4];
+//            buf[i + LENGTH / 4] = temp;
+////            char x = 128;
+////            buf[i] = (byte) x;
+//        }
+
+        //NV21数据转化成COLOR_FormatYUV420SeimPlanar
+        for (int j = 0; j < LENGTH/2; j+=2)
+        {
+            byte temp = buf[LENGTH + j - 1];
+            buf[LENGTH + j - 1] = buf[j+LENGTH];
+            buf[LENGTH + j] = temp;
         }
         ByteBuffer[] inputBuffers = mMediaCodec.getInputBuffers();
         ByteBuffer[] outputBuffers = mMediaCodec.getOutputBuffers();
@@ -471,20 +517,21 @@ public class MyCameraEncoderView extends SurfaceView implements Camera.PreviewCa
             }
             RxLogTool.w("MediaCodecInfo " + mediaCodecInfo.getName());
             mMediaCodec = MediaCodec.createByCodecName(mediaCodecInfo.getName());
-            MediaFormat mediaFormat = MediaFormat.createVideoFormat(VCODEC_MIME, getWidth(), getHeight());
-            mediaFormat.setInteger(KEY_BIT_RATE, bitrate);
+            MediaFormat mediaFormat = MediaFormat.createVideoFormat(VCODEC_MIME, this.camera.getParameters().getPreviewSize().width, this.camera.getParameters().getPreviewSize().height);
+            mediaFormat.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
+            mediaFormat.setInteger(MediaFormat.KEY_BIT_RATE, bitrate);
             mediaFormat.setInteger(MediaFormat.KEY_FRAME_RATE, FRAME_RATE);
             mediaFormat.setInteger(MediaFormat.KEY_COLOR_FORMAT,
-                    MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420Planar);
-            mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 1);
+                    MediaCodecInfo.CodecCapabilities.COLOR_FormatYUV420SemiPlanar);
+            mediaFormat.setInteger(MediaFormat.KEY_I_FRAME_INTERVAL, 5);
             mMediaCodec.configure(mediaFormat, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
             mMediaCodec.start();
 
             mAudioCodec = MediaCodec.createEncoderByType(MediaFormat.MIMETYPE_AUDIO_AAC);
             MediaFormat format = MediaFormat.createAudioFormat(MediaFormat.MIMETYPE_AUDIO_AAC,
                     aSampleRate, aChanelCount);
-            format.setInteger(KEY_MAX_INPUT_SIZE, 0);
-            format.setInteger(KEY_BIT_RATE, 1000 * 30);
+            format.setInteger(MediaFormat.KEY_MAX_INPUT_SIZE, 0);
+            format.setInteger(MediaFormat.KEY_BIT_RATE, 1000 * 30);
             mAudioCodec.configure(format, null, null, MediaCodec.CONFIGURE_FLAG_ENCODE);
             mAudioCodec.start();
         } catch (IOException e) {

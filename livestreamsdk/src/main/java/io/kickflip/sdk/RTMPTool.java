@@ -18,6 +18,7 @@ public class RTMPTool {
         public MyRTMPAVTransfers(int i, Thread.UncaughtExceptionHandler uncaughtExceptionHandler) {
             super(i, uncaughtExceptionHandler);
             for(Map.Entry<String, Reflect> o : Reflect.on(this).fields().entrySet()) {
+                if(o.getValue().get() == null) continue;
                 if(o.getValue().type().equals(Handler.class)) {
                     superHandler = o.getValue().get();
                     break;
