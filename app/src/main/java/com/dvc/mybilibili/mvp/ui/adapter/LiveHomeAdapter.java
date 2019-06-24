@@ -143,7 +143,6 @@ public class LiveHomeAdapter extends BaseMultiItemQuickAdapter<BiliLiveHomePage.
             tmp.addAll(rooms.subList(1, rooms.size()));
         addData(tmp);
         //footerview : bili_live_layout_home_load_all
-//        removeAllFooterView();
-//        addFooterView(LayoutInflater.from(mContext).inflate(R.layout.bili_live_layout_home_load_all, null));
+//        setFooterView(LayoutInflater.from(mContext).inflate(R.layout.bili_live_layout_home_load_all, null));
     }
 }

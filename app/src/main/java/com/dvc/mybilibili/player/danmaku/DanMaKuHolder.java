@@ -1,6 +1,7 @@
 package com.dvc.mybilibili.player.danmaku;
 
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.support.annotation.Nullable;
 import android.widget.ImageView;
 
@@ -11,6 +12,7 @@ import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.retrofit2.callback.ObserverCallback;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.player.BiliVideoPlayer;
+import com.dvc.mybilibili.player.utils.FontUtils;
 import com.shuyu.gsyvideoplayer.utils.Debuger;
 
 import java.io.InputStream;
@@ -23,7 +25,6 @@ import master.flame.danmaku.danmaku.loader.IllegalDataException;
 import master.flame.danmaku.danmaku.loader.android.DanmakuLoaderFactory;
 import master.flame.danmaku.danmaku.model.BaseDanmaku;
 import master.flame.danmaku.danmaku.model.DanmakuTimer;
-import master.flame.danmaku.danmaku.model.Duration;
 import master.flame.danmaku.danmaku.model.IDisplayer;
 import master.flame.danmaku.danmaku.model.android.DanmakuContext;
 import master.flame.danmaku.danmaku.model.android.Danmakus;
@@ -74,12 +75,14 @@ public class DanMaKuHolder extends BaseMvpHolder {
         mDanmakuContext = DanmakuContext.create();
         mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)//描边
                 .setDuplicateMergingEnabled(false)//重复不合并
-                .setScrollSpeedFactor(2f)//弹幕滚动速度
+                .setScrollSpeedFactor(2.5f)//弹幕滚动速度
 //                .setScaleTextSize(1.2f)
                 .setCacheStuffer(new SpannedCacheStuffer(), danamakuAdapter) // 图文混排使用SpannedCacheStuffer
                 .setMaximumLines(maxLinesPair)
                 .setMaximumVisibleSizeInScreen(-1) //同屏最大显示数量(弹幕密度(只对滚动有效))
                 .preventOverlapping(overlappingEnablePair);
+        Typeface font = FontUtils.loadFont2Assets(getContext(), "fonts/danmaku.ttf");
+        if(font != null) mDanmakuContext.setTypeface(font);
 
         if (mDanmakuView != null) {
             initParser();

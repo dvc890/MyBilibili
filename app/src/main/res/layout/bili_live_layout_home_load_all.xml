@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:fresco="http://schemas.android.com/apk/com.facebook.drawee" xmlns:internal="http://schemas.android.com/apk/prv/res/android" xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:aapt="http://schemas.android.com/aapt" android:background="@color/live_daynight_bg_color_gray_light_4" android:layout_width="match_parent" android:layout_height="60dp">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android" android:background="@color/live_daynight_bg_color_gray_light_4" android:layout_width="match_parent" android:layout_height="60dp">
     <TextView android:textSize="12sp" android:textColor="@color/theme_color_live_text_assist_dark" android:gravity="center" android:layout_gravity="center" android:id="@+id/text_view_all" android:background="@drawable/shape_roundrect_white_stroke_gray_v2" android:layout_width="128dp" android:layout_height="28dp" android:text="@string/live_all"/>
 </FrameLayout>
