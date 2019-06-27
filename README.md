@@ -2,6 +2,7 @@
 一款基于 MVP+RxJava2+Retrofit+Dagger2+Butterknife+Glide的个人Bilibili（哔哩哔哩）客户端
 
 ### 本项目预计支持的功能 [MyBilibili for Android](https://github.com/dvc890/MyBilibili)
+- [x] 完整的bilibili-Api（采用java编写）【自己弄完才发现有人有现成的[来自czp3009的bilibili-api kotlin版本](https://github.com/czp3009/bilibili-api)】
 - [x] 开屏页面（广告倒计时）
 - [x] 主页-推荐页面（天马推荐系统页面）
 - [x] 主页-直播页面
