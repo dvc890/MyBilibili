@@ -65,11 +65,11 @@ public class DanMaKuHolder extends BaseMvpHolder {
         maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 10); // 滚动弹幕最大显示5行
         // 设置是否禁止重叠
         HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<Integer, Boolean>();
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, false);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, false);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, false);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, false);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, true);
 
         DanamakuAdapter danamakuAdapter = new DanamakuAdapter(mDanmakuView);
         mDanmakuContext = DanmakuContext.create();
