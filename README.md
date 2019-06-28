@@ -96,3 +96,18 @@
 		  </td>
 	</tr>
 </table>
+
+### Demo动态图
+<table>
+	<tr>
+		  <td>
+			  <img src="https://github.com/dvc890/MyBilibili/raw/master/screenshot/splash.gif"/>
+		</td>
+		  <td>
+			  <img src="https://github.com/dvc890/MyBilibili/raw/master/screenshot/video.gif"/>
+		</td>
+		  <td>
+			  <img src="https://github.com/dvc890/MyBilibili/raw/master/screenshot/live.gif"/>
+		</td>
+	</tr>
+</table>
