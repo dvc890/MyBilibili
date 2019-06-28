@@ -18,8 +18,17 @@ android {
     sourceSets {
         main.jniLibs.srcDirs = ['libs']
     }
+    signingConfigs {
+        BilibiliSigning {
+            storeFile file('../sign/mybilibili.jks')
+            storePassword 'bilibili'
+            keyAlias 'bilibili'
+            keyPassword 'bilibili'
+        }
+    }
     buildTypes {
         release {
+            signingConfig signingConfigs.BilibiliSigning
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
