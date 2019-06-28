@@ -91,4 +91,6 @@ dependencies {
     api 'cn.bingoogolapple:bga-swipebacklayout:1.2.0@aar'
 ////    RxPermissions
     api 'com.github.tbruyelle:rxpermissions:0.10.2'
+    //aspectjrt （https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx）
+    api 'org.aspectj:aspectjrt:1.8.+'
 }
