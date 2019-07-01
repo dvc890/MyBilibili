@@ -4,6 +4,7 @@ import android.arch.lifecycle.Lifecycle;
 
 import com.dvc.base.MvpBasePresenter;
 import com.dvc.mybilibili.mvp.model.DataManager;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.CookieInfo;
 import com.dvc.mybilibili.mvp.ui.fragment.web.GuideFragView;
 import com.trello.rxlifecycle2.LifecycleProvider;
 
@@ -18,5 +19,12 @@ public class GuideFragPresenter extends MvpBasePresenter<GuideFragView> {
     public GuideFragPresenter(DataManager dataManager, LifecycleProvider<Lifecycle.Event> provider) {
         this.dataManager = dataManager;
         this.provider = provider;
+    }
+
+    public CookieInfo getCookieInfo() {
+        if(this.dataManager.getUser().isLogin()) {
+            return this.dataManager.getUser().getCookieInfo();
+        }
+        return null;
     }
 }

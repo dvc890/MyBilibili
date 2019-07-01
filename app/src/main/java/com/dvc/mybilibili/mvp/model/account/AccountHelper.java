@@ -10,6 +10,7 @@ import com.alibaba.fastjson.parser.DefaultJSONParser;
 import com.alibaba.fastjson.parser.ParserConfig;
 import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.alibaba.fastjson.serializer.SerializerFeature;
+import com.bilibili.commons.time.FastDateFormat;
 import com.bilibili.nativelibrary.LibBili;
 import com.bilibili.nativelibrary.SignedQuery;
 import com.dvc.base.di.ApplicationContext;
@@ -25,6 +26,7 @@ import com.dvc.mybilibili.mvp.model.api.service.passport.entity.AccessToken;
 import com.vondear.rxtool.RxLogTool;
 
 import java.security.InvalidKeyException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
@@ -53,7 +55,7 @@ public class AccountHelper implements IAccountHelper {
         this.appEditor = this.appPreferences.edit();
         this.parserConfig = new ParserConfig();
         this.token = getToken();
-//        this.accountInfo = getAccountInfo();
+        this.accountInfo = getAccountInfo();
 //        loadAccountInfo();
     }
 
@@ -85,7 +87,7 @@ public class AccountHelper implements IAccountHelper {
     @Override
     public AccessToken getToken() {
         if(this.token == null) {
-            this.token = toClass(AccessToken.class, this.appPreferences.getString(KEY_ACCOUNT_TOKEN_CONTENT_STR, null));
+            this.token = toClass(AccessToken.class, this.appPreferences.getString(KEY_ACCOUNT_TOKEN_CONTENT_STR, null), true);
         }
         return this.token;
     }
@@ -98,7 +100,7 @@ public class AccountHelper implements IAccountHelper {
     @Override
     public AccountInfo getAccountInfo() {
         if(this.accountInfo == null) {
-            this.accountInfo = toClass(AccountInfo.class, this.appPreferences.getString(KEY_ACCOUNT_INFO_CONTENT_STR, null));
+            this.accountInfo = toClass(AccountInfo.class, this.appPreferences.getString(KEY_ACCOUNT_INFO_CONTENT_STR, null),false);
         }
         return accountInfo;
     }
@@ -106,7 +108,7 @@ public class AccountHelper implements IAccountHelper {
     @Override
     public CookieInfo getCookieInfo() {
         if(this.cookieInfo == null) {
-            this.cookieInfo = toClass(CookieInfo.class, this.appPreferences.getString(KEY_ACCOUNT_COOKIE_CONTENT_STR, null));
+            this.cookieInfo = toClass(CookieInfo.class, this.appPreferences.getString(KEY_ACCOUNT_COOKIE_CONTENT_STR, null), true);
         }
         return cookieInfo;
     }
@@ -114,7 +116,12 @@ public class AccountHelper implements IAccountHelper {
     @Override
     public String getBrithday() {
         if(getAccountInfo() == null) return "";
-        return BIRTHDAY_FORMAT.format(getAccountInfo().getBirthday());
+        if(TextUtils.isEmpty(getAccountInfo().getBirthday())) return "";
+        try {
+            return BIRTHDAY_FORMAT.format(FastDateFormat.getInstance("").parse(getAccountInfo().getBirthday()));
+        } catch (ParseException e) {
+            return "";
+        }
     }
 
     @Override
@@ -162,12 +169,12 @@ public class AccountHelper implements IAccountHelper {
                 });
     }
 
-    private <T> T toClass(Class<T> mClass, String str) {
+    private <T> T toClass(Class<T> mClass, String str, boolean fieldOnly) {
         if (str != null) {
             try {
                 byte[] b = LibBili.b(LibBili.getAndroidAppKey(), Base64.decode(str, 2));
                 if (b != null) {
-                    return formatType(new String(b, SignedQuery.HttpUtils.ENCODING_UTF_8), mClass, true);
+                    return formatType(new String(b, SignedQuery.HttpUtils.ENCODING_UTF_8), mClass, fieldOnly);
                 }
             } catch (Exception e) {
                 RxLogTool.e("PassportStorage", "error occurred on decrypt token", e);

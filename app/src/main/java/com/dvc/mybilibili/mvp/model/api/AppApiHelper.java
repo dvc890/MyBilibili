@@ -12,6 +12,7 @@ import com.dvc.mybilibili.mvp.model.api.cache.CacheProviders;
 import com.dvc.mybilibili.mvp.model.api.exception.BiliApiException;
 import com.dvc.mybilibili.mvp.model.api.service.account.AccountInfoApiService;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.CookieInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.BiliLiveApiV2Service;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveActivityReceiveInfo;
@@ -240,6 +241,16 @@ public class AppApiHelper implements ApiHelper {
                 .map(loginInfoGeneralResponse -> {
                     if(loginInfoGeneralResponse.isSuccess())
                         return loginInfoGeneralResponse.data;
+                    throw new BiliApiException(loginInfoGeneralResponse);
+                });
+    }
+
+    @Override
+    public Observable signOut(String access_key, CookieInfo cookieInfo) {
+        return this.biliAuthService.signOut(access_key, new BiliAuthService.CookieParamsMap(cookieInfo.cookies))
+                .map(loginInfoGeneralResponse -> {
+                    if(loginInfoGeneralResponse.isSuccess())
+                        return true;
                     throw new BiliApiException(loginInfoGeneralResponse);
                 });
     }

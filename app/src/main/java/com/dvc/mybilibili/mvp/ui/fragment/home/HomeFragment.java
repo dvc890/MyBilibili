@@ -99,6 +99,8 @@ public class HomeFragment extends MvpBaseFragment<HomeFragView, HomeFragPresente
             isLogined = true;
             GlideUtils.Default2ImageView(iv_avatar, accountInfo.getAvatar(), R.drawable.bili_default_avatar);
             CommandActionUtils.start(getContext(), CommandActionUtils.createBiliUrl("home/refreshnavi", null).url());
+        } else if(accountInfo == null) {
+            isLogined = false;
         }
     }
 

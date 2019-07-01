@@ -8,12 +8,19 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.bilibili.commons.time.FastDateFormat;
+import com.bilibili.nativelibrary.SignedQuery;
 import com.dvc.base.MvpBaseFragment;
 import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.constants.Keys;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.CookieInfo;
 import com.dvc.mybilibili.mvp.presenter.fragment.GuideFragPresenter;
 import com.just.agentweb.AgentWeb;
+import com.just.agentweb.AgentWebConfig;
 import com.just.agentweb.WebViewClient;
+
+import java.util.Date;
+import java.util.Locale;
 
 import javax.inject.Inject;
 
@@ -86,7 +93,35 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
 //                    }
 //                });
         if(webViewClient != null) builder.setWebViewClient(webViewClient);
+        if(presenter.getCookieInfo() != null) {
+            setAccountCookie();
+        }
         agentWeb = builder.createAgentWeb().ready().go(url);
+    }
+
+    @Override
+    public void onPause() {
+        if (agentWeb!= null) {
+            agentWeb.getWebLifeCycle().onPause();
+        }
+        super.onPause();
+    }
+    @Override
+    public void onResume() {
+        if (agentWeb!= null) {
+            agentWeb.getWebLifeCycle().onResume();
+        }
+        super.onResume();
+    }
+
+    @Override
+    public void onDestroy() {
+        if (agentWeb!= null) {
+            agentWeb.clearWebCache();
+            agentWeb.getWebLifeCycle().onDestroy();
+            agentWeb= null;
+        }
+        super.onDestroy();
     }
 
     @OnClick(R.id.btn_back)
@@ -108,5 +143,48 @@ public class GuideFragment extends MvpBaseFragment<GuideFragView, GuideFragPrese
 
     public AgentWeb getWebView() {
         return this.agentWeb;
+    }
+
+    private void setAccountCookie() {
+        CookieInfo cookieInfo = presenter.getCookieInfo();
+        if (!(cookieInfo == null || cookieInfo.cookies.size() <= 0 || cookieInfo.domains == null || cookieInfo.domains.length == 0)) {
+            for (CookieInfo.Cookie cookie : cookieInfo.cookies) {
+                for (String str : cookieInfo.domains) {
+                    AgentWebConfig.syncCookie(str, formatCookieValue(cookie, str));
+                }
+            }
+        }
+    }
+
+    private String formatCookieValue(CookieInfo.Cookie cookie, String domain) {
+        StringBuilder stringBuilder = new StringBuilder();
+        long j = cookie.expires * 1000;
+        double ceil = Math.ceil(((double) (j - System.currentTimeMillis())) / 1000.0d);
+        stringBuilder.append(cookie.name);
+        stringBuilder.append(SignedQuery.HttpUtils.EQUAL_SIGN);
+        stringBuilder.append(cookie.value);
+        stringBuilder.append("; Domain=");
+        stringBuilder.append(domain);
+        stringBuilder.append("; Max-Age=");
+        stringBuilder.append(ceil);
+        Date date = new Date();
+        date.setTime(j);
+        try {
+            StringBuilder stringBuilder2 = new StringBuilder();
+            stringBuilder2.append("Expires=");
+            stringBuilder2.append(FastDateFormat.getInstance("EEE, dd MMM yyyy HH:mm:ss zzz", Locale.ENGLISH).format(date));
+            domain = stringBuilder2.toString();
+        } catch (Exception e) {
+//            dts.m121335a(e);
+            domain = null;
+        }
+        if (domain != null) {
+            stringBuilder.append("; Expires=");
+            stringBuilder.append(domain);
+        }
+        if (cookie.http_only == 1) {
+            stringBuilder.append("; HttpOnly");
+        }
+        return stringBuilder.toString();
     }
 }

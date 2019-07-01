@@ -8,17 +8,14 @@ import android.widget.TextView;
 
 import com.dvc.base.BaseMvpHolder;
 import com.dvc.mybilibili.R;
-import com.dvc.mybilibili.app.application.BiliApplication;
-import com.dvc.mybilibili.app.utils.CommandActionUtils;
-import com.dvc.mybilibili.mvp.model.DataManager;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
+import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
 import com.dvc.mybilibili.mvp.ui.widget.PendantAvatarLayout;
 
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
-import butterknife.OnClick;
 
 
 public class HomeNavigationHolder extends BaseMvpHolder implements View.OnClickListener{
@@ -53,35 +50,26 @@ public class HomeNavigationHolder extends BaseMvpHolder implements View.OnClickL
 //    @BindView(R.id.switch_night)
 //    LinearLayout switchNight;
 
-    DataManager dataManager;
+    HomePresenter presenter;
 
-    public HomeNavigationHolder(NavigationView view) {
+    public HomeNavigationHolder(NavigationView view, HomePresenter presenter) {
         super(view.getHeaderView(0));
-        this.dataManager = BiliApplication.getDataManager();
+        this.presenter = presenter;
         view.findViewById(R.id.nav_settings).setOnClickListener(this);
         view.findViewById(R.id.nav_theme).setOnClickListener(this);
         view.findViewById(R.id.switch_night).setOnClickListener(this);
     }
 
-    @OnClick(R.id.avatar_layout)
-    public void onAvatarClick() {
-        if (dataManager.getUser().isLogin()) {
-
-        } else {
-            CommandActionUtils.toMainLogin(getContext());
-        }
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN, sticky = true)
     public void refrashAvatar(LoginInfo loginInfo) {
-        if (this.dataManager.getUser().isLogin()) {
-            avatar_layout.setAvatarUrl(this.dataManager.getUser().getAccountInfo().getAvatar());
-            if(this.dataManager.getUser().getAccountInfo().getPendantInfo() != null)
-                avatar_layout.setPendantUrl(this.dataManager.getUser().getAccountInfo().getPendantInfo().getImage());
-            if(this.dataManager.getUser().getAccountInfo().getVipInfo().isEffectiveYearVip())
+        if (this.presenter.isLogin()) {
+            avatar_layout.setAvatarUrl(this.presenter.getAccountInfo().getAvatar());
+            if(this.presenter.getAccountInfo().getPendantInfo() != null)
+                avatar_layout.setPendantUrl(this.presenter.getAccountInfo().getPendantInfo().getImage());
+            if(this.presenter.getAccountInfo().getVipInfo().isEffectiveYearVip())
                 avatar_layout.showBigVipIcon(PendantAvatarLayout.VerifySize.LARGE);
             profile_cover_image.setImageResource(R.drawable.bili_drawerbg_logined);
-            user_nick_tv.setText(this.dataManager.getUser().getAccountInfo().getUserName());
+            user_nick_tv.setText(this.presenter.getAccountInfo().getUserName());
         } else {
             avatar_layout.setAvatarUrl(null);
             avatar_layout.setPendantUrl(null);

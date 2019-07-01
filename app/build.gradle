@@ -51,8 +51,8 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project (':base')
-    implementation project(":livestreamsdk")
     implementation project(":gsyvideoplayer")
+    implementation project(":livestreamsdk")
 ////    GSYVideoPlayer
 //    implementation 'com.shuyu:gsyVideoPlayer-java:6.0.3' //高版本需要AndroidX
 //    implementation 'com.shuyu:GSYVideoPlayer-exo2:6.0.3'//是否需要ExoPlayer模式

@@ -1,15 +1,16 @@
 package com.dvc.mybilibili.mvp.ui.activity;
 
 import android.content.Intent;
-import android.os.Bundle;
 import android.support.annotation.IntRange;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
@@ -21,9 +22,11 @@ import com.dvc.mybilibili.R;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.utils.BottomNavigationBarUtils;
+import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
 import com.dvc.mybilibili.mvp.ui.activity.viewholder.HomeNavigationHolder;
 import com.dvc.mybilibili.mvp.ui.fragment.home.HomeFragment;
+import com.vondear.rxtool.view.RxToast;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +34,6 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> implements HomeView {
 
@@ -78,7 +80,8 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
         navigationView.addView(
                 LayoutInflater.from(this).inflate(R.layout.bili_view_navigation_footer, null, true),
                 new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, Gravity.BOTTOM));
-        homeNavigationHolder = new HomeNavigationHolder(navigationView);
+        homeNavigationHolder = new HomeNavigationHolder(navigationView, presenter);
+        navigationView.getHeaderView(0).findViewById(R.id.avatar_layout).setOnClickListener(v -> onAvatarClick(v));
     }
 
     @Override
@@ -100,6 +103,29 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
 
     @Override
     protected void loadDatas() {
+    }
+
+    public void onAvatarClick(View view) {
+        if (presenter.isLogin()) {
+            new AlertDialog.Builder(getBaseContext())
+                    .setTitle(R.string.dialog_logout_title)
+                    .setMessage(R.string.dialog_logout_message)
+                    .setNegativeButton(R.string.dialog_logout_cancel, (dialog, which) -> {
+                        dialog.cancel();
+                    })
+                    .setNeutralButton(R.string.dialog_logout_confirm, ((dialog, which) -> {
+                        presenter.loginOut();
+                        dialog.dismiss();
+                    })).create().show();
+        } else {
+            CommandActionUtils.toMainLogin(getBaseContext());
+        }
+    }
+
+    @Override
+    public void onLoginOut() {
+        homeNavigationHolder.refrashAvatar(null);
+        RxToast.info(getString(R.string.pref_title_logout_category));
     }
 
     private void initBottomNavigationBar(int selectIndex) {

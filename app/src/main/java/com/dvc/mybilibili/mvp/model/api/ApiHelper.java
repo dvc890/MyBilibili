@@ -2,6 +2,7 @@ package com.dvc.mybilibili.mvp.model.api;
 
 import com.dvc.mybilibili.danmaku.video.entity.VideoDanmaku;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.AccountInfo;
+import com.dvc.mybilibili.mvp.model.api.service.account.entity.CookieInfo;
 import com.dvc.mybilibili.mvp.model.api.service.account.entity.LoginInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveActivityReceiveInfo;
 import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.BiliLiveDanmakuConfig;
@@ -52,6 +53,8 @@ public interface ApiHelper {
     Observable<LoginInfo> signInWithVerify(String username, String password, String captcha);
 
     Observable<LoginInfo> loginV3(String username, String password/*, Map<String, String> map*/);
+
+    Observable<Void> signOut(String access_key, CookieInfo cookieInfo);
 
     Observable<LoginInfo> acquireAccessToken(String code);
 

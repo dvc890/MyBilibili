@@ -29,7 +29,7 @@ public class HomeFragPresenter extends MyMvpBasePresenter<HomeFragView> {
             ifViewAttached(view -> view.onLoginUpdate(null));
             return;
         }
-        if(!TextUtils.isEmpty(this.user.getAccountInfo().getUserName())){
+        if(this.user.getAccountInfo() != null && !TextUtils.isEmpty(this.user.getAccountInfo().getUserName())){
             ifViewAttached(view -> view.onLoginUpdate(this.user.getAccountInfo()));
             return;
         }
