@@ -499,15 +499,5 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
         }
     }
 
-//    @Override
-//    public void onClick(View v) {
-//        super.onClick(v);
-//        switch (v.getId()) {
-//            case R.id.toogle_danmaku:
-//                this.danmakuHolder.resolveDanmakuShow();
-//                break;
-//        }
-//    }
-
 
 }

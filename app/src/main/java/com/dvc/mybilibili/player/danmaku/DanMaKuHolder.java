@@ -54,7 +54,10 @@ public class DanMaKuHolder extends BaseMvpHolder {
         super(view);
         this.player = view;
 //        if(mSendDanmaku != null) mSendDanmaku.setOnClickListener(this.player);
-        if(mToogleDanmaku != null) mToogleDanmaku.setOnClickListener(v->resolveDanmakuShow());
+        if(mToogleDanmaku != null) mToogleDanmaku.setOnClickListener(v->{
+            setDanmaKuShow(!getDanmaKuShow());
+            resolveDanmakuShow();
+        });
     }
 
     public void initDanmaku(int aid, long cid) {

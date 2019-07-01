@@ -61,8 +61,8 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 
     @Override
     protected void init(Context context) {
-        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
-        GSYVideoType.enableMediaCodecTexture();
+//        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
+//        GSYVideoType.enableMediaCodecTexture();
         super.init(context);
         this.danmakuHolder = new DanMaKuHolder(this);
         this.refresh.setOnClickListener(this);
@@ -282,9 +282,6 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
     public void onClick(View v) {
         super.onClick(v);
         switch (v.getId()) {
-            case R.id.toogle_danmaku:
-                this.danmakuHolder.resolveDanmakuShow();
-                break;
             case R.id.refresh:
                 Refresh();
                 break;
