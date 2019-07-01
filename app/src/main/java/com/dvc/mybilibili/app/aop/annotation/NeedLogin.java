@@ -1,6 +1,7 @@
-package com.dvc.mybilibili.app.aop;
+package com.dvc.mybilibili.app.aop.annotation;
 
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.aop.LoginTipsLevel;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
