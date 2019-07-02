@@ -13,6 +13,7 @@ import com.dvc.mybilibili.mvp.model.api.service.bililive.beans.liveplayer.LivePl
 import com.dvc.mybilibili.player.danmaku.DanMaKuHolder;
 import com.shuyu.gsyvideoplayer.GSYVideoBaseManager;
 import com.shuyu.gsyvideoplayer.model.VideoOptionModel;
+import com.shuyu.gsyvideoplayer.utils.Debuger;
 import com.shuyu.gsyvideoplayer.utils.GSYVideoType;
 import com.shuyu.gsyvideoplayer.video.base.GSYBaseVideoPlayer;
 import com.shuyu.gsyvideoplayer.video.base.GSYVideoPlayer;
@@ -61,12 +62,12 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 
     @Override
     protected void init(Context context) {
-//        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
-//        GSYVideoType.enableMediaCodecTexture();
+        GSYVideoType.setRenderType(GSYVideoType.SUFRACE);
+        GSYVideoType.enableMediaCodecTexture();
         super.init(context);
         this.danmakuHolder = new DanMaKuHolder(this);
         this.refresh.setOnClickListener(this);
-//        Debuger.enable();
+        Debuger.disable();
     }
 
     @Override

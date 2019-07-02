@@ -3,7 +3,6 @@ package com.dvc.mybilibili.player.danmaku;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.dvc.base.BaseMvpHolder;
@@ -258,10 +257,6 @@ public class DanMaKuHolder extends BaseMvpHolder {
 
     public IDanmakuView getDanmakuView() {
         return mDanmakuView;
-    }
-
-    public void setDanmakuView(IDanmakuView view) {
-        this.mDanmakuView = view;
     }
 
     public long getDanmakuStartSeekPosition() {

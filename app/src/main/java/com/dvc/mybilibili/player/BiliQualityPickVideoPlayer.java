@@ -83,7 +83,7 @@ public class BiliQualityPickVideoPlayer extends BiliVideoPlayer {
     @Override
     protected void init(Context context) {
         super.init(context);
-        Debuger.enable();
+        Debuger.disable();
         //切换视频清晰度
         mSwitchSize.setOnClickListener(v -> {
             if (mHadPlay && !isChanging) {
