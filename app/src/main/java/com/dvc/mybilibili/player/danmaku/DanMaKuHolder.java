@@ -77,7 +77,6 @@ public class DanMaKuHolder extends BaseMvpHolder {
         overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, false);
         overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, true);
         overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, true);
-        View.V
         DanamakuAdapter danamakuAdapter = new DanamakuAdapter(mDanmakuView);
         mDanmakuContext = DanmakuContext.create();
         mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)//描边
