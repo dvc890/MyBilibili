@@ -3,6 +3,7 @@ package com.dvc.mybilibili.player.danmaku;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.dvc.base.BaseMvpHolder;
@@ -17,6 +18,8 @@ import com.shuyu.gsyvideoplayer.utils.Debuger;
 
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import butterknife.BindView;
 import master.flame.danmaku.controller.IDanmakuView;
@@ -49,6 +52,7 @@ public class DanMaKuHolder extends BaseMvpHolder {
     private int aid;
     private long cid;
     private BiliVideoPlayer player;
+    private Executor executor = Executors.newFixedThreadPool(5);
 
     public DanMaKuHolder(BiliVideoPlayer view) {
         super(view);
@@ -65,15 +69,15 @@ public class DanMaKuHolder extends BaseMvpHolder {
         this.cid = cid;
         // 设置最大显示行数
         HashMap<Integer, Integer> maxLinesPair = new HashMap<Integer, Integer>();
-        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 10); // 滚动弹幕最大显示5行
+        maxLinesPair.put(BaseDanmaku.TYPE_SCROLL_RL, 15); // 滚动弹幕最大显示5行
         // 设置是否禁止重叠
         HashMap<Integer, Boolean> overlappingEnablePair = new HashMap<Integer, Boolean>();
-        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, true);
-        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, true);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_SCROLL_RL, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_TOP, false);
+        overlappingEnablePair.put(BaseDanmaku.TYPE_FIX_BOTTOM, false);
         overlappingEnablePair.put(BaseDanmaku.TYPE_MOVEABLE_XXX, true);
         overlappingEnablePair.put(BaseDanmaku.TYPE_SPECIAL, true);
-
+        View.V
         DanamakuAdapter danamakuAdapter = new DanamakuAdapter(mDanmakuView);
         mDanmakuContext = DanmakuContext.create();
         mDanmakuContext.setDanmakuStyle(IDisplayer.DANMAKU_STYLE_STROKEN, 3)//描边
@@ -82,13 +86,19 @@ public class DanMaKuHolder extends BaseMvpHolder {
 //                .setScaleTextSize(1.2f)
                 .setCacheStuffer(new SpannedCacheStuffer(), danamakuAdapter) // 图文混排使用SpannedCacheStuffer
                 .setMaximumLines(maxLinesPair)
-                .setMaximumVisibleSizeInScreen(-1) //同屏最大显示数量(弹幕密度(只对滚动有效))
+                .setMaximumVisibleSizeInScreen(50) //同屏最大显示数量(弹幕密度(只对滚动有效))
                 .preventOverlapping(overlappingEnablePair);
         Typeface font = FontUtils.loadFont2Assets(getContext(), "fonts/danmaku.ttf");
         if(font != null) mDanmakuContext.setTypeface(font);
 
         if (mDanmakuView != null) {
             initParser();
+            initCallback();
+        }
+    }
+
+    public void initCallback() {
+        if (mDanmakuView != null) {
 
             mDanmakuView.setCallback(new master.flame.danmaku.controller.DrawHandler.Callback() {
                 @Override
@@ -117,7 +127,6 @@ public class DanMaKuHolder extends BaseMvpHolder {
                 }
             });
             mDanmakuView.enableDanmakuDrawingCache(true);
-//            mDanmakuView.showFPS(true);
         }
     }
 
@@ -252,6 +261,10 @@ public class DanMaKuHolder extends BaseMvpHolder {
         return mDanmakuView;
     }
 
+    public void setDanmakuView(IDanmakuView view) {
+        this.mDanmakuView = view;
+    }
+
     public long getDanmakuStartSeekPosition() {
         return mDanmakuStartSeekPosition;
     }
@@ -285,7 +298,8 @@ public class DanMaKuHolder extends BaseMvpHolder {
         danmaku.textSize = textsize * (mParser.getDisplayer().getDensity() - 0.6f);
         danmaku.setTime(mDanmakuView.getCurrentTime() + 500);
 
-        getDanmakuView().addDanmaku(danmaku);
+//        if(isLive)
+        executor.execute(()->getDanmakuView().addDanmaku(danmaku));
 
     }
 }

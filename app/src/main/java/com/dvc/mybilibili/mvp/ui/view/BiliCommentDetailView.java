@@ -1,6 +1,5 @@
 package com.dvc.mybilibili.mvp.ui.view;
 
-import android.arch.lifecycle.Lifecycle;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.constraint.ConstraintLayout;
@@ -10,15 +9,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.FrameLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.dvc.base.utils.RxSchedulersHelper;
 import com.dvc.mybilibili.R;
@@ -40,7 +36,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class BiliCommentDetailView extends ConstraintLayout implements OnRefreshListener {
 
@@ -109,6 +104,7 @@ public class BiliCommentDetailView extends ConstraintLayout implements OnRefresh
         this.isShowing = true;
         loadData(true);
         this.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.upper_bottom_in));
+        requestFocus();
     }
 
     public void close() {

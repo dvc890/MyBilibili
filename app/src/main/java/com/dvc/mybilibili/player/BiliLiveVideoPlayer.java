@@ -168,12 +168,14 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
 //        gsyBaseVideoPlayer.mTypeText = mTypeText;
         gsyBaseVideoPlayer.mediaResource = getMediaResource();
         gsyBaseVideoPlayer.mSourcePosition = mSourcePosition;
-        gsyBaseVideoPlayer.setRoomId(roomid);
         gsyBaseVideoPlayer.isFrist = isFrist;
         //对弹幕设置偏移记录
+//        gsyBaseVideoPlayer.setRoomId(roomid);
+        gsyBaseVideoPlayer.danmakuHolder.setDanmakuContext(this.danmakuHolder.getDanmakuContext());
         gsyBaseVideoPlayer.danmakuHolder.setParser(this.danmakuHolder.getParser());
         gsyBaseVideoPlayer.danmakuHolder.setDanmakuStartSeekPosition(getCurrentPositionWhenPlaying());
         gsyBaseVideoPlayer.danmakuHolder.setDanmaKuShow(this.danmakuHolder.getDanmaKuShow());
+        gsyBaseVideoPlayer.danmakuHolder.initCallback();
         gsyBaseVideoPlayer.danmakuHolder.onPrepareDanmaku(gsyBaseVideoPlayer);
         return gsyBaseVideoPlayer;
     }
@@ -190,16 +192,15 @@ public class BiliLiveVideoPlayer extends BiliVideoPlayer {
             BiliLiveVideoPlayer gsyBaseVideoPlayer = (BiliLiveVideoPlayer) gsyVideoPlayer;
             mediaResource = gsyBaseVideoPlayer.getMediaResource();
             mSourcePosition = gsyBaseVideoPlayer.mSourcePosition;
-            this.setRoomId(gsyBaseVideoPlayer.roomid);
             this.isFrist = gsyBaseVideoPlayer.isFrist;
             //对弹幕设置偏移记录
+//            this.setRoomId(gsyBaseVideoPlayer.roomid);
             this.danmakuHolder.setDanmaKuShow(gsyBaseVideoPlayer.danmakuHolder.getDanmaKuShow());
             if (gsyBaseVideoPlayer.danmakuHolder.getDanmakuView() != null &&
                     gsyBaseVideoPlayer.danmakuHolder.getDanmakuView().isPrepared()) {
                 this.danmakuHolder.resolveDanmakuSeek(this, gsyBaseVideoPlayer.getCurrentPositionWhenPlaying());
-                this.danmakuHolder.resolveDanmakuShow();
-                gsyBaseVideoPlayer.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);
-            }
+//                this.danmakuHolder.resolveDanmakuShow();
+                gsyBaseVideoPlayer.danmakuHolder.releaseDanmaku(gsyBaseVideoPlayer);           }
         }
     }
 
