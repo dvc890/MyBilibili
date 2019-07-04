@@ -79,6 +79,11 @@ dependencies {
     implementation 'com.github.ctiao:DanmakuFlameMaster:0.9.25'
     implementation 'com.github.ctiao:ndkbitmap-armv7a:0.9.21'
 
+    aspectjx {
+//        //排除所有package路径中包含`android.support`的class文件及库（jar文件）
+//        exclude 'android.support'
+        include "com.dvc"
+    }
 
     annotationProcessor "com.jakewharton:butterknife-compiler:$parent.ext.butterKnifeVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$parent.ext.daggerVersion"

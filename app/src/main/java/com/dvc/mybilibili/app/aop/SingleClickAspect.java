@@ -11,14 +11,11 @@ import org.aspectj.lang.annotation.Pointcut;
 
 import java.util.Calendar;
 
-import butterknife.OnClick;
-
 @Aspect
 public class SingleClickAspect {
     public static final String TAG="SingleClickAspect";
     public static final int MIN_CLICK_DELAY_TIME = 500;
 
-    @OnClick
     @Pointcut("execution(@com.dvc.mybilibili.app.aop.annotation.SingleClick * *(..))")//方法切入点
     public void methodAnnotated(){
 

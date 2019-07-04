@@ -12,6 +12,7 @@ import com.vondear.rxtool.view.RxToast;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 
 import java.lang.reflect.Method;
@@ -20,8 +21,13 @@ import java.lang.reflect.Method;
 public class LoginAspectJ {
     private static final String TAG = "LoginAspectJ";
 
-    @Around("execution(@com.dvc.mybilibili.app.aop.annotation.NeedLogin * *..*.*(..))")
-    public void needLogin(ProceedingJoinPoint joinPoint) throws Throwable {
+    @Pointcut("execution(@com.dvc.mybilibili.app.aop.annotation.NeedLogin * *..*.*(..))")
+    public void methodAnnotated(){
+
+    }
+
+    @Around("methodAnnotated()")//在连接点进行方法替换
+    public void aroundJoinPoint(ProceedingJoinPoint joinPoint) throws Throwable {
         NeedLogin xjNeedLogin = getAnnotation(joinPoint);
         if (BiliApplication.getUser().isLogin()){
             joinPoint.proceed();

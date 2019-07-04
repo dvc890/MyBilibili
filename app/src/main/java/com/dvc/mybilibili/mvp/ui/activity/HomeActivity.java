@@ -19,10 +19,10 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.dvc.base.MvpBaseActivity;
 import com.dvc.base.utils.FragmentUtils;
 import com.dvc.mybilibili.R;
+import com.dvc.mybilibili.app.aop.annotation.NeedLogin;
 import com.dvc.mybilibili.app.application.BiliApplication;
 import com.dvc.mybilibili.app.constants.Keys;
 import com.dvc.mybilibili.app.utils.BottomNavigationBarUtils;
-import com.dvc.mybilibili.app.utils.CommandActionUtils;
 import com.dvc.mybilibili.mvp.presenter.activity.HomePresenter;
 import com.dvc.mybilibili.mvp.ui.activity.viewholder.HomeNavigationHolder;
 import com.dvc.mybilibili.mvp.ui.fragment.home.HomeFragment;
@@ -105,6 +105,7 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
     protected void loadDatas() {
     }
 
+    @NeedLogin
     public void onAvatarClick(View view) {
         if (presenter.isLogin()) {
             new AlertDialog.Builder(getBaseContext())
@@ -117,8 +118,6 @@ public class HomeActivity extends MvpBaseActivity<HomeView, HomePresenter> imple
                         presenter.loginOut();
                         dialog.dismiss();
                     })).create().show();
-        } else {
-            CommandActionUtils.toMainLogin(getBaseContext());
         }
     }
 
